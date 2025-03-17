@@ -626,6 +626,7 @@ return [
     'Set the portfolio status'=>'قم بتعيين حالة المحفطة.',
     'Portfolio created successfully'=>'تم إنشاء المحفظة بنجاح',
     'Failed to create portfolio'=>'حدث خطأ أثناء إنشاء المحفظة',
+    'Market stock screen'=>'شاشة الأسهم المالية',
 
 
 
