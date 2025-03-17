@@ -625,6 +625,7 @@ return [
     'Set the portfolio status'=>'Set the portfolio status',
     'Portfolio created successfully'=>'Portfolio created successfully',
     'Failed to create portfolio'=>'Failed to create portfolio',
+    'Market stock screen'=>'Market stock screen',
 
 
 
