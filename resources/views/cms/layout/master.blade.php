@@ -64,7 +64,9 @@
     <!--begin::Page-->
     <div class="page d-flex flex-row flex-column-fluid">
         <!--begin::Aside-->
-        <div id="kt_aside" class="aside py-9" data-kt-drawer="true" data-kt-drawer-name="aside" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_aside_toggle">
+        <div id="kt_aside" class="aside py-9" data-kt-drawer="true" data-kt-drawer-name="aside" data-kt-drawer-activate="{default: true, lg: false}"
+             data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'200px', '300px': '250px'}"
+             data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_aside_toggle">
             <!--begin::Brand-->
             <div class="aside-logo flex-column-auto px-9 mb-9" id="kt_aside_logo">
                 <!--begin::Logo-->
@@ -98,6 +100,7 @@
                             </a>
                         </div>
                         <!--end:Menu item-->
+
                         <!--begin:Menu item-->
                         <div data-kt-menu-trigger="click" class="menu-item menu-accordion "  >
                             <!--begin:Menu link-->
@@ -142,6 +145,25 @@
                             <!--end:Menu sub-->
                         </div>
                         <!--end:Menu item-->
+
+                        <!--begin:Menu item-->
+                        <div  class="menu-item ">
+                            <a class="menu-link" href="{{ route('market-stock-screen') }}">
+										<span class="menu-icon">
+											<!--begin::Svg Icon | path: icons/duotune/arrows/arr001.svg-->
+											<span class="svg-icon svg-icon-5">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+													<path d="M14.4 11H3C2.4 11 2 11.4 2 12C2 12.6 2.4 13 3 13H14.4V11Z" fill="black" />
+													<path opacity="0.3" d="M14.4 20V4L21.7 11.3C22.1 11.7 22.1 12.3 21.7 12.7L14.4 20Z" fill="black" />
+												</svg>
+											</span>
+                                            <!--end::Svg Icon-->
+										</span>
+                                <span class="menu-title">{{trans('dashboard_trans.Market stock screen')}}</span>
+                            </a>
+                        </div>
+                        <!--end:Menu item-->
+
                     </div>
                     <!--end::Menu-->
                 </div>
