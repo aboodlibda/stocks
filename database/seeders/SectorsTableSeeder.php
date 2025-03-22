@@ -11,7 +11,7 @@ class SectorsTableSeeder extends Seeder
     public function run(): void
     {
 
-        Excel::import(new SectorImport(), storage_path('app/public/sectors data.xlsx'));
+        Excel::import(new SectorImport(), storage_path('app/public/sectors data.csv'));
 
     }
 }
