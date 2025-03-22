@@ -75,12 +75,12 @@
                                     <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_ecommerce_coupons_table .form-check-input" value="1" />
                                 </div>
                             </th>
-                            <th class="min-w-100px">{{trans('dashboard_trans.Name')}}</th>
-                            <th class="text-end min-w-70px">{{trans('dashboard_trans.Select portfolio stocks')}}</th>
-                            <th class="text-end min-w-100px">{{trans('dashboard_trans.Portfolio stocks details')}}</th>
-                            <th class="text-end min-w-100px">{{trans('dashboard_trans.Investment amount')}}</th>
-                            <th class="text-end min-w-100px">{{trans('dashboard_trans.Status')}}</th>
-                            <th class="text-end min-w-70px">{{trans('dashboard_trans.Actions')}}</th>
+                            <th class="text-dark min-w-100px">{{trans('dashboard_trans.Name')}}</th>
+                            <th class="text-dark min-w-70px">{{trans('dashboard_trans.Select portfolio stocks')}}</th>
+                            <th class="text-dark text-end min-w-100px">{{trans('dashboard_trans.Portfolio stocks details')}}</th>
+                            <th class="text-dark text-end min-w-100px">{{trans('dashboard_trans.Investment amount')}}</th>
+                            <th class="text-dark text-end min-w-100px">{{trans('dashboard_trans.Status')}}</th>
+                            <th class="text-dark text-end min-w-70px">{{trans('dashboard_trans.Actions')}}</th>
                         </tr>
                         </thead>
                         <tbody class="fw-semibold text-gray-600">
@@ -101,13 +101,13 @@
 
                             <td>
                                 <div class="text-center pe-0">
-                                    <button class="btn btn-primary"><i class="fa fa-user-edit"></i></button>
+                                    <button class="btn btn-success"><i class="fa fa-edit"></i></button>
                                 </div>
                             </td>
 
                             <td>
                                 <div class="text-center pe-0">
-                                    <button class="btn btn-primary"><i class="fa fa-user-plus"></i></button>
+                                    <button class="btn btn-info"><i class="fa fa-exchange"></i></button>
                                 </div>
                             </td>
 
