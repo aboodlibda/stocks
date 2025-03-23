@@ -23,7 +23,6 @@
         table {
             width: 100%;
             height: 100%;
-            border-collapse: collapse;
         }
     </style>
 
@@ -54,73 +53,65 @@
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
         <!--begin::Container-->
         <div class="container-xxl" id="kt_content_container">
-            <!--begin::Products-->
-            <div class="card card-flush ">
-                <!--begin::Card body-->
-                <div class="card-body pt-0 ">
-                    <!--begin::Table-->
-                    <table class="table table-row-dashed table table-dark table-separate dataTable"
-                           id="kt_ecommerce_coupons_table">
-                        <thead >
+            <!--begin::Table-->
+            <table class="table table-row-dashed table table-dark table-separate dataTable"
+                   id="kt_ecommerce_coupons_table">
+                <thead >
 
 
-                        <tr>
-                            <th colspan="4" class="color1">رابط اخبار و اسعار سوق التداول السعودى</th>
-                            <th colspan="2" class="bg-danger text-white">average industry</th>
-                            <th  class="bg-warning text-dark">10</th>
-                            <th  class="bg-warning text-dark">10</th>
-                            <th  class="bg-warning text-dark">5</th>
-                            <th  class="bg-warning text-dark">7</th>
-                            <th  class="bg-warning text-dark">55</th>
-                            <th  class="color2"></th>
-                            <th  class="bg-warning text-dark">12</th>
+                <tr>
+                    <th colspan="4" class="color1">رابط اخبار و اسعار سوق التداول السعودى</th>
+                    <th colspan="2" class="bg-danger text-white">average industry</th>
+                    <th  class="bg-warning text-dark">10</th>
+                    <th  class="bg-warning text-dark">10</th>
+                    <th  class="bg-warning text-dark">5</th>
+                    <th  class="bg-warning text-dark">7</th>
+                    <th  class="bg-warning text-dark">55</th>
+                    <th  class="color2"></th>
+                    <th  class="bg-warning text-dark">12</th>
 
 
-                            <th  class="bg-warning text-dark">45</th>
-                            <th  class="bg-warning text-dark">47</th>
-                            <th  class="bg-warning text-dark">21</th>
-                            <th  class="bg-warning text-dark">01</th>
-                            <th  class="bg-warning text-dark">78</th>
+                    <th  class="bg-warning text-dark">45</th>
+                    <th  class="bg-warning text-dark">47</th>
+                    <th  class="bg-warning text-dark">21</th>
+                    <th  class="bg-warning text-dark">01</th>
+                    <th  class="bg-warning text-dark">78</th>
 
-                        </tr>
+                </tr>
 
-                        <tr>
-                            <th colspan="6" class="color1">اسماء الشركات فى سوق التداول السعودى</th>
-                            <th colspan="6" class="color2">Risk measurement Ratios</th>
-                            <th colspan="2" class="color3">Earning Ratios</th>
-                            <th colspan="4" class="color4">Financial Ratios</th>
-                        </tr>
+                <tr>
+                    <th colspan="6" class="color1">اسماء الشركات فى سوق التداول السعودى</th>
+                    <th colspan="6" class="color2">Risk measurement Ratios</th>
+                    <th colspan="2" class="color3">Earning Ratios</th>
+                    <th colspan="4" class="color4">Financial Ratios</th>
+                </tr>
 
 
-                        <tr class="text-start text-white fw-bold fs-7 text-uppercase gs-0">
-                            <th class="min-w-50px bg-info">Avg Daily Expected Stock Return (3 Years)</th>
-                            <th class="min-w-50px bg-info">Annual Stock Expected Return (3 Years)</th>
-                            <th class="min-w-50px bg-info">Earning Per Share</th>
-                            <th class="min-w-50px bg-info">Stock Dividend Yield</th>
-                            <th class="min-w-50px bg-warning">Return on Equity (ROE %)</th>
-                            <th class="min-w-50px bg-warning">P/E Ratio</th>
-                            <th class="min-w-50px bg-danger">Stock Risk Rank</th>
-                            <th class="min-w-50px bg-danger">Daily Stock Volatility</th>
-                            <th class="min-w-50px bg-danger">Annual Stock Volatility % (Risk Level)</th>
-                            <th class="min-w-50px bg-danger">Stock Beta Coefficient</th>
-                            <th class="min-w-50px bg-danger">Stock - Sharp Risk Ratio</th>
-                            <th class="min-w-50px bg-danger">Stock Value at Risk (VaR %)</th>
-                            <th class="min-w-50px bg-success">Index Code</th>
-                            <th class="min-w-50px bg-success">Industry Type</th>
-                            <th class="min-w-50px bg-success">Company Name</th>
-                            <th class="min-w-50px bg-success">Symbol Code</th>
-                            <th class="min-w-50px">View Stock Performance</th>
-                            <th class="min-w-50px">Add to Portfolio</th>
-                        </tr>
-                        </thead>
-                        <tbody class="fw-semibold text-gray-600">
-                        </tbody>
-                    </table>
-                    <!--end::Table-->
-                </div>
-                <!--end::Card body-->
-            </div>
-            <!--end::Products-->
+                <tr class="text-start text-white fw-bold fs-7 text-uppercase gs-0">
+                    <th class="min-w-50px bg-info">Avg Daily Expected Stock Return (3 Years)</th>
+                    <th class="min-w-50px bg-info">Annual Stock Expected Return (3 Years)</th>
+                    <th class="min-w-50px bg-info">Earning Per Share</th>
+                    <th class="min-w-50px bg-info">Stock Dividend Yield</th>
+                    <th class="min-w-50px bg-warning">Return on Equity (ROE %)</th>
+                    <th class="min-w-50px bg-warning">P/E Ratio</th>
+                    <th class="min-w-50px bg-danger">Stock Risk Rank</th>
+                    <th class="min-w-50px bg-danger">Daily Stock Volatility</th>
+                    <th class="min-w-50px bg-danger">Annual Stock Volatility % (Risk Level)</th>
+                    <th class="min-w-50px bg-danger">Stock Beta Coefficient</th>
+                    <th class="min-w-50px bg-danger">Stock - Sharp Risk Ratio</th>
+                    <th class="min-w-50px bg-danger">Stock Value at Risk (VaR %)</th>
+                    <th class="min-w-50px bg-success">Index Code</th>
+                    <th class="min-w-50px bg-success">Industry Type</th>
+                    <th class="min-w-50px bg-success">Company Name</th>
+                    <th class="min-w-50px bg-success">Symbol Code</th>
+                    <th class="min-w-50px">View Stock Performance</th>
+                    <th class="min-w-50px">Add to Portfolio</th>
+                </tr>
+                </thead>
+                <tbody class="fw-semibold text-gray-600">
+                </tbody>
+            </table>
+            <!--end::Table-->
         </div>
         <!--end::Container-->
     </div>
@@ -143,7 +134,7 @@
             $('#kt_ecommerce_coupons_table').DataTable({
                 processing: true,
                 serverSide: true,
-                // language: { url: dataTableLanguage },
+                language: { url: dataTableLanguage },
 
                 ajax: '{{ route("companies.index.ajax") }}', // Adjust route name as appropriate
                 columns: [
