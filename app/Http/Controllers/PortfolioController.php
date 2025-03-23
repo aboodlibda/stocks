@@ -71,14 +71,45 @@ class PortfolioController extends Controller
     {
     }
 
-    public function edit($portfolio)
+    public function edit(portfolio $portfolio)
     {
         return view('cms.portfolio.edit', compact('portfolio'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Portfolio $portfolio)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:30',
+            'investment_amount' => 'required|numeric|min:0',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors(),
+                'text' => trans('dashboard_trans.Please correct the highlighted errors and try again'),
+                'confirmButtonText' => trans('dashboard_trans.Ok, got it!'),
+                'icon' => 'error',
+            ], 422);
+        }
+
+        $data = $request->only(['name', 'investment_amount']);
+        $data['status'] = $request->status ?? 'active';
+
+        if ($portfolio->update($data)) {
+            return response()->json([
+                'icon' => 'success',
+                'confirmButtonText' => trans('dashboard_trans.Ok, got it!'),
+                'text' => trans('dashboard_trans.Portfolio updated successfully'),
+            ]);
+        } else {
+            return response()->json([
+                'icon' => 'error',
+                'confirmButtonText' => trans('dashboard_trans.Ok, got it!'),
+                'text' => trans('dashboard_trans.Failed to update portfolio'),
+            ]);
+        }
     }
+
 
     public function destroy($id)
     {
