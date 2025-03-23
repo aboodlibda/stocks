@@ -67,7 +67,7 @@ class HomeController extends Controller
 
     public function getStockAverages()
     {
-        $averages = Company::selectRaw("
+        $averages = Company::query()->selectRaw("
             AVG(stock_var_percent) AS avg_stock_var_percent,
             AVG(stock_sharp_ratio) AS avg_stock_sharp_ratio,
             AVG(stock_beta_coefficient) AS avg_stock_beta_coefficient,
