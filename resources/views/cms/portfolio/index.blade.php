@@ -101,7 +101,9 @@
 
                             <td>
                                 <div class="text-center pe-0">
-                                    <button class="btn btn-success"><i class="fa fa-edit"></i></button>
+                                    <a href="{{ route('market-stock-screen') }}">
+                                        <button class="btn btn-success"><i class="fa fa-edit"></i></button>
+                                    </a>
                                 </div>
                             </td>
 
