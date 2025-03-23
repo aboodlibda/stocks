@@ -7,7 +7,7 @@
         <!--begin::Head-->
         <head>
             <base href="../../../"/>
-            <title>Cardio - {{trans('dashboard_trans.Sign In')}}</title>
+            <title>Stocks - {{trans('dashboard_trans.Sign In')}}</title>
             {{--    @notifyCss--}}
             <meta charset="utf-8"/>
             <meta name="description"
