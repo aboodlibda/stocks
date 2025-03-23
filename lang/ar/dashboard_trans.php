@@ -627,6 +627,9 @@ return [
     'Portfolio created successfully'=>'تم إنشاء المحفظة بنجاح',
     'Failed to create portfolio'=>'حدث خطأ أثناء إنشاء المحفظة',
     'Market stock screen'=>'شاشة الأسهم المالية',
+    'edit portfolio'=>'تعديل المحفطة الإستثمارية',
+    'Portfolio updated successfully'=>'تم تجديث المحفظة بنجاح',
+
 
 
 
