@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Portfolio extends Model
 {
-//    protected $fillable = ['name', 'investment_amount', 'sharp_risk_ratio', 'var', 'beta_coefficient', 'annual_volatility', 'daily_volatility', 'risk_ranking', 'user_id','status'];
-    protected $guarded = [];
+    protected $fillable = ['name', 'investment_amount', 'sharp_risk_ratio', 'var', 'beta_coefficient', 'annual_volatility', 'daily_volatility', 'risk_ranking', 'user_id','status'];
+
 
     public function user(): BelongsTo
     {
