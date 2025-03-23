@@ -626,6 +626,8 @@ return [
     'Portfolio created successfully'=>'Portfolio created successfully',
     'Failed to create portfolio'=>'Failed to create portfolio',
     'Market stock screen'=>'Market stock screen',
+    'edit portfolio'=>'edit investment portfolio',
+    'Portfolio updated successfully'=>'Portfolio updated successfully',
 
 
 
