@@ -81,7 +81,7 @@
                                             </select>
                                             <!--end::Select2-->
                                             <!--begin::Description-->
-                                            <div class="text-muted fs-7">{{trans('dashboard_trans.Set the category status')}}.</div>
+                                            <div class="text-muted fs-7">{{trans('dashboard_trans.Set the portfolio status')}}.</div>
                                             <!--end::Description-->
                                         </div>
                                         <div id="status-error" class="error-message"></div>
