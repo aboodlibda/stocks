@@ -66,7 +66,7 @@
                 <!--end::Search-->
             </div>
             <table class="table table-row-dashed table dataTable "
-                   id="kt_ecommerce_coupons_table" dir="ltr">
+                   id="kt_ecommerce_coupons_table">
                 <thead>
                 <tr>
                     <th colspan="4" class="color1">رابط اخبار و اسعار سوق التداول السعودى</th>
@@ -97,43 +97,43 @@
 
 
                 <tr class="text-start text-white fw-bold fs-7 text-uppercase gs-0">
-                    <th scope="col" class="bg-secondary">add to portfilio</th>
-                    <th scope="col" class="bg-secondary">view stock performance</th>
-                    <th scope="col" class="bg-success">Symbol Code</th>
-                    <th scope="col" class="bg-success">Company Name</th>
-                    <th scope="col" class="bg-success">Industry Type</th>
-                    <th scope="col" class="bg-success">Index Code</th>
-                    <th class="bg-danger">Stock Value at Risk (VaR %)</th>
-                    <th class="bg-danger">Stock - Sharp Risk Ratio</th>
-                    <th class="bg-danger">Stock Beta Coefficient</th>
-                    <th class="bg-danger">Annual Stock Volatility % (Risk Level)</th>
-                    <th class="bg-danger">Daily Stock Volatility % (Risk Level)</th>
-                    <th class="bg-danger">Stock Risk Rank</th>
-                    <th class="bg-warning">P/E Ratio</th>
-                    <th class="bg-warning">Return on Equity (ROE %)</th>
-                    <th class="bg-info">Stock Dividend Yield</th>
-                    <th class="bg-info">Earning Per Share</th>
-                    <th class="bg-info">Annual Stock Expected Return (3 Years)</th>
-                    <th class="bg-info">Avg Daily Expected Stock Return (3 Years)</th>
+{{--                    <th scope="col" class="bg-secondary">add to portfilio</th>--}}
+{{--                    <th scope="col" class="bg-secondary">view stock performance</th>--}}
+{{--                    <th scope="col" class="bg-success">Symbol Code</th>--}}
+{{--                    <th scope="col" class="bg-success">Company Name</th>--}}
+{{--                    <th scope="col" class="bg-success">Industry Type</th>--}}
+{{--                    <th scope="col" class="bg-success">Index Code</th>--}}
+{{--                    <th class="bg-danger">Stock Value at Risk (VaR %)</th>--}}
+{{--                    <th class="bg-danger">Stock - Sharp Risk Ratio</th>--}}
+{{--                    <th class="bg-danger">Stock Beta Coefficient</th>--}}
+{{--                    <th class="bg-danger">Annual Stock Volatility % (Risk Level)</th>--}}
+{{--                    <th class="bg-danger">Daily Stock Volatility % (Risk Level)</th>--}}
+{{--                    <th class="bg-danger">Stock Risk Rank</th>--}}
+{{--                    <th class="bg-warning">P/E Ratio</th>--}}
+{{--                    <th class="bg-warning">Return on Equity (ROE %)</th>--}}
+{{--                    <th class="bg-info">Stock Dividend Yield</th>--}}
+{{--                    <th class="bg-info">Earning Per Share</th>--}}
+{{--                    <th class="bg-info">Annual Stock Expected Return (3 Years)</th>--}}
+{{--                    <th class="bg-info">Avg Daily Expected Stock Return (3 Years)</th>--}}
 
-                    {{--                    <th class="min-w-50px bg-info">Avg Daily Expected Stock Return (3 Years)</th>--}}
-{{--                    <th class="min-w-50px bg-info">Annual Stock Expected Return (3 Years)</th>--}}
-{{--                    <th class="min-w-50px bg-info">Earning Per Share</th>--}}
-{{--                    <th class="min-w-50px bg-info">Stock Dividend Yield</th>--}}
-{{--                    <th class="min-w-50px bg-warning">Return on Equity (ROE %)</th>--}}
-{{--                    <th class="min-w-50px bg-warning">P/E Ratio</th>--}}
-{{--                    <th class="min-w-50px bg-danger">Stock Risk Rank</th>--}}
-{{--                    <th class="min-w-50px bg-danger">Daily Stock Volatility</th>--}}
-{{--                    <th class="min-w-50px bg-danger">Annual Stock Volatility % (Risk Level)</th>--}}
-{{--                    <th class="min-w-50px bg-danger">Stock Beta Coefficient</th>--}}
-{{--                    <th class="min-w-50px bg-danger">Stock - Sharp Risk Ratio</th>--}}
-{{--                    <th class="min-w-50px bg-danger">Stock Value at Risk (VaR %)</th>--}}
-{{--                    <th class="min-w-50px bg-success">Index Code</th>--}}
-{{--                    <th class="min-w-50px bg-success">Industry Type</th>--}}
-{{--                    <th class="min-w-50px bg-success">Company Name</th>--}}
-{{--                    <th class="min-w-50px bg-success">Symbol Code</th>--}}
-{{--                    <th class="min-w-50px">View Stock Performance</th>--}}
-{{--                    <th class="min-w-50px">Add to Portfolio</th>--}}
+                                        <th class="min-w-50px bg-info">Avg Daily Expected Stock Return (3 Years)</th>
+                    <th class="min-w-50px bg-info">Annual Stock Expected Return (3 Years)</th>
+                    <th class="min-w-50px bg-info">Earning Per Share</th>
+                    <th class="min-w-50px bg-info">Stock Dividend Yield</th>
+                    <th class="min-w-50px bg-warning">Return on Equity (ROE %)</th>
+                    <th class="min-w-50px bg-warning">P/E Ratio</th>
+                    <th class="min-w-50px bg-danger">Stock Risk Rank</th>
+                    <th class="min-w-50px bg-danger">Daily Stock Volatility</th>
+                    <th class="min-w-50px bg-danger">Annual Stock Volatility % (Risk Level)</th>
+                    <th class="min-w-50px bg-danger">Stock Beta Coefficient</th>
+                    <th class="min-w-50px bg-danger">Stock - Sharp Risk Ratio</th>
+                    <th class="min-w-50px bg-danger">Stock Value at Risk (VaR %)</th>
+                    <th class="min-w-50px bg-success">Index Code</th>
+                    <th class="min-w-50px bg-success">Industry Type</th>
+                    <th class="min-w-50px bg-success">Company Name</th>
+                    <th class="min-w-50px bg-success">Symbol Code</th>
+                    <th class="min-w-50px">View Stock Performance</th>
+                    <th class="min-w-50px">Add to Portfolio</th>
                 </tr>
                 </thead>
                 <tbody class="fw-semibold text-gray-600">
