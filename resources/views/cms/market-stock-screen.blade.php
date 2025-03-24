@@ -54,11 +54,20 @@
         <!--begin::Container-->
         <div class="container-xxl" id="kt_content_container">
             <!--begin::Table-->
+            <div class="card-title">
+                <!--begin::Search-->
+                <div class="d-flex align-items-center position-relative my-1">
+                    <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-4">
+                        <span class="path1"></span>
+                        <span class="path2"></span>
+                    </i>
+                    <input type="text" data-kt-ecommerce-coupons-filter="search" id="searchInput" class="form-control form-control-solid w-250px ps-12" placeholder="{{'ابحث في سوق الأسهم'}}" />
+                </div>
+                <!--end::Search-->
+            </div>
             <table class="table table-row-dashed table dataTable "
                    id="kt_ecommerce_coupons_table" dir="ltr">
                 <thead>
-
-
                 <tr>
                     <th colspan="4" class="color1">رابط اخبار و اسعار سوق التداول السعودى</th>
                     <th colspan="2" class="bg-danger text-white">average industry</th>
@@ -217,6 +226,16 @@
             setInterval(fetchStockAverages, 60000);
         });
 
+        // oTable = $('#kt_ecommerce_coupons_table').DataTable();   //pay attention to capital D, which is mandatory to retrieve "api" datatables' object, as @Lionel said
+        // $('#searchInput').keyup(function(){
+        //     oTable.search($(this).val()).draw() ;
+        // })
+
+
+        $('#searchInput').keyup(function() {
+            var table = $('#kt_ecommerce_coupons_table').DataTable();
+            table.search($(this).val()).draw();
+        });
     </script>
 
 
