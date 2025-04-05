@@ -21,4 +21,17 @@ class StockController extends Controller
         return response()->json($data);
     }
 
+    public function getApi(){
+        $data = $this->stockService->test_api();
+        return response()->json($data);
+    }
+
+    public function read_companies()
+    {
+        $data = $this->stockService->readDataFromJSON();
+        return response()->json($data[2030][0]);
+    }
+
+
+
 }
