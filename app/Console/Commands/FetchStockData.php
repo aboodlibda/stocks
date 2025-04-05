@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Services\StockService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 class FetchStockData extends Command
 {
@@ -20,13 +21,29 @@ class FetchStockData extends Command
 
     public function handle()
     {
-        $tickers = [7010, 2222, 2010, 6002, 2270, 1120];
+        // Fetch tickers dynamically using Laravel Query Builder
+        $tickers = DB::table('companies')->pluck('company_num')->toArray();
+
+        // Check if tickers exist
+        if (empty($tickers)) {
+            $this->error("No tickers found in the companies table.");
+            return;
+        }
+
+        // Define start and end dates
         $sdate = '2021-09-12';
         $edate = '2024-09-12';
 
+        // Fetch stock data
         $data = $this->stockService->getStockData($tickers, $sdate, $edate);
 
+        // Display success message
         $this->info("Stock data fetched successfully.");
-        $this->line(print_r(array_slice($data[7010] ?? [], 0, 5), true));
+
+        // Display first 5 records for the first ticker
+        $firstTicker = $tickers[0] ?? null;
+        if ($firstTicker) {
+            $this->line(print_r(array_slice($data[$firstTicker] ?? [], 0, 5), true));
+        }
     }
 }
