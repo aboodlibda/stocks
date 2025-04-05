@@ -10,6 +10,7 @@
       <LaravelCodeGeneration>
         <option name="generationStringSettings">
           <map>
+            <entry key="createConsoleCommand:classSuffix" value="" />
             <entry key="createEloquentScope:namespace" value="Models\Scopes" />
             <entry key="createModel:namespace" value="Models" />
           </map>
