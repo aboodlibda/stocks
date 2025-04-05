@@ -15,28 +15,23 @@ class StockService
         $this->baseUrl = 'https://yh-finance-complete.p.rapidapi.com/';
     }
 
-//    public function getStockData($symbol)
-//    {
-//        $response = Http::withHeaders([
-//            'X-RapidAPI-Key' => $this->apiKey,
-//            'X-RapidAPI-Host' => $this->apiHost,
-//        ])->get("https://yh-finance-complete.p.rapidapi.com/summaryprofile", [
-//            'symbol' => $symbol,
-//        ]);
-//
-//        // Log full response for debugging
-//        \Log::info('Yahoo Finance API Response: ', ['response' => $response->json()]);
-//
-//        if ($response->failed()) {
-//            return ['error' => 'Failed to fetch stock data', 'details' => $response->body()];
-//        }
-//
-//        return $response->json();
-//    }
-
-
-
     protected $fileName = 'companies.json';
+
+    public function fetchCompanyData($endpoint, $variable, $ticker, $extraParams = "")
+    {
+        $url = $this->baseUrl . $endpoint . "?" . "{$variable}" . "={$ticker}.SR" . $extraParams;
+
+        $response = Http::withHeaders([
+            "X-RapidAPI-Host" => $this->apiHost,
+            "X-RapidAPI-Key" => $this->apiKey
+        ])->get($url);
+
+        return $response->successful() ? $response->json() : null;
+    }
+
+
+
+
 
 
     public function fetchDataFromAPI($ticker, $sdate, $edate)
@@ -76,7 +71,8 @@ class StockService
         if ($data === null) {
             $data = [];
 
-            foreach ($tickers as $ticker) {
+            foreach ($tickers as $key => $ticker) {
+                echo $key .'  :  getting stock : '. $ticker. PHP_EOL;
                 $data[$ticker] = $this->fetchDataFromAPI($ticker, $sdate, $edate);
             }
 
@@ -84,6 +80,24 @@ class StockService
         }
 
         return $data;
+    }
+
+
+    public function test_api()
+    {
+        $ticker = "2030";
+        $url = "https://{$this->apiHost}/financials?symbol={$ticker}.SR";
+
+        $response = Http::withHeaders([
+            'X-RapidAPI-Host' => $this->apiHost,
+            'X-RapidAPI-Key' => $this->apiKey,
+        ])->get($url);
+
+        if ($response->successful()) {
+            return $response->json();
+        }
+
+        return null;
     }
 
 }
