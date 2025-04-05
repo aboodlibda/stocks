@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Stock extends Model
 {
-    protected $fillable = [
-        'date', 'high', 'volume', 'open', 'low', 'close', 'adjclose'
-    ];
+    protected $fillable = ['ticker', 'date', 'high', 'volume', 'open', 'low', 'close', 'adjclose'];
+
 }
