@@ -141,7 +141,7 @@
            </td>
 
            <td>
-               <span style="font-weight: bold">{{$company->company_name . ' ' . $company->company_num}}</span>
+               <span style="font-weight: bold" dir="rtl">{{$company->company_num . ' ' . $company->company_name}}</span>
            </td>
 
            <td>
@@ -311,7 +311,7 @@
         fetchStockAverages();
 
         // Optional: Refresh data every 60 seconds
-        setInterval(fetchStockAverages, 60000);
+        // setInterval(fetchStockAverages, 600000);
     });
 
     // oTable = $('#kt_ecommerce_coupons_table').DataTable();   //pay attention to capital D, which is mandatory to retrieve "api" datatables' object, as @Lionel said
