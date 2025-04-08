@@ -77,6 +77,7 @@
             <!--end::Page bg image-->
             <!--begin::Authentication - Sign-in -->
             <div class="d-flex flex-column flex-lg-row flex-column-fluid">
+
                 <!--begin::Aside-->
                 <div class="d-flex flex-lg-row-fluid">
                     <!--begin::Content-->
