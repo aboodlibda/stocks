@@ -38,15 +38,12 @@ function calculateRatiosBySector($code)
     $ratios = [];
     for ($i = 0; $i < count($closes) - 1; $i++) {
         if ($closes[$i + 1] != 0) {
-            $ratios[] = log(($closes[$i] / $closes[$i + 1])) * 100;
+            $ratios[] = number_format((log(($closes[$i] / $closes[$i + 1])) * 100), 2);
         } else {
             $ratios[] = null; // Avoid division by zero
         }
     }
 
-//    foreach ($ratios as $ratio) {
-//        echo number_format($ratio, 2) . "<br>";
-//    }
     return $ratios;
 }
 
@@ -76,7 +73,7 @@ function calculateAverage(array $numbers) {
     }
 
     $sum = array_sum($numbers);
-    return $sum / $count;
+    return ($sum / $count);
 }
 
 
@@ -84,7 +81,8 @@ function calculateAverage(array $numbers) {
 // $dash_C6 is dynamic retrieved from database and entered by admin in database
 function annualStockExpectedReturn($dash_C6, $company_daily_stock_volatility, $sector_return_avg, $sector_daily_stock_volatility)
 {
-    return $dash_C6 + ($company_daily_stock_volatility * sqrt(250)) * ((($sector_return_avg + 1) ^ 250 - 1) - $dash_C6) / ($sector_daily_stock_volatility * sqrt(250));
+    return $dash_C6 + ($company_daily_stock_volatility * sqrt(250)) * (pow(($sector_return_avg + 1), 250)  - 1 - $dash_C6)
+        / ($sector_daily_stock_volatility * sqrt(250));
 }
 
 
@@ -103,7 +101,18 @@ function test()
     // end of calculate $sector_daily_stock_volatility
 
     $sector_return_avg = calculateAverage($sectorRatios);
+//
+    $result = annualStockExpectedReturn(4.9,$company_daily_stock_volatility,$sector_return_avg,$sector_daily_stock_volatility);
+//    echo 'Annual Stock Expected Return  :  ' . $result . "<br>";
+//    echo 'company daily stock volatility  :  ' . number_format($company_daily_stock_volatility, 2) . "%" . "<br>";
 
-    $result = annualStockExpectedReturn(4.90,$company_daily_stock_volatility,$sector_return_avg,$sector_daily_stock_volatility);
-    echo $result;
+    $last = sharpRatio($result,$company_daily_stock_volatility);
+    echo 'sharpRatio : ' . number_format($last ,3);
 }
+
+
+function sharpRatio($annualStockExpectedReturn, $dailyStockVolatility) // $dailyStockVolatility will be * 250 do get it as Annual Stock Volatility
+{
+    return $annualStockExpectedReturn / ($dailyStockVolatility * sqrt(250));
+}
+
