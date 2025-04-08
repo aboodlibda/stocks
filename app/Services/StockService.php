@@ -72,8 +72,8 @@ class StockService
             $data = [];
 
             foreach ($tickers as $key => $ticker) {
-                echo $key .'  :  getting stock : '. $ticker. PHP_EOL;
                 $data[$ticker] = $this->fetchDataFromAPI($ticker, $sdate, $edate);
+                echo $key+1 .'    :  stock retrieved : '. $ticker. PHP_EOL;
             }
 
             $this->saveDataToJSON($data);
