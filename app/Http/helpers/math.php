@@ -81,11 +81,14 @@ function calculateAverage(array $numbers) {
 // $dash_C6 is dynamic retrieved from database and entered by admin in database
 function annualStockExpectedReturn($dash_C6, $company_daily_stock_volatility, $sector_return_avg, $sector_daily_stock_volatility)
 {
-    return $dash_C6 + ($company_daily_stock_volatility * sqrt(250)) * (pow(($sector_return_avg + 1), 250)  - 1 - $dash_C6)
-        / ($sector_daily_stock_volatility * sqrt(250));
+    return 4.9/100 + (1.342/100 * sqrt(250)) * (pow((0.010350553505535/100 + 1), 250 - 1)   - 4.9/100)
+        / (1.1653959942978/100 * sqrt(250));
 }
 
 
+/**
+ * @throws \MathPHP\Exception\BadDataException
+ */
 function test()
 {
     // start of calculate $company_daily_stock_volatility
@@ -101,13 +104,28 @@ function test()
     // end of calculate $sector_daily_stock_volatility
 
     $sector_return_avg = calculateAverage($sectorRatios);
-//
-    $result = annualStockExpectedReturn(4.9,$company_daily_stock_volatility,$sector_return_avg,$sector_daily_stock_volatility);
-//    echo 'Annual Stock Expected Return  :  ' . $result . "<br>";
-//    echo 'company daily stock volatility  :  ' . number_format($company_daily_stock_volatility, 2) . "%" . "<br>";
+    $annualStockExpectedReturn = annualStockExpectedReturn(4.9,$company_daily_stock_volatility,$sector_return_avg,$sector_daily_stock_volatility);
 
-    $last = sharpRatio($result,$company_daily_stock_volatility);
-    echo 'sharpRatio : ' . number_format($last ,3);
+    $sharpRatio = sharpRatio($annualStockExpectedReturn,$company_daily_stock_volatility);
+    $stockBetaCoefficient = calculateBeta($companyRatios, $sectorRatios, $sectorRatios);
+    $annualStockVolatility = (($company_daily_stock_volatility/100) * sqrt(250));
+    if ($annualStockVolatility <= 0.10) {
+        $stockRiskRank = "Conservative";
+    } elseif ($annualStockVolatility <= 0.20) {
+        $stockRiskRank = "Moderately Conservative";
+    } elseif ($annualStockVolatility <= 0.30) {
+        $stockRiskRank = "Aggressive";
+    } else {
+        $stockRiskRank = "Very Aggressive";
+    }
+
+    echo "Sharp Ratio : " .    round($sharpRatio, 3) . "<br>";
+    echo "Stock Beta Coefficient : "    . round($stockBetaCoefficient, 3) . "<br>";
+    echo "Daily Volatility : " .    round($company_daily_stock_volatility, 3) . "<br>";
+    echo "Annual Volatility : " .    round($annualStockVolatility, 3) . "<br>";
+    echo "Risk Rank : " .    $stockRiskRank . "<br>";
+    echo "sector_daily_stock_volatility : " .    $sector_daily_stock_volatility . "<br>";
+
 }
 
 
@@ -115,4 +133,37 @@ function sharpRatio($annualStockExpectedReturn, $dailyStockVolatility) // $daily
 {
     return $annualStockExpectedReturn / ($dailyStockVolatility * sqrt(250));
 }
+
+
+function calculateBeta(array $rangeR, array $rangeX1, array $rangeX2): float {
+    $n = count($rangeR);
+    $meanR = array_sum($rangeR) / $n;
+    $meanX1 = array_sum($rangeX1) / $n;
+
+    // Covariance calculation
+    $covar = 0.0;
+    for ($i = 0; $i < $n; $i++) {
+        $covar += ($rangeR[$i] - $meanR) * ($rangeX1[$i] - $meanX1);
+    }
+    $covar /= $n;
+
+    // Variance calculation for rangeX2
+    $m = count($rangeX2);
+    $meanX2 = array_sum($rangeX2) / $m;
+    $variance = 0.0;
+    for ($i = 0; $i < $m; $i++) {
+        $variance += pow($rangeX2[$i] - $meanX2, 2);
+    }
+    $variance /= $m;
+
+    // Avoid division by zero
+    if ($variance == 0.0) {
+        throw new Exception("Variance is zero, division by zero error.");
+    }
+
+    return $covar / $variance;
+}
+
+
+
 
