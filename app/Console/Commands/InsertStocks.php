@@ -15,7 +15,10 @@ class InsertStocks extends Command
 
     public function handle(): void
     {
-//        $jsonPath = Storage::disk('local')->get('companies.json');
+
+        Stock::truncate();
+        echo "Stocks table truncated." . PHP_EOL;
+
         $jsonPath = storage_path('app/private/companies.json');
 
         if (File::exists($jsonPath)) {
