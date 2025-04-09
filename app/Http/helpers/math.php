@@ -3,11 +3,12 @@
 
 use App\Models\Sector;
 use App\Models\Stock;
+use Illuminate\Support\Facades\Http;
 
 
 const dash_C6 = 4.90;
 
-function calculateRatiosByCompany($ticker)
+function calculateRatiosByCompany($ticker): array
 {
     // Get adjclose values for the given ticker, ordered by ID (or date if available)
     $adjCloses = Stock::where('ticker', $ticker)
@@ -27,7 +28,7 @@ function calculateRatiosByCompany($ticker)
     return $ratios;
 }
 
-function calculateRatiosBySector($code)
+function calculateRatiosBySector($code): array
 {
     // Get adjclose values for the given ticker, ordered by ID (or date if available)
     $closes = Sector::where('code', $code)
@@ -49,7 +50,8 @@ function calculateRatiosBySector($code)
 
 
 
-function variance(array $numbers) {
+function variance(array $numbers): float|int|null
+{
     $count = count($numbers);
     if ($count < 2) {
         return null; // Variance requires at least two numbers
@@ -66,7 +68,8 @@ function variance(array $numbers) {
 }
 
 
-function calculateAverage(array $numbers) {
+function calculateAverage(array $numbers): float|int|null
+{
     $count = count($numbers);
     if ($count === 0) {
         return null; // Avoid division by zero
@@ -79,57 +82,15 @@ function calculateAverage(array $numbers) {
 
 
 // $dash_C6 is dynamic retrieved from database and entered by admin in database
-function annualStockExpectedReturn($dash_C6, $company_daily_stock_volatility, $sector_return_avg, $sector_daily_stock_volatility)
+function annualStockExpectedReturn($dash_C6, $company_daily_stock_volatility, $sector_return_avg, $sector_daily_stock_volatility): float
 {
-    return 4.9/100 + (1.342/100 * sqrt(250)) * (pow((0.010350553505535/100 + 1), 250 - 1)   - 4.9/100)
-        / (1.1653959942978/100 * sqrt(250));
+    return $dash_C6/100 + ($company_daily_stock_volatility/100 * sqrt(250)) * ((pow(($sector_return_avg/100 + 1),250) - 1) * 100   - $dash_C6/100)
+        / ($sector_daily_stock_volatility/100 * sqrt(250));
 }
 
 
-/**
- * @throws \MathPHP\Exception\BadDataException
- */
-function test()
-{
-    // start of calculate $company_daily_stock_volatility
-    $companyRatios = calculateRatiosByCompany(2010);
-    $companyVariance = variance($companyRatios);
-    $company_daily_stock_volatility = sqrt($companyVariance);
-    // end of calculate $company_daily_stock_volatility
 
-    // start of calculate $sector_daily_stock_volatility
-    $sectorRatios = calculateRatiosBySector("TMTI");
-    $sectorVariance = variance($sectorRatios);
-    $sector_daily_stock_volatility = sqrt($sectorVariance);
-    // end of calculate $sector_daily_stock_volatility
-
-    $sector_return_avg = calculateAverage($sectorRatios);
-    $annualStockExpectedReturn = annualStockExpectedReturn(4.9,$company_daily_stock_volatility,$sector_return_avg,$sector_daily_stock_volatility);
-
-    $sharpRatio = sharpRatio($annualStockExpectedReturn,$company_daily_stock_volatility);
-    $stockBetaCoefficient = calculateBeta($companyRatios, $sectorRatios, $sectorRatios);
-    $annualStockVolatility = (($company_daily_stock_volatility/100) * sqrt(250));
-    if ($annualStockVolatility <= 0.10) {
-        $stockRiskRank = "Conservative";
-    } elseif ($annualStockVolatility <= 0.20) {
-        $stockRiskRank = "Moderately Conservative";
-    } elseif ($annualStockVolatility <= 0.30) {
-        $stockRiskRank = "Aggressive";
-    } else {
-        $stockRiskRank = "Very Aggressive";
-    }
-
-    echo "Sharp Ratio : " .    round($sharpRatio, 3) . "<br>";
-    echo "Stock Beta Coefficient : "    . round($stockBetaCoefficient, 3) . "<br>";
-    echo "Daily Volatility : " .    round($company_daily_stock_volatility, 3) . "<br>";
-    echo "Annual Volatility : " .    round($annualStockVolatility, 3) . "<br>";
-    echo "Risk Rank : " .    $stockRiskRank . "<br>";
-    echo "sector_daily_stock_volatility : " .    $sector_daily_stock_volatility . "<br>";
-
-}
-
-
-function sharpRatio($annualStockExpectedReturn, $dailyStockVolatility) // $dailyStockVolatility will be * 250 do get it as Annual Stock Volatility
+function sharpRatio($annualStockExpectedReturn, $dailyStockVolatility): float|int // $dailyStockVolatility will be * 250 do get it as Annual Stock Volatility
 {
     return $annualStockExpectedReturn / ($dailyStockVolatility * sqrt(250));
 }
@@ -164,6 +125,110 @@ function calculateBeta(array $rangeR, array $rangeX1, array $rangeX2): float {
     return $covar / $variance;
 }
 
+
+/**
+ * @throws Exception
+ */
+function riskMeasurementRatios(): array
+{
+    // start of calculate $company_daily_stock_volatility
+    $companyRatios = calculateRatiosByCompany(2010);
+    $companyVariance = variance($companyRatios);
+    $company_daily_stock_volatility = sqrt($companyVariance);
+    // end of calculate $company_daily_stock_volatility
+
+    // start of calculate $sector_daily_stock_volatility
+    $sectorRatios = calculateRatiosBySector("TMTI");
+    $sectorVariance = variance($sectorRatios);
+    $sector_daily_stock_volatility = sqrt($sectorVariance);
+    // end of calculate $sector_daily_stock_volatility
+
+    $sector_return_avg = calculateAverage($sectorRatios);
+    $annualStockExpectedReturn = annualStockExpectedReturn(dash_C6,$company_daily_stock_volatility,$sector_return_avg,$sector_daily_stock_volatility);
+
+    $sharpRatio = sharpRatio($annualStockExpectedReturn,$company_daily_stock_volatility);
+    $stockBetaCoefficient = calculateBeta($companyRatios, $sectorRatios, $sectorRatios);
+    $annualStockVolatility = (($company_daily_stock_volatility/100) * sqrt(250));
+    if ($annualStockVolatility <= 0.10) {
+        $stockRiskRank = "Conservative";
+    } elseif ($annualStockVolatility <= 0.20) {
+        $stockRiskRank = "Moderately Conservative";
+    } elseif ($annualStockVolatility <= 0.30) {
+        $stockRiskRank = "Aggressive";
+    } else {
+        $stockRiskRank = "Very Aggressive";
+    }
+
+    echo "Sharp Ratio: " . round($sharpRatio, 3) . "<br>";
+    echo "Stock Beta Coefficient: " . round($stockBetaCoefficient, 3) . "<br>";
+    echo "Daily Volatility: " . round($company_daily_stock_volatility, 3) . "<br>";
+    echo "Annual Volatility: " . round($annualStockVolatility*100, 3) . "<br>";
+    echo "Risk Rank: " . $stockRiskRank . "<br>";
+
+    return [
+        'sharpRatio' => round($sharpRatio, 3),
+        'stockBetaCoefficient' => round($stockBetaCoefficient, 3),
+        'dailyVolatility' => round($company_daily_stock_volatility, 3),
+        'annualVolatility' => round($annualStockVolatility, 3),
+        'riskRank' => $stockRiskRank,
+    ];
+}
+
+function financialRatios($ticker): array
+{
+//    $sdate = '2023-09-12';
+//    $edate = '2024-09-13';
+
+
+    $summaryProfileUrl = "https://yh-finance-complete.p.rapidapi.com/summaryprofile?symbol=$ticker.SR";
+    $summaryProfile = fetchStockDataFromAPI($summaryProfileUrl);
+
+//    $defaultKeyStatisticsUrl = "https://yh-finance-complete.p.rapidapi.com/defaultKeyStatistics?symbol=$ticker.SR";
+//    $defaultKeyStatistics = fetchDataFromAPI($defaultKeyStatisticsUrl);
+//
+    $financialsUrl = "https://yh-finance-complete.p.rapidapi.com/financials?symbol=$ticker.SR";
+    $financials = fetchDataFromAPI($financialsUrl);
+//
+//    $historicalUrl = "https://yh-finance-complete.p.rapidapi.com/yhfhistorical?ticker=$ticker.SR&sdate=$sdate&edate=$edate";
+//    $historical = fetchDataFromAPI($historicalUrl);
+
+    $stockOptionsUrl = "https://yh-finance-complete.p.rapidapi.com/stockOptions?ticker=$ticker.SR";
+    $stockOptions = fetchDataFromAPI($stockOptionsUrl);
+
+    $PIRatio = $summaryProfile['summaryDetail']['trailingPE'] ?? null;
+    $returnOnEquity = $financials['financialData']['returnOnEquity'] ?? null;
+    $dividendYield = $stockOptions['quote']['dividendYield'] ?? null;
+    $revenuePerShare = $financials['financialData']['revenuePerShare'] ?? null;
+
+    return [
+        'PIRatio' => $PIRatio,
+        'returnOnEquity' => $returnOnEquity,
+        'dividendYield' => $dividendYield,
+        'revenuePerShare' => $revenuePerShare
+    ];
+//    echo 'P/I Ratio :  ' . $PIRatio . "<br>";
+//    echo 'Return On Equity :  ' . $returnOnEquity . "<br>";
+//    echo 'Dividend Yield :  ' . $dividendYield . "<br>";
+//    echo 'revenue Per Share :  ' . $revenuePerShare . "<br>";
+
+}
+
+/**
+ * @throws \Illuminate\Http\Client\ConnectionException
+ */
+function fetchStockDataFromAPI($url)
+{
+    $response = Http::withHeaders([
+        'X-RapidAPI-Host' => env('RAPIDAPI_HOST'),
+        'X-RapidAPI-Key' => env('RAPIDAPI_KEY'),
+    ])->get($url);
+
+    if ($response->successful()) {
+        return $response->json();
+    }
+
+    return null;
+}
 
 
 
