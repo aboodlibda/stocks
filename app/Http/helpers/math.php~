@@ -166,7 +166,7 @@ function riskMeasurementRatios(): array
     echo "Risk Rank: " . $stockRiskRank . "<br>";
 
     return [
-        'sharpRatio' => round($sharpRatio*100, 3),
+        'sharpRatio' => round($sharpRatio, 3),
         'stockBetaCoefficient' => round($stockBetaCoefficient, 3),
         'dailyVolatility' => round($company_daily_stock_volatility, 3),
         'annualVolatility' => round($annualStockVolatility, 3),
