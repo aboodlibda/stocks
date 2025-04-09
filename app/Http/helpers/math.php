@@ -129,16 +129,16 @@ function calculateBeta(array $rangeR, array $rangeX1, array $rangeX2): float {
 /**
  * @throws Exception
  */
-function riskMeasurementRatios(): array
+function riskMeasurementRatios($ticker, $code): array
 {
     // start of calculate $company_daily_stock_volatility
-    $companyRatios = calculateRatiosByCompany(2010);
+    $companyRatios = calculateRatiosByCompany($ticker);
     $companyVariance = variance($companyRatios);
     $company_daily_stock_volatility = sqrt($companyVariance);
     // end of calculate $company_daily_stock_volatility
 
     // start of calculate $sector_daily_stock_volatility
-    $sectorRatios = calculateRatiosBySector("TMTI");
+    $sectorRatios = calculateRatiosBySector($code);
     $sectorVariance = variance($sectorRatios);
     $sector_daily_stock_volatility = sqrt($sectorVariance);
     // end of calculate $sector_daily_stock_volatility
