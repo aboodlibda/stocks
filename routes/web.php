@@ -24,7 +24,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     Route::get('read-companies', [StockController::class, 'read_companies'])->name('read-companies');
     Route::get('test_api', [StockController::class,'getApi'])->name('get-api');
     Route::get('execute',function(){
-        test();
+        riskMeasurementRatios();
 //        return number_format((log(42.35/42.65))*100,2);
 //       return Company::where('company_num',3001)->first();
     });
