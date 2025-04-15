@@ -235,6 +235,7 @@ function riskMeasurementRatios($ticker, $code): array
     echo "Annual Stock Expected Return: " . round($annualStockExpectedReturn*100, 2) . "<br>";
 
     return [
+        'stockVar' => round($stockVar, 2),
         'sharpRatio' => round($sharpRatio, 3),
         'stockBetaCoefficient' => round($stockBetaCoefficient, 3),
         'dailyVolatility' => round($company_daily_stock_volatility, 3),
