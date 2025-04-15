@@ -32,7 +32,7 @@ class FetchStockData extends Command
 
         // Define start and end dates
         $sdate = '2021-09-12';
-        $edate = '2024-09-12';
+        $edate = '2024-09-13';
 
         // Fetch stock data
         $data = $this->stockService->getStockData($tickers, $sdate, $edate);
