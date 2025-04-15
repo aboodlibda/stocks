@@ -4,7 +4,7 @@
 use App\Models\Sector;
 use App\Models\Stock;
 use Illuminate\Support\Facades\Http;
-use MathPHP\Statistics\Correlation;
+use PhpOffice\PhpSpreadsheet\Calculation\Statistical\Distributions\Normal;
 
 
 const dash_C6 = 4.68;
@@ -13,18 +13,32 @@ function calculateRatiosByCompany($ticker): array
 {
     // Get adjclose values for the given ticker, ordered by ID (or date if available)
     $adjCloses = Stock::where('ticker', $ticker)
-        ->orderBy('id', 'asc')  // Use 'date' if your table has it
+        ->orderBy('date', 'desc')  // Use 'date' if your table has it
         ->pluck('adjclose');
 
-    // Calculate ratios like B10/B11, B11/B12, etc.
+    $date = Stock::where('ticker', $ticker)
+        ->orderBy('date', 'desc')  // Use 'date' if your table has it
+        ->pluck('date');
+
+
+//    dd(calculateAverage($adjCloses->toArray()));
+
+    $adjCloses[] = $adjCloses[count($adjCloses) - 1]; // Add a duplicate of the last element
     $ratios = [];
     for ($i = 0; $i < count($adjCloses) - 1; $i++) {
         if ($adjCloses[$i + 1] != 0) {
-            $ratios[] = round(log(($adjCloses[$i] / $adjCloses[$i + 1])) * 100 , 2);
+            $ratios[] = round(log(($adjCloses[$i] / $adjCloses[$i + 1])) * 100 , 3);
         } else {
             $ratios[] = null; // Avoid division by zero
         }
     }
+//    $ratios = array_merge(array_slice($ratios, 0, 103), [0.15], array_slice($ratios, 103));
+//    $ratios[0] = -2.12;
+
+//        foreach ($ratios as $key => $ratio) {
+//        echo $key . ": " . $ratio . "<br>";
+//    }
+
 
     return $ratios;
 }
@@ -37,6 +51,8 @@ function calculateRatiosBySector($code): array
         ->pluck('close');
 
     // Calculate ratios like B10/B11, B11/B12, etc.
+    $closes[] = $closes[count($closes) - 1]; // Add a duplicate of the last element
+
     $ratios = [];
     for ($i = 0; $i < count($closes) - 1; $i++) {
         if ($closes[$i + 1] != 0) {
@@ -85,8 +101,9 @@ function calculateAverage(array $numbers): float|int|null
 // $dash_C6 is dynamic retrieved from database and entered by admin in database
 function annualStockExpectedReturn($dash_C6, $company_daily_stock_volatility, $sector_return_avg, $sector_daily_stock_volatility): float
 {
-    return $dash_C6/100 + ($company_daily_stock_volatility/100 * sqrt(250)) * ((pow(($sector_return_avg/100 + 1),250) - 1)   - $dash_C6/100)
-        / ($sector_daily_stock_volatility/100 * sqrt(250));
+//    dd($sector_daily_stock_volatility);
+    return ($dash_C6/100) + (($company_daily_stock_volatility/100) * sqrt(250)) * (pow((($sector_return_avg/100) + 1),250) - 1 - ($dash_C6/100))
+        / (($sector_daily_stock_volatility/100) * sqrt(250));
 
 //    return (4.68/100)+((1.342/100)*SQRT(250))*(pow(((0.010400472/100)+1),250)-1-(4.68/100))/((1.165353608/100)*SQRT(250));
 }
@@ -98,26 +115,39 @@ function sharpRatio($annualStockExpectedReturn, $dailyStockVolatility): float|in
     return ($annualStockExpectedReturn / ($dailyStockVolatility * sqrt(250))) * 100;
 }
 
-/**
- * Calculate beta
- *
- * @param array $assetReturns Array of asset returns
- * @param array $marketReturns Array of market returns
- * @return float Beta value
- * @throws \MathPHP\Exception\BadDataException
- */
-function calculateBeta(array $stockRatios, array $sectorRatios)
-{
-//    $sectorRatios = array_slice($sectorRatios, 0, count($stockRatios));
 
-    $std_deviation = stdDeviation($sectorRatios);
-    $std_deviation2 = stdDeviation($stockRatios);
 
-    $varianceG = $std_deviation ** 2;
+function calculateBeta(array $stockRatios, array $sectorRatios) {
+    // For Data Count Matching
+    $sectorRatios = array_slice($sectorRatios, 0,count($stockRatios));
 
-    $covariance = Correlation::covariance($stockRatios, $sectorRatios);
-    dd($covariance / $varianceG);
-    return $covariance / $varianceG;
+//    dd($stockRatios);
+    $n = count($stockRatios);
+
+    if ($n !== count($sectorRatios) || $n < 2) {
+        return null; // Data mismatch or not enough points
+    }
+
+    $meanStock = array_sum($stockRatios) / $n;
+    $meanSector = array_sum($sectorRatios) / $n;
+
+    $covariance = 0;
+    $varianceSector = 0;
+
+    for ($i = 0; $i < $n; $i++) {
+        $covariance += ($stockRatios[$i] - $meanStock) * ($sectorRatios[$i] - $meanSector);
+        $varianceSector += pow($sectorRatios[$i] - $meanSector, 2);
+    }
+
+
+    $covariance /= ($n - 1);
+    $varianceSector /= ($n - 1);
+
+    if ($varianceSector == 0) {
+        return null; // To avoid division by zero
+    }
+
+    return round(($covariance / $varianceSector) ,3);
 }
 
 
@@ -173,15 +203,19 @@ function riskMeasurementRatios($ticker, $code): array
 
     // start of calculate $sector_daily_stock_volatility
     $sectorRatios = calculateRatiosBySector($code);
+
     $sectorVariance = variance($sectorRatios);
     $sector_daily_stock_volatility = sqrt($sectorVariance);
     // end of calculate $sector_daily_stock_volatility
 
     $sector_return_avg = calculateAverage($sectorRatios);
-    $annualStockExpectedReturn = annualStockExpectedReturn(dash_C6,$company_daily_stock_volatility,$sector_return_avg,$sector_daily_stock_volatility);
-    $sharpRatio = sharpRatio($annualStockExpectedReturn,$company_daily_stock_volatility);
+    $annualStockExpectedReturn = annualStockExpectedReturn(dash_C6, $company_daily_stock_volatility, $sector_return_avg, $sector_daily_stock_volatility);
+
+    $stockVar = Normal::inverse((1-0.95), calculateAverage($companyRatios), stdDeviation($companyRatios)) * sqrt(1);
+    $sharpRatio = sharpRatio($annualStockExpectedReturn, $company_daily_stock_volatility);
     $stockBetaCoefficient = calculateBeta($companyRatios, $sectorRatios);
-    $annualStockVolatility = (($company_daily_stock_volatility/100) * sqrt(250));
+    $annualStockVolatility = (($company_daily_stock_volatility) * sqrt(250)) / 100;
+//    dd($annualStockVolatility);
     if ($annualStockVolatility <= 0.10) {
         $stockRiskRank = "Conservative";
     } elseif ($annualStockVolatility <= 0.20) {
@@ -191,14 +225,14 @@ function riskMeasurementRatios($ticker, $code): array
     } else {
         $stockRiskRank = "Very Aggressive";
     }
-
+    echo "Stock Var: " . round($stockVar, 2) . "<br>";
     echo "Sharp Ratio: " . round($sharpRatio, 3) . "<br>";
     echo "Stock Beta Coefficient: " . $stockBetaCoefficient . "<br>";
-    echo "Daily Volatility: " . round($company_daily_stock_volatility, 3) . "<br>";
+    echo "Daily Stock Volatility: " . round($company_daily_stock_volatility, 3) . "<br>";
     echo "Annual Volatility: " . round($annualStockVolatility*100, 3) . "<br>";
     echo "Risk Rank: " . $stockRiskRank . "<br>";
     echo "Average Daily Expected Return: " . round(averageIfNotEmpty($companyRatios),3) . "<br>";
-    echo "Expected Annual Return: " . round($annualStockExpectedReturn*100, 3) . "<br>";
+    echo "Annual Stock Expected Return: " . round($annualStockExpectedReturn*100, 2) . "<br>";
 
     return [
         'sharpRatio' => round($sharpRatio, 3),
