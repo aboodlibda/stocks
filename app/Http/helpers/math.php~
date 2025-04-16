@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Models\Company;
 use App\Models\Sector;
 use App\Models\Stock;
 use Illuminate\Support\Facades\Http;
@@ -13,27 +14,24 @@ function calculateRatiosByCompany($ticker): array
 {
     // Get adjclose values for the given ticker, ordered by ID (or date if available)
     $adjCloses = Stock::where('ticker', $ticker)
+//        ->where('date', '<>', '2024-04-15') // exclude this date
         ->orderBy('date', 'desc')  // Use 'date' if your table has it
-        ->pluck('adjclose');
+        ->pluck('stocks.adjclose');
 
-    $date = Stock::where('ticker', $ticker)
-        ->orderBy('date', 'desc')  // Use 'date' if your table has it
-        ->pluck('date');
-
-
-//    dd(calculateAverage($adjCloses->toArray()));
 
     $adjCloses[] = $adjCloses[count($adjCloses) - 1]; // Add a duplicate of the last element
     $ratios = [];
     for ($i = 0; $i < count($adjCloses) - 1; $i++) {
+        if ($i == 103) { // Skip index 103
+//            $ratios = array_merge(array_slice($ratios, 0, 103), [$ratios[102]], array_slice($ratios, 103));
+        }
         if ($adjCloses[$i + 1] != 0) {
             $ratios[] = round(log(($adjCloses[$i] / $adjCloses[$i + 1])) * 100 , 3);
         } else {
             $ratios[] = null; // Avoid division by zero
         }
     }
-//    $ratios = array_merge(array_slice($ratios, 0, 103), [0.15], array_slice($ratios, 103));
-//    $ratios[0] = -2.12;
+//    $ratios = array_merge(array_slice($ratios, 0, 103), [$ratios[102]], array_slice($ratios, 103));
 
 //        foreach ($ratios as $key => $ratio) {
 //        echo $key . ": " . $ratio . "<br>";
@@ -215,7 +213,7 @@ function riskMeasurementRatios($ticker, $code): array
     $sharpRatio = sharpRatio($annualStockExpectedReturn, $company_daily_stock_volatility);
     $stockBetaCoefficient = calculateBeta($companyRatios, $sectorRatios);
     $annualStockVolatility = (($company_daily_stock_volatility) * sqrt(250)) / 100;
-//    dd($annualStockVolatility);
+
     if ($annualStockVolatility <= 0.10) {
         $stockRiskRank = "Conservative";
     } elseif ($annualStockVolatility <= 0.20) {
@@ -225,23 +223,24 @@ function riskMeasurementRatios($ticker, $code): array
     } else {
         $stockRiskRank = "Very Aggressive";
     }
-    echo "Stock Var: " . round($stockVar, 2) . "<br>";
-    echo "Sharp Ratio: " . round($sharpRatio, 3) . "<br>";
-    echo "Stock Beta Coefficient: " . $stockBetaCoefficient . "<br>";
-    echo "Daily Stock Volatility: " . round($company_daily_stock_volatility, 3) . "<br>";
-    echo "Annual Volatility: " . round($annualStockVolatility*100, 3) . "<br>";
-    echo "Risk Rank: " . $stockRiskRank . "<br>";
-    echo "Average Daily Expected Return: " . round(averageIfNotEmpty($companyRatios),3) . "<br>";
-    echo "Annual Stock Expected Return: " . round($annualStockExpectedReturn*100, 2) . "<br>";
+//    echo "Stock Var: " . round($stockVar, 2) . "<br>";
+//    echo "Sharp Ratio: " . round($sharpRatio, 3) . "<br>";
+//    echo "Stock Beta Coefficient: " . $stockBetaCoefficient . "<br>";
+//    echo "Daily Stock Volatility: " . round($company_daily_stock_volatility, 3) . "<br>";
+//    echo "Annual Volatility: " . round($annualStockVolatility*100, 3) . "<br>";
+//    echo "Risk Rank: " . $stockRiskRank . "<br>";
+//    echo "Average Daily Expected Return: " . round(averageIfNotEmpty($companyRatios),3) . "<br>";
+//    echo "Annual Stock Expected Return: " . round($annualStockExpectedReturn*100, 2) . "<br>";
 
     return [
+        'stockVar' => round($stockVar, 2),
         'sharpRatio' => round($sharpRatio, 3),
-        'stockBetaCoefficient' => round($stockBetaCoefficient, 3),
+        'stockBetaCoefficient' => $stockBetaCoefficient,
         'dailyVolatility' => round($company_daily_stock_volatility, 3),
-        'annualVolatility' => round($annualStockVolatility, 3),
+        'annualVolatility' => round($annualStockVolatility*100, 3),
         'riskRank' => $stockRiskRank,
         'averageDailyExpectedReturn' => round(averageIfNotEmpty($companyRatios),3),
-        'expectedAnnualReturn' => round($annualStockExpectedReturn, 3),
+        'averageAnnualExpectedReturn' => round($annualStockExpectedReturn*100, 2),
     ];
 }
 
@@ -314,4 +313,42 @@ function stdDeviation($arr): float
     return sqrt($ans / $arr_size);
 }
 
+
+/**
+ * @throws Exception
+ */
+function updateCompanyRatios()
+{
+    $companies = Company::all();
+
+    foreach ($companies as $company) {
+        if ($company->company_num == 3001 || $company->company_num == 4010) {
+            continue;
+        }
+        $riskMeasurementRatios = riskMeasurementRatios($company->company_num, $company->index_symbol);
+        $financialRatios = financialRatios($company->company_num);
+
+        // Update company record with risk measurement ratios and financial ratios
+        $company->update([
+            'stock_var_percent' => $riskMeasurementRatios['stockVar'],
+            'stock_sharp_ratio' => $riskMeasurementRatios['sharpRatio'],
+            'stock_beta_coefficient' => $riskMeasurementRatios['stockBetaCoefficient'],
+            'daily_stock_volatility' => $riskMeasurementRatios['dailyVolatility'],
+            'annual_stock_volatility' => $riskMeasurementRatios['annualVolatility'],
+            'stock_risk_rank' => $riskMeasurementRatios['riskRank'],
+            'avg_daily_expected_stock_return' => $riskMeasurementRatios['averageDailyExpectedReturn'],
+            'annual_stock_expected_return' => $riskMeasurementRatios['averageAnnualExpectedReturn'],
+            'pe_ratio' => $financialRatios['PIRatio'],
+            'return_on_equity' => $financialRatios['returnOnEquity'],
+            'stock_dividend_yield' => $financialRatios['dividendYield'],
+            'earning_per_share' => $financialRatios['revenuePerShare']
+        ]);
+//        $company->timestamp = false;
+        $company->save();
+        echo 'risk measurement ratios and financial ratios updated for : ' . $company->company_num . PHP_EOL;
+    }
+
+    echo  'All Companies Updated'. "<br>";
+
+}
 
