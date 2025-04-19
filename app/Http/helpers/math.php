@@ -57,7 +57,7 @@ function calculateRatiosByCompany($ticker): array
     if (!$found) {
         foreach ($adjCloses as $key => $adjClose) {
             if ($adjClose->date == $insertAfterDate) {
-                array_splice($ratios, $key, 0, [0.10]);
+                array_splice($ratios, $key, 0, [10.10]);
                 break;
             }
         }
@@ -278,14 +278,14 @@ function riskMeasurementRatios($ticker, $code): array
     } else {
         $stockRiskRank = "Very Aggressive";
     }
-//    echo "Stock Var: " . round($stockVar, 2) . "<br>";
-//    echo "Sharp Ratio: " . round($sharpRatio, 3) . "<br>";
-//    echo "Stock Beta Coefficient: " . $stockBetaCoefficient . "<br>";
-//    echo "Daily Stock Volatility: " . round($company_daily_stock_volatility, 3) . "<br>";
-//    echo "Annual Volatility: " . round($annualStockVolatility*100, 3) . "<br>";
-//    echo "Risk Rank: " . $stockRiskRank . "<br>";
-//    echo "Average Daily Expected Return: " . round(averageIfNotEmpty($companyRatios),3) . "<br>";
-//    echo "Annual Stock Expected Return: " . round($annualStockExpectedReturn*100, 2) . "<br>";
+    echo "Stock Var: " . round($stockVar, 2) . "<br>";
+    echo "Sharp Ratio: " . round($sharpRatio, 3) . "<br>";
+    echo "Stock Beta Coefficient: " . $stockBetaCoefficient . "<br>";
+    echo "Daily Stock Volatility: " . round($company_daily_stock_volatility, 3) . "<br>";
+    echo "Annual Volatility: " . round($annualStockVolatility*100, 3) . "<br>";
+    echo "Risk Rank: " . $stockRiskRank . "<br>";
+    echo "Average Daily Expected Return: " . round(averageIfNotEmpty($companyRatios),3) . "<br>";
+    echo "Annual Stock Expected Return: " . round($annualStockExpectedReturn*100, 2) . "<br>";
 
     return [
         'stockVar' => round($stockVar, 2),
@@ -357,22 +357,8 @@ function fetchStockDataFromAPI($url)
 
 
 
-//function stdDeviation($arr): float
-//{
-//    $arr_size = count($arr);
-//    $mu = array_sum($arr) / $arr_size;
-//    $ans = 0;
-//    foreach($arr as $elem){
-//        $ans += pow(($elem - $mu), 2);
-//    }
-//    return sqrt($ans / $arr_size);
-//}
-
 function stdDeviation($arr): float
 {
-    if (count($arr) === 0) {
-        throw new InvalidArgumentException('Input array cannot be empty');
-    }
     $arr_size = count($arr);
     $mu = array_sum($arr) / $arr_size;
     $ans = 0;
@@ -381,6 +367,7 @@ function stdDeviation($arr): float
     }
     return sqrt($ans / $arr_size);
 }
+
 
 /**
  * @throws Exception
