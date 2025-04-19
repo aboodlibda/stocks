@@ -17,7 +17,7 @@ function calculateRatiosByCompany($ticker): array
     $adjCloses = Stock::where('ticker', $ticker)->orderBy('date', 'desc')  // Use 'date' if your table has it
         ->get(['ticker','date','adjclose']);
 
-
+dd($adjCloses);
 
 //    foreach ($adjCloses as $key => $ratio) {
 //        if ($ratio->date == '2024-04-14') {
@@ -380,7 +380,7 @@ function stdDeviation($arr): float
  */
 function updateCompanyRatios()
 {
-    $companies = Company::where('company_num','2010')->get();
+    $companies = Company::where('company_num','4263')->get();
 
     foreach ($companies as $company) {
         if ($company->company_num == 3001 || $company->company_num == 4010) {
