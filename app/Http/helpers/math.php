@@ -357,8 +357,22 @@ function fetchStockDataFromAPI($url)
 
 
 
+//function stdDeviation($arr): float
+//{
+//    $arr_size = count($arr);
+//    $mu = array_sum($arr) / $arr_size;
+//    $ans = 0;
+//    foreach($arr as $elem){
+//        $ans += pow(($elem - $mu), 2);
+//    }
+//    return sqrt($ans / $arr_size);
+//}
+
 function stdDeviation($arr): float
 {
+    if (count($arr) === 0) {
+        throw new InvalidArgumentException('Input array cannot be empty');
+    }
     $arr_size = count($arr);
     $mu = array_sum($arr) / $arr_size;
     $ans = 0;
@@ -367,7 +381,6 @@ function stdDeviation($arr): float
     }
     return sqrt($ans / $arr_size);
 }
-
 
 /**
  * @throws Exception
