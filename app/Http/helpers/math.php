@@ -360,6 +360,9 @@ function fetchStockDataFromAPI($url)
 function stdDeviation($arr): float
 {
     $arr_size = count($arr);
+    if ($arr_size === 0) {
+        throw new InvalidArgumentException('Input array cannot be empty');
+    }
     $mu = array_sum($arr) / $arr_size;
     $ans = 0;
     foreach($arr as $elem){
