@@ -377,7 +377,7 @@ function stdDeviation($arr): float
  */
 function updateCompanyRatios()
 {
-    $companies = Company::all();
+    $companies = Company::where('company_num','4263')->get();
 
     foreach ($companies as $company) {
         if ($company->company_num == 3001 || $company->company_num == 4010) {
