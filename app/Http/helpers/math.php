@@ -13,41 +13,92 @@ const dash_C6 = 4.68;
 function calculateRatiosByCompany($ticker): array
 {
     // Get adjclose values for the given ticker, ordered by ID (or date if available)
-    $adjCloses = Stock::where('ticker', $ticker)
-//        ->where('date', '<>', '2024-04-15') // exclude this date
-        ->orderBy('date', 'desc')  // Use 'date' if your table has it
-        ->pluck('stocks.adjclose');
+    $adjCloses = Stock::where('ticker', $ticker)->whereNotNull('adjclose')->orderBy('date', 'desc')  // Use 'date' if your table has it
+        ->get(['ticker','date','adjclose']);
 
 
-    $adjCloses[] = $adjCloses[count($adjCloses) - 1]; // Add a duplicate of the last element
+
+//    foreach ($adjCloses as $key => $ratio) {
+//        if ($ratio->date == '2024-04-14') {
+//            echo $ratio->ticker . " : " . $ratio->date . "<br>";
+//        }
+//    }
+//
+//    dd("test");
+//
+//    $adjCloses[] = $adjCloses[count($adjCloses) - 1]; // Add a duplicate of the last element
+//    $ratios = [];
+//    for ($i = 0; $i < count($adjCloses) - 1; $i++) {
+//        if ($adjCloses[$i + 1]->adjclose != 0) {
+//            $ratios[] = round(log(($adjCloses[$i]->adjclose / $adjCloses[$i + 1]->adjclose)) * 100 , 2);
+//        } else {
+//            $ratios[] = null; // Avoid division by zero
+//        }
+//    }
     $ratios = [];
     for ($i = 0; $i < count($adjCloses) - 1; $i++) {
-        if ($i == 103) { // Skip index 103
-//            $ratios = array_merge(array_slice($ratios, 0, 103), [$ratios[102]], array_slice($ratios, 103));
-        }
-        if ($adjCloses[$i + 1] != 0) {
-            $ratios[] = round(log(($adjCloses[$i] / $adjCloses[$i + 1])) * 100 , 3);
+        if ($adjCloses[$i + 1]->adjclose != 0) {
+            $ratios[] = round(log(($adjCloses[$i]->adjclose / $adjCloses[$i + 1]->adjclose)) * 100 , 2);
         } else {
             $ratios[] = null; // Avoid division by zero
         }
     }
-//    $ratios = array_merge(array_slice($ratios, 0, 103), [$ratios[102]], array_slice($ratios, 103));
 
-//        foreach ($ratios as $key => $ratio) {
-//        echo $key . ": " . $ratio . "<br>";
+
+    $targetDate = '2024-04-14';
+    $insertAfterDate = '2024-04-15';
+    $found = false;
+    foreach ($adjCloses as $key => $adjClose) {
+        if ($adjClose->date == $targetDate) {
+            $found = true;
+            break;
+        }
+    }
+    if (!$found) {
+        foreach ($adjCloses as $key => $adjClose) {
+            if ($adjClose->date == $insertAfterDate) {
+                array_splice($ratios, $key, 0, [0.10]);
+                break;
+            }
+        }
+    }
+
+
+//    dd($ratios);
+//    foreach ($ratios as $key => $ratio) {
+//        echo $ratio . "<br>";
 //    }
-
-
     return $ratios;
+
+
+//    return $ratios;
 }
 
 function calculateRatiosBySector($code): array
 {
+    $sdate='2023-09-12';
+    $edate='2024-09-13';
     // Get adjclose values for the given ticker, ordered by ID (or date if available)
     $closes = Sector::where('code', $code)
+//        ->whereBetween('date', [$sdate, $edate])
         ->orderBy('id', 'asc')  // Use 'date' if your table has it
         ->pluck('close');
 
+    $sdate_all_year='2016-01-03';
+
+//    $sql = "SELECT *, close AS current_close, LEAD(close) OVER (ORDER BY date) AS next_close, (LEAD(close) OVER (ORDER BY date)/close ) AS result_divide FROM index_data WHERE date >= '$sdate' AND date < '$edate' AND index_sumbol = '$index_symbol' AND  date!='2024-04-14'";
+
+//    $data = Sector::where('code', $code)
+//        ->where(DB::raw("STR_TO_DATE(sectors.date, '%Y-%m-%d')"), '>=', $sdate_all_year)
+//        ->where(DB::raw("STR_TO_DATE(sectors.date, '%Y-%m-%d')"), '<', $edate)
+//        ->where('date', '!=', '2024-04-14')
+//        ->join('sectors as next_row', 'sectors.date', '<', 'next_row.date')
+//        ->select('sectors.*', 'next_row.close as next_close')
+//        ->selectRaw('(next_row.close / sectors.close) as result_divide')
+//        ->orderBy('sectors.date','asc')
+//        ->get();
+//
+//    dd($data);
     // Calculate ratios like B10/B11, B11/B12, etc.
     $closes[] = $closes[count($closes) - 1]; // Add a duplicate of the last element
 
@@ -59,6 +110,8 @@ function calculateRatiosBySector($code): array
             $ratios[] = null; // Avoid division by zero
         }
     }
+
+
 
     return $ratios;
 }
@@ -116,10 +169,9 @@ function sharpRatio($annualStockExpectedReturn, $dailyStockVolatility): float|in
 
 
 function calculateBeta(array $stockRatios, array $sectorRatios) {
-    // For Data Count Matching
     $sectorRatios = array_slice($sectorRatios, 0,count($stockRatios));
 
-//    dd($stockRatios);
+
     $n = count($stockRatios);
 
     if ($n !== count($sectorRatios) || $n < 2) {
@@ -145,6 +197,7 @@ function calculateBeta(array $stockRatios, array $sectorRatios) {
         return null; // To avoid division by zero
     }
 
+//    dd(round(($covariance / $varianceSector) ,3));
     return round(($covariance / $varianceSector) ,3);
 }
 
@@ -214,6 +267,8 @@ function riskMeasurementRatios($ticker, $code): array
     $stockBetaCoefficient = calculateBeta($companyRatios, $sectorRatios);
     $annualStockVolatility = (($company_daily_stock_volatility) * sqrt(250)) / 100;
 
+
+
     if ($annualStockVolatility <= 0.10) {
         $stockRiskRank = "Conservative";
     } elseif ($annualStockVolatility <= 0.20) {
@@ -223,14 +278,14 @@ function riskMeasurementRatios($ticker, $code): array
     } else {
         $stockRiskRank = "Very Aggressive";
     }
-//    echo "Stock Var: " . round($stockVar, 2) . "<br>";
-//    echo "Sharp Ratio: " . round($sharpRatio, 3) . "<br>";
-//    echo "Stock Beta Coefficient: " . $stockBetaCoefficient . "<br>";
-//    echo "Daily Stock Volatility: " . round($company_daily_stock_volatility, 3) . "<br>";
-//    echo "Annual Volatility: " . round($annualStockVolatility*100, 3) . "<br>";
-//    echo "Risk Rank: " . $stockRiskRank . "<br>";
-//    echo "Average Daily Expected Return: " . round(averageIfNotEmpty($companyRatios),3) . "<br>";
-//    echo "Annual Stock Expected Return: " . round($annualStockExpectedReturn*100, 2) . "<br>";
+    echo "Stock Var: " . round($stockVar, 2) . "<br>";
+    echo "Sharp Ratio: " . round($sharpRatio, 3) . "<br>";
+    echo "Stock Beta Coefficient: " . $stockBetaCoefficient . "<br>";
+    echo "Daily Stock Volatility: " . round($company_daily_stock_volatility, 3) . "<br>";
+    echo "Annual Volatility: " . round($annualStockVolatility*100, 3) . "<br>";
+    echo "Risk Rank: " . $stockRiskRank . "<br>";
+    echo "Average Daily Expected Return: " . round(averageIfNotEmpty($companyRatios),3) . "<br>";
+    echo "Annual Stock Expected Return: " . round($annualStockExpectedReturn*100, 2) . "<br>";
 
     return [
         'stockVar' => round($stockVar, 2),
@@ -351,4 +406,41 @@ function updateCompanyRatios()
     echo  'All Companies Updated'. PHP_EOL;
 
 }
+
+
+function calculateCovariance($x, $y)
+{
+    $n = 0;
+    $sumX = 0;
+    $sumY = 0;
+    $sumXY = 0;
+
+    $length = min(count($x), count($y));
+
+    for ($i = 0; $i < $length; $i++) {
+        // Skip rows where data is missing
+        if (!isset($x[$i]) || !isset($y[$i])) {
+            continue;
+        }
+
+        $n++;
+        $sumX += $x[$i];
+        $sumY += $y[$i];
+        $sumXY += $x[$i] * $y[$i];
+    }
+
+    if ($n < 2) {
+        return null; // Not enough data to calculate covariance
+    }
+
+    $meanX = $sumX / $n;
+    $meanY = $sumY / $n;
+
+    return ($sumXY / $n) - ($meanX * $meanY);
+}
+
+// Example arrays with some missing values (null or not set)
+//$x = [2, 4, null, 8, 10];
+//$y = [1, 3, 5, null, 9];
+
 
