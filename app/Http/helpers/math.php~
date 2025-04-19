@@ -249,6 +249,7 @@ function riskMeasurementRatios($ticker, $code): array
 {
     // start of calculate $company_daily_stock_volatility
     $companyRatios = calculateRatiosByCompany($ticker);
+    dd($companyRatios);
     $companyVariance = variance($companyRatios);
     $company_daily_stock_volatility = sqrt($companyVariance);
     // end of calculate $company_daily_stock_volatility
