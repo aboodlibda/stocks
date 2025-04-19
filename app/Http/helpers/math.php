@@ -278,14 +278,14 @@ function riskMeasurementRatios($ticker, $code): array
     } else {
         $stockRiskRank = "Very Aggressive";
     }
-    echo "Stock Var: " . round($stockVar, 2) . "<br>";
-    echo "Sharp Ratio: " . round($sharpRatio, 3) . "<br>";
-    echo "Stock Beta Coefficient: " . $stockBetaCoefficient . "<br>";
-    echo "Daily Stock Volatility: " . round($company_daily_stock_volatility, 3) . "<br>";
-    echo "Annual Volatility: " . round($annualStockVolatility*100, 3) . "<br>";
-    echo "Risk Rank: " . $stockRiskRank . "<br>";
-    echo "Average Daily Expected Return: " . round(averageIfNotEmpty($companyRatios),3) . "<br>";
-    echo "Annual Stock Expected Return: " . round($annualStockExpectedReturn*100, 2) . "<br>";
+//    echo "Stock Var: " . round($stockVar, 2) . "<br>";
+//    echo "Sharp Ratio: " . round($sharpRatio, 3) . "<br>";
+//    echo "Stock Beta Coefficient: " . $stockBetaCoefficient . "<br>";
+//    echo "Daily Stock Volatility: " . round($company_daily_stock_volatility, 3) . "<br>";
+//    echo "Annual Volatility: " . round($annualStockVolatility*100, 3) . "<br>";
+//    echo "Risk Rank: " . $stockRiskRank . "<br>";
+//    echo "Average Daily Expected Return: " . round(averageIfNotEmpty($companyRatios),3) . "<br>";
+//    echo "Annual Stock Expected Return: " . round($annualStockExpectedReturn*100, 2) . "<br>";
 
     return [
         'stockVar' => round($stockVar, 2),
