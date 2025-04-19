@@ -17,6 +17,8 @@ function calculateRatiosByCompany($ticker): array
     $adjCloses = Stock::where('ticker', $ticker)->orderBy('date', 'desc')  // Use 'date' if your table has it
         ->get(['ticker','date','adjclose']);
 
+    dd("adjCloses", $adjCloses);
+
 
 
 //    foreach ($adjCloses as $key => $ratio) {
