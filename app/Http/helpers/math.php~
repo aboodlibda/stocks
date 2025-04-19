@@ -262,7 +262,8 @@ function riskMeasurementRatios($ticker, $code): array
     $sector_return_avg = calculateAverage($sectorRatios);
     $annualStockExpectedReturn = annualStockExpectedReturn(dash_C6, $company_daily_stock_volatility, $sector_return_avg, $sector_daily_stock_volatility);
 
-    $stockVar = Normal::inverse((1-0.95), calculateAverage($companyRatios), stdDeviation($companyRatios)) * sqrt(1);
+//    $stockVar = Normal::inverse((1-0.95), calculateAverage($companyRatios), stdDeviation($companyRatios)) * sqrt(1);
+    $stockVar = Normal::inverse((1-0.95), calculateAverage($companyRatios), Descr) * sqrt(1);
     $sharpRatio = sharpRatio($annualStockExpectedReturn, $company_daily_stock_volatility);
     $stockBetaCoefficient = calculateBeta($companyRatios, $sectorRatios);
     $annualStockVolatility = (($company_daily_stock_volatility) * sqrt(250)) / 100;
@@ -377,7 +378,7 @@ function stdDeviation($arr): float
  */
 function updateCompanyRatios()
 {
-    $companies = Company::where('company_num','4263');
+    $companies = Company::where('company_num','4263')->get();
 
     foreach ($companies as $company) {
         if ($company->company_num == 3001 || $company->company_num == 4010) {
