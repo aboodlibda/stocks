@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Services;
+use App\Models\Stock;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 class StockService
@@ -66,17 +67,34 @@ class StockService
 
     public function getStockData($tickers, $sdate, $edate)
     {
-        $data = $this->readDataFromJSON();
+        $data = null;
 
         if ($data === null) {
             $data = [];
 
             foreach ($tickers as $key => $ticker) {
                 $data[$ticker] = $this->fetchDataFromAPI($ticker, $sdate, $edate);
+
                 echo $key+1 .'    :  stock retrieved : '. $ticker. PHP_EOL;
+
+                foreach ($data[$ticker] as $record) {
+                    Stock::create([
+                        'ticker'   => $ticker,
+                        'date'     => date('Y-m-d', strtotime($record['date'])),
+                        'high'     => $record['high'],
+                        'volume'   => $record['volume'] ?? 0,
+                        'open'     => $record['open'],
+                        'low'      => $record['low'],
+                        'close'    => $record['close'],
+                        'adjclose' => $record['adjclose'],
+                    ]);
+
+                    echo '  inserted successfully : '. $ticker. PHP_EOL;
+
+                }
             }
 
-            $this->saveDataToJSON($data);
+//            $this->saveDataToJSON($data);
         }
 
         return $data;
