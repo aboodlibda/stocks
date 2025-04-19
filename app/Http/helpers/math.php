@@ -5,7 +5,6 @@ use App\Models\Company;
 use App\Models\Sector;
 use App\Models\Stock;
 use Illuminate\Support\Facades\Http;
-use MathPHP\Statistics\Descriptive;
 use PhpOffice\PhpSpreadsheet\Calculation\Statistical\Distributions\Normal;
 
 
@@ -14,10 +13,10 @@ const dash_C6 = 4.68;
 function calculateRatiosByCompany($ticker): array
 {
     // Get adjclose values for the given ticker, ordered by ID (or date if available)
-    $adjCloses = Stock::where('ticker', $ticker)->orderBy('date', 'desc')  // Use 'date' if your table has it
+    $adjCloses = Stock::where('ticker', $ticker)->whereNotNull('adjclose')->orderBy('date', 'desc')  // Use 'date' if your table has it
         ->get(['ticker','date','adjclose']);
 
-dd($adjCloses);
+
 
 //    foreach ($adjCloses as $key => $ratio) {
 //        if ($ratio->date == '2024-04-14') {
@@ -249,7 +248,6 @@ function riskMeasurementRatios($ticker, $code): array
 {
     // start of calculate $company_daily_stock_volatility
     $companyRatios = calculateRatiosByCompany($ticker);
-    dd($companyRatios);
     $companyVariance = variance($companyRatios);
     $company_daily_stock_volatility = sqrt($companyVariance);
     // end of calculate $company_daily_stock_volatility
@@ -264,8 +262,7 @@ function riskMeasurementRatios($ticker, $code): array
     $sector_return_avg = calculateAverage($sectorRatios);
     $annualStockExpectedReturn = annualStockExpectedReturn(dash_C6, $company_daily_stock_volatility, $sector_return_avg, $sector_daily_stock_volatility);
 
-//    $stockVar = Normal::inverse((1-0.95), calculateAverage($companyRatios), stdDeviation($companyRatios)) * sqrt(1);
-    $stockVar = Normal::inverse((1-0.95), calculateAverage($companyRatios), Descriptive::standardDeviation($companyRatios)) * sqrt(1);
+    $stockVar = Normal::inverse((1-0.95), calculateAverage($companyRatios), stdDeviation($companyRatios)) * sqrt(1);
     $sharpRatio = sharpRatio($annualStockExpectedReturn, $company_daily_stock_volatility);
     $stockBetaCoefficient = calculateBeta($companyRatios, $sectorRatios);
     $annualStockVolatility = (($company_daily_stock_volatility) * sqrt(250)) / 100;
@@ -380,7 +377,7 @@ function stdDeviation($arr): float
  */
 function updateCompanyRatios()
 {
-    $companies = Company::where('company_num','4263')->get();
+    $companies = Company::all();
 
     foreach ($companies as $company) {
         if ($company->company_num == 3001 || $company->company_num == 4010) {
