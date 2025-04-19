@@ -5,6 +5,7 @@ use App\Models\Company;
 use App\Models\Sector;
 use App\Models\Stock;
 use Illuminate\Support\Facades\Http;
+use MathPHP\Statistics\Descriptive;
 use PhpOffice\PhpSpreadsheet\Calculation\Statistical\Distributions\Normal;
 
 
@@ -262,7 +263,8 @@ function riskMeasurementRatios($ticker, $code): array
     $sector_return_avg = calculateAverage($sectorRatios);
     $annualStockExpectedReturn = annualStockExpectedReturn(dash_C6, $company_daily_stock_volatility, $sector_return_avg, $sector_daily_stock_volatility);
 
-    $stockVar = Normal::inverse((1-0.95), calculateAverage($companyRatios), stdDeviation($companyRatios)) * sqrt(1);
+//    $stockVar = Normal::inverse((1-0.95), calculateAverage($companyRatios), stdDeviation($companyRatios)) * sqrt(1);
+    $stockVar = Normal::inverse((1-0.95), calculateAverage($companyRatios), Descriptive::standardDeviation($companyRatios)) * sqrt(1);
     $sharpRatio = sharpRatio($annualStockExpectedReturn, $company_daily_stock_volatility);
     $stockBetaCoefficient = calculateBeta($companyRatios, $sectorRatios);
     $annualStockVolatility = (($company_daily_stock_volatility) * sqrt(250)) / 100;
