@@ -29,7 +29,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 //        riskMeasurementRatios(7010,'TTSI');
 //        riskMeasurementRatios(1120,'TBNI');
 //        riskMeasurementRatios(6002,'TCSI');
-        riskMeasurementRatios(2270,'TFBI');
+        riskMeasurementRatios(4263,'TTNI');
 
     });
 
