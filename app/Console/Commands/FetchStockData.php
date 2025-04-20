@@ -2,9 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Company;
 use App\Services\StockService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use mysql_xdevapi\Table;
 
 class FetchStockData extends Command
 {
@@ -23,7 +25,22 @@ class FetchStockData extends Command
     {
         // Fetch tickers dynamically using Laravel Query Builder
 //        $tickers = DB::table('companies')->pluck('company_num')->toArray();
-        $tickers = DB::table('companies')->pluck('company_num')->toArray();
+//        $tickers = DB::table('companies')->pluck('company_num')->toArray();
+
+
+// Step 1: Get the target record
+        $target = DB::table('companies')->where('company_num', 6002)->first();
+
+        if ($target) {
+            // Step 2: Get all records after it, based on ID
+            $tickers = DB::table('companies')->where('company_id', '>=', $target->company_id)
+                ->orderBy('company_id')
+                ->pluck('company_num')->toArray();
+        } else {
+            $tickers = collect(); // Empty collection if not found
+        }
+
+
 
         // Check if tickers exist
         if (empty($tickers)) {
