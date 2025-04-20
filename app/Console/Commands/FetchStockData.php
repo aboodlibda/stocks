@@ -23,7 +23,7 @@ class FetchStockData extends Command
     {
         // Fetch tickers dynamically using Laravel Query Builder
 //        $tickers = DB::table('companies')->pluck('company_num')->toArray();
-        $tickers = [6002];
+        $tickers = DB::table('companies')->pluck('company_num')->toArray();
 
         // Check if tickers exist
         if (empty($tickers)) {
