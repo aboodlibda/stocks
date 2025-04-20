@@ -29,7 +29,7 @@ class FetchStockData extends Command
 
 
 // Step 1: Get the target record
-        $target = DB::table('companies')->where('company_num', 6002)->first();
+        $target = DB::table('companies')->where('company_num', 4292)->first();
 
         if ($target) {
             // Step 2: Get all records after it, based on ID
@@ -42,6 +42,7 @@ class FetchStockData extends Command
 
 
 
+//        dd($tickers);
         // Check if tickers exist
         if (empty($tickers)) {
             $this->error("No tickers found in the companies table.");
