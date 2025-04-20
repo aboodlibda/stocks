@@ -73,9 +73,10 @@ class StockService
             $data = [];
 
             foreach ($tickers as $key => $ticker) {
+                echo $data[$ticker] . PHP_EOL;
                 $data[$ticker] = $this->fetchDataFromAPI($ticker, $sdate, $edate);
 
-                echo $key+1 .'    :  stock retrieved : '. $ticker. PHP_EOL;
+//                echo $key+1 .'    :  stock retrieved : '. $ticker. PHP_EOL;
                 if (!is_null($data[$ticker])) {
                     foreach ($data[$ticker] as $record) {
                         Stock::create([
@@ -98,6 +99,7 @@ class StockService
 
             }
 
+            echo "DONE" . PHP_EOL;
 //            $this->saveDataToJSON($data);
         }
 
