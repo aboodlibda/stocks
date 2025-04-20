@@ -73,7 +73,7 @@ class StockService
             $data = [];
 
             foreach ($tickers as $key => $ticker) {
-                echo $data[$ticker] . PHP_EOL;
+                echo "Fetching stock data for " . $ticker . PHP_EOL;
                 $data[$ticker] = $this->fetchDataFromAPI($ticker, $sdate, $edate);
 
 //                echo $key+1 .'    :  stock retrieved : '. $ticker. PHP_EOL;
