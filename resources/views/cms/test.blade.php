@@ -269,7 +269,7 @@
         fetchStockAverages();
 
         // Optional: Refresh data every 60 seconds
-        setInterval(fetchStockAverages, 60000);
+        // setInterval(fetchStockAverages, 60000);
     });
 </script>
 
