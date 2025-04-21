@@ -4,6 +4,7 @@
 use App\Models\Company;
 use App\Models\Sector;
 use App\Models\Stock;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
 use PhpOffice\PhpSpreadsheet\Calculation\Statistical\Distributions\Normal;
 
@@ -308,8 +309,8 @@ function financialRatios($ticker): array
     $summaryProfileUrl = "https://yh-finance-complete.p.rapidapi.com/summaryprofile?symbol=$ticker.SR";
     $summaryProfile = fetchStockDataFromAPI($summaryProfileUrl);
 
-//    $defaultKeyStatisticsUrl = "https://yh-finance-complete.p.rapidapi.com/defaultKeyStatistics?symbol=$ticker.SR";
-//    $defaultKeyStatistics = fetchDataFromAPI($defaultKeyStatisticsUrl);
+    $defaultKeyStatisticsUrl = "https://yh-finance-complete.p.rapidapi.com/defaultKeyStatistics?symbol=$ticker.SR";
+    $defaultKeyStatistics = fetchDataFromAPI($defaultKeyStatisticsUrl);
 //
     $financialsUrl = "https://yh-finance-complete.p.rapidapi.com/financials?symbol=$ticker.SR";
     $financials = fetchDataFromAPI($financialsUrl);
@@ -324,12 +325,14 @@ function financialRatios($ticker): array
     $returnOnEquity = $financials['financialData']['returnOnEquity'] ?? null;
     $dividendYield = $stockOptions['quote']['dividendYield'] ?? null;
     $revenuePerShare = $financials['financialData']['revenuePerShare'] ?? null;
+    $lastDividendDate = $defaultKeyStatistics['defaultKeyStatistics']['lastDividendDate'] ?? null;
 
     return [
         'PIRatio' => $PIRatio,
         'returnOnEquity' => $returnOnEquity,
         'dividendYield' => $dividendYield,
-        'revenuePerShare' => $revenuePerShare
+        'revenuePerShare' => $revenuePerShare,
+        'lastDividendDate' => $lastDividendDate
     ];
 //    echo 'P/I Ratio :  ' . $PIRatio . "<br>";
 //    echo 'Return On Equity :  ' . $returnOnEquity . "<br>";
@@ -337,6 +340,22 @@ function financialRatios($ticker): array
 //    echo 'revenue Per Share :  ' . $revenuePerShare . "<br>";
 
 }
+
+function stockMarketPrice($ticker)
+{
+    $stock = DB::table('stocks')->where('ticker', $ticker)->orderBy('date', 'desc')->first(['low', 'high', 'close']);
+    if ($stock) {
+        $low = $stock->low;
+        $high = $stock->high;
+        $close = $stock->close;
+        $typicalPrice = ($low + $high + $close) / 3;
+        return [
+            'close' => $close,
+            'typicalPrice' => $typicalPrice
+        ];
+    }
+}
+
 
 /**
  * @throws \Illuminate\Http\Client\ConnectionException
@@ -385,6 +404,7 @@ function updateCompanyRatios()
         }
         $riskMeasurementRatios = riskMeasurementRatios($company->company_num, $company->index_symbol);
         $financialRatios = financialRatios($company->company_num);
+        $stockMarketPrice = stockMarketPrice($company->company_num);
 
         // Update company record with risk measurement ratios and financial ratios
         $company->update([
@@ -399,7 +419,10 @@ function updateCompanyRatios()
             'pe_ratio' => $financialRatios['PIRatio'],
             'return_on_equity' => $financialRatios['returnOnEquity'],
             'stock_dividend_yield' => $financialRatios['dividendYield'],
-            'earning_per_share' => $financialRatios['revenuePerShare']
+            'earning_per_share' => $financialRatios['revenuePerShare'],
+            'last_dividend_date' => Carbon::parse($financialRatios['lastDividendDate'])->format('Y-m-d'),
+            'close' => $stockMarketPrice['close'],
+            'typical_price' => $stockMarketPrice['typicalPrice']
         ]);
 //        $company->timestamp = false;
         $company->save();
@@ -441,9 +464,5 @@ function calculateCovariance($x, $y)
 
     return ($sumXY / $n) - ($meanX * $meanY);
 }
-
-// Example arrays with some missing values (null or not set)
-//$x = [2, 4, null, 8, 10];
-//$y = [1, 3, 5, null, 9];
 
 
