@@ -91,18 +91,18 @@
 {{--            <a href="https://www.saudiexchange.sa/" style="color: white;text-decoration: none">رابط أخبار و أسعار سوق التداول السعودى</a>--}}
         </th>
         <th colspan="2" class="row1-merged">Average Industry</th>
-        <th class="row1-single" id="avg_stock_var_percent">عنوان</th>
-        <th class="row1-single" id="avg_stock_sharp_ratio">عنوان</th>
-        <th class="row1-single" id="avg_stock_beta_coefficient">عنوان</th>
-        <th class="row1-single" id="avg_annual_stock_volatility">عنوان</th>
-        <th class="row1-single" id="avg_daily_stock_volatility">عنوان</th>
+        <th class="row1-single" id="avg_stock_var_percent">0</th>
+        <th class="row1-single" id="avg_stock_sharp_ratio">0</th>
+        <th class="row1-single" id="avg_stock_beta_coefficient">0</th>
+        <th class="row1-single" id="avg_annual_stock_volatility">0</th>
+        <th class="row1-single" id="avg_daily_stock_volatility">0</th>
 {{--        <th class="gr-blue-2"></th>--}}
-        <th class="row1-single" id="avg_pe_ratio">عنوان</th>
-        <th class="row1-single" id="avg_return_on_equity">عنوان</th>
-        <th class="row1-single" id="avg_stock_dividend_yield">عنوان</th>
-        <th class="row1-single" id="avg_earning_per_share">عنوان</th>
-        <th class="row1-single" id="avg_annual_stock_expected_return">عنوان</th>
-        <th class="row1-single" id="avg_avg_daily_expected_stock_return">عنوان</th>
+        <th class="row1-single" id="avg_pe_ratio">0</th>
+        <th class="row1-single" id="avg_return_on_equity">0</th>
+        <th class="row1-single" id="avg_stock_dividend_yield">0</th>
+        <th class="row1-single" id="avg_earning_per_share">0</th>
+        <th class="row1-single" id="avg_annual_stock_expected_return">0</th>
+        <th class="row1-single" id="avg_avg_daily_expected_stock_return">0</th>
     </tr>
 
     <tr>
@@ -275,12 +275,12 @@
 
 <script>
 
-    var lang = $('html').attr('lang');
-
-    const currentLanguage = document.documentElement.lang || "ar";
-    const dataTableLanguage = currentLanguage === "ar"
-        ? '//cdn.datatables.net/plug-ins/2.1.8/i18n/ar.json'
-        : '';
+    // var lang = $('html').attr('lang');
+    //
+    // const currentLanguage = document.documentElement.lang || "ar";
+    // const dataTableLanguage = currentLanguage === "ar"
+    //     ? '//cdn.datatables.net/plug-ins/2.1.8/i18n/ar.json'
+    //     : '';
     {{--$(document).ready(function () {--}}
     {{--    $('#stock_table').DataTable({--}}
     {{--        processing: true,--}}
