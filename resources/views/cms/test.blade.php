@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
-    <link href="{{asset('assets/plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css">
+{{--    <link href="{{asset('assets/plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css">--}}
 
     <title>Table</title>
     <style>
@@ -58,8 +58,9 @@
         }
 
         .row2-mergedAll {
-            background-color: #c50000;
+            background-color: #c00202;
             color: white;
+            font-weight: bold;
         }
 
 
@@ -117,7 +118,7 @@
         <td class="row3-cell2 gr-blue-1">ملخص أداء السهم</td>
         <td class="row3-cell3 gr-blue-1">مؤشر القطاع</td>
         <td class="row3-cell4 gr-blue-1">القطاع</td>
-        <td class="row3-cell5 gr-blue-1">اسم ورمز الشركة</td>
+        <td class="row3-cell5 gr-blue-1">الشركة</td>
 
 
         <td class="row3-cell6 gr-blue-5">Closing Price</td>
@@ -139,7 +140,7 @@
         <td class="row3-cell15 gr-blue-4">ROE</td>
         <td class="row3-cell16 gr-blue-4">Dividend Yield</td>
         <td class="row3-cell17 gr-blue-4">EPS</td>
-        <td class="row3-cell18 gr-blue-3">Latest Dividend Announcement Date</td>
+        <td class="row3-cell18 gr-blue-3">Latest Dividend Date</td>
     </tr>
 
    <tbody>
@@ -163,7 +164,7 @@
            </td>
 
            <td>
-               <span style="font-weight: bold" dir="rtl">{{$company->company_num . ' | ' . $company->company_name}}</span>
+               <span style="font-weight: bold" dir="rtl">{{$company->company_num}} <br> {{$company->company_name}}</span>
            </td>
 
            <td>
@@ -234,7 +235,7 @@
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-<script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
+{{--<script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>--}}
 
 <script>
     $(document).ready(function () {
@@ -280,38 +281,38 @@
     const dataTableLanguage = currentLanguage === "ar"
         ? '//cdn.datatables.net/plug-ins/2.1.8/i18n/ar.json'
         : '';
-    $(document).ready(function () {
-        $('#stock_table').DataTable({
-            processing: true,
-            serverSide: true,
-            language: { url: dataTableLanguage },
-            scrollX: false,
-            paging: true,
-            searching: true,
-            responsive: false,
-            ajax: '{{ route("companies.index.ajax") }}', // Adjust route name as appropriate
-            columns: [
-                { data: 'avg_daily_expected_stock_return', name: 'avg_daily_expected_stock_return' },
-                { data: 'annual_stock_expected_return', name: 'annual_stock_expected_return' },
-                { data: 'earning_per_share', name: 'earning_per_share' },
-                { data: 'stock_dividend_yield', name: 'stock_dividend_yield' },
-                { data: 'return_on_equity', name: 'return_on_equity' },
-                { data: 'pe_ratio', name: 'pe_ratio' },
-                { data: 'stock_risk_rank', name: 'stock_risk_rank' },
-                { data: 'daily_stock_volatility', name: 'daily_stock_volatility' },
-                { data: 'annual_stock_volatility', name: 'annual_stock_volatility' },
-                { data: 'stock_beta_coefficient', name: 'stock_beta_coefficient' },
-                { data: 'stock_sharp_ratio', name: 'stock_sharp_ratio' },
-                { data: 'stock_var_percent', name: 'stock_var_percent' },
-                { data: 'index_symbol', name: 'index_symbol' },
-                { data: 'index_name', name: 'index_name' },
-                { data: 'company_name', name: 'company_name' },
-                { data: 'company_num', name: 'company_num' },
-                { data: 'view_stock_performance', name: 'view_stock_performance', orderable: false, searchable: false },
-                { data: 'add_to_portfolio', name: 'add_to_portfolio', orderable: false, searchable: false },
-            ]
-        });
-    });
+    {{--$(document).ready(function () {--}}
+    {{--    $('#stock_table').DataTable({--}}
+    {{--        processing: true,--}}
+    {{--        serverSide: true,--}}
+    {{--        language: { url: dataTableLanguage },--}}
+    {{--        scrollX: false,--}}
+    {{--        paging: true,--}}
+    {{--        searching: true,--}}
+    {{--        responsive: false,--}}
+    {{--        ajax: '{{ route("companies.index.ajax") }}', // Adjust route name as appropriate--}}
+    {{--        columns: [--}}
+    {{--            { data: 'avg_daily_expected_stock_return', name: 'avg_daily_expected_stock_return' },--}}
+    {{--            { data: 'annual_stock_expected_return', name: 'annual_stock_expected_return' },--}}
+    {{--            { data: 'earning_per_share', name: 'earning_per_share' },--}}
+    {{--            { data: 'stock_dividend_yield', name: 'stock_dividend_yield' },--}}
+    {{--            { data: 'return_on_equity', name: 'return_on_equity' },--}}
+    {{--            { data: 'pe_ratio', name: 'pe_ratio' },--}}
+    {{--            { data: 'stock_risk_rank', name: 'stock_risk_rank' },--}}
+    {{--            { data: 'daily_stock_volatility', name: 'daily_stock_volatility' },--}}
+    {{--            { data: 'annual_stock_volatility', name: 'annual_stock_volatility' },--}}
+    {{--            { data: 'stock_beta_coefficient', name: 'stock_beta_coefficient' },--}}
+    {{--            { data: 'stock_sharp_ratio', name: 'stock_sharp_ratio' },--}}
+    {{--            { data: 'stock_var_percent', name: 'stock_var_percent' },--}}
+    {{--            { data: 'index_symbol', name: 'index_symbol' },--}}
+    {{--            { data: 'index_name', name: 'index_name' },--}}
+    {{--            { data: 'company_name', name: 'company_name' },--}}
+    {{--            { data: 'company_num', name: 'company_num' },--}}
+    {{--            { data: 'view_stock_performance', name: 'view_stock_performance', orderable: false, searchable: false },--}}
+    {{--            { data: 'add_to_portfolio', name: 'add_to_portfolio', orderable: false, searchable: false },--}}
+    {{--        ]--}}
+    {{--    });--}}
+    {{--});--}}
 
 
 
