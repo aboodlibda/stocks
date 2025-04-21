@@ -31,7 +31,7 @@
         }
 
         .row1-single {
-            background-color: #ffbf00;
+            background-color: #e1e1e1;
         }
 
 
@@ -53,6 +53,15 @@
             background-color: #b3c6e8;
         }
 
+        .row2-merged5 {
+            background-color: #9ba4b3;
+        }
+
+        .row2-mergedAll {
+            background-color: #c50000;
+            color: white;
+        }
+
 
         .gr-blue-1 {
             background-color: #203562;
@@ -68,22 +77,25 @@
         .gr-blue-4 {
             background-color: #b3c6e8;
         }
+        .gr-blue-5 {
+            background-color: #9ba4b3;
+        }
     </style>
 </head>
 <body>
 <table id="stock_table datatable">
 
     <tr>
-        <th colspan="4" class="row2-merged1">
-            <a href="https://www.saudiexchange.sa/" style="color: white;text-decoration: none">رابط أخبار و أسعار سوق التداول السعودى</a>
+        <th colspan="4" class="">
+{{--            <a href="https://www.saudiexchange.sa/" style="color: white;text-decoration: none">رابط أخبار و أسعار سوق التداول السعودى</a>--}}
         </th>
-        <th colspan="1" class="row1-merged">Average Industry</th>
+        <th colspan="2" class="row1-merged">Average Industry</th>
         <th class="row1-single" id="avg_stock_var_percent">عنوان</th>
         <th class="row1-single" id="avg_stock_sharp_ratio">عنوان</th>
         <th class="row1-single" id="avg_stock_beta_coefficient">عنوان</th>
         <th class="row1-single" id="avg_annual_stock_volatility">عنوان</th>
         <th class="row1-single" id="avg_daily_stock_volatility">عنوان</th>
-        <th class="gr-blue-2"></th>
+{{--        <th class="gr-blue-2"></th>--}}
         <th class="row1-single" id="avg_pe_ratio">عنوان</th>
         <th class="row1-single" id="avg_return_on_equity">عنوان</th>
         <th class="row1-single" id="avg_stock_dividend_yield">عنوان</th>
@@ -93,10 +105,11 @@
     </tr>
 
     <tr>
-        <td colspan="5" class="row2-merged1">أسماء الشركات فى سوق التداول السعودى</td>
-        <td colspan="6" class="row2-merged2">Risk measurement Ratios</td>
-        <td colspan="2" class="row2-merged3">Earning Ratios</td>
-        <td colspan="4" class="row2-merged4">Earning Ratios</td>
+        <td colspan="5" class="row2-mergedAll">ملخص أداء أسهم الشركات في السوق السعودى للتداول</td>
+        <td colspan="2" class="row2-mergedAll">Stock Market Price</td>
+        <td colspan="6" class="row2-mergedAll">Risk measurement Ratios</td>
+        <td colspan="2" class="row2-mergedAll">Earning Ratios</td>
+        <td colspan="5" class="row2-mergedAll">Financial Ratios</td>
     </tr>
 
     <tr>
@@ -106,18 +119,27 @@
         <td class="row3-cell4 gr-blue-1">القطاع</td>
         <td class="row3-cell5 gr-blue-1">اسم ورمز الشركة</td>
 
+
+        <td class="row3-cell6 gr-blue-5">Closing Price</td>
+        <td class="row3-cell7 gr-blue-5">Typical Price</td>
+
         <td class="row3-cell6 gr-blue-2">VaR % For 1 Day</td>
         <td class="row3-cell7 gr-blue-2">Sharp Ratio</td>
         <td class="row3-cell8 gr-blue-2">Beta Coefficient</td>
         <td class="row3-cell9 gr-blue-2">Daily Volatility</td>
         <td class="row3-cell10 gr-blue-2">Annual Volatility</td>
         <td class="row3-cell11 gr-blue-2">Risk Ranking</td>
+
+
         <td class="row3-cell12 gr-blue-3">Daily Expected Return</td>
         <td class="row3-cell13 gr-blue-3">Annual Expected Return</td>
+
+
         <td class="row3-cell14 gr-blue-4">P/E Ratio</td>
         <td class="row3-cell15 gr-blue-4">ROE</td>
         <td class="row3-cell16 gr-blue-4">Dividend Yield</td>
         <td class="row3-cell17 gr-blue-4">EPS</td>
+        <td class="row3-cell18 gr-blue-3">Latest Dividend Announcement Date</td>
     </tr>
 
    <tbody>
@@ -133,16 +155,25 @@
            </td>
 
            <td>
-               <span style="font-weight: bold">{{$company->index_name}}</span>
-           </td>
-
-           <td>
                <span style="font-weight: bold">{{$company->index_symbol}}</span>
            </td>
 
            <td>
-               <span style="font-weight: bold" dir="rtl">{{$company->company_num . ' ' . $company->company_name}}</span>
+               <span style="font-weight: bold">{{$company->index_name}}</span>
            </td>
+
+           <td>
+               <span style="font-weight: bold" dir="rtl">{{$company->company_num . ' | ' . $company->company_name}}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">{{round($company->close, 3)}}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">{{round($company->typical_price, 3)}}</span>
+           </td>
+
 
            <td>
                <span style="font-weight: bold">{{round($company->stock_var_percent, 3) . '%'}}</span>
@@ -190,6 +221,10 @@
 
            <td>
                <span style="font-weight: bold">{{round($company->earning_per_share, 2)}}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">{{$company->last_dividend_date}}</span>
            </td>
        </tr>
 
