@@ -58,8 +58,9 @@
         }
 
         .row2-mergedAll {
-            background-color: #c50000;
+            background-color: #c00202;
             color: white;
+            font-weight: bold;
         }
 
 
@@ -117,7 +118,7 @@
         <td class="row3-cell2 gr-blue-1">ملخص أداء السهم</td>
         <td class="row3-cell3 gr-blue-1">مؤشر القطاع</td>
         <td class="row3-cell4 gr-blue-1">القطاع</td>
-        <td class="row3-cell5 gr-blue-1">اسم ورمز الشركة</td>
+        <td class="row3-cell5 gr-blue-1">الشركة</td>
 
 
         <td class="row3-cell6 gr-blue-5">Closing Price</td>
@@ -139,7 +140,7 @@
         <td class="row3-cell15 gr-blue-4">ROE</td>
         <td class="row3-cell16 gr-blue-4">Dividend Yield</td>
         <td class="row3-cell17 gr-blue-4">EPS</td>
-        <td class="row3-cell18 gr-blue-3">Latest Dividend Announcement Date</td>
+        <td class="row3-cell18 gr-blue-3">Latest Dividend Date</td>
     </tr>
 
    <tbody>
@@ -163,7 +164,7 @@
            </td>
 
            <td>
-               <span style="font-weight: bold" dir="rtl">{{$company->company_num . ' |' . $company->company_name}}</span>
+               <span style="font-weight: bold" dir="rtl">{{$company->company_num}} <br> {{$company->company_name}}</span>
            </td>
 
            <td>
