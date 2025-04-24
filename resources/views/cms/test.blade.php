@@ -366,11 +366,11 @@
            </td>
 
            <td>
-               <span style="font-weight: bold">${company.close.toFixed(3)}</span>
+               <span style="font-weight: bold">${company.close}</span>
            </td>
 
            <td>
-               <span style="font-weight: bold">${company.typical_price.toFixed(3)}</span>
+               <span style="font-weight: bold">${company.typical_price}</span>
            </td>
 
 
