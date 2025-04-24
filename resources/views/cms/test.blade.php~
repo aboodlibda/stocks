@@ -547,14 +547,14 @@
 
 <script>
 
-    const searchButton = document.getElementById('search-button');
-    const searchInput = document.getElementById('search-input');
-
-    searchButton.addEventListener('click', () => {
-        const searchTerm = searchInput.value.trim();
-        // Add your search logic here
-        console.log(`Searching for: ${searchTerm}`);
-    });
+    // const searchButton = document.getElementById('search-button');
+    // const searchInput = document.getElementById('search-input');
+    //
+    // searchButton.addEventListener('click', () => {
+    //     const searchTerm = searchInput.value.trim();
+    //     // Add your search logic here
+    //     console.log(`Searching for: ${searchTerm}`);
+    // });
 
     {{--var lang = $('html').attr('lang');--}}
 
