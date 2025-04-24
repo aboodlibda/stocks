@@ -489,13 +489,16 @@
                <span style="font-weight: bold">${company.stock_beta_coefficient}</span>
            </td>
 
-           <td>
-               <span style="font-weight: bold">${company.annual_stock_volatility}</span>
-           </td>
 
            <td>
                <span style="font-weight: bold">${company.daily_stock_volatility}</span>
            </td>
+
+
+           <td>
+               <span style="font-weight: bold">${company.annual_stock_volatility}</span>
+           </td>
+
 
            <td>
                <span style="font-weight: bold">${company.stock_risk_rank}</span>
