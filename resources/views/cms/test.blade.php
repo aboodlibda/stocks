@@ -366,11 +366,11 @@
            </td>
 
            <td>
-               <span style="font-weight: bold">${company.close}</span>
+               <span style="font-weight: bold">${company.close.toFixed(3)}</span>
            </td>
 
            <td>
-               <span style="font-weight: bold">${company.typical_price}</span>
+               <span style="font-weight: bold">${company.typical_price.toFixed(3)}</span>
            </td>
 
 
@@ -549,7 +549,7 @@
 
     // const searchButton = document.getElementById('search-button');
     // const searchInput = document.getElementById('search-input');
-    //
+
     // searchButton.addEventListener('click', () => {
     //     const searchTerm = searchInput.value.trim();
     //     // Add your search logic here
