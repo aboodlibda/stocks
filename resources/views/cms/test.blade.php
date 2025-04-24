@@ -443,7 +443,7 @@
                     $('#table-data').append('<tr><td colspan="16" style="text-align: center;">جاري التحميل ...</td></tr>');
                 },
                 success: function(data) {
-                    $('#table-data').empty(); // Clear existing table data
+                    $('#table-data').empty();
                     $.each(data, function(index, company) {
                         $('#table-data').append(`
                           <tr>
@@ -509,7 +509,7 @@
            </td>
 
            <td>
-               <span style="font-weight: bold">${company.pe_ratio !== null ? company.pe_ratio : 'N/A'}</span>
+                <span style="font-weight: bold">${company.pe_ratio !== null ? company.pe_ratio : 'N/A'}</span>
            </td>
 
            <td>
@@ -517,7 +517,7 @@
            </td>
 
            <td>
-               <span style="font-weight: bold">${company.stock_dividend_yield !== null ? company.stock_dividend_yield : 'N/A'}</span>
+                <span style="font-weight: bold">${company.stock_dividend_yield !== null ? company.stock_dividend_yield : 'N/A'}</span>
            </td>
 
            <td>
@@ -525,14 +525,12 @@
            </td>
 
            <td>
-               <span style="font-weight: bold">${company.last_dividend_date}</span>
+               <span style="font-weight: bold">${company.last_dividend_date !== null ? company.last_dividend_date : '-'}</span>
            </td>
        </tr>
 
                 `);
                     });
-                    // handle the search results
-                    // update the UI with the search results
                 }
             });
         });
