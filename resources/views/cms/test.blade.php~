@@ -423,7 +423,7 @@
            </td>
 
            <td>
-               <span style="font-weight: bold">${company.last_dividend_date}</span>
+               <span style="font-weight: bold">${company.last_dividend_date !== null ? company.last_dividend_date : '-'}</span>
            </td>
        </tr>
 
