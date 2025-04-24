@@ -432,7 +432,7 @@
             }
         });
     }
-    function searching() {
+    // function searching() {
         $('#search-input').on('keyup', function() {
             var searchQuery = $(this).val();
             $.ajax({
@@ -534,7 +534,7 @@
                 }
             });
         });
-    }
+    // }
     $(document).ready(function () {
         // searching();
         getCompanies();
