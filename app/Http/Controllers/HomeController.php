@@ -122,7 +122,7 @@ class HomeController extends Controller
         $query = $request->input('query');
         // Perform the search logic here
         // For example, query the database
-        $results = DB::table('companies')
+        $results = Company::query()
             ->where('company_name', 'LIKE', '%' . $query . '%')
             ->orWhere('company_num', 'LIKE', '%' . $query . '%')
             ->get();
