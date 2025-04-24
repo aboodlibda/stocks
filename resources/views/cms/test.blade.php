@@ -536,7 +536,7 @@
         });
     }
     $(document).ready(function () {
-        searching();
+        // searching();
         getCompanies();
         fetchStockAverages();
         // setInterval(fetchStockAverages, 60000);
