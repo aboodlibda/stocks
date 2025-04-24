@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -104,5 +106,29 @@ class HomeController extends Controller
         return response()->json($averages);
     }
 
+
+    public function getCompanies()
+    {
+        $companies = Company::all();
+        return response()->json($companies);
+
+    }
+
+// SearchController.php
+
+    public function search(Request $request)
+    {
+
+        $query = $request->input('query');
+        // Perform the search logic here
+        // For example, query the database
+        $results = DB::table('companies')
+            ->where('company_name', 'LIKE', '%' . $query . '%')
+            ->orWhere('company_num', 'LIKE', '%' . $query . '%')
+            ->get();
+
+        // Return the search results as JSON
+        return response()->json($results);
+    }
 
 }
