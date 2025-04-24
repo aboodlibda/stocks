@@ -438,6 +438,7 @@
             $.ajax({
                 type: 'GET',
                 url: '/search', // replace with your search endpoint
+                dataType: 'json',
                 data: { query: searchQuery },
                 beforeSend: function() {
                     $('#table-data').append('<tr><td colspan="16" style="text-align: center;">جاري التحميل ...</td></tr>');
