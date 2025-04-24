@@ -366,11 +366,11 @@
            </td>
 
            <td>
-               <span style="font-weight: bold">${company.close}</span>
+               <span style="font-weight: bold">${company.close.toFixed(3)}</span>
            </td>
 
            <td>
-               <span style="font-weight: bold">${company.typical_price}</span>
+               <span style="font-weight: bold">${company.typical_price.toFixed(3)}</span>
            </td>
 
 
@@ -407,7 +407,7 @@
            </td>
 
            <td>
-               <span style="font-weight: bold">${company.pe_ratio}</span>
+                <span style="font-weight: bold">${company.pe_ratio !== null ? company.pe_ratio : 'N/A'}</span>
            </td>
 
            <td>
@@ -415,7 +415,7 @@
            </td>
 
            <td>
-               <span style="font-weight: bold">${company.stock_dividend_yield}</span>
+                <span style="font-weight: bold">${company.stock_dividend_yield !== null ? company.stock_dividend_yield : 'N/A'}</span>
            </td>
 
            <td>
@@ -423,7 +423,7 @@
            </td>
 
            <td>
-               <span style="font-weight: bold">${company.last_dividend_date}</span>
+               <span style="font-weight: bold">${company.last_dividend_date !== null ? company.last_dividend_date : '-'}</span>
            </td>
        </tr>
 
@@ -509,7 +509,7 @@
            </td>
 
            <td>
-               <span style="font-weight: bold">${company.pe_ratio}</span>
+               <span style="font-weight: bold">${company.pe_ratio !== null ? company.pe_ratio : 'N/A'}</span>
            </td>
 
            <td>
@@ -517,7 +517,7 @@
            </td>
 
            <td>
-               <span style="font-weight: bold">${company.stock_dividend_yield}</span>
+               <span style="font-weight: bold">${company.stock_dividend_yield !== null ? company.stock_dividend_yield : 'N/A'}</span>
            </td>
 
            <td>
