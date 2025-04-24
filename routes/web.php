@@ -21,6 +21,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         return view('cms.test', compact('companies'));
     })->name('test');
 
+    Route::get('/companies', [HomeController::class, 'getCompanies']);
+    Route::get('/search', [HomeController::class, 'search']);
     Route::get('read-companies', [StockController::class, 'read_companies'])->name('read-companies');
     Route::get('test_api', [StockController::class,'getApi'])->name('get-api');
     Route::get('execute',function(){
