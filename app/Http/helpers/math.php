@@ -324,10 +324,11 @@ function financialRatios($ticker): array
     $stockOptionsUrl = "https://yh-finance-complete.p.rapidapi.com/stockOptions?ticker=$ticker.SR";
     $stockOptions = fetchDataFromAPI($stockOptionsUrl);
 
+
     $PIRatio = $summaryProfile['summaryDetail']['trailingPE'] ?? null;
     $returnOnEquity = $financials['financialData']['returnOnEquity'] ?? null;
     $dividendYield = $stockOptions['quote']['dividendYield'] ?? null;
-    $revenuePerShare = $financials['financialData']['revenuePerShare'] ?? null;
+    $revenuePerShare = $stockOptions['quote']['epsTrailingTwelveMonths'] ?? null;
     $lastDividendDate = $defaultKeyStatistics['defaultKeyStatistics']['lastDividendDate'] ?? null;
 
 //    echo 'P/I Ratio :  ' . $PIRatio . "<br>";
