@@ -337,7 +337,11 @@
             type: 'GET',
             url: '/companies',
             dataType: 'json',
+            beforeSend: function() {
+                $('#table-data').append('<tr><td colspan="16" style="text-align: center;">جاري التحميل ...</td></tr>');
+            },
             success: function(data) {
+                $('#table-data').empty();
                 $.each(data, function(index, company) {
                     $('#table-data').append(`
                           <tr>
@@ -435,10 +439,11 @@
                 type: 'GET',
                 url: '/search', // replace with your search endpoint
                 data: { query: searchQuery },
+                beforeSend: function() {
+                    $('#table-data').append('<tr><td colspan="16" style="text-align: center;">جاري التحميل ...</td></tr>');
+                },
                 success: function(data) {
-                    console.log(data);
                     $('#table-data').empty(); // Clear existing table data
-
                     $.each(data, function(index, company) {
                         $('#table-data').append(`
                           <tr>
@@ -642,6 +647,8 @@
     //     var table = $('#stock_table').DataTable();
     //     table.search($(this).val()).draw();
     // });
+
+
 </script>
 
 
