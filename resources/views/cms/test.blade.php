@@ -6,7 +6,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
 {{--    <link href="{{asset('assets/plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css">--}}
 
-    <title>Table</title>
+    <title>Market Stock Screen</title>
     <style>
         body {
             font-family: Tajawal, sans-serif;
@@ -81,10 +81,77 @@
         .gr-blue-5 {
             background-color: #9ba4b3;
         }
+
+        .main_search_div {
+            /*background: linear-gradient(25deg, #8600b3 50%, #cc33ff 50%);*/
+            /*height: 100vh;*/
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-bottom: 20px;
+        }
+
+
+        h1 {
+            /*position: absolute;*/
+            top: 30%;
+
+            font-size: 60px;
+            color: #c00202;
+        }
+
+        .box {
+            width: 500px;
+            height: 20px;
+            background-color: white;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            border: 2px solid red;
+        }
+
+        .box>i {
+            font-size: 20px;
+            color: #777;
+        }
+
+        .box>input {
+            flex: 1;
+            height: 40px;
+            border: none;
+            outline: none;
+            font-size: 18px;
+            padding-left: 10px;
+        }
+
+        #search-button {
+            width: 30%;
+            height: 40px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        #search-button:hover {
+            background-color: #3e8e41;
+        }
     </style>
 </head>
 <body>
-<table id="stock_table datatable">
+
+<div class="main_search_div">
+    <div class="box">
+        <i class="fa-brands fa-searching"></i>
+        <input type="text" name="" placeholder="البحث بإسم أو رقم الشركة" id="search-input">
+{{--        <button id="search-button">بحث</button>--}}
+    </div>
+</div>
+
+
+<table id="stock_table">
 
     <tr>
         <th colspan="4" class="">
@@ -143,93 +210,94 @@
         <td class="row3-cell18 gr-blue-3">Latest Dividend Date</td>
     </tr>
 
-   <tbody>
+   <tbody id="table-data">
 
-   @foreach($companies as $company)
-       <tr>
-           <td>
-               <span><img src="{{asset('assets/media/svg/mouse-pointer-solid.svg')}}" alt="click" style="height: 30px;width: 30px"></span>
-           </td>
+{{--   @foreach($companies as $company)--}}
+{{--       <tr>--}}
+{{--           <td>--}}
+{{--               <span><img src="{{asset('assets/media/svg/mouse-pointer-solid.svg')}}" alt="click" style="height: 30px;width: 30px"></span>--}}
+{{--           </td>--}}
 
-           <td>
-               <span><img src="{{asset('assets/media/svg/mouse-pointer-solid.svg')}}" alt="click" style="height: 30px;width: 30px"></span>
-           </td>
+{{--           <td>--}}
+{{--               <span><img src="{{asset('assets/media/svg/mouse-pointer-solid.svg')}}" alt="click" style="height: 30px;width: 30px"></span>--}}
+{{--           </td>--}}
 
-           <td>
-               <span style="font-weight: bold">{{$company->index_symbol}}</span>
-           </td>
+{{--           <td>--}}
+{{--               <span style="font-weight: bold">{{$company->index_symbol}}</span>--}}
+{{--           </td>--}}
 
-           <td>
-               <span style="font-weight: bold">{{$company->index_name}}</span>
-           </td>
+{{--           <td>--}}
+{{--               <span style="font-weight: bold">{{$company->index_name}}</span>--}}
+{{--           </td>--}}
 
-           <td>
-               <span style="font-weight: bold" dir="rtl">{{$company->company_num}} <br> {{$company->company_name}}</span>
-           </td>
+{{--           <td>--}}
+{{--               <span style="font-weight: bold" dir="rtl">{{$company->company_num}} <br> {{$company->company_name}}</span>--}}
+{{--           </td>--}}
 
-           <td>
-               <span style="font-weight: bold">{{round($company->close, 3)}}</span>
-           </td>
+{{--           <td>--}}
+{{--               <span style="font-weight: bold">{{round($company->close, 3)}}</span>--}}
+{{--           </td>--}}
 
-           <td>
-               <span style="font-weight: bold">{{round($company->typical_price, 3)}}</span>
-           </td>
+{{--           <td>--}}
+{{--               <span style="font-weight: bold">{{round($company->typical_price, 3)}}</span>--}}
+{{--           </td>--}}
 
 
-           <td>
-               <span style="font-weight: bold">{{round($company->stock_var_percent, 3) . '%'}}</span>
-           </td>
+{{--           <td>--}}
+{{--               <span style="font-weight: bold">{{round($company->stock_var_percent, 3) . '%'}}</span>--}}
+{{--           </td>--}}
 
-           <td>
-               <span style="font-weight: bold">{{round($company->stock_sharp_ratio, 3)}}</span>
-           </td>
+{{--           <td>--}}
+{{--               <span style="font-weight: bold">{{$company->stock_sharp_ratio}}</span>--}}
+{{--           </td>--}}
 
-           <td>
-               <span style="font-weight: bold">{{round($company->stock_beta_coefficient, 2)}}</span>
-           </td>
+{{--           <td>--}}
+{{--               <span style="font-weight: bold">{{round($company->stock_beta_coefficient, 3)}}</span>--}}
+{{--           </td>--}}
 
-           <td>
-               <span style="font-weight: bold">{{round($company->annual_stock_volatility * 100, 3) . '%'}}</span>
-           </td>
+{{--           <td>--}}
+{{--               <span style="font-weight: bold">{{round($company->annual_stock_volatility, 3) . '%'}}</span>--}}
+{{--           </td>--}}
 
-           <td>
-               <span style="font-weight: bold">{{round($company->daily_stock_volatility * 100, 3) . '%'}}</span>
-           </td>
+{{--           <td>--}}
+{{--               <span style="font-weight: bold">{{round($company->daily_stock_volatility, 3) . '%'}}</span>--}}
+{{--           </td>--}}
 
-           <td>
-               <span style="font-weight: bold">{{$company->stock_risk_rank}}</span>
-           </td>
+{{--           <td>--}}
+{{--               <span style="font-weight: bold">{{$company->stock_risk_rank}}</span>--}}
+{{--           </td>--}}
 
-           <td>
-               <span style="font-weight: bold">{{round($company->avg_daily_expected_stock_return * 100, 3) . '%'}}</span>
-           </td>
+{{--           <td>--}}
+{{--               <span style="font-weight: bold">{{round($company->avg_daily_expected_stock_return * 100, 3) . '%'}}</span>--}}
+{{--           </td>--}}
 
-           <td>
-               <span style="font-weight: bold">{{round($company->annual_stock_expected_return * 100, 3) . '%'}}</span>
-           </td>
+{{--           <td>--}}
+{{--               <span style="font-weight: bold">{{round($company->annual_stock_expected_return, 3) . '%'}}</span>--}}
+{{--           </td>--}}
 
-           <td>
-               <span style="font-weight: bold">{{(isset($company->pe_ratio) ? round($company->pe_ratio, 2) : 'N/A')}}</span>
-           </td>
+{{--           <td>--}}
+{{--               <span style="font-weight: bold">{{(isset($company->pe_ratio) ? round($company->pe_ratio, 3) : 'N/A')}}</span>--}}
+{{--           </td>--}}
 
-           <td>
-               <span style="font-weight: bold">{{(isset($company->return_on_equity) ? round($company->return_on_equity, 2) . '%' : 'N/A')}}</span>
-           </td>
+{{--           <td>--}}
+{{--               <span style="font-weight: bold">{{(isset($company->return_on_equity) ? round($company->return_on_equity, 3) . '%' : 'N/A')}}</span>--}}
+{{--           </td>--}}
 
-           <td>
-               <span style="font-weight: bold">{{(isset($company->stock_dividend_yield) ? round($company->stock_dividend_yield, 2) : 'N/A')}}</span>
-           </td>
+{{--           <td>--}}
+{{--               <span style="font-weight: bold">{{(isset($company->stock_dividend_yield) ? round($company->stock_dividend_yield, 3) : 'N/A')}}</span>--}}
+{{--           </td>--}}
 
-           <td>
-               <span style="font-weight: bold">{{round($company->earning_per_share, 2)}}</span>
-           </td>
+{{--           <td>--}}
+{{--               <span style="font-weight: bold">{{round($company->earning_per_share, 3)}}</span>--}}
+{{--           </td>--}}
 
-           <td>
-               <span style="font-weight: bold">{{$company->last_dividend_date}}</span>
-           </td>
-       </tr>
+{{--           <td>--}}
+{{--               <span style="font-weight: bold">{{$company->last_dividend_date}}</span>--}}
+{{--           </td>--}}
+{{--       </tr>--}}
 
-   @endforeach
+{{--   @endforeach--}}
+
    </tbody>
 </table>
 </body>
@@ -238,51 +306,264 @@
 {{--<script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>--}}
 
 <script>
-    $(document).ready(function () {
-        function fetchStockAverages() {
-            $.ajax({
-                url: "{{route('get-stock-averages')}}", // Adjust the URL if needed
-                method: "GET",
-                dataType: "json",
-                success: function (response) {
-                    // Assuming response contains keys matching the ID attributes in the table
-                    $("#avg_stock_var_percent").text(response.avg_stock_var_percent || "N/A");
-                    $("#avg_stock_sharp_ratio").text(response.avg_stock_sharp_ratio || "N/A");
-                    $("#avg_stock_beta_coefficient").text(response.avg_stock_beta_coefficient || "N/A");
-                    $("#avg_annual_stock_volatility").text(response.avg_annual_stock_volatility || "N/A");
-                    $("#avg_daily_stock_volatility").text(response.avg_daily_stock_volatility || "N/A");
-                    $("#avg_pe_ratio").text(response.avg_pe_ratio || "N/A");
-                    $("#avg_return_on_equity").text(response.avg_return_on_equity || "N/A");
-                    $("#avg_stock_dividend_yield").text(response.avg_stock_dividend_yield || "N/A");
-                    $("#avg_earning_per_share").text(response.avg_earning_per_share || "N/A");
-                    $("#avg_annual_stock_expected_return").text(response.avg_annual_stock_expected_return || "N/A");
-                    $("#avg_avg_daily_expected_stock_return").text(response.avg_avg_daily_expected_stock_return || "N/A");
-                },
 
-                error: function () {
-                    console.error("Failed to fetch stock averages.");
+    function fetchStockAverages() {
+        $.ajax({
+            url: "{{route('get-stock-averages')}}", // Adjust the URL if needed
+            method: "GET",
+            dataType: "json",
+            success: function (response) {
+                // Assuming response contains keys matching the ID attributes in the table
+                $("#avg_stock_var_percent").text(response.avg_stock_var_percent || "N/A");
+                $("#avg_stock_sharp_ratio").text(response.avg_stock_sharp_ratio || "N/A");
+                $("#avg_stock_beta_coefficient").text(response.avg_stock_beta_coefficient || "N/A");
+                $("#avg_annual_stock_volatility").text(response.avg_annual_stock_volatility || "N/A");
+                $("#avg_daily_stock_volatility").text(response.avg_daily_stock_volatility || "N/A");
+                $("#avg_pe_ratio").text(response.avg_pe_ratio || "N/A");
+                $("#avg_return_on_equity").text(response.avg_return_on_equity || "N/A");
+                $("#avg_stock_dividend_yield").text(response.avg_stock_dividend_yield || "N/A");
+                $("#avg_earning_per_share").text(response.avg_earning_per_share || "N/A");
+                $("#avg_annual_stock_expected_return").text(response.avg_annual_stock_expected_return || "N/A");
+                $("#avg_avg_daily_expected_stock_return").text(response.avg_avg_daily_expected_stock_return || "N/A");
+            },
+
+            error: function () {
+                console.error("Failed to fetch stock averages.");
+            }
+        });
+    }
+    function getCompanies() {
+        $.ajax({
+            type: 'GET',
+            url: '/companies',
+            dataType: 'json',
+            success: function(data) {
+                $.each(data, function(index, company) {
+                    $('#table-data').append(`
+                          <tr>
+           <td>
+               <span><img src="{{asset('assets/media/svg/mouse-pointer-solid.svg')}}" alt="click" style="height: 30px;width: 30px"></span>
+           </td>
+
+           <td>
+               <span><img src="{{asset('assets/media/svg/mouse-pointer-solid.svg')}}" alt="click" style="height: 30px;width: 30px"></span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.index_symbol}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.index_name}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold" dir="rtl">${company.company_num} <br> ${company.company_name}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.close}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.typical_price}</span>
+           </td>
+
+
+           <td>
+               <span style="font-weight: bold">${company.stock_var_percent}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.stock_sharp_ratio}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.stock_beta_coefficient}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.annual_stock_volatility}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.daily_stock_volatility}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.stock_risk_rank}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.avg_daily_expected_stock_return}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.annual_stock_expected_return}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.pe_ratio}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.return_on_equity}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.stock_dividend_yield}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.earning_per_share}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.last_dividend_date}</span>
+           </td>
+       </tr>
+
+                `);
+                });
+            }
+        });
+    }
+    function searching() {
+        $('#search-input').on('keyup', function() {
+            var searchQuery = $(this).val();
+            $.ajax({
+                type: 'GET',
+                url: '/search', // replace with your search endpoint
+                data: { query: searchQuery },
+                success: function(data) {
+                    console.log(data);
+                    $('#table-data').empty(); // Clear existing table data
+
+                    $.each(data, function(index, company) {
+                        $('#table-data').append(`
+                          <tr>
+           <td>
+               <span><img src="{{asset('assets/media/svg/mouse-pointer-solid.svg')}}" alt="click" style="height: 30px;width: 30px"></span>
+           </td>
+
+           <td>
+               <span><img src="{{asset('assets/media/svg/mouse-pointer-solid.svg')}}" alt="click" style="height: 30px;width: 30px"></span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.index_symbol}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.index_name}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold" dir="rtl">${company.company_num} <br> ${company.company_name}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.close}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.typical_price}</span>
+           </td>
+
+
+           <td>
+               <span style="font-weight: bold">${company.stock_var_percent}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.stock_sharp_ratio}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.stock_beta_coefficient}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.annual_stock_volatility}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.daily_stock_volatility}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.stock_risk_rank}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.avg_daily_expected_stock_return}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.annual_stock_expected_return}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.pe_ratio}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.return_on_equity}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.stock_dividend_yield}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.earning_per_share}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.last_dividend_date}</span>
+           </td>
+       </tr>
+
+                `);
+                    });
+                    // handle the search results
+                    // update the UI with the search results
                 }
             });
-        }
-
-        // Fetch data initially
+        });
+    }
+    $(document).ready(function () {
+        searching();
+        getCompanies();
         fetchStockAverages();
-
-        // Optional: Refresh data every 60 seconds
         // setInterval(fetchStockAverages, 60000);
     });
 </script>
 
 <script>
 
-    // var lang = $('html').attr('lang');
-    //
-    // const currentLanguage = document.documentElement.lang || "ar";
-    // const dataTableLanguage = currentLanguage === "ar"
-    //     ? '//cdn.datatables.net/plug-ins/2.1.8/i18n/ar.json'
-    //     : '';
+    const searchButton = document.getElementById('search-button');
+    const searchInput = document.getElementById('search-input');
+
+    searchButton.addEventListener('click', () => {
+        const searchTerm = searchInput.value.trim();
+        // Add your search logic here
+        console.log(`Searching for: ${searchTerm}`);
+    });
+
+    {{--var lang = $('html').attr('lang');--}}
+
+    {{--const currentLanguage = document.documentElement.lang || "ar";--}}
+    {{--const dataTableLanguage = currentLanguage === "ar"--}}
+    {{--    ? '//cdn.datatables.net/plug-ins/2.1.8/i18n/ar.json'--}}
+    {{--    : '';--}}
     {{--$(document).ready(function () {--}}
     {{--    $('#stock_table').DataTable({--}}
+    {{--        "bFilter": false,--}}
+    {{--        "bInfo": false,--}}
+    {{--        "bAutoWidth": false,--}}
+    {{--        "sDom": '<"table-responsive"t>',--}}
+    {{--        "customCss": "my-custom-datatable",--}}
     {{--        processing: true,--}}
     {{--        serverSide: true,--}}
     {{--        language: { url: dataTableLanguage },--}}
@@ -312,6 +593,7 @@
     {{--            { data: 'add_to_portfolio', name: 'add_to_portfolio', orderable: false, searchable: false },--}}
     {{--        ]--}}
     {{--    });--}}
+
     {{--});--}}
 
 
@@ -356,10 +638,10 @@
     // })
 
 
-    $('#searchInput').keyup(function() {
-        var table = $('#stock_table').DataTable();
-        table.search($(this).val()).draw();
-    });
+    // $('#searchInput').keyup(function() {
+    //     var table = $('#stock_table').DataTable();
+    //     table.search($(this).val()).draw();
+    // });
 </script>
 
 
