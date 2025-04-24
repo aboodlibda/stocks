@@ -444,7 +444,7 @@
                 },
                 success: function(data) {
                     $('#table-data').empty(); // Clear existing table data
-                    $.each(data, function(index, company) {
+                    $.each(data, function(company) {
                         $('#table-data').append(`
                           <tr>
            <td>
