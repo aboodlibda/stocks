@@ -4,6 +4,7 @@
 use App\Models\Company;
 use App\Models\Sector;
 use App\Models\Stock;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
 use PhpOffice\PhpSpreadsheet\Calculation\Statistical\Distributions\Normal;
 
@@ -38,7 +39,7 @@ function calculateRatiosByCompany($ticker): array
     $ratios = [];
     for ($i = 0; $i < count($adjCloses) - 1; $i++) {
         if ($adjCloses[$i + 1]->adjclose != 0) {
-            $ratios[] = round(log(($adjCloses[$i]->adjclose / $adjCloses[$i + 1]->adjclose)) * 100 , 2);
+            $ratios[] = round(log(($adjCloses[$i]->adjclose / $adjCloses[$i + 1]->adjclose))*100  , 3);
         } else {
             $ratios[] = null; // Avoid division by zero
         }
@@ -204,20 +205,23 @@ function calculateBeta(array $stockRatios, array $sectorRatios) {
 
 
 function averageIfNotEmpty(array $values) {
-    $validValues = array_filter($values, function ($v) {
-        return $v !== null && $v !== '' && is_numeric($v);
+    // Filter to keep only non-empty numeric values
+    $valid = array_filter($values, function ($v) {
+        return $v !== '' && $v !== null && is_numeric($v);
     });
 
-    $count = count($validValues);
+    $count = count($values);
 
     if ($count === 0) {
-        return '0%'; // Same as Excel default
+        return '0%'; // Same as Excel's fallback
     }
 
-    $average = array_sum($validValues) / $count;
-//    return round($average * 100, 2) . '%'; // Convert to percentage and round
+    $average = array_sum($values) / $count;
+
+    // Format as percentage
     return $average;
 }
+
 
 
 function sampleStandardDeviation(array $values) {
@@ -278,14 +282,14 @@ function riskMeasurementRatios($ticker, $code): array
     } else {
         $stockRiskRank = "Very Aggressive";
     }
-//    echo "Stock Var: " . round($stockVar, 2) . "<br>";
-//    echo "Sharp Ratio: " . round($sharpRatio, 3) . "<br>";
-//    echo "Stock Beta Coefficient: " . $stockBetaCoefficient . "<br>";
-//    echo "Daily Stock Volatility: " . round($company_daily_stock_volatility, 3) . "<br>";
-//    echo "Annual Volatility: " . round($annualStockVolatility*100, 3) . "<br>";
-//    echo "Risk Rank: " . $stockRiskRank . "<br>";
-//    echo "Average Daily Expected Return: " . round(averageIfNotEmpty($companyRatios),3) . "<br>";
-//    echo "Annual Stock Expected Return: " . round($annualStockExpectedReturn*100, 2) . "<br>";
+    echo "Stock Var: " . round($stockVar, 2) . "<br>";
+    echo "Sharp Ratio: " . round($sharpRatio, 3) . "<br>";
+    echo "Stock Beta Coefficient: " . $stockBetaCoefficient . "<br>";
+    echo "Daily Stock Volatility: " . round($company_daily_stock_volatility, 3) . "<br>";
+    echo "Annual Volatility: " . round($annualStockVolatility*100, 3) . "<br>";
+    echo "Risk Rank: " . $stockRiskRank . "<br>";
+    echo "Average Daily Expected Return: " . round(averageIfNotEmpty($companyRatios),4) . "<br>";
+    echo "Annual Stock Expected Return: " . round($annualStockExpectedReturn*100, 3) . "<br>";
 
     return [
         'stockVar' => round($stockVar, 2),
@@ -294,8 +298,8 @@ function riskMeasurementRatios($ticker, $code): array
         'dailyVolatility' => round($company_daily_stock_volatility, 3),
         'annualVolatility' => round($annualStockVolatility*100, 3),
         'riskRank' => $stockRiskRank,
-        'averageDailyExpectedReturn' => round(averageIfNotEmpty($companyRatios),3),
-        'averageAnnualExpectedReturn' => round($annualStockExpectedReturn*100, 2),
+        'averageDailyExpectedReturn' => round(averageIfNotEmpty($companyRatios),4),
+        'averageAnnualExpectedReturn' => round($annualStockExpectedReturn*100, 3),
     ];
 }
 
@@ -326,17 +330,18 @@ function financialRatios($ticker): array
     $revenuePerShare = $financials['financialData']['revenuePerShare'] ?? null;
     $lastDividendDate = $defaultKeyStatistics['defaultKeyStatistics']['lastDividendDate'] ?? null;
 
-    return [
-        'PIRatio' => $PIRatio,
-        'returnOnEquity' => $returnOnEquity,
-        'dividendYield' => $dividendYield,
-        'revenuePerShare' => $revenuePerShare,
-        'lastDividendDate' => $lastDividendDate
-    ];
 //    echo 'P/I Ratio :  ' . $PIRatio . "<br>";
 //    echo 'Return On Equity :  ' . $returnOnEquity . "<br>";
 //    echo 'Dividend Yield :  ' . $dividendYield . "<br>";
 //    echo 'revenue Per Share :  ' . $revenuePerShare . "<br>";
+
+    return [
+        'PIRatio' => $PIRatio,
+        'returnOnEquity' => $returnOnEquity*100,
+        'dividendYield' => $dividendYield,
+        'revenuePerShare' => $revenuePerShare,
+        'lastDividendDate' => $lastDividendDate
+    ];
 
 }
 
@@ -395,7 +400,8 @@ function stdDeviation($arr): float
  */
 function updateCompanyRatios()
 {
-    $companies = Company::all();
+//    $companies = Company::all();
+    $companies = Company::where('company_num', '=', 2010)->get();
 
     foreach ($companies as $company) {
         if ($company->company_num == 3001 || $company->company_num == 4010) {
@@ -419,7 +425,7 @@ function updateCompanyRatios()
             'return_on_equity' => $financialRatios['returnOnEquity'],
             'stock_dividend_yield' => $financialRatios['dividendYield'],
             'earning_per_share' => $financialRatios['revenuePerShare'],
-            'last_dividend_date' => $financialRatios['lastDividendDate'],
+            'last_dividend_date' => Carbon::parse($financialRatios['lastDividendDate'])->format('Y-m-d'),
             'close' => $stockMarketPrice['close'],
             'typical_price' => $stockMarketPrice['typicalPrice']
         ]);
