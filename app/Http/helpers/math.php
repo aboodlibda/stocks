@@ -288,7 +288,7 @@ function riskMeasurementRatios($ticker, $code): array
 //    echo "Annual Volatility: " . round($annualStockVolatility*100, 3) . "<br>";
 //    echo "Risk Rank: " . $stockRiskRank . "<br>";
 //    echo "Average Daily Expected Return: " . round(averageIfNotEmpty($companyRatios),4) . "<br>";
-//    echo "Annual Stock Expected Return: " . round($annualStockExpectedReturn*100, 3) . "<br>";
+    echo "Annual Stock Expected Return: " . round($annualStockExpectedReturn*100, 3) . "<br>";
 
     return [
         'stockVar' => round($stockVar, 2),
@@ -400,8 +400,8 @@ function stdDeviation($arr): float
  */
 function updateCompanyRatios()
 {
-    $companies = Company::all();
-//    $companies = Company::where('company_num', '=', 2010)->get();
+//    $companies = Company::all();
+    $companies = Company::where('company_num', '=', 2010)->get();
 
     foreach ($companies as $company) {
         if ($company->company_num == 3001 || $company->company_num == 4010) {
