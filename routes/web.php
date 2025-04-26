@@ -26,13 +26,13 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     Route::get('read-companies', [StockController::class, 'read_companies'])->name('read-companies');
     Route::get('test_api', [StockController::class,'getApi'])->name('get-api');
     Route::get('execute',function(){
-//        riskMeasurementRatios(2010,'TMTI');
+        riskMeasurementRatios(2010,'TMTI');
 //        riskMeasurementRatios(2222,'TENI');
 //        riskMeasurementRatios(7010,'TTSI');
 //        riskMeasurementRatios(1120,'TBNI');
 //        riskMeasurementRatios(6002,'TCSI');
 //        riskMeasurementRatios(4263,'TTNI');
-        financialRatios(2010);
+//        financialRatios(2010);
 //        stockMarketPrice(2010);
     });
 
