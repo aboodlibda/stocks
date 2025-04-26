@@ -153,7 +153,7 @@ function calculateAverage(array $numbers): float|int|null
 // $dash_C6 is dynamic retrieved from database and entered by admin in database
 function annualStockExpectedReturn($dash_C6, $company_daily_stock_volatility, $sector_return_avg, $sector_daily_stock_volatility): float
 {
-    dd($sector_return_avg);
+//    dd($sector_daily_stock_volatility);
     return ($dash_C6/100) + (($company_daily_stock_volatility/100) * sqrt(250)) * (pow((($sector_return_avg/100) + 1),250) - 1 - ($dash_C6/100))
         / (($sector_daily_stock_volatility/100) * sqrt(250));
 //    return (4.68/100)+((1.342/100)*SQRT(250))*(pow(((0.010400472/100)+1),250)-1-(4.68/100))/((1.165353608/100)*SQRT(250));
@@ -288,7 +288,7 @@ function riskMeasurementRatios($ticker, $code): array
 //    echo "Annual Volatility: " . round($annualStockVolatility*100, 3) . "<br>";
 //    echo "Risk Rank: " . $stockRiskRank . "<br>";
 //    echo "Average Daily Expected Return: " . round(averageIfNotEmpty($companyRatios),4) . "<br>";
-    echo "Annual Stock Expected Return: " . round($annualStockExpectedReturn*100, 3) . "<br>";
+//    echo "Annual Stock Expected Return: " . round($annualStockExpectedReturn*100, 3) . "<br>";
 
     return [
         'stockVar' => round($stockVar, 2),
@@ -400,8 +400,8 @@ function stdDeviation($arr): float
  */
 function updateCompanyRatios()
 {
-//    $companies = Company::all();
-    $companies = Company::where('company_num', '=', 2010)->get();
+    $companies = Company::all();
+//    $companies = Company::where('company_num', '=', 2010)->get();
 
     foreach ($companies as $company) {
         if ($company->company_num == 3001 || $company->company_num == 4010) {
