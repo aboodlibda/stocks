@@ -58,7 +58,7 @@ function calculateRatiosByCompany($ticker): array
     if (!$found) {
         foreach ($adjCloses as $key => $adjClose) {
             if ($adjClose->date == $insertAfterDate) {
-                array_splice($ratios, $key, 0, [10.10]);
+                array_splice($ratios, $key, 0, [$adjClose->adjClose]);
                 break;
             }
         }
@@ -156,7 +156,6 @@ function annualStockExpectedReturn($dash_C6, $company_daily_stock_volatility, $s
 //    dd($sector_daily_stock_volatility);
     return ($dash_C6/100) + (($company_daily_stock_volatility/100) * sqrt(250)) * (pow((($sector_return_avg/100) + 1),250) - 1 - ($dash_C6/100))
         / (($sector_daily_stock_volatility/100) * sqrt(250));
-
 //    return (4.68/100)+((1.342/100)*SQRT(250))*(pow(((0.010400472/100)+1),250)-1-(4.68/100))/((1.165353608/100)*SQRT(250));
 }
 
