@@ -186,7 +186,7 @@
 
     <tr>
         <th colspan="19" style="padding: 10px;border: none">
-            <a href="https://www.saudiexchange.sa/" style="color: black;text-decoration: none;font-size: 12px">رابط أخبار وأسعار سوق التداول السعودي</a>
+            <a href="https://www.saudiexchange.sa/" style="color: black;text-decoration: none;font-size: 11px">رابط أخبار وأسعار سوق التداول السعودي</a>
 
         </th>
     </tr>
