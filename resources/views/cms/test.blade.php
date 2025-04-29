@@ -404,11 +404,11 @@
            </td>
 
            <td>
-               <span style="font-weight: bold">${company.close.toFixed(2)}</span>
+               <span style="font-weight: bold">${company.close}</span>
            </td>
 
            <td>
-               <span style="font-weight: bold">${company.typical_price.toFixed(2)}</span>
+               <span style="font-weight: bold">${company.typical_price}</span>
            </td>
 
 
