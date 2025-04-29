@@ -163,7 +163,7 @@
 
     <tr>
         <th colspan="4" class="">
-            <a href="https://www.saudiexchange.sa/" style="color: black;text-decoration: none;font-size: 12px">تاريخ تحميل البيانات التاريخية من 12-09-2021 الى 12-09-2024</a>
+            <a href="https://www.saudiexchange.sa/" style="color: black;text-decoration: none;font-size: 11px">تاريخ تحميل البيانات التاريخية من 12-09-2021 الى 12-09-2024</a>
         </th>
         <th colspan="3" class="row1-merged gr-blue-2">Average Industry</th>
         <th class="row1-single orange" id="avg_stock_var_percent">0</th>
@@ -186,7 +186,7 @@
 
     <tr>
         <th colspan="19" style="padding: 10px;border: none">
-            <a href="https://www.saudiexchange.sa/" style="color: black;text-decoration: none;font-size: 11px">رابط أخبار وأسعار سوق التداول السعودي</a>
+            <a href="https://www.saudiexchange.sa/" style="color: black;text-decoration: none;font-size: 12px">رابط أخبار وأسعار سوق التداول السعودي</a>
 
         </th>
     </tr>
