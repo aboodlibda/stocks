@@ -125,6 +125,8 @@ class HomeController extends Controller
         $results = Company::query()
             ->where('company_name', 'LIKE', '%' . $query . '%')
             ->orWhere('company_num', 'LIKE', '%' . $query . '%')
+            ->orWhere('index_name', 'LIKE', '%' . $query . '%')
+            ->orWhere('index_symbol', 'LIKE', '%' . $query . '%')
             ->get();
 
         // Return the search results as JSON
