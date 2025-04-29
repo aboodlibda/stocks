@@ -17,11 +17,12 @@
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
+            font-size: 13px;
         }
 
         th, td {
             border: 1px solid #000;
-            padding: 8px;
+            padding: 2px;
             text-align: center;
         }
 
@@ -74,6 +75,7 @@
         }
         .gr-blue-3 {
             background-color: #8faadd;
+            color: black;
         }
         .gr-blue-4 {
             background-color: #b3c6e8;
@@ -81,6 +83,8 @@
         .gr-blue-5 {
             background-color: #9ba4b3;
         }
+
+        .orange { background-color: #ffb823; }
 
         .main_search_div {
             /*background: linear-gradient(25deg, #8600b3 50%, #cc33ff 50%);*/
@@ -102,13 +106,13 @@
 
         .box {
             width: 500px;
-            height: 20px;
+            height: 15px;
             background-color: white;
             border-radius: 30px;
             display: flex;
             align-items: center;
-            padding: 20px;
-            border: 2px solid red;
+            padding: 10px;
+            border: 3px solid #4e7bd1;
         }
 
         .box>i {
@@ -118,7 +122,7 @@
 
         .box>input {
             flex: 1;
-            height: 40px;
+            height: 15px;
             border: none;
             outline: none;
             font-size: 18px;
@@ -138,6 +142,10 @@
         #search-button:hover {
             background-color: #3e8e41;
         }
+
+        .gray{
+            background-color: #a6a6a6;
+        }
     </style>
 </head>
 <body>
@@ -145,7 +153,7 @@
 <div class="main_search_div">
     <div class="box">
         <i class="fa-brands fa-searching"></i>
-        <input type="text" name="" placeholder="البحث بإسم أو رقم الشركة" id="search-input">
+        <input type="text" name="" dir="rtl" placeholder="البحث بإسم أو رقم الشركة / إسم أو رمز القطاع" id="search-input">
 {{--        <button id="search-button">بحث</button>--}}
     </div>
 </div>
@@ -155,29 +163,40 @@
 
     <tr>
         <th colspan="4" class="">
-{{--            <a href="https://www.saudiexchange.sa/" style="color: white;text-decoration: none">رابط أخبار و أسعار سوق التداول السعودى</a>--}}
+            <a href="https://www.saudiexchange.sa/" style="color: black;text-decoration: none;font-size: 12px">تاريخ تحميل البيانات التاريخية من 12-09-2021 الى 12-09-2024</a>
         </th>
-        <th colspan="2" class="row1-merged">Average Industry</th>
-        <th class="row1-single" id="avg_stock_var_percent">0</th>
-        <th class="row1-single" id="avg_stock_sharp_ratio">0</th>
-        <th class="row1-single" id="avg_stock_beta_coefficient">0</th>
-        <th class="row1-single" id="avg_annual_stock_volatility">0</th>
-        <th class="row1-single" id="avg_daily_stock_volatility">0</th>
-{{--        <th class="gr-blue-2"></th>--}}
-        <th class="row1-single" id="avg_pe_ratio">0</th>
-        <th class="row1-single" id="avg_return_on_equity">0</th>
-        <th class="row1-single" id="avg_stock_dividend_yield">0</th>
-        <th class="row1-single" id="avg_earning_per_share">0</th>
-        <th class="row1-single" id="avg_annual_stock_expected_return">0</th>
-        <th class="row1-single" id="avg_avg_daily_expected_stock_return">0</th>
+        <th colspan="3" class="row1-merged gr-blue-2">Average Industry</th>
+        <th class="row1-single orange" id="avg_stock_var_percent">0</th>
+        <th class="row1-single orange" id="avg_stock_sharp_ratio">0</th>
+        <th class="row1-single orange" id="avg_stock_beta_coefficient">0</th>
+        <th class="row1-single orange" id="avg_annual_stock_volatility">0</th>
+        <th class="row1-single orange" id="avg_daily_stock_volatility">0</th>
+        <th class="gr-blue-3 gray"></th>
+
+        <th class="row1-single orange" id="avg_pe_ratio">0</th>
+        <th class="row1-single orange" id="avg_return_on_equity">0</th>
+        <th class="row1-single orange" id="avg_stock_dividend_yield">0</th>
+        <th class="row1-single orange" id="avg_earning_per_share">0</th>
+        <th class="row1-single orange" id="avg_annual_stock_expected_return">0</th>
+        <th class="row1-single orange" id="avg_avg_daily_expected_stock_return">0</th>
+    </tr>
+{{--    <tr>--}}
+{{--        <th colspan="19" style="padding: 10px;border: none"></th>--}}
+{{--    </tr>--}}
+
+    <tr>
+        <th colspan="19" style="padding: 10px;border: none">
+            <a href="https://www.saudiexchange.sa/" style="color: black;text-decoration: none;font-size: 12px">رابط أخبار وأسعار سوق التداول السعودي</a>
+
+        </th>
     </tr>
 
     <tr>
-        <td colspan="5" class="row2-mergedAll">ملخص أداء أسهم الشركات في السوق السعودى للتداول</td>
-        <td colspan="2" class="row2-mergedAll">Stock Market Price</td>
-        <td colspan="6" class="row2-mergedAll">Risk measurement Ratios</td>
-        <td colspan="2" class="row2-mergedAll">Earning Ratios</td>
-        <td colspan="5" class="row2-mergedAll">Financial Ratios</td>
+        <td colspan="5" class="row2-mergedAll gr-blue-3">ملخص أداء أسهم الشركات في السوق السعودى للتداول</td>
+        <td colspan="2" class="row2-mergedAll gr-blue-2">Stock Market Price</td>
+        <td colspan="6" class="row2-mergedAll gr-blue-3">Risk measurement Ratios</td>
+        <td colspan="2" class="row2-mergedAll gr-blue-2">Earning Ratios</td>
+        <td colspan="5" class="row2-mergedAll gr-blue-3">Financial Ratios</td>
     </tr>
 
     <tr>
@@ -188,8 +207,8 @@
         <td class="row3-cell5 gr-blue-1">الشركة</td>
 
 
-        <td class="row3-cell6 gr-blue-5">Closing Price</td>
-        <td class="row3-cell7 gr-blue-5">Typical Price</td>
+        <td class="row3-cell6 gr-blue-3">Closing Price</td>
+        <td class="row3-cell7 gr-blue-3">Typical Price</td>
 
         <td class="row3-cell6 gr-blue-2">VaR % For 1 Day</td>
         <td class="row3-cell7 gr-blue-2">Sharp Ratio</td>
@@ -203,11 +222,11 @@
         <td class="row3-cell13 gr-blue-3">Annual Expected Return</td>
 
 
-        <td class="row3-cell14 gr-blue-4">P/E Ratio</td>
-        <td class="row3-cell15 gr-blue-4">ROE</td>
-        <td class="row3-cell16 gr-blue-4">Dividend Yield</td>
-        <td class="row3-cell17 gr-blue-4">EPS</td>
-        <td class="row3-cell18 gr-blue-3">Latest Dividend Date</td>
+        <td class="row3-cell14 gr-blue-2">P/E Ratio</td>
+        <td class="row3-cell15 gr-blue-2">ROE</td>
+        <td class="row3-cell16 gr-blue-2">Dividend Yield</td>
+        <td class="row3-cell17 gr-blue-2">EPS</td>
+        <td class="row3-cell18 gr-blue-2">Latest Dividend Date</td>
     </tr>
 
    <tbody id="table-data">
@@ -343,6 +362,25 @@
             success: function(data) {
                 $('#table-data').empty();
                 $.each(data, function(index, company) {
+
+                    let color;
+                    switch (company.stock_risk_rank) {
+                        case 'Conservative':
+                            color = 'lightgreen';
+                            break;
+                        case 'Moderately Conservative':
+                            color = 'yellow';
+                            break;
+                        case 'Aggressive':
+                            color = 'orange';
+                            break;
+                        case 'Very Aggressive':
+                            color = 'red';
+                            break;
+                        default:
+                            color = 'gray'; // fallback
+                    }
+
                     $('#table-data').append(`
                           <tr>
            <td>
@@ -366,11 +404,11 @@
            </td>
 
            <td>
-               <span style="font-weight: bold">${company.close.toFixed(4)}</span>
+               <span style="font-weight: bold">${company.close.toFixed(2)}</span>
            </td>
 
            <td>
-               <span style="font-weight: bold">${company.typical_price.toFixed(4)}</span>
+               <span style="font-weight: bold">${company.typical_price.toFixed(2)}</span>
            </td>
 
 
@@ -394,11 +432,12 @@
                <span style="font-weight: bold">${company.daily_stock_volatility}</span>
            </td>
 
-           <td>
-               <span style="font-weight: bold">${company.stock_risk_rank}</span>
-           </td>
 
-           <td>
+           <td style="background-color: ${color}">
+                            <span style="font-weight: bold">${company.stock_risk_rank !== null ? company.stock_risk_rank : '-'}</span>
+                        </td>
+
+            <td>
                <span style="font-weight: bold">${company.avg_daily_expected_stock_return}</span>
            </td>
 
@@ -423,7 +462,7 @@
            </td>
 
            <td>
-               <span style="font-weight: bold">${company.last_dividend_date !== null ? company.last_dividend_date : '-'}</span>
+               <span  style="font-weight: bold;width: 100%">${company.last_dividend_date !== null ? company.last_dividend_date : '-'}</span>
            </td>
        </tr>
 
@@ -446,6 +485,25 @@
                 success: function(data) {
                     $('#table-data').empty();
                     $.each(data, function(index, company) {
+
+                        let color;
+                        switch (company.stock_risk_rank) {
+                            case 'Conservative':
+                                color = 'lightgreen';
+                                break;
+                            case 'Moderately Conservative':
+                                color = 'yellow';
+                                break;
+                            case 'Aggressive':
+                                color = 'orange';
+                                break;
+                            case 'Very Aggressive':
+                                color = 'red';
+                                break;
+                            default:
+                                color = 'gray'; // fallback
+                        }
+
                         $('#table-data').append(`
                           <tr>
            <td>
@@ -469,11 +527,11 @@
            </td>
 
            <td>
-               <span style="font-weight: bold">${company.close.toFixed(4)}</span>
+               <span style="font-weight: bold">${company.close.toFixed(2)}</span>
            </td>
 
            <td>
-               <span style="font-weight: bold">${company.typical_price.toFixed(4)}</span>
+               <span style="font-weight: bold">${company.typical_price.toFixed(2)}</span>
            </td>
 
 
@@ -489,22 +547,20 @@
                <span style="font-weight: bold">${company.stock_beta_coefficient}</span>
            </td>
 
+           <td>
+               <span style="font-weight: bold">${company.annual_stock_volatility}</span>
+           </td>
 
            <td>
                <span style="font-weight: bold">${company.daily_stock_volatility}</span>
            </td>
 
 
-           <td>
-               <span style="font-weight: bold">${company.annual_stock_volatility}</span>
-           </td>
+           <td style="background-color: ${color}">
+                            <span style="font-weight: bold">${company.stock_risk_rank !== null ? company.stock_risk_rank : '-'}</span>
+                        </td>
 
-
-           <td>
-               <span style="font-weight: bold">${company.stock_risk_rank}</span>
-           </td>
-
-           <td>
+            <td>
                <span style="font-weight: bold">${company.avg_daily_expected_stock_return}</span>
            </td>
 
@@ -529,7 +585,7 @@
            </td>
 
            <td>
-               <span style="font-weight: bold">${company.last_dividend_date !== null ? company.last_dividend_date : '-'}</span>
+               <span  style="font-weight: bold;width: 100%">${company.last_dividend_date !== null ? company.last_dividend_date : '-'}</span>
            </td>
        </tr>
 
