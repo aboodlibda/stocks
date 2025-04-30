@@ -200,7 +200,7 @@
 <body>
 
 <div class="main_search_div">
-    <div class="select-search">
+    <div class="select-search" dir="rtl">
         <select name="sector" class="sector" id="sector">
             <option  selected>اختر القطاع</option>
             @foreach($companies as $sector)
@@ -219,7 +219,7 @@
 
         <thead>
         <tr>
-            <th colspan="4" border: 1px solid #000>
+            <th colspan="4" style="border: 1px solid #000">
                 <span style="color: black;font-size: 11px">تاريخ تحميل البيانات التاريخية من 12-09-2021 الى 12-09-2024</span>
             </th>
             <th colspan="3" class="row1-merged gr-blue-2">Average Industry</th>
