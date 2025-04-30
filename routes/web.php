@@ -17,8 +17,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     Route::get('/get-stock-averages', [HomeController::class, 'getStockAverages'])->name('get-stock-averages');
     Route::get('/companies/ajax', [HomeController::class, 'ajaxIndex'])->name('companies.index.ajax');
     Route::get('new-market-stock-screen', function () {
-        $companies = Company::query()->orderBy('index_name')->get();
-        return view('cms.test', compact('companies'));
+//        $companies = Company::query()->get(['index_name', 'index_symbol']);
+        $companies = Company::query()->distinct()->get(['index_name', 'index_symbol']);
+        return view('cms.test',compact('companies'));
     })->name('test');
 
     Route::get('/companies', [HomeController::class, 'getCompanies']);
