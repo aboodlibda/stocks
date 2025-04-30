@@ -174,12 +174,14 @@
             border: 2px solid #006a83;
             border-radius: 30px;
             background-color: #f9f9f9;
+            cursor: pointer;
         }
 
         /* Style the options */
         .sector option {
             padding: 10px;
             font-size: 16px;
+            cursor: pointer;
         }
 
         /* Style the selected option */
@@ -199,7 +201,7 @@
 
 <div class="main_search_div">
     <div class="select-search">
-        <select name="sector" class="sector" id="sector" >
+        <select name="sector" class="sector" id="sector">
             <option  selected>اختر القطاع</option>
             @foreach($companies as $sector)
                 <option value="{{$sector->index_symbol}}">{{$sector->index_name}}</option>
@@ -217,8 +219,8 @@
 
         <thead>
         <tr>
-            <th colspan="4" class="">
-                <span style="color: black;text-decoration: none;font-size: 11px">تاريخ تحميل البيانات التاريخية من 12-09-2021 الى 12-09-2024</span>
+            <th colspan="4" style="border: 1px solid #000">
+                <span style="color: black;font-size: 11px">تاريخ تحميل البيانات التاريخية من 12-09-2021 الى 12-09-2024</span>
             </th>
             <th colspan="3" class="row1-merged gr-blue-2">Average Industry</th>
             <th class="row1-single orange" id="avg_stock_var_percent">0</th>
@@ -237,11 +239,15 @@
         </tr>
 
         <tr>
-            <th colspan="20" style="padding: 10px;border: none">
-                <a href="https://www.saudiexchange.sa/" target="_blank" style="color: black;text-decoration: none;font-size: 12px">رابط أخبار وأسعار سوق التداول السعودي</a>
+            <th colspan="4" style="border: 1px solid #000">
+                <span style="color: black;;font-size: 11px">PM 01:45:00 | تاريخ تحديث البيانات 30-04-2024 </span>
+            </th>
 
+            <th colspan="10" style="padding: 10px;border: none">
+                <a href="https://www.saudiexchange.sa/" target="_blank" style="color: black;text-decoration: none;font-size: 12px">رابط أخبار وأسعار سوق التداول السعودي</a>
             </th>
         </tr>
+
 
         <tr>
             <th colspan="5" class="row2-mergedAll gr-blue-3">ملخص أداء أسهم الشركات في السوق السعودى للتداول</th>
@@ -277,7 +283,9 @@
             <th class="row3-cell14 gr-blue-2">P/E Ratio</th>&nbsp;
             <th class="row3-cell15 gr-blue-2">ROE</th>
             <th class="row3-cell16 gr-blue-2">Dividend Yield</th>
-            <th class="row3-cell17 gr-blue-2">EPS</th>
+            <th class="row3-cell17 gr-blue-2">
+                EPS<img src="{{asset('assets/media/Saudi_Riyal_Symbol.svg')}}" alt="Saudi Exchange Logo" style="width: 30px; height: 15px;">
+            </th>
             <th class="row3-cell18 gr-blue-2">Latest Dividend Date</th>
         </tr>
         </thead>
