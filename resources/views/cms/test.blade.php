@@ -92,7 +92,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding-bottom: 20px;
+            /*padding-bottom: 10px;*/
         }
 
 
@@ -158,16 +158,59 @@
         .table-container {
             overflow-y: auto;
         }
+
+
+        .select-search {
+            margin: 20px;
+            /*padding: 10px;*/
+            border: none;
+        }
+
+        /* Style the select element */
+        .sector {
+            width: 100%;
+            padding: 9px;
+            font-size: 16px;
+            border: 2px solid #006a83;
+            border-radius: 30px;
+            background-color: #f9f9f9;
+        }
+
+        /* Style the options */
+        .sector option {
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        /* Style the selected option */
+        .sector option[selected] {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        /* Style the disabled option */
+        .sector option[disabled] {
+            color: #ccc;
+        }
+
     </style>
 </head>
 <body>
 
 <div class="main_search_div">
+    <div class="select-search">
+        <select name="sector" class="sector" id="sector" >
+            <option  selected>اختر القطاع</option>
+            @foreach($companies as $sector)
+                <option value="{{$sector->index_symbol}}">{{$sector->index_name}}</option>
+            @endforeach
+        </select>
+    </div>
     <div class="box">
         <i class="fa-brands fa-searching"></i>
         <input type="text" name="" dir="rtl" placeholder="البحث بإسم أو رقم الشركة / إسم أو رمز القطاع" id="search-input">
-{{--        <button id="search-button">بحث</button>--}}
     </div>
+
 </div>
 
     <table id="stock_table" class="table-container">
@@ -195,7 +238,7 @@
 
         <tr>
             <th colspan="20" style="padding: 10px;border: none">
-                <a href="https://www.saudiexchange.sa/" style="color: black;text-decoration: none;font-size: 12px">رابط أخبار وأسعار سوق التداول السعودي</a>
+                <a href="https://www.saudiexchange.sa/" target="_blank" style="color: black;text-decoration: none;font-size: 12px">رابط أخبار وأسعار سوق التداول السعودي</a>
 
             </th>
         </tr>
@@ -231,7 +274,7 @@
             <th class="row3-cell13 gr-blue-3">Annual Expected Return</th>
 
 
-            <th class="row3-cell14 gr-blue-2">P/E Ratio</th>
+            <th class="row3-cell14 gr-blue-2">P/E Ratio</th>&nbsp;
             <th class="row3-cell15 gr-blue-2">ROE</th>
             <th class="row3-cell16 gr-blue-2">Dividend Yield</th>
             <th class="row3-cell17 gr-blue-2">EPS</th>
@@ -240,93 +283,6 @@
         </thead>
 
         <tbody id="table-data">
-
-        {{--   @foreach($companies as $company)--}}
-        {{--       <tr>--}}
-        {{--           <td>--}}
-        {{--               <span><img src="{{asset('assets/media/svg/mouse-pointer-solid.svg')}}" alt="click" style="height: 30px;width: 30px"></span>--}}
-        {{--           </td>--}}
-
-        {{--           <td>--}}
-        {{--               <span><img src="{{asset('assets/media/svg/mouse-pointer-solid.svg')}}" alt="click" style="height: 30px;width: 30px"></span>--}}
-        {{--           </td>--}}
-
-        {{--           <td>--}}
-        {{--               <span style="font-weight: bold">{{$company->index_symbol}}</span>--}}
-        {{--           </td>--}}
-
-        {{--           <td>--}}
-        {{--               <span style="font-weight: bold">{{$company->index_name}}</span>--}}
-        {{--           </td>--}}
-
-        {{--           <td>--}}
-        {{--               <span style="font-weight: bold" dir="rtl">{{$company->company_num}} <br> {{$company->company_name}}</span>--}}
-        {{--           </td>--}}
-
-        {{--           <td>--}}
-        {{--               <span style="font-weight: bold">{{round($company->close, 3)}}</span>--}}
-        {{--           </td>--}}
-
-        {{--           <td>--}}
-        {{--               <span style="font-weight: bold">{{round($company->typical_price, 3)}}</span>--}}
-        {{--           </td>--}}
-
-
-        {{--           <td>--}}
-        {{--               <span style="font-weight: bold">{{round($company->stock_var_percent, 3) . '%'}}</span>--}}
-        {{--           </td>--}}
-
-        {{--           <td>--}}
-        {{--               <span style="font-weight: bold">{{$company->stock_sharp_ratio}}</span>--}}
-        {{--           </td>--}}
-
-        {{--           <td>--}}
-        {{--               <span style="font-weight: bold">{{round($company->stock_beta_coefficient, 3)}}</span>--}}
-        {{--           </td>--}}
-
-        {{--           <td>--}}
-        {{--               <span style="font-weight: bold">{{round($company->annual_stock_volatility, 3) . '%'}}</span>--}}
-        {{--           </td>--}}
-
-        {{--           <td>--}}
-        {{--               <span style="font-weight: bold">{{round($company->daily_stock_volatility, 3) . '%'}}</span>--}}
-        {{--           </td>--}}
-
-        {{--           <td>--}}
-        {{--               <span style="font-weight: bold">{{$company->stock_risk_rank}}</span>--}}
-        {{--           </td>--}}
-
-        {{--           <td>--}}
-        {{--               <span style="font-weight: bold">{{round($company->avg_daily_expected_stock_return * 100, 3) . '%'}}</span>--}}
-        {{--           </td>--}}
-
-        {{--           <td>--}}
-        {{--               <span style="font-weight: bold">{{round($company->annual_stock_expected_return, 3) . '%'}}</span>--}}
-        {{--           </td>--}}
-
-        {{--           <td>--}}
-        {{--               <span style="font-weight: bold">{{(isset($company->pe_ratio) ? round($company->pe_ratio, 3) : 'N/A')}}</span>--}}
-        {{--           </td>--}}
-
-        {{--           <td>--}}
-        {{--               <span style="font-weight: bold">{{(isset($company->return_on_equity) ? round($company->return_on_equity, 3) . '%' : 'N/A')}}</span>--}}
-        {{--           </td>--}}
-
-        {{--           <td>--}}
-        {{--               <span style="font-weight: bold">{{(isset($company->stock_dividend_yield) ? round($company->stock_dividend_yield, 3) : 'N/A')}}</span>--}}
-        {{--           </td>--}}
-
-        {{--           <td>--}}
-        {{--               <span style="font-weight: bold">{{round($company->earning_per_share, 3)}}</span>--}}
-        {{--           </td>--}}
-
-        {{--           <td>--}}
-        {{--               <span style="font-weight: bold">{{$company->last_dividend_date}}</span>--}}
-        {{--           </td>--}}
-        {{--       </tr>--}}
-
-        {{--   @endforeach--}}
-
         </tbody>
     </table>
 
@@ -337,24 +293,25 @@
 
 <script>
 
-    function fetchStockAverages() {
+    function fetchStockAverages(value) {
         $.ajax({
             url: "{{route('get-stock-averages')}}", // Adjust the URL if needed
             method: "GET",
             dataType: "json",
+            data: { sector_code: value },
             success: function (response) {
                 // Assuming response contains keys matching the ID attributes in the table
-                $("#avg_stock_var_percent").text(response.avg_stock_var_percent || "N/A");
-                $("#avg_stock_sharp_ratio").text(response.avg_stock_sharp_ratio || "N/A");
-                $("#avg_stock_beta_coefficient").text(response.avg_stock_beta_coefficient || "N/A");
-                $("#avg_annual_stock_volatility").text(response.avg_annual_stock_volatility || "N/A");
-                $("#avg_daily_stock_volatility").text(response.avg_daily_stock_volatility || "N/A");
-                $("#avg_pe_ratio").text(response.avg_pe_ratio || "N/A");
-                $("#avg_return_on_equity").text(response.avg_return_on_equity || "N/A");
-                $("#avg_stock_dividend_yield").text(response.avg_stock_dividend_yield || "N/A");
-                $("#avg_earning_per_share").text(response.avg_earning_per_share || "N/A");
-                $("#avg_annual_stock_expected_return").text(response.avg_annual_stock_expected_return || "N/A");
-                $("#avg_avg_daily_expected_stock_return").text(response.avg_avg_daily_expected_stock_return || "N/A");
+                $("#avg_stock_var_percent").text(response.avg_stock_var_percent || "0");
+                $("#avg_stock_sharp_ratio").text(response.avg_stock_sharp_ratio || "0");
+                $("#avg_stock_beta_coefficient").text(response.avg_stock_beta_coefficient || "0");
+                $("#avg_annual_stock_volatility").text(response.avg_annual_stock_volatility || "0");
+                $("#avg_daily_stock_volatility").text(response.avg_daily_stock_volatility || "0");
+                $("#avg_pe_ratio").text(response.avg_pe_ratio || "0");
+                $("#avg_return_on_equity").text(response.avg_return_on_equity || "0");
+                $("#avg_stock_dividend_yield").text(response.avg_stock_dividend_yield || "0");
+                $("#avg_earning_per_share").text(response.avg_earning_per_share || "0");
+                $("#avg_annual_stock_expected_return").text(response.avg_annual_stock_expected_return || "0");
+                $("#avg_avg_daily_expected_stock_return").text(response.avg_avg_daily_expected_stock_return || "0");
             },
 
             error: function () {
@@ -483,8 +440,8 @@
             }
         });
     }
-    // function searching() {
-        $('#search-input').on('keyup', function() {
+
+    $('#search-input').on('keyup', function() {
             var searchQuery = $(this).val();
             $.ajax({
                 type: 'GET',
@@ -496,7 +453,6 @@
                 },
                 success: function(data) {
                     $('#table-data').empty();
-                    fetchStockAverages();
                     $.each(data, function(index, company) {
 
                         let color;
@@ -607,84 +563,14 @@
                 }
             });
         });
-    // }
     $(document).ready(function () {
-        // searching();
         getCompanies();
     });
+
+    $('#sector').on('change', function() {
+        var selectedValue = $(this).val();
+       fetchStockAverages(selectedValue);
+    });
 </script>
-
-<script>
-
-    // const searchButton = document.getElementById('search-button');
-    // const searchInput = document.getElementById('search-input');
-
-    // searchButton.addEventListener('click', () => {
-    //     const searchTerm = searchInput.value.trim();
-    //     // Add your search logic here
-    //     console.log(`Searching for: ${searchTerm}`);
-    // });
-
-    {{--var lang = $('html').attr('lang');--}}
-
-    {{--const currentLanguage = document.documentElement.lang || "ar";--}}
-    {{--const dataTableLanguage = currentLanguage === "ar"--}}
-    {{--    ? '//cdn.datatables.net/plug-ins/2.1.8/i18n/ar.json'--}}
-    {{--    : '';--}}
-    {{--$(document).ready(function () {--}}
-    {{--    $('#stock_table').DataTable({--}}
-    {{--        "bFilter": false,--}}
-    {{--        "bInfo": false,--}}
-    {{--        "bAutoWidth": false,--}}
-    {{--        "sDom": '<"table-responsive"t>',--}}
-    {{--        "customCss": "my-custom-datatable",--}}
-    {{--        processing: true,--}}
-    {{--        serverSide: true,--}}
-    {{--        language: { url: dataTableLanguage },--}}
-    {{--        scrollX: false,--}}
-    {{--        paging: true,--}}
-    {{--        searching: true,--}}
-    {{--        responsive: false,--}}
-    {{--        ajax: '{{ route("companies.index.ajax") }}', // Adjust route name as appropriate--}}
-    {{--        columns: [--}}
-    {{--            { data: 'avg_daily_expected_stock_return', name: 'avg_daily_expected_stock_return' },--}}
-    {{--            { data: 'annual_stock_expected_return', name: 'annual_stock_expected_return' },--}}
-    {{--            { data: 'earning_per_share', name: 'earning_per_share' },--}}
-    {{--            { data: 'stock_dividend_yield', name: 'stock_dividend_yield' },--}}
-    {{--            { data: 'return_on_equity', name: 'return_on_equity' },--}}
-    {{--            { data: 'pe_ratio', name: 'pe_ratio' },--}}
-    {{--            { data: 'stock_risk_rank', name: 'stock_risk_rank' },--}}
-    {{--            { data: 'daily_stock_volatility', name: 'daily_stock_volatility' },--}}
-    {{--            { data: 'annual_stock_volatility', name: 'annual_stock_volatility' },--}}
-    {{--            { data: 'stock_beta_coefficient', name: 'stock_beta_coefficient' },--}}
-    {{--            { data: 'stock_sharp_ratio', name: 'stock_sharp_ratio' },--}}
-    {{--            { data: 'stock_var_percent', name: 'stock_var_percent' },--}}
-    {{--            { data: 'index_symbol', name: 'index_symbol' },--}}
-    {{--            { data: 'index_name', name: 'index_name' },--}}
-    {{--            { data: 'company_name', name: 'company_name' },--}}
-    {{--            { data: 'company_num', name: 'company_num' },--}}
-    {{--            { data: 'view_stock_performance', name: 'view_stock_performance', orderable: false, searchable: false },--}}
-    {{--            { data: 'add_to_portfolio', name: 'add_to_portfolio', orderable: false, searchable: false },--}}
-    {{--        ]--}}
-    {{--    });--}}
-
-    {{--});--}}
-
-
-
-    // oTable = $('#kt_ecommerce_coupons_table').DataTable();   //pay attention to capital D, which is mandatory to retrieve "api" datatables' object, as @Lionel said
-    // $('#searchInput').keyup(function(){
-    //     oTable.search($(this).val()).draw() ;
-    // })
-
-
-    // $('#searchInput').keyup(function() {
-    //     var table = $('#stock_table').DataTable();
-    //     table.search($(this).val()).draw();
-    // });
-
-
-</script>
-
 
 </html>
