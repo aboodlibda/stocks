@@ -523,7 +523,7 @@
                 dataType: 'json',
                 data: { query: searchQuery },
                 beforeSend: function() {
-                    $('#table-data').append('<tr><td colspan="16" style="text-align: center;">جاري التحميل ...</td></tr>');
+                    $('#table-data').append('<tr><td colspan="21" style="text-align: center;">جاري التحميل ...</td></tr>');
                 },
                 success: function(data) {
                     $('#table-data').empty();
