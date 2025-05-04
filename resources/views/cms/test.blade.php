@@ -269,7 +269,7 @@
             </th>
             <th colspan="3" class="row1-merged gr-blue-2">
                 Average Industry
-                <select id="sector" name="sector" style="width: 100%;background-color: white;color: #315492;font-family: Tajawal, sans-serif">
+                <select id="sector" name="sector" style="width: 100%;background-color: #315492;color:white;font-family: Tajawal, sans-serif;border: none;text-align: center">
                     <option  selected>اختر القطاع</option>
                     @foreach($companies as $sector)
                         <option value="{{$sector->index_symbol}}">{{$sector->index_name}}</option>
