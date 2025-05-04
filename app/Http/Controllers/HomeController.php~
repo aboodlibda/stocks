@@ -80,7 +80,7 @@ class HomeController extends Controller
             AVG(stock_dividend_yield) AS avg_stock_dividend_yield,
             AVG(earning_per_share) AS avg_earning_per_share,
             AVG(annual_stock_expected_return) AS avg_annual_stock_expected_return,
-            AVG(minimum_daily_stock_3_years) AS avg_minimum_daily_stock_3_years
+            AVG(minimum_daily_stock_3_years) AS avg_minimum_daily_stock_3_years,
             AVG(maximum_daily_stock_3_years) AS avg_maximum_daily_stock_3_years
         ")->whereNotNull('stock_var_percent')
             ->whereNotNull('stock_sharp_ratio')
@@ -105,7 +105,7 @@ class HomeController extends Controller
 //            return round($value, 2);
 //        });
 
-        dd($averages);
+//        dd($averages);
         $averages = collect($averages)->map(function ($value) {
             if ($value->avg_annual_stock_volatility <= 0.10) {
                 $stockRiskRank = "Conservative";
