@@ -223,14 +223,14 @@
 </div>
 
 <div class="main_search_div">
-    <div class="select-search">
-        <select name="sector" class="sector" id="sector">
-            <option  selected>اختر القطاع</option>
-            @foreach($companies as $sector)
-                <option value="{{$sector->index_symbol}}">{{$sector->index_name}}</option>
-            @endforeach
-        </select>
-    </div>
+{{--    <div class="select-search">--}}
+{{--        <select name="sector" class="sector" id="sector">--}}
+{{--            <option  selected>اختر القطاع</option>--}}
+{{--            @foreach($companies as $sector)--}}
+{{--                <option value="{{$sector->index_symbol}}">{{$sector->index_name}}</option>--}}
+{{--            @endforeach--}}
+{{--        </select>--}}
+{{--    </div>--}}
     <div class="box">
         <i class="fa-brands fa-searching"></i>
         <input type="text" name="" dir="rtl" placeholder="البحث بإسم أو رقم الشركة / إسم أو رمز القطاع" id="search-input">
@@ -403,7 +403,7 @@
             url: '/companies',
             dataType: 'json',
             beforeSend: function() {
-                $('#table-data').append('<tr><td colspan="16" style="text-align: center;">جاري التحميل ...</td></tr>');
+                $('#table-data').append('<tr><td colspan="21" style="text-align: center;font-weight: bold">جاري التحميل ...</td></tr>');
             },
             success: function(data) {
                 $('#table-data').empty();
