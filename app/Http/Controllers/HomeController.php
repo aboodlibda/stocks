@@ -80,7 +80,7 @@ class HomeController extends Controller
             AVG(stock_dividend_yield) AS avg_stock_dividend_yield,
             AVG(earning_per_share) AS avg_earning_per_share,
             AVG(annual_stock_expected_return) AS avg_annual_stock_expected_return,
-            AVG(minimum_daily_stock_3_years) AS avg_minimum_daily_stock_3_years
+            AVG(minimum_daily_stock_3_years) AS avg_minimum_daily_stock_3_years,
             AVG(maximum_daily_stock_3_years) AS avg_maximum_daily_stock_3_years
         ")->whereNotNull('stock_var_percent')
             ->whereNotNull('stock_sharp_ratio')
@@ -128,7 +128,7 @@ class HomeController extends Controller
                 'avg_stock_dividend_yield' => round($value->avg_stock_dividend_yield, 2),
                 'avg_earning_per_share' => round($value->avg_earning_per_share, 2),
                 'avg_annual_stock_expected_return' => round($value->avg_annual_stock_expected_return, 2),
-                'avg_minimum_daily_stock_3_years' => round($value->avg_minimum_daily_stock_3_years, 2),
+                'avg_minimum_daily_stock_3_years' => $value->avg_minimum_daily_stock_3_years,
                 'avg_maximum_daily_stock_3_years' => round($value->avg_maximum_daily_stock_3_years, 2),
                 'stock_risk_rank' => $stockRiskRank
                 ];
