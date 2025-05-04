@@ -29,16 +29,16 @@ class FetchStockData extends Command
 
 
 // Step 1: Get the target record
-        $target = DB::table('companies')->where('company_num', 8200)->first();
-
-        if ($target) {
-            // Step 2: Get all records after it, based on ID
-            $tickers = DB::table('companies')->where('company_id', '>', $target->company_id)
-                ->orderBy('company_id')
-                ->pluck('company_num')->toArray();
-        } else {
-            $tickers = collect(); // Empty collection if not found
-        }
+//        $target = DB::table('companies')->where('company_num', 4291)->first();
+//
+//        if ($target) {
+//            // Step 2: Get all records after it, based on ID
+//            $tickers = DB::table('companies')->where('company_id', '>', $target->company_id)
+//                ->orderBy('company_id')
+//                ->pluck('company_num')->toArray();
+//        } else {
+//            $tickers = collect(); // Empty collection if not found
+//        }
 
 
 
