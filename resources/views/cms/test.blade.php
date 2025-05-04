@@ -223,14 +223,14 @@
 </div>
 
 <div class="main_search_div">
-    <div class="select-search">
-        <select name="sector" class="sector" id="sector">
-            <option  selected>اختر القطاع</option>
-            @foreach($companies as $sector)
-                <option value="{{$sector->index_symbol}}">{{$sector->index_name}}</option>
-            @endforeach
-        </select>
-    </div>
+{{--    <div class="select-search">--}}
+{{--        <select name="sector" class="sector" id="sector">--}}
+{{--            <option  selected>اختر القطاع</option>--}}
+{{--            @foreach($companies as $sector)--}}
+{{--                <option value="{{$sector->index_symbol}}">{{$sector->index_name}}</option>--}}
+{{--            @endforeach--}}
+{{--        </select>--}}
+{{--    </div>--}}
     <div class="box">
         <i class="fa-brands fa-searching"></i>
         <input type="text" name="" dir="rtl" placeholder="البحث بإسم أو رقم الشركة / إسم أو رمز القطاع" id="search-input">
@@ -265,9 +265,17 @@
         </tr>
         <tr>
             <th colspan="4" style="border: 1px solid #000">
-                <span style="color: black;font-size: 11px">البيانات التاريخية من 12-09-2021 الى 12-09-2024</span>
+                <span style="color: black;font-size: 11px">فترة تحميل أسعار الأسهم التاريخية من 12-09-2021 الى 12-09-2024</span>
             </th>
-            <th colspan="3" class="row1-merged gr-blue-2">Average Industry</th>
+            <th colspan="3" class="row1-merged gr-blue-2">
+                Average Industry
+                <select id="sector" name="sector" style="width: 100%;background-color: white;color: #315492;font-family: Tajawal, sans-serif">
+                    <option  selected>اختر القطاع</option>
+                    @foreach($companies as $sector)
+                        <option value="{{$sector->index_symbol}}">{{$sector->index_name}}</option>
+                    @endforeach
+                </select>
+            </th>
             <th class="row1-single orange" id="avg_stock_var_percent">0</th>
             <th class="row1-single orange" id="avg_stock_sharp_ratio">0</th>
             <th class="row1-single orange" id="avg_stock_beta_coefficient">0</th>
