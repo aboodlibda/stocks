@@ -105,7 +105,7 @@ class HomeController extends Controller
 //            return round($value, 2);
 //        });
 
-//        dd($averages);
+        dd($averages);
         $averages = collect($averages)->map(function ($value) {
             if ($value->avg_annual_stock_volatility <= 0.10) {
                 $stockRiskRank = "Conservative";
@@ -128,8 +128,8 @@ class HomeController extends Controller
                 'avg_stock_dividend_yield' => round($value->avg_stock_dividend_yield, 2),
                 'avg_earning_per_share' => round($value->avg_earning_per_share, 2),
                 'avg_annual_stock_expected_return' => round($value->avg_annual_stock_expected_return, 2),
-                'avg_minimum_daily_stock_3_years' => round($value->minimum_daily_stock_3_years, 2),
-                'avg_maximum_daily_stock_3_years' => round($value->maximum_daily_stock_3_years, 2),
+                'avg_minimum_daily_stock_3_years' => round($value->avg_minimum_daily_stock_3_years, 2),
+                'avg_maximum_daily_stock_3_years' => round($value->avg_maximum_daily_stock_3_years, 2),
                 'stock_risk_rank' => $stockRiskRank
                 ];
         });
