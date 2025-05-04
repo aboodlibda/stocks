@@ -80,7 +80,8 @@ class HomeController extends Controller
             AVG(stock_dividend_yield) AS avg_stock_dividend_yield,
             AVG(earning_per_share) AS avg_earning_per_share,
             AVG(annual_stock_expected_return) AS avg_annual_stock_expected_return,
-            AVG(avg_daily_expected_stock_return) AS avg_avg_daily_expected_stock_return
+            AVG(minimum_daily_stock_3_years) AS avg_minimum_daily_stock_3_years
+            AVG(maximum_daily_stock_3_years) AS avg_maximum_daily_stock_3_years
         ")->whereNotNull('stock_var_percent')
             ->whereNotNull('stock_sharp_ratio')
             ->whereNotNull('stock_beta_coefficient')
@@ -91,19 +92,48 @@ class HomeController extends Controller
             ->whereNotNull('stock_dividend_yield')
             ->whereNotNull('earning_per_share')
             ->whereNotNull('annual_stock_expected_return')
-            ->whereNotNull('avg_daily_expected_stock_return')
-            ->first();
+            ->whereNotNull('minimum_daily_stock_3_years')
+            ->whereNotNull('maximum_daily_stock_3_years')
+            ->get();
 
         if (!$averages) {
             return response()->json(['message' => 'لا توجد بيانات متاحة لحساب المتوسط.'], 404);
         }
 
         // تقريب القيم إلى خانتين عشريتين
-        $averages = collect($averages)->map(function ($value) {
-            return round($value, 2);
-        });
+//        $averages = collect($averages)->map(function ($value) {
+//            return round($value, 2);
+//        });
 
-        return response()->json($averages);
+//        dd($averages);
+        $averages = collect($averages)->map(function ($value) {
+            if ($value->avg_annual_stock_volatility <= 0.10) {
+                $stockRiskRank = "Conservative";
+            } elseif ($value->avg_annual_stock_volatility <= 0.20) {
+                $stockRiskRank = "Moderately Conservative";
+            } elseif ($value->avg_annual_stock_volatility <= 0.30) {
+                $stockRiskRank = "Aggressive";
+            } else {
+                $stockRiskRank = "Very Aggressive";
+            }
+
+            return [
+                'avg_stock_var_percent' => round($value->avg_stock_var_percent, 2),
+                'avg_stock_sharp_ratio' => round($value->avg_stock_sharp_ratio, 2),
+                'avg_stock_beta_coefficient' => round($value->avg_stock_beta_coefficient, 2),
+                'avg_annual_stock_volatility' => round($value->avg_annual_stock_volatility, 2),
+                'avg_daily_stock_volatility' => round($value->avg_daily_stock_volatility, 2),
+                'avg_pe_ratio' => round($value->avg_pe_ratio, 2),
+                'avg_return_on_equity' => round($value->avg_return_on_equity, 2),
+                'avg_stock_dividend_yield' => round($value->avg_stock_dividend_yield, 2),
+                'avg_earning_per_share' => round($value->avg_earning_per_share, 2),
+                'avg_annual_stock_expected_return' => round($value->avg_annual_stock_expected_return, 2),
+                'avg_minimum_daily_stock_3_years' => round($value->avg_minimum_daily_stock_3_years, 2),
+                'avg_maximum_daily_stock_3_years' => round($value->avg_maximum_daily_stock_3_years, 2),
+                'stock_risk_rank' => $stockRiskRank
+                ];
+        });
+        return response()->json($averages[0]);
     }
 
 
