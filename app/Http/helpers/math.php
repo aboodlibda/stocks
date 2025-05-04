@@ -270,6 +270,12 @@ function riskMeasurementRatios($ticker, $code): array
     $stockBetaCoefficient = calculateBeta($companyRatios, $sectorRatios);
     $annualStockVolatility = (($company_daily_stock_volatility) * sqrt(250)) / 100;
 
+    $companyRatios3Years = array_slice($companyRatios, 0,250);
+    $minimumDailyStock3Years = getMinimumValue($companyRatios3Years);
+    $maximumDailyStock3Years = getMaximumValue($companyRatios3Years);
+
+
+
 
 
     if ($annualStockVolatility <= 0.10) {
@@ -299,6 +305,8 @@ function riskMeasurementRatios($ticker, $code): array
         'riskRank' => $stockRiskRank,
         'averageDailyExpectedReturn' => round(averageIfNotEmpty($companyRatios),4),
         'averageAnnualExpectedReturn' => round($annualStockExpectedReturn*100, 3),
+        'minimumDailyStock3Years' => $minimumDailyStock3Years,
+        'maximumDailyStock3Years' => $maximumDailyStock3Years
     ];
 }
 
@@ -427,7 +435,9 @@ function updateCompanyRatios()
             'earning_per_share' => $financialRatios['revenuePerShare'],
             'last_dividend_date' => Carbon::parse($financialRatios['lastDividendDate'])->format('Y-m-d'),
             'close' => $stockMarketPrice['close'],
-            'typical_price' => $stockMarketPrice['typicalPrice']
+            'typical_price' => $stockMarketPrice['typicalPrice'],
+            'minimum_daily_stock_3_years' => $riskMeasurementRatios['minimumDailyStock3Years'],
+            'maximum_daily_stock_3_years' => $riskMeasurementRatios['maximumDailyStock3Years'],
         ]);
 //        $company->timestamp = false;
         $company->save();
@@ -471,3 +481,29 @@ function calculateCovariance($x, $y)
 }
 
 
+function getMinimumValue(array $values) {
+    // Filter out non-numeric or empty values (optional, for safety)
+    $filtered = array_filter($values, function ($v) {
+        return is_numeric($v);
+    });
+
+    if (empty($filtered)) {
+        return null; // or some default like 0
+    }
+
+    return min($filtered);
+}
+
+
+function getMaximumValue(array $values) {
+    // Filter out non-numeric values
+    $filtered = array_filter($values, function ($v) {
+        return is_numeric($v);
+    });
+
+    if (empty($filtered)) {
+        return null; // or return 0 or a custom default
+    }
+
+    return max($filtered);
+}
