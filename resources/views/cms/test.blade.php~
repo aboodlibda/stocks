@@ -195,12 +195,35 @@
             color: #ccc;
         }
 
+        /* CSS */
+        .logo-container {
+            width: 160px; /* adjust the width as needed */
+            height: 70px; /* adjust the height as needed */
+            /*background-color: #8faadd; !* light gray background *!*/
+            border-radius: 10px; /* rounded corners */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin:  auto; /* add some margin */
+        }
+
+        .logo {
+            width: 110%; /* adjust the logo size */
+            height: auto;
+            object-fit: contain;
+        }
+
     </style>
 </head>
 <body>
 
+<!-- HTML -->
+<div class="logo-container">
+    <img src="{{asset('assets/media/logo.png')}}" alt="Logo" class="logo">
+</div>
+
 <div class="main_search_div">
-    <div class="select-search" dir="rtl">
+    <div class="select-search">
         <select name="sector" class="sector" id="sector">
             <option  selected>اختر القطاع</option>
             @foreach($companies as $sector)
@@ -219,23 +242,45 @@
 
         <thead>
         <tr>
+            <th colspan="7"></th>
+            <th class="row3-cell6 gr-blue-2">VaR % For 1 Day</th>
+            <th class="row3-cell7 gr-blue-2">Sharp Ratio</th>
+            <th class="row3-cell8 gr-blue-2">Beta Coefficient</th>
+            <th class="row3-cell9 gr-blue-2">Daily Volatility</th>
+            <th class="row3-cell10 gr-blue-2">Annual Volatility</th>
+            <th class="row3-cell11 gr-blue-2">Risk Ranking</th>
+
+
+            <th class="row3-cell12 gr-blue-3" style="font-size: 10px">Minimum Daily Stock Return Over 3 Years of Historical Data</th>
+            <th class="row3-cell12 gr-blue-3" style="font-size: 10px">Maximum Daily Stock Return Over 3 Years of Historical Data</th>
+            <th class="row3-cell13 gr-blue-3">Annual Expected Return</th>
+
+
+            <th class="row3-cell14 gr-blue-2">P/E Ratio</th>&nbsp;
+            <th class="row3-cell15 gr-blue-2">ROE</th>
+            <th class="row3-cell16 gr-blue-2">Dividend Yield</th>
+            <th class="row3-cell17 gr-blue-2">
+                EPS<img src="{{asset('assets/media/Saudi_Riyal_Symbol.svg')}}" alt="Saudi Exchange Logo" style="width: 30px; height: 15px;">
+            </th>
+        </tr>
+        <tr>
             <th colspan="4" style="border: 1px solid #000">
-                <span style="color: black;font-size: 11px">تاريخ تحميل البيانات التاريخية من 12-09-2021 الى 12-09-2024</span>
+                <span style="color: black;font-size: 11px">البيانات التاريخية من 12-09-2021 الى 12-09-2024</span>
             </th>
             <th colspan="3" class="row1-merged gr-blue-2">Average Industry</th>
             <th class="row1-single orange" id="avg_stock_var_percent">0</th>
             <th class="row1-single orange" id="avg_stock_sharp_ratio">0</th>
             <th class="row1-single orange" id="avg_stock_beta_coefficient">0</th>
-            <th class="row1-single orange" id="avg_annual_stock_volatility">0</th>
             <th class="row1-single orange" id="avg_daily_stock_volatility">0</th>
-            <th class="gr-blue-3 gray"></th>
-
+            <th class="row1-single orange" id="avg_annual_stock_volatility">0</th>
+            <th class="gr-blue-3 gray" id="stock_rank_risk"></th>
+            <th class="row1-single orange" id="avg_annual_stock_expected_return">0</th>
+            <th class="row1-single orange" id="avg_minimum_daily_stock_3_years">0</th>
+            <th class="row1-single orange" id="avg_maximum_daily_stock_3_years">0</th>
             <th class="row1-single orange" id="avg_pe_ratio">0</th>
             <th class="row1-single orange" id="avg_return_on_equity">0</th>
             <th class="row1-single orange" id="avg_stock_dividend_yield">0</th>
             <th class="row1-single orange" id="avg_earning_per_share">0</th>
-            <th class="row1-single orange" id="avg_annual_stock_expected_return">0</th>
-            <th class="row1-single orange" id="avg_avg_daily_expected_stock_return">0</th>
         </tr>
 
         <tr>
@@ -253,7 +298,7 @@
             <th colspan="5" class="row2-mergedAll gr-blue-3">ملخص أداء أسهم الشركات في السوق السعودى للتداول</th>
             <th colspan="2" class="row2-mergedAll gr-blue-2">Stock Market Price</th>
             <th colspan="6" class="row2-mergedAll gr-blue-3">Risk measurement Ratios</th>
-            <th colspan="2" class="row2-mergedAll gr-blue-2">Earning Ratios</th>
+            <th colspan="3" class="row2-mergedAll gr-blue-2">Stock Performance</th>
             <th colspan="5" class="row2-mergedAll gr-blue-3">Financial Ratios</th>
         </tr>
 
@@ -276,7 +321,8 @@
             <th class="row3-cell11 gr-blue-2">Risk Ranking</th>
 
 
-            <th class="row3-cell12 gr-blue-3">Daily Expected Return</th>
+            <th class="row3-cell12 gr-blue-3" style="font-size: 10px">Minimum Daily Stock Return Over 3 Years of Historical Data</th>
+            <th class="row3-cell12 gr-blue-3" style="font-size: 10px">Maximum Daily Stock Return Over 3 Years of Historical Data</th>
             <th class="row3-cell13 gr-blue-3">Annual Expected Return</th>
 
 
@@ -320,6 +366,20 @@
                 $("#avg_earning_per_share").text(response.avg_earning_per_share || "0");
                 $("#avg_annual_stock_expected_return").text(response.avg_annual_stock_expected_return || "0");
                 $("#avg_avg_daily_expected_stock_return").text(response.avg_avg_daily_expected_stock_return || "0");
+                $("#stock_rank_risk").text(response.stock_risk_rank || "-");
+
+                var riskRank = response.stock_risk_rank;
+                if (riskRank === "Conservative") {
+                    $("#stock_rank_risk").css("background-color", "lightgreen");
+                } else if (riskRank === "Moderately Conservative") {
+                    $("#stock_rank_risk").css("background-color", "yellow");
+                } else if (riskRank === "Aggressive") {
+                    $("#stock_rank_risk").css("background-color", "orange");
+                } else if (riskRank === "Very Aggressive") {
+                    $("#stock_rank_risk").css("background-color", "red");
+                } else {
+                    $("#stock_rank_risk").css("background-color", "gray");
+                }
             },
 
             error: function () {
@@ -400,7 +460,7 @@
                <span style="font-weight: bold; color: ${company.stock_beta_coefficient < 0 ? 'red' : 'black'}">${company.stock_beta_coefficient}</span>
            </td>
 
-           <td>
+             <td>
                <span style="font-weight: bold; color: ${company.daily_stock_volatility < 0 ? 'red' : 'black'}">${'% ' + company.daily_stock_volatility}</span>
            </td>
 
@@ -414,7 +474,11 @@
                         </td>
 
             <td>
-               <span style="font-weight: bold; color: ${company.avg_daily_expected_stock_return < 0 ? 'red' : 'black'}">${'% ' + company.avg_daily_expected_stock_return}</span>
+               <span style="font-weight: bold; color: ${company.minimum_daily_stock_3_years < 0 ? 'red' : 'black'}">${'% ' + company.minimum_daily_stock_3_years}</span>
+           </td>
+
+               <td>
+               <span style="font-weight: bold; color: ${company.maximum_daily_stock_3_years < 0 ? 'red' : 'black'}">${'% ' + company.maximum_daily_stock_3_years}</span>
            </td>
 
            <td>
@@ -503,33 +567,33 @@
                <span style="font-weight: bold" dir="rtl">${company.company_num} <br> ${company.company_name}</span>
            </td>
 
-                 <td>
-               <span style="font-weight: bold">${company.close !== null ? company.close.toFixed(2) : '00.00'}</span>
+           <td>
+               <span style="font-weight: bold; color: ${company.close < 0 ? 'red' : 'black'}">${company.close !== null ? company.close.toFixed(2) : '00.00'}</span>
            </td>
 
            <td>
-               <span style="font-weight: bold">${company.typical_price !== null ? company.typical_price.toFixed(2) : '00.00'}</span>
+               <span style="font-weight: bold; color: ${company.typical_price < 0 ? 'red' : 'black'}">${company.typical_price !== null ? company.typical_price.toFixed(2) : '00.00'}</span>
            </td>
 
 
            <td>
-               <span style="font-weight: bold">${'% ' + company.stock_var_percent}</span>
+               <span style="font-weight: bold; color: ${company.stock_var_percent < 0 ? 'red' : 'black'}">${'% ' + company.stock_var_percent}</span>
            </td>
 
            <td>
-               <span style="font-weight: bold">${company.stock_sharp_ratio}</span>
+               <span style="font-weight: bold; color: ${company.stock_sharp_ratio < 0 ? 'red' : 'black'}">${company.stock_sharp_ratio}</span>
            </td>
 
            <td>
-               <span style="font-weight: bold">${company.stock_beta_coefficient}</span>
+               <span style="font-weight: bold; color: ${company.stock_beta_coefficient < 0 ? 'red' : 'black'}">${company.stock_beta_coefficient}</span>
+           </td>
+
+             <td>
+               <span style="font-weight: bold; color: ${company.daily_stock_volatility < 0 ? 'red' : 'black'}">${'% ' + company.daily_stock_volatility}</span>
            </td>
 
            <td>
-               <span style="font-weight: bold">${'% ' + company.daily_stock_volatility}</span>
-           </td>
-
-           <td>
-               <span style="font-weight: bold">${'% ' + company.annual_stock_volatility}</span>
+               <span style="font-weight: bold; color: ${company.annual_stock_volatility < 0 ? 'red' : 'black'}">${'% ' + company.annual_stock_volatility}</span>
            </td>
 
 
@@ -538,24 +602,29 @@
                         </td>
 
             <td>
-               <span style="font-weight: bold">${'% ' + company.avg_daily_expected_stock_return}</span>
+               <span style="font-weight: bold; color: ${company.minimum_daily_stock_3_years < 0 ? 'red' : 'black'}">${'% ' + company.minimum_daily_stock_3_years}</span>
+           </td>
+
+               <td>
+               <span style="font-weight: bold; color: ${company.maximum_daily_stock_3_years < 0 ? 'red' : 'black'}">${'% ' + company.maximum_daily_stock_3_years}</span>
            </td>
 
            <td>
-               <span style="font-weight: bold">${'% ' + company.annual_stock_expected_return}</span>
+               <span style="font-weight: bold; color: ${company.annual_stock_expected_return < 0 ? 'red' : 'black'}">${'% ' + company.annual_stock_expected_return}</span>
            </td>
 
            <td>
-                <span style="font-weight: bold">${company.pe_ratio !== null ? company.pe_ratio : 'N/A'}</span>
+                <span style="font-weight: bold; color: ${company.pe_ratio < 0 ? 'red' : 'black'}">${company.pe_ratio !== null ? company.pe_ratio : 'N/A'}</span>
            </td>
 
            <td>
-               <span style="font-weight: bold">${'%' + company.return_on_equity}</span>
+               <span style="font-weight: bold; color: ${company.return_on_equity < 0 ? 'red' : 'black'}">${'%' + company.return_on_equity}</span>
            </td>
 
            <td>
-                <span style="font-weight: bold">${company.stock_dividend_yield !== null ? '%' + company.stock_dividend_yield : 'N/A'}</span>
+                <span style="font-weight: bold; color: ${company.stock_dividend_yield < 0 ? 'red' : 'black'}">${company.stock_dividend_yield !== null ? '%' + company.stock_dividend_yield : 'N/A'}</span>
            </td>
+
 
            <td>
                <span style="font-weight: bold; color: ${company.earning_per_share < 0 ? 'red' : 'black'}">${company.earning_per_share}</span>
