@@ -100,12 +100,6 @@ class HomeController extends Controller
             return response()->json(['message' => 'لا توجد بيانات متاحة لحساب المتوسط.'], 404);
         }
 
-        // تقريب القيم إلى خانتين عشريتين
-//        $averages = collect($averages)->map(function ($value) {
-//            return round($value, 2);
-//        });
-
-//        dd($averages);
         $averages = collect($averages)->map(function ($value) {
             if ($value->avg_annual_stock_volatility <= 0.10) {
                 $stockRiskRank = "Conservative";
