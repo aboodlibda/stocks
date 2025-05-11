@@ -147,17 +147,17 @@
             background-color: #a6a6a6;
         }
 
-        thead th, thead td  {
-            position: sticky;
-            top: 0;
-            background-color: white; /* Or any color that fits your design */
-            z-index: 1;
-            border-bottom: 1px solid #ccc;
-        }
+        /*thead th, thead td  {*/
+        /*    position: sticky;*/
+        /*    top: 0;*/
+        /*    background-color: white; !* Or any color that fits your design *!*/
+        /*    z-index: 1;*/
+        /*    border-bottom: 1px solid #ccc;*/
+        /*}*/
 
-        .table-container {
-            overflow-y: auto;
-        }
+        /*.table-container {*/
+        /*    overflow-y: auto;*/
+        /*}*/
 
 
         .select-search {
@@ -241,9 +241,9 @@
     <table id="stock_table" class="table-container">
 
         <thead>
-        <tr>
-            <th colspan="4" style="border: 1px solid #000"></th>
-            <th colspan="3" style="font-weight: bold">
+        <tr style="position: sticky; top: 0">
+            <th colspan="4" style="border: 1px solid #000;background: white"></th>
+            <th colspan="3" style="font-weight: bold;background: white">
                 أضغط على السهم أدناة
                 لأحتساب متوسط القطاع آليا
             </th>
@@ -267,9 +267,9 @@
                 EPS<img src="{{asset('assets/media/Saudi_Riyal_Symbol.svg')}}" alt="Saudi Exchange Logo" style="width: 30px; height: 15px;">
             </th>
         </tr>
-        <tr>
-            <th colspan="4" style="border: 1px solid #000">
-                <span style="color: black;font-size: 11px">فترة تحميل أسعار الأسهم التاريخية من 12-09-2021 الى 12-09-2024</span>
+        <tr style="position: sticky; top: 60px">
+            <th colspan="4" style="border: 1px solid #000;background: white">
+                <span style="color: black;font-size: 11px">فترة تحميل أسعار الأسهم التاريخية من 12-09-2021 الى 12-09-2024 والقطاع الصناعي من 12-09-2021 الى 12-09-2024</span>
             </th>
             <th colspan="3" class="row1-merged gr-blue-2">
                 Average Industry
@@ -306,7 +306,7 @@
         </tr>
 
 
-        <tr>
+        <tr style="position: sticky; top: 90px">
             <th colspan="5" class="row2-mergedAll gr-blue-3">ملخص أداء أسهم الشركات في السوق السعودى للتداول</th>
             <th colspan="2" class="row2-mergedAll gr-blue-2">Stock Market Price</th>
             <th colspan="6" class="row2-mergedAll gr-blue-3">Risk measurement Ratios</th>
@@ -314,7 +314,7 @@
             <th colspan="5" class="row2-mergedAll gr-blue-3">Financial Ratios</th>
         </tr>
 
-        <tr>
+        <tr style="position: sticky; top: 130px">
             <th class="row3-cell1 gr-blue-1">إضافة للمحفظة</th>
             <th class="row3-cell2 gr-blue-1">ملخص أداء السهم</th>
             <th class="row3-cell3 gr-blue-1">مؤشر القطاع</th>
