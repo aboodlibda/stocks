@@ -377,8 +377,8 @@
                 $("#avg_earning_per_share").text(response.avg_earning_per_share || "0");
                 $("#avg_annual_stock_expected_return").text(response.avg_annual_stock_expected_return || "0");
                 $("#stock_rank_risk").text(response.stock_risk_rank || "-");
-                $("#avg_minimum_daily_stock_3_years").text(response.avg_minimum_daily_stock_3_years || "0");
-                $("#avg_maximum_daily_stock_3_years").text(response.avg_maximum_daily_stock_3_years || "0");
+                $("#avg_minimum_daily_stock_3_years").text(response.avg_minimum_daily_stock_3_years.toFixed(2) || "0");
+                $("#avg_maximum_daily_stock_3_years").text(response.avg_maximum_daily_stock_3_years.toFixed(2) || "0");
 
 
                 var riskRank = response.stock_risk_rank;
