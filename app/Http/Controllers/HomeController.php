@@ -82,18 +82,19 @@ class HomeController extends Controller
             AVG(annual_stock_expected_return) AS avg_annual_stock_expected_return,
             AVG(minimum_daily_stock_3_years) AS avg_minimum_daily_stock_3_years,
             AVG(maximum_daily_stock_3_years) AS avg_maximum_daily_stock_3_years
-        ")->whereNotNull('stock_var_percent')
-            ->whereNotNull('stock_sharp_ratio')
-            ->whereNotNull('stock_beta_coefficient')
-            ->whereNotNull('annual_stock_volatility')
-            ->whereNotNull('daily_stock_volatility')
-            ->whereNotNull('pe_ratio')
-            ->whereNotNull('return_on_equity')
-            ->whereNotNull('stock_dividend_yield')
-            ->whereNotNull('earning_per_share')
-            ->whereNotNull('annual_stock_expected_return')
-            ->whereNotNull('minimum_daily_stock_3_years')
-            ->whereNotNull('maximum_daily_stock_3_years')
+        ")
+//            ->whereNotNull('stock_var_percent')
+//            ->whereNotNull('stock_sharp_ratio')
+//            ->whereNotNull('stock_beta_coefficient')
+//            ->whereNotNull('annual_stock_volatility')
+//            ->whereNotNull('daily_stock_volatility')
+//            ->whereNotNull('pe_ratio')
+//            ->whereNotNull('return_on_equity')
+//            ->whereNotNull('stock_dividend_yield')
+//            ->whereNotNull('earning_per_share')
+//            ->whereNotNull('annual_stock_expected_return')
+//            ->whereNotNull('minimum_daily_stock_3_years')
+//            ->whereNotNull('maximum_daily_stock_3_years')
             ->get();
 
         if (!$averages) {
