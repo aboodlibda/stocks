@@ -255,8 +255,8 @@
             <th class="row3-cell11 gr-blue-2">Risk Ranking</th>
 
 
-            <th class="row3-cell12 gr-blue-3" style="font-size: 10px">Minimum Daily Stock Return Over 3 Years of Historical Data</th>
-            <th class="row3-cell12 gr-blue-3" style="font-size: 10px">Maximum Daily Stock Return Over 3 Years of Historical Data</th>
+            <th class="row3-cell12 gr-blue-3" style="font-size: 10px">Minimum Daily Return Over 3 Years</th>
+            <th class="row3-cell12 gr-blue-3" style="font-size: 10px">Maximum Daily Return Over 3 Years</th>
             <th class="row3-cell13 gr-blue-3">Annual Expected Return</th>
 
 
