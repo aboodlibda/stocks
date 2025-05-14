@@ -255,8 +255,8 @@
             <th class="row3-cell11 gr-blue-2">Risk Ranking</th>
 
 
-            <th class="row3-cell12 gr-blue-3" style="font-size: 10px">Minimum Daily Stock Return Over 3 Years of Historical Data</th>
-            <th class="row3-cell12 gr-blue-3" style="font-size: 10px">Maximum Daily Stock Return Over 3 Years of Historical Data</th>
+            <th class="row3-cell12 gr-blue-3" style="font-size: 10px">Maximum Daily Return Over 3 Years</th>
+            <th class="row3-cell12 gr-blue-3" style="font-size: 10px">Maximum Daily Return Over 3 Years</th>
             <th class="row3-cell13 gr-blue-3">Annual Expected Return</th>
 
 
@@ -306,7 +306,7 @@
         </tr>
 
 
-        <tr style="position: sticky; top: 90px">
+        <tr style="position: sticky; top: 100px">
             <th colspan="5" class="row2-mergedAll gr-blue-3">ملخص أداء أسهم الشركات في السوق السعودى للتداول</th>
             <th colspan="2" class="row2-mergedAll gr-blue-2">Stock Market Price</th>
             <th colspan="6" class="row2-mergedAll gr-blue-3">Risk measurement Ratios</th>
@@ -314,7 +314,7 @@
             <th colspan="5" class="row2-mergedAll gr-blue-3">Financial Ratios</th>
         </tr>
 
-        <tr style="position: sticky; top: 130px">
+        <tr style="position: sticky; top: 140px">
             <th class="row3-cell1 gr-blue-1">إضافة للمحفظة</th>
             <th class="row3-cell2 gr-blue-1">ملخص أداء السهم</th>
             <th class="row3-cell3 gr-blue-1">مؤشر القطاع</th>
