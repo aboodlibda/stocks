@@ -69,66 +69,70 @@ class HomeController extends Controller
 
     public function getStockAverages(Request $request)
     {
-        $averages = Company::query()->where('index_symbol','=',$request->sector_code)->selectRaw("
-            AVG(stock_var_percent) AS avg_stock_var_percent,
-            AVG(stock_sharp_ratio) AS avg_stock_sharp_ratio,
-            AVG(stock_beta_coefficient) AS avg_stock_beta_coefficient,
-            AVG(annual_stock_volatility) AS avg_annual_stock_volatility,
-            AVG(daily_stock_volatility) AS avg_daily_stock_volatility,
-            AVG(pe_ratio) AS avg_pe_ratio,
-            AVG(return_on_equity) AS avg_return_on_equity,
-            AVG(stock_dividend_yield) AS avg_stock_dividend_yield,
-            AVG(earning_per_share) AS avg_earning_per_share,
-            AVG(annual_stock_expected_return) AS avg_annual_stock_expected_return,
-            AVG(minimum_daily_stock_3_years) AS avg_minimum_daily_stock_3_years,
-            AVG(maximum_daily_stock_3_years) AS avg_maximum_daily_stock_3_years
-        ")
-            ->whereNotNull('stock_var_percent')
-            ->whereNotNull('stock_sharp_ratio')
-            ->whereNotNull('stock_beta_coefficient')
-            ->whereNotNull('annual_stock_volatility')
-            ->whereNotNull('daily_stock_volatility')
-            ->whereNotNull('pe_ratio')
-            ->whereNotNull('return_on_equity')
-            ->whereNotNull('stock_dividend_yield')
-            ->whereNotNull('earning_per_share')
-            ->whereNotNull('annual_stock_expected_return')
-            ->whereNotNull('minimum_daily_stock_3_years')
-            ->whereNotNull('maximum_daily_stock_3_years')
-            ->get();
+        $columns = [
+            'stock_var_percent',
+            'stock_sharp_ratio',
+            'stock_beta_coefficient',
+            'annual_stock_volatility',
+            'daily_stock_volatility',
+            'pe_ratio',
+            'return_on_equity',
+            'stock_dividend_yield',
+            'earning_per_share',
+            'annual_stock_expected_return',
+            'minimum_daily_stock_3_years',
+            'maximum_daily_stock_3_years',
+        ];
+
+        $selectRaw = collect($columns)->map(function ($col) {
+            return "AVG($col) AS avg_$col";
+        })->implode(", ");
+
+        $averages = Company::query()
+            ->where('index_symbol', $request->sector_code)
+            ->selectRaw($selectRaw)
+            ->where(function ($query) use ($columns) {
+                foreach ($columns as $col) {
+                    $query->whereNotNull($col);
+                }
+            })
+            ->first();
 
         if (!$averages) {
             return response()->json(['message' => 'لا توجد بيانات متاحة لحساب المتوسط.'], 404);
         }
 
-        $averages = collect($averages)->map(function ($value) {
-            if ($value->avg_annual_stock_volatility <= 0.10) {
-                $stockRiskRank = "Conservative";
-            } elseif ($value->avg_annual_stock_volatility <= 0.20) {
-                $stockRiskRank = "Moderately Conservative";
-            } elseif ($value->avg_annual_stock_volatility <= 0.30) {
-                $stockRiskRank = "Aggressive";
-            } else {
-                $stockRiskRank = "Very Aggressive";
-            }
+// Determine risk rank
+        $volatility = $averages->avg_annual_stock_volatility;
+        if ($volatility <= 0.10) {
+            $stockRiskRank = "Conservative";
+        } elseif ($volatility <= 0.20) {
+            $stockRiskRank = "Moderately Conservative";
+        } elseif ($volatility <= 0.30) {
+            $stockRiskRank = "Aggressive";
+        } else {
+            $stockRiskRank = "Very Aggressive";
+        }
 
-            return [
-                'avg_stock_var_percent' => round($value->avg_stock_var_percent, 2),
-                'avg_stock_sharp_ratio' => round($value->avg_stock_sharp_ratio, 2),
-                'avg_stock_beta_coefficient' => round($value->avg_stock_beta_coefficient, 2),
-                'avg_annual_stock_volatility' => round($value->avg_annual_stock_volatility, 2),
-                'avg_daily_stock_volatility' => round($value->avg_daily_stock_volatility, 2),
-                'avg_pe_ratio' => round($value->avg_pe_ratio, 2),
-                'avg_return_on_equity' => round($value->avg_return_on_equity, 2),
-                'avg_stock_dividend_yield' => round($value->avg_stock_dividend_yield, 2),
-                'avg_earning_per_share' => round($value->avg_earning_per_share, 2),
-                'avg_annual_stock_expected_return' => round($value->avg_annual_stock_expected_return, 2),
-                'avg_minimum_daily_stock_3_years' => $value->avg_minimum_daily_stock_3_years,
-                'avg_maximum_daily_stock_3_years' => round($value->avg_maximum_daily_stock_3_years, 2),
-                'stock_risk_rank' => $stockRiskRank
-                ];
-        });
-        return response()->json($averages[0]);
+// Format response
+        $response = [
+            'avg_stock_var_percent' => round($averages->avg_stock_var_percent, 2),
+            'avg_stock_sharp_ratio' => round($averages->avg_stock_sharp_ratio, 2),
+            'avg_stock_beta_coefficient' => round($averages->avg_stock_beta_coefficient, 2),
+            'avg_annual_stock_volatility' => round($averages->avg_annual_stock_volatility, 2),
+            'avg_daily_stock_volatility' => round($averages->avg_daily_stock_volatility, 2),
+            'avg_pe_ratio' => round($averages->avg_pe_ratio, 2),
+            'avg_return_on_equity' => round($averages->avg_return_on_equity, 2),
+            'avg_stock_dividend_yield' => round($averages->avg_stock_dividend_yield, 2),
+            'avg_earning_per_share' => round($averages->avg_earning_per_share, 2),
+            'avg_annual_stock_expected_return' => round($averages->avg_annual_stock_expected_return, 2),
+            'avg_minimum_daily_stock_3_years' => $averages->avg_minimum_daily_stock_3_years,
+            'avg_maximum_daily_stock_3_years' => round($averages->avg_maximum_daily_stock_3_years, 2),
+            'stock_risk_rank' => $stockRiskRank
+        ];
+
+        return response()->json($response);
+
     }
 
 
