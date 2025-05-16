@@ -242,8 +242,10 @@
 
         <thead>
         <tr style="position: sticky; top: 0">
-            <th colspan="4" style="border: 1px solid #000;background: white"></th>
-            <th colspan="3" style="font-weight: bold;background: white">
+            <th colspan="4" style="border: 1px solid black;background: white">
+                <span style="color: black;font-size: 11px;font-weight: bold">فترة تحميل أسعار الأسهم التاريخية من 12-09-2021 الى 12-09-2024 والقطاع الصناعي من 12-09-2021 الى 12-09-2024</span>
+            </th>
+            <th colspan="3" style="font-weight: bold;background: white;border: 1px solid black">
                 أضغط على السهم أدناة
                 لأحتساب متوسط القطاع آليا
             </th>
@@ -269,11 +271,11 @@
         </tr>
         <tr style="position: sticky; top: 60px">
             <th colspan="4" style="border: 1px solid #000;background: white">
-                <span style="color: black;font-size: 11px">فترة تحميل أسعار الأسهم التاريخية من 12-09-2021 الى 12-09-2024 والقطاع الصناعي من 12-09-2021 الى 12-09-2024</span>
+                <span style="color: black;;font-size: 11px">PM 01:45:00 | تاريخ تحديث البيانات 30-04-2024 </span>
             </th>
             <th colspan="3" class="row1-merged gr-blue-2">
                 Average Industry
-                <select id="sector" name="sector" style="width: 100%;background-color: #8faadd;color:black;font-family: Tajawal, sans-serif;border: none;text-align: center">
+                <select id="sector" name="sector" style="border: 1px solid black;width: 100%;background-color: #8faadd;color:black;font-family: Tajawal, sans-serif;text-align: center">
                     <option  selected>اختر القطاع</option>
                     @foreach($companies as $sector)
                         <option value="{{$sector->index_symbol}}">{{$sector->index_name}}</option>
@@ -296,8 +298,7 @@
         </tr>
 
         <tr>
-            <th colspan="4" style="border: 1px solid #000">
-                <span style="color: black;;font-size: 11px">PM 01:45:00 | تاريخ تحديث البيانات 30-04-2024 </span>
+            <th colspan="4" style="border: none">
             </th>
 
             <th colspan="10" style="padding: 10px;border: none">
