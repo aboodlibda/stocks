@@ -367,19 +367,19 @@
             data: { sector_code: value },
             success: function (response) {
                 // Assuming response contains keys matching the ID attributes in the table
-                $("#avg_stock_var_percent").text(response.avg_stock_var_percent || "0");
-                $("#avg_stock_sharp_ratio").text(response.avg_stock_sharp_ratio || "0");
-                $("#avg_stock_beta_coefficient").text(response.avg_stock_beta_coefficient || "0");
-                $("#avg_annual_stock_volatility").text(response.avg_annual_stock_volatility || "0");
-                $("#avg_daily_stock_volatility").text(response.avg_daily_stock_volatility || "0");
-                $("#avg_pe_ratio").text(response.avg_pe_ratio || "0");
-                $("#avg_return_on_equity").text(response.avg_return_on_equity || "0");
-                $("#avg_stock_dividend_yield").text(response.avg_stock_dividend_yield || "0");
-                $("#avg_earning_per_share").text(response.avg_earning_per_share || "0");
-                $("#avg_annual_stock_expected_return").text(response.avg_annual_stock_expected_return || "0");
+                $("#avg_stock_var_percent").text("% " + response.avg_stock_var_percent || "0");
+                $("#avg_stock_sharp_ratio").text("% " + response.avg_stock_sharp_ratio || "0");
+                $("#avg_stock_beta_coefficient").text("% " + response.avg_stock_beta_coefficient || "0");
+                $("#avg_annual_stock_volatility").text("% " + response.avg_annual_stock_volatility || "0");
+                $("#avg_daily_stock_volatility").text("% " + response.avg_daily_stock_volatility || "0");
+                $("#avg_pe_ratio").text("% " + response.avg_pe_ratio || "0");
+                $("#avg_return_on_equity").text("% " + response.avg_return_on_equity || "0");
+                $("#avg_stock_dividend_yield").text("% " + response.avg_stock_dividend_yield || "0");
+                $("#avg_earning_per_share").text("%"+ response.avg_earning_per_share || "0");
+                $("#avg_annual_stock_expected_return").text("% " + response.avg_annual_stock_expected_return || "0");
                 $("#stock_rank_risk").text(response.stock_risk_rank || "-");
-                $("#avg_minimum_daily_stock_3_years").text(response.avg_minimum_daily_stock_3_years.toFixed(2) || "0");
-                $("#avg_maximum_daily_stock_3_years").text(response.avg_maximum_daily_stock_3_years.toFixed(2) || "0");
+                $("#avg_minimum_daily_stock_3_years").text("% " + response.avg_minimum_daily_stock_3_years.toFixed(2) || "0");
+                $("#avg_maximum_daily_stock_3_years").text("% " + response.avg_maximum_daily_stock_3_years.toFixed(2) || "0");
 
 
                 var riskRank = response.stock_risk_rank;
