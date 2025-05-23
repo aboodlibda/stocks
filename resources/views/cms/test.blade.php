@@ -496,7 +496,7 @@
            </td>
 
            <td>
-               <span style="font-weight: bold; color: ${company.annual_stock_expected_return < 0 ? 'red' : 'black'}">${'% ' + company.annual_stock_expected_return}</span>
+               <span style="font-weight: bold; color: ${company.annual_stock_expected_return < 0 ? 'red' : 'black'}">${company.annual_stock_expected_return !== null ? '% ' + company.annual_stock_expected_return : 'N/A'}</span>
            </td>
 
            <td>
@@ -504,7 +504,7 @@
            </td>
 
            <td>
-               <span style="font-weight: bold; color: ${company.return_on_equity < 0 ? 'red' : 'black'}">${'%' + company.return_on_equity}</span>
+               <span style="font-weight: bold; color: ${company.return_on_equity < 0 ? 'red' : 'black'}">${company.return_on_equity !== null ? '% ' + company.return_on_equity : 'N/A'}</span>
            </td>
 
            <td>
@@ -513,7 +513,7 @@
 
 
            <td>
-               <span style="font-weight: bold; color: ${company.earning_per_share < 0 ? 'red' : 'black'}">${company.earning_per_share}</span>
+               <span style="font-weight: bold; color: ${company.earning_per_share < 0 ? 'red' : 'black'}">${company.earning_per_share !== null ? company.earning_per_share : 'N/A'}</span>
            </td>
 
            <td>
@@ -624,7 +624,7 @@
            </td>
 
            <td>
-               <span style="font-weight: bold; color: ${company.annual_stock_expected_return < 0 ? 'red' : 'black'}">${'% ' + company.annual_stock_expected_return}</span>
+               <span style="font-weight: bold; color: ${company.annual_stock_expected_return < 0 ? 'red' : 'black'}">${company.annual_stock_expected_return !== null ? '% ' + company.annual_stock_expected_return : 'N/A'}</span>
            </td>
 
            <td>
@@ -632,7 +632,7 @@
            </td>
 
            <td>
-               <span style="font-weight: bold; color: ${company.return_on_equity < 0 ? 'red' : 'black'}">${'%' + company.return_on_equity}</span>
+               <span style="font-weight: bold; color: ${company.return_on_equity < 0 ? 'red' : 'black'}">${company.return_on_equity !== null ? '% ' + company.return_on_equity : 'N/A'}</span>
            </td>
 
            <td>
@@ -641,7 +641,7 @@
 
 
            <td>
-               <span style="font-weight: bold; color: ${company.earning_per_share < 0 ? 'red' : 'black'}">${company.earning_per_share}</span>
+               <span style="font-weight: bold; color: ${company.earning_per_share < 0 ? 'red' : 'black'}">${company.earning_per_share !== null ? company.earning_per_share : 'N/A'}</span>
            </td>
 
            <td>
