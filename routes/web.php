@@ -27,7 +27,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     Route::get('read-companies', [StockController::class, 'read_companies'])->name('read-companies');
     Route::get('test_api', [StockController::class,'getApi'])->name('get-api');
     Route::get('execute',function(){
-        riskMeasurementRatios(2010,'TMTI');
+        financialRatios(2010);
 //        riskMeasurementRatios(2222,'TENI');
 //        riskMeasurementRatios(7010,'TTSI');
 //        riskMeasurementRatios(1120,'TBNI');
