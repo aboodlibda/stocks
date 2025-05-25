@@ -270,9 +270,14 @@ function riskMeasurementRatios($ticker, $code): array
     $stockBetaCoefficient = calculateBeta($companyRatios, $sectorRatios);
     $annualStockVolatility = (($company_daily_stock_volatility) * sqrt(250)) / 100;
 
-    $companyRatios3Years = array_slice($companyRatios, 0,250);
+    $companyRatios3Years = array_slice($companyRatios, 0,750);
     $minimumDailyStock3Years = getMinimumValue($companyRatios3Years);
     $maximumDailyStock3Years = getMaximumValue($companyRatios3Years);
+
+    $companyRatios1Year = array_slice($companyRatios, 0,250);
+    $minimumDailyStock1Year = getMinimumValue($companyRatios1Year);
+    $maximumDailyStock1Year = getMaximumValue($companyRatios1Year);
+
 
 
 
@@ -306,7 +311,12 @@ function riskMeasurementRatios($ticker, $code): array
         'averageDailyExpectedReturn' => round(averageIfNotEmpty($companyRatios),4),
         'averageAnnualExpectedReturn' => round($annualStockExpectedReturn*100, 3),
         'minimumDailyStock3Years' => $minimumDailyStock3Years,
-        'maximumDailyStock3Years' => $maximumDailyStock3Years
+        'maximumDailyStock3Years' => $maximumDailyStock3Years,
+        'minimumDailyStock1Year' => $minimumDailyStock1Year,
+        'maximumDailyStock1Year' => $maximumDailyStock1Year,
+        'averageDailyExpectedReturn1Year' => round(averageIfNotEmpty($companyRatios1Year),4),
+
+
     ];
 }
 
@@ -337,6 +347,7 @@ function financialRatios($ticker): array
     $dividendYield = $stockOptions['quote']['dividendYield'] ?? null;
     $revenuePerShare = $stockOptions['quote']['epsTrailingTwelveMonths'] ?? null;
     $lastDividendDate = $defaultKeyStatistics['defaultKeyStatistics']['lastDividendDate'] ?? null;
+    $week_25_high_price = $summaryProfile['summaryDetail']['fiftyTwoWeekHigh'] ?? null;
 
 //    echo 'P/I Ratio :  ' . $PIRatio . "<br>";
 //    echo 'Return On Equity :  ' . $returnOnEquity . "<br>";
@@ -348,7 +359,8 @@ function financialRatios($ticker): array
         'returnOnEquity' => $returnOnEquity*100,
         'dividendYield' => $dividendYield,
         'revenuePerShare' => $revenuePerShare,
-        'lastDividendDate' => $lastDividendDate
+        'lastDividendDate' => $lastDividendDate,
+        'week_25_high_price' => $week_25_high_price
     ];
 
 }
@@ -438,6 +450,10 @@ function updateCompanyRatios()
             'typical_price' => $stockMarketPrice['typicalPrice'],
             'minimum_daily_stock_3_years' => $riskMeasurementRatios['minimumDailyStock3Years'],
             'maximum_daily_stock_3_years' => $riskMeasurementRatios['maximumDailyStock3Years'],
+            'minimum_daily_stock_1_year' => $riskMeasurementRatios['minimumDailyStock1Year'],
+            'maximum_daily_stock_1_year' => $riskMeasurementRatios['maximumDailyStock1Year'],
+            'averageDailyExpectedReturn1Year' => $riskMeasurementRatios['averageDailyExpectedReturn1Year'],
+            'week_25_high_price' => $financialRatios['week_25_high_price'],
         ]);
 //        $company->timestamp = false;
         $company->save();
