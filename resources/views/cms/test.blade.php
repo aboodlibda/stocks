@@ -213,6 +213,10 @@
             object-fit: contain;
         }
 
+        .border-none{
+            border: none;
+        }
+
     </style>
 </head>
 <body>
@@ -311,7 +315,7 @@
             <th colspan="5" class="row2-mergedAll gr-blue-3">ملخص أداء أسهم الشركات في السوق السعودى للتداول</th>
             <th colspan="2" class="row2-mergedAll gr-blue-2">Stock Market Price</th>
             <th colspan="6" class="row2-mergedAll gr-blue-3">Risk measurement Ratios</th>
-            <th colspan="3" class="row2-mergedAll gr-blue-2">Stock Performance <br> Over 3 Years of Historical Data </th>
+            <th colspan="8" class="row2-mergedAll gr-blue-2">Stock Performance</th>
             <th colspan="5" class="row2-mergedAll gr-blue-3">Financial Ratios</th>
         </tr>
 
@@ -326,7 +330,7 @@
             <th class="row3-cell6 gr-blue-3">Closing Price</th>
             <th class="row3-cell7 gr-blue-3">Typical Price</th>
 
-            <th class="row3-cell6 gr-blue-2">VaR % For 1 Day</th>
+            <th class="row3-cell6 gr-blue-2" title="VaR % For 1 Day">VaR % For 1 Day</th>
             <th class="row3-cell7 gr-blue-2">Sharp Ratio</th>
             <th class="row3-cell8 gr-blue-2">Beta Coefficient</th>
             <th class="row3-cell9 gr-blue-2">Daily Volatility</th>
@@ -334,9 +338,9 @@
             <th class="row3-cell11 gr-blue-2">Risk Ranking</th>
 
 
-            <th class="row3-cell12 gr-blue-3">Minimum Daily Return</th>
-            <th class="row3-cell12 gr-blue-3">Maximum Daily Return</th>
-            <th class="row3-cell13 gr-blue-3">Annual Expected Return</th>
+            <th colspan="4" class="row2-mergedAll gr-blue-3">Over 3 Years Historical Data</th>
+            <th colspan="4" class="row3-cell14 gr-blue-4">Over 1 Year Historical Data</th>
+
 
 
             <th class="row3-cell14 gr-blue-2">P/E Ratio</th>&nbsp;
@@ -346,6 +350,36 @@
                 EPS<img src="{{asset('assets/media/Saudi_Riyal_Symbol.svg')}}" alt="Saudi Exchange Logo" style="width: 30px; height: 15px;">
             </th>
             <th class="row3-cell18 gr-blue-2">Latest Dividend Date</th>
+        </tr>
+        <tr>
+            <th class="border-none"></th>
+            <th class="border-none"></th>
+            <th class="border-none"></th>
+            <th class="border-none"></th>
+            <th class="border-none"></th>
+            <th class="border-none"></th>
+            <th class="border-none"></th>
+            <th class="border-none"></th>
+            <th class="border-none"></th>
+            <th class="border-none"></th>
+            <th class="border-none"></th>
+            <th class="border-none"></th>
+            <th class="border-none"></th>
+            <th class="row3-cell14 gr-blue-3" style="font-size: 10px">Minimum Daily Return</th>
+            <th class="row3-cell14 gr-blue-3" style="font-size: 10px">Maximum Daily Return</th>
+            <th class="row3-cell14 gr-blue-3" style="font-size: 10px">Annual Expected Return</th>
+            <th class="row3-cell14 gr-blue-3" style="font-size: 10px">Average Daily Return</th>
+            <th class="row3-cell14 gr-blue-4" style="font-size: 10px">Minimum Daily Return</th>
+            <th class="row3-cell14 gr-blue-4" style="font-size: 10px">Maximum Daily Return</th>
+            <th class="row3-cell14 gr-blue-4" style="font-size: 10px">Average Daily Return</th>
+            <th class="row3-cell14 gr-blue-4" style="font-size: 10px">25 Week High Price</th>
+            <th class="border-none"></th>
+            <th class="border-none"></th>
+            <th class="border-none"></th>
+            <th class="border-none"></th>
+            <th class="border-none"></th>
+
+
         </tr>
         </thead>
 
@@ -407,7 +441,7 @@
             url: '/companies',
             dataType: 'json',
             beforeSend: function() {
-                $('#table-data').append('<tr><td colspan="21" style="text-align: center;font-weight: bold">جاري التحميل ...</td></tr>');
+                $('#table-data').append('<tr><td colspan="29" style="text-align: center;font-weight: bold">جاري التحميل ...</td></tr>');
             },
             success: function(data) {
                 $('#table-data').empty();
@@ -497,6 +531,26 @@
 
            <td>
                <span style="font-weight: bold; color: ${company.annual_stock_expected_return < 0 ? 'red' : 'black'}">${company.annual_stock_expected_return !== null ? '% ' + company.annual_stock_expected_return : 'N/A'}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.avg_daily_expected_stock_return < 0 ? 'red' : 'black'}">${company.avg_daily_expected_stock_return !== null ? '% ' + company.avg_daily_expected_stock_return : 'N/A'}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.minimum_daily_stock_1_year < 0 ? 'red' : 'black'}">${company.minimum_daily_stock_1_year !== null ? '% ' + company.minimum_daily_stock_1_year : 'N/A'}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.maximum_daily_stock_1_year < 0 ? 'red' : 'black'}">${company.maximum_daily_stock_1_year !== null ? '% ' + company.maximum_daily_stock_1_year : 'N/A'}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.averageDailyExpectedReturn1Year < 0 ? 'red' : 'black'}">${company.averageDailyExpectedReturn1Year !== null ? '% ' + company.averageDailyExpectedReturn1Year : 'N/A'}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.week_25_high_price < 0 ? 'red' : 'black'}">${company.week_25_high_price !== null ? '% ' + company.week_25_high_price : 'N/A'}</span>
            </td>
 
            <td>
