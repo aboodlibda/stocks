@@ -90,9 +90,7 @@ class StockService
                             'adjclose' => $record['adjclose'],
                         ]);
 
-//                        echo '  inserted successfully : '. $ticker. PHP_EOL;
-                        echo '*';
-
+                        echo '  inserted successfully : '. $ticker. PHP_EOL;
                     }
                 }
 
