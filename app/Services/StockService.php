@@ -86,7 +86,6 @@ class StockService
                 }
 
                 if (!is_null($data[$ticker])) {
-                    echo "Data not null" . PHP_EOL;
                     foreach ($data[$ticker] as $record) {
                         try {
                             Stock::create([
@@ -99,15 +98,15 @@ class StockService
                                 'close'    => $record['close'],
                                 'adjclose' => $record['adjclose'],
                             ]);
-                            echo "after create" . PHP_EOL;
 
                         } catch (\Exception $e) {
                             echo "Error saving stock data for ticker {$ticker}: " . $e->getMessage() . PHP_EOL;
                             continue;
                         }
+                        echo "after create" . PHP_EOL;
 
                     }
-                    echo '  inserted successfully : '. $ticker. PHP_EOL;
+                    echo 'inserted successfully : '. $ticker. PHP_EOL;
 
                 }
 
