@@ -37,18 +37,22 @@ class StockService
 
     public function fetchDataFromAPI($ticker, $sdate, $edate)
     {
-        $url = "https://{$this->apiHost}/yhfhistorical?ticker={$ticker}.SR&sdate={$sdate}&edate={$edate}";
+        try {
+            $url = "https://{$this->apiHost}/yhfhistorical?ticker={$ticker}.SR&sdate={$sdate}&edate={$edate}";
 
-        $response = Http::withHeaders([
-            'X-RapidAPI-Host' => $this->apiHost,
-            'X-RapidAPI-Key' => $this->apiKey,
-        ])->get($url);
+            $response = Http::withHeaders([
+                'X-RapidAPI-Host' => $this->apiHost,
+                'X-RapidAPI-Key' => $this->apiKey,
+            ])->get($url);
 
-        if ($response->successful()) {
-            return $response->json();
+            if ($response->successful()) {
+                return $response->json();
+            }
+
+            return null;
+        } catch (\Exception $e) {
+            throw new \Exception("API request failed for ticker {$ticker}: " . $e->getMessage());
         }
-
-        return null;
     }
 
     public function saveDataToJSON($data)
