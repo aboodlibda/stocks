@@ -79,20 +79,25 @@ class StockService
 //                echo $key+1 .'    :  stock retrieved : '. $ticker. PHP_EOL;
                 if (!is_null($data[$ticker])) {
                     foreach ($data[$ticker] as $record) {
-                        Stock::create([
-                            'ticker'   => $ticker,
-                            'date'     => date('Y-m-d', strtotime($record['date'])),
-                            'high'     => $record['high'],
-                            'volume'   => $record['volume'] ?? 0,
-                            'open'     => $record['open'],
-                            'low'      => $record['low'],
-                            'close'    => $record['close'],
-                            'adjclose' => $record['adjclose'],
-                        ]);
+                        try {
+                            Stock::create([
+                                'ticker'   => $ticker,
+                                'date'     => date('Y-m-d', strtotime($record['date'])),
+                                'high'     => $record['high'],
+                                'volume'   => $record['volume'] ?? 0,
+                                'open'     => $record['open'],
+                                'low'      => $record['low'],
+                                'close'    => $record['close'],
+                                'adjclose' => $record['adjclose'],
+                            ]);
+                        } catch (\Exception $e) {
+                            echo "Error saving stock data for ticker {$ticker}: " . $e->getMessage() . PHP_EOL;
+                            continue;
+                        }
 
                     }
                     echo '  inserted successfully : '. $ticker. PHP_EOL;
-                    
+
                 }
 
 
