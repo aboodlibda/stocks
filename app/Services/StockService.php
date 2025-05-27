@@ -74,7 +74,12 @@ class StockService
 
             foreach ($tickers as $key => $ticker) {
                 echo "Fetching stock data for " . $ticker . PHP_EOL;
-                $data[$ticker] = $this->fetchDataFromAPI($ticker, $sdate, $edate);
+                try {
+                    $data[$ticker] = $this->fetchDataFromAPI($ticker, $sdate, $edate);
+                } catch (\Exception $e) {
+                    echo "Error fetching data for ticker {$ticker}: " . $e->getMessage() . PHP_EOL;
+                    continue;
+                }
 
 //                echo $key+1 .'    :  stock retrieved : '. $ticker. PHP_EOL;
                 if (!is_null($data[$ticker])) {
