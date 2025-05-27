@@ -103,9 +103,10 @@ class StockService
                             echo "Error saving stock data for ticker {$ticker}: " . $e->getMessage() . PHP_EOL;
                             continue;
                         }
-                        echo "after create" . PHP_EOL;
 
                     }
+                    echo "after create" . PHP_EOL;
+
                     echo 'inserted successfully : '. $ticker. PHP_EOL;
 
                 }
