@@ -468,7 +468,7 @@ function updateCompanyRatios()
             'week_25_high_price' => $financialRatios['week_25_high_price'],
             'market_to_book_ratio' => $financialRatios['market_to_book_ratio'],
             'free_cash_flow_yield' => $financialRatios['free_cash_flow_yield'],
-            'leverage_ratio' => $financialRatios['leverage_ratio'],
+            'leverage_ratio' => 0,
             'annual_dividend_rate' => $financialRatios['annual_dividend_rate'],
             'last_fiscal_year' => Carbon::parse($financialRatios['last_fiscal_year'])->format('Y-m-d'),
         ]);
