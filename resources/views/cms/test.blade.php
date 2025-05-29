@@ -497,7 +497,7 @@
            </td>
 
            <td>
-               <span style="font-weight: bold; color: ${company.typical_price < 0 ? 'red' : 'black'}">${company.typical_price !== null ? company.typical_price.toFixed(2) : '00.00'}</span>
+               <span style="font-weight: bold; color: ${company.typical_price < 0 ? 'red' : 'black'}">${company.typical_price !== null ? Number(company.typical_price).toFixed(2) : '00.00'}</span>
            </td>
 
 
@@ -663,11 +663,11 @@
            </td>
 
            <td>
-               <span style="font-weight: bold; color: ${company.close < 0 ? 'red' : 'black'}">${company.close !== null ? company.close.toFixed(2) : '00.00'}</span>
+               <span style="font-weight: bold; color: ${company.close < 0 ? 'red' : 'black'}">${company.close !== null ? Number(company.close).toFixed(2) : '00.00'}</span>
            </td>
 
            <td>
-               <span style="font-weight: bold; color: ${company.typical_price < 0 ? 'red' : 'black'}">${company.typical_price !== null ? company.typical_price.toFixed(2) : '00.00'}</span>
+               <span style="font-weight: bold; color: ${company.typical_price < 0 ? 'red' : 'black'}">${company.typical_price !== null ? Number(company.typical_price).toFixed(2) : '00.00'}</span>
            </td>
 
 
@@ -709,11 +709,45 @@
            </td>
 
            <td>
-                <span style="font-weight: bold; color: ${company.pe_ratio < 0 ? 'red' : 'black'}">${company.pe_ratio !== null ? company.pe_ratio : 'N/A'}</span>
+               <span style="font-weight: bold; color: ${company.avg_daily_expected_stock_return < 0 ? 'red' : 'black'}">${company.avg_daily_expected_stock_return !== null ? '% ' + company.avg_daily_expected_stock_return : 'N/A'}</span>
            </td>
 
            <td>
+               <span style="font-weight: bold; color: ${company.minimum_daily_stock_1_year < 0 ? 'red' : 'black'}">${company.minimum_daily_stock_1_year !== null ? '% ' + company.minimum_daily_stock_1_year : 'N/A'}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.maximum_daily_stock_1_year < 0 ? 'red' : 'black'}">${company.maximum_daily_stock_1_year !== null ? '% ' + company.maximum_daily_stock_1_year : 'N/A'}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.averageDailyExpectedReturn1Year < 0 ? 'red' : 'black'}">${company.averageDailyExpectedReturn1Year !== null ? '% ' + company.averageDailyExpectedReturn1Year : 'N/A'}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.week_25_high_price < 0 ? 'red' : 'black'}">${company.week_25_high_price !== null ? '% ' + company.week_25_high_price : 'N/A'}</span>
+           </td>
+
+           <td>
+                <span style="font-weight: bold; color: ${company.pe_ratio < 0 ? 'red' : 'black'}">${company.pe_ratio !== null ? company.pe_ratio : 'N/A'}</span>
+           </td>
+
+
+           <td>
+                <span style="font-weight: bold; color: ${company.price_to_book < 0 ? 'red' : 'black'}">${company.market_to_book !== null ? company.market_to_book : 'N/A'}</span>
+           </td>
+
+
+           <td>
                <span style="font-weight: bold; color: ${company.return_on_equity < 0 ? 'red' : 'black'}">${company.return_on_equity !== null ? '% ' + company.return_on_equity : 'N/A'}</span>
+           </td>
+
+           <td>
+                <span style="font-weight: bold; color: ${company.free_cash_flow_yield < 0 ? 'red' : 'black'}">${company.free_cash_flow_yield !== null ? '%' + company.free_cash_flow_yield : 'N/A'}</span>
+           </td>
+
+           <td>
+                <span style="font-weight: bold; color: ${company.leverage_ratio < 0 ? 'red' : 'black'}">${company.leverage_ratio !== null ? '%' + company.leverage_ratio : 'N/A'}</span>
            </td>
 
            <td>
@@ -723,6 +757,14 @@
 
            <td>
                <span style="font-weight: bold; color: ${company.earning_per_share < 0 ? 'red' : 'black'}">${company.earning_per_share !== null ? company.earning_per_share : 'N/A'}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.annual_dividend_rate < 0 ? 'red' : 'black'}">${company.annual_dividend_rate !== null ? company.annual_dividend_rate : 'N/A'}</span>
+           </td>
+
+            <td>
+               <span style="font-weight: bold; color: ${company.last_updated_fiscal_year < 0 ? 'red' : 'black'}">${company.last_updated_fiscal_year !== null ? company.last_updated_fiscal_year : 'N/A'}</span>
            </td>
 
            <td>
