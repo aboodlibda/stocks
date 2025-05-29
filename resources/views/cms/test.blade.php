@@ -493,7 +493,7 @@
            </td>
 
            <td>
-               <span style="font-weight: bold; color: ${company.close < 0 ? 'red' : 'black'}">${company.close !== null ? company.close.toFixed(2) : '00.00'}</span>
+               <span style="font-weight: bold; color: ${company.close < 0 ? 'red' : 'black'}">${company.close !== null ? Number(company.close).toFixed(2) : '00.00'}</span>
            </td>
 
            <td>
