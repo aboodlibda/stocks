@@ -17,7 +17,7 @@
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
-            font-size: 13px;
+            font-size: 11px;
         }
 
         th, td {
@@ -316,7 +316,7 @@
             <th colspan="2" class="row2-mergedAll gr-blue-2">Stock Market Price</th>
             <th colspan="6" class="row2-mergedAll gr-blue-3">Risk measurement Ratios</th>
             <th colspan="8" class="row2-mergedAll gr-blue-2">Stock Performance</th>
-            <th colspan="5" class="row2-mergedAll gr-blue-3">Financial Ratios</th>
+            <th colspan="10" class="row2-mergedAll gr-blue-3">Financial Ratios</th>
         </tr>
 
         <tr style="position: sticky; top: 140px">
@@ -338,17 +338,22 @@
             <th class="row3-cell11 gr-blue-2">Risk Ranking</th>
 
 
-            <th colspan="4" class="row2-mergedAll gr-blue-3">Over 3 Years Historical Data</th>
+            <th colspan="4" rowspan="7" class="row2-mergedAll gr-blue-3">Over 3 Years Historical Data</th>
             <th colspan="4" class="row3-cell14 gr-blue-4">Over 1 Year Historical Data</th>
 
 
 
             <th class="row3-cell14 gr-blue-2">P/E Ratio</th>&nbsp;
+            <th class="row3-cell15 gr-blue-2">Market to Book Ratio</th>
             <th class="row3-cell15 gr-blue-2">ROE</th>
+            <th class="row3-cell15 gr-blue-2">Free Cash Flow Yield</th>
+            <th class="row3-cell15 gr-blue-2">Leverage Ratio</th>
             <th class="row3-cell16 gr-blue-2">Dividend Yield</th>
             <th class="row3-cell17 gr-blue-2">
                 EPS<img src="{{asset('assets/media/Saudi_Riyal_Symbol.svg')}}" alt="Saudi Exchange Logo" style="width: 30px; height: 15px;">
             </th>
+            <th class="row3-cell18 gr-blue-2">Annual Dividend Rate</th>
+            <th class="row3-cell18 gr-blue-2">Last Updated fiscal Year</th>
             <th class="row3-cell18 gr-blue-2">Latest Dividend Date</th>
         </tr>
         <tr>
@@ -441,7 +446,7 @@
             url: '/companies',
             dataType: 'json',
             beforeSend: function() {
-                $('#table-data').append('<tr><td colspan="29" style="text-align: center;font-weight: bold">جاري التحميل ...</td></tr>');
+                $('#table-data').append('<tr><td colspan="31" style="text-align: center;font-weight: bold">جاري التحميل ...</td></tr>');
             },
             success: function(data) {
                 $('#table-data').empty();
@@ -550,15 +555,29 @@
            </td>
 
            <td>
-               <span style="font-weight: bold; color: ${company.25_week_high_price < 0 ? 'red' : 'black'}">${company.annual_stock_expected_return !== null ? '% ' + company.annual_stock_expected_return : 'N/A'}</span>
+               <span style="font-weight: bold; color: ${company.week_25_high_price < 0 ? 'red' : 'black'}">${company.week_25_high_price !== null ? '% ' + company.week_25_high_price : 'N/A'}</span>
            </td>
 
            <td>
                 <span style="font-weight: bold; color: ${company.pe_ratio < 0 ? 'red' : 'black'}">${company.pe_ratio !== null ? company.pe_ratio : 'N/A'}</span>
            </td>
 
+
+           <td>
+                <span style="font-weight: bold; color: ${company.price_to_book < 0 ? 'red' : 'black'}">${company.market_to_book !== null ? company.market_to_book : 'N/A'}</span>
+           </td>
+
+
            <td>
                <span style="font-weight: bold; color: ${company.return_on_equity < 0 ? 'red' : 'black'}">${company.return_on_equity !== null ? '% ' + company.return_on_equity : 'N/A'}</span>
+           </td>
+
+           <td>
+                <span style="font-weight: bold; color: ${company.free_cash_flow_yield < 0 ? 'red' : 'black'}">${company.free_cash_flow_yield !== null ? '%' + company.free_cash_flow_yield : 'N/A'}</span>
+           </td>
+
+           <td>
+                <span style="font-weight: bold; color: ${company.leverage_ratio < 0 ? 'red' : 'black'}">${company.leverage_ratio !== null ? '%' + company.leverage_ratio : 'N/A'}</span>
            </td>
 
            <td>
@@ -568,6 +587,14 @@
 
            <td>
                <span style="font-weight: bold; color: ${company.earning_per_share < 0 ? 'red' : 'black'}">${company.earning_per_share !== null ? company.earning_per_share : 'N/A'}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.annual_dividend_rate < 0 ? 'red' : 'black'}">${company.annual_dividend_rate !== null ? company.annual_dividend_rate : 'N/A'}</span>
+           </td>
+
+            <td>
+               <span style="font-weight: bold; color: ${company.last_updated_fiscal_year < 0 ? 'red' : 'black'}">${company.last_updated_fiscal_year !== null ? company.last_updated_fiscal_year : 'N/A'}</span>
            </td>
 
            <td>
