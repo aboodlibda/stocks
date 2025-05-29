@@ -564,7 +564,7 @@
 
 
            <td>
-                <span style="font-weight: bold; color: ${company.price_to_book < 0 ? 'red' : 'black'}">${company.market_to_book !== null ? company.market_to_book : 'N/A'}</span>
+                <span style="font-weight: bold; color: ${company.market_to_book_ratio < 0 ? 'red' : 'black'}">${company.market_to_book_ratio !== null ? company.market_to_book_ratio : 'N/A'}</span>
            </td>
 
 
@@ -594,7 +594,7 @@
            </td>
 
             <td>
-               <span style="font-weight: bold; color: ${company.last_updated_fiscal_year < 0 ? 'red' : 'black'}">${company.last_updated_fiscal_year !== null ? company.last_updated_fiscal_year : 'N/A'}</span>
+               <span style="font-weight: bold; color: ${company.last_fiscal_year < 0 ? 'red' : 'black'}">${company.last_fiscal_year !== null ? company.last_fiscal_year : 'N/A'}</span>
            </td>
 
            <td>
