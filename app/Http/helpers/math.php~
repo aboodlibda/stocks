@@ -470,7 +470,7 @@ function updateCompanyRatios()
             'free_cash_flow_yield' => $financialRatios['free_cash_flow_yield'],
             'leverage_ratio' => $financialRatios['leverage_ratio'],
             'annual_dividend_rate' => $financialRatios['annual_dividend_rate'],
-            'last_fiscal_year' => $financialRatios['last_fiscal_year'],
+            'last_fiscal_year' => Carbon::parse($financialRatios['last_fiscal_year'])->format('Y-m-d'),
         ]);
 //        $company->timestamp = false;
         $company->save();
