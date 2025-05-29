@@ -105,9 +105,8 @@ class StockService
                         }
 
                     }
-                    echo "after create" . PHP_EOL;
 
-                    echo 'inserted successfully : '. $ticker. PHP_EOL;
+                    echo "inserted successfully : ". $ticker. PHP_EOL;
 
                 }
 
