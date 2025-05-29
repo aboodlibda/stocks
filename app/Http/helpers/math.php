@@ -331,16 +331,13 @@ function financialRatios($ticker): array
 
     $defaultKeyStatisticsUrl = "https://yh-finance-complete.p.rapidapi.com/defaultKeyStatistics?symbol=$ticker.SR";
     $defaultKeyStatistics = fetchDataFromAPI($defaultKeyStatisticsUrl);
-//
+
     $financialsUrl = "https://yh-finance-complete.p.rapidapi.com/financials?symbol=$ticker.SR";
     $financials = fetchDataFromAPI($financialsUrl);
-//
-//    $historicalUrl = "https://yh-finance-complete.p.rapidapi.com/yhfhistorical?ticker=$ticker.SR&sdate=$sdate&edate=$edate";
-//    $historical = fetchDataFromAPI($historicalUrl);
+
 
     $stockOptionsUrl = "https://yh-finance-complete.p.rapidapi.com/stockOptions?ticker=$ticker.SR";
     $stockOptions = fetchDataFromAPI($stockOptionsUrl);
-
 
     $PIRatio = $summaryProfile['summaryDetail']['trailingPE'] ?? null;
     $returnOnEquity = $financials['financialData']['returnOnEquity'] ?? null;
@@ -348,6 +345,15 @@ function financialRatios($ticker): array
     $revenuePerShare = $stockOptions['quote']['epsTrailingTwelveMonths'] ?? null;
     $lastDividendDate = $defaultKeyStatistics['defaultKeyStatistics']['lastDividendDate'] ?? null;
     $week_25_high_price = $summaryProfile['summaryDetail']['fiftyTwoWeekHigh'] ?? null;
+    $market_to_book_ratio = $defaultKeyStatistics['defaultKeyStatistics']['priceToBook'] ?? null;
+    $free_cash_flow = $financials['financialData']['freeCashflow'] ?? null;
+    $ordinary_shares_number = $defaultKeyStatistics['defaultKeyStatistics']['sharesOutstanding'] ?? null;
+    $regular_market_previous_close = $summaryProfile['summaryDetail']['regularMarketPreviousClose'] ?? null;
+    $total_debt = $financials['financialData']['totalDebt'] ?? null;
+    $leverage_ratio = '';
+    $annual_dividend_rate = $summaryProfile['summaryDetail']['trailingAnnualDividendRate'] ?? null;
+
+    $free_cash_flow_yield = ($free_cash_flow / $ordinary_shares_number) / $regular_market_previous_close;
 
 //    echo 'P/I Ratio :  ' . $PIRatio . "<br>";
 //    echo 'Return On Equity :  ' . $returnOnEquity . "<br>";
@@ -360,7 +366,11 @@ function financialRatios($ticker): array
         'dividendYield' => $dividendYield,
         'revenuePerShare' => $revenuePerShare,
         'lastDividendDate' => $lastDividendDate,
-        'week_25_high_price' => $week_25_high_price
+        'week_25_high_price' => $week_25_high_price,
+        'market_to_book_ratio' => $market_to_book_ratio,
+        'free_cash_flow_yield' => $free_cash_flow_yield,
+        'leverage_ratio' => $leverage_ratio,
+        'annual_dividend_rate' => $annual_dividend_rate,
     ];
 
 }
