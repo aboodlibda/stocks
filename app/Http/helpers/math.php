@@ -339,6 +339,7 @@ function financialRatios($ticker): array
     $stockOptionsUrl = "https://yh-finance-complete.p.rapidapi.com/stockOptions?ticker=$ticker.SR";
     $stockOptions = fetchDataFromAPI($stockOptionsUrl);
 
+    dd($defaultKeyStatistics);
     $PIRatio = $summaryProfile['summaryDetail']['trailingPE'] ?? null;
     $returnOnEquity = $financials['financialData']['returnOnEquity'] ?? null;
     $dividendYield = $stockOptions['quote']['dividendYield'] ?? null;
@@ -350,6 +351,7 @@ function financialRatios($ticker): array
     $ordinary_shares_number = $defaultKeyStatistics['defaultKeyStatistics']['sharesOutstanding'] ?? null;
     $regular_market_previous_close = $summaryProfile['summaryDetail']['regularMarketPreviousClose'] ?? null;
     $total_debt = $financials['financialData']['totalDebt'] ?? null;
+    $last_fiscal_year = $defaultKeyStatistics['defaultKeyStatistics']['lastFiscalYearEnd'] ?? null;
     $leverage_ratio = '';
     $annual_dividend_rate = $summaryProfile['summaryDetail']['trailingAnnualDividendRate'] ?? null;
 
@@ -371,6 +373,7 @@ function financialRatios($ticker): array
         'free_cash_flow_yield' => $free_cash_flow_yield,
         'leverage_ratio' => $leverage_ratio,
         'annual_dividend_rate' => $annual_dividend_rate,
+        'last_fiscal_year' => $last_fiscal_year,
     ];
 
 }
@@ -464,6 +467,11 @@ function updateCompanyRatios()
             'maximum_daily_stock_1_year' => $riskMeasurementRatios['maximumDailyStock1Year'],
             'averageDailyExpectedReturn1Year' => $riskMeasurementRatios['averageDailyExpectedReturn1Year'],
             'week_25_high_price' => $financialRatios['week_25_high_price'],
+            'market_to_book_ratio' => $financialRatios['market_to_book_ratio'],
+            'free_cash_flow_yield' => $financialRatios['free_cash_flow_yield'],
+            'leverage_ratio' => $financialRatios['leverage_ratio'],
+            'annual_dividend_rate' => $financialRatios['annual_dividend_rate'],
+            'last_fiscal_year' => $financialRatios['last_fiscal_year'],
         ]);
 //        $company->timestamp = false;
         $company->save();
