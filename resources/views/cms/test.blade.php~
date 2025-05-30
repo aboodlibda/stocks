@@ -543,19 +543,19 @@
            </td>
 
            <td>
-               <span style="font-weight: bold; color: ${company.minimum_daily_stock_1_year < 0 ? 'red' : 'black'}">${company.minimum_daily_stock_1_year !== null ? '% ' + company.minimum_daily_stock_1_year : 'N/A'}</span>
+               <span style="font-weight: bold; color: ${company.minimum_daily_stock_1_year < 0 ? 'red' : 'black'}">${company.minimum_daily_stock_1_year !== null ? '% ' + Number(company.minimum_daily_stock_1_year).toFixed(2) : 'N/A'}</span>
            </td>
 
            <td>
-               <span style="font-weight: bold; color: ${company.maximum_daily_stock_1_year < 0 ? 'red' : 'black'}">${company.maximum_daily_stock_1_year !== null ? '% ' + company.maximum_daily_stock_1_year : 'N/A'}</span>
+               <span style="font-weight: bold; color: ${company.maximum_daily_stock_1_year < 0 ? 'red' : 'black'}">${company.maximum_daily_stock_1_year !== null ? '% ' + Number(company.maximum_daily_stock_1_year).toFixed(2) : 'N/A'}</span>
            </td>
 
            <td>
-               <span style="font-weight: bold; color: ${company.averageDailyExpectedReturn1Year < 0 ? 'red' : 'black'}">${company.averageDailyExpectedReturn1Year !== null ? '% ' + company.averageDailyExpectedReturn1Year : 'N/A'}</span>
+               <span style="font-weight: bold; color: ${company.averageDailyExpectedReturn1Year < 0 ? 'red' : 'black'}">${company.averageDailyExpectedReturn1Year !== null ? '% ' + Number(company.averageDailyExpectedReturn1Year).toFixed(2) : 'N/A'}</span>
            </td>
 
            <td>
-               <span style="font-weight: bold; color: ${company.week_25_high_price < 0 ? 'red' : 'black'}">${company.week_25_high_price !== null ? '% ' + company.week_25_high_price : 'N/A'}</span>
+               <span style="font-weight: bold; color: ${company.week_25_high_price < 0 ? 'red' : 'black'}">${company.week_25_high_price !== null ? '% ' + Number(company.week_25_high_price).toFixed(2) : 'N/A'}</span>
            </td>
 
            <td>
@@ -564,7 +564,7 @@
 
 
            <td>
-                <span style="font-weight: bold; color: ${company.market_to_book_ratio < 0 ? 'red' : 'black'}">${company.market_to_book_ratio !== null ? company.market_to_book_ratio : 'N/A'}</span>
+                <span style="font-weight: bold; color: ${company.market_to_book_ratio < 0 ? 'red' : 'black'}">${company.market_to_book_ratio !== null ? Number(company.market_to_book_ratio).toFixed(2) : 'N/A'}</span>
            </td>
 
 
@@ -573,7 +573,7 @@
            </td>
 
            <td>
-                <span style="font-weight: bold; color: ${company.free_cash_flow_yield < 0 ? 'red' : 'black'}">${company.free_cash_flow_yield !== null ? '%' + company.free_cash_flow_yield : 'N/A'}</span>
+                <span style="font-weight: bold; color: ${company.free_cash_flow_yield < 0 ? 'red' : 'black'}">${company.free_cash_flow_yield !== null ? '%' + Number(company.free_cash_flow_yield).toFixed(2) : 'N/A'}</span>
            </td>
 
            <td>
@@ -594,7 +594,7 @@
            </td>
 
             <td>
-               <span style="font-weight: bold; color: ${company.last_updated_fiscal_year < 0 ? 'red' : 'black'}">${company.last_updated_fiscal_year !== null ? company.last_updated_fiscal_year : 'N/A'}</span>
+               <span style="font-weight: bold; color: ${company.last_fiscal_year < 0 ? 'red' : 'black'}">${company.last_fiscal_year !== null ? company.last_fiscal_year : 'N/A'}</span>
            </td>
 
            <td>
