@@ -247,18 +247,20 @@
         <thead>
 
         <tr style="position: sticky; top: 0">
-            <th colspan="13" class="border-none"></th>
+            <th colspan="13" class="border-none" style="background-color: white"></th>
             <th colspan="8" class="row2-mergedAll gr-blue-2">Industry Performance</th>
+            <th colspan="11" class="border-none" style="background-color: white"></th>
         </tr>
         <tr style="position: sticky; top: 20px">
-            <th colspan="5" class="border-none"></th>
-            <th colspan="2" class="border-none"></th>
+            <th colspan="7" class="border-none" style="background-color: white"></th>
             <th colspan="6" class="row2-mergedAll gr-blue-3">Risk measurement Ratios</th>
             <th colspan="4" class="row2-mergedAll gr-blue-3">Over 3 Years Historical Data</th>
             <th colspan="3" class="row3-cell14 gr-blue-4">Over 1 Year Historical Data</th>
             <th colspan="1" class="row2-mergedAll gr-blue-2"></th>
 
             <th colspan="8" class="row2-mergedAll gr-blue-3">Financial Ratios</th>
+            <th colspan="11" class="border-none" style="background-color: white"></th>
+
         </tr>
         <tr style="position: sticky; top: 40px">
             <th colspan="4" style="border: 1px solid black;background: white">
@@ -296,6 +298,7 @@
                 EPS<img src="{{asset('assets/media/Saudi_Riyal_Symbol.svg')}}" alt="Saudi Exchange Logo" style="width: 30px; height: 15px;">
             </th>
             <th class="row3-cell18 gr-blue-2">Annual Dividend Rate</th>
+            <th colspan="11" class="border-none" style="background-color: white"></th>
 
         </tr>
         <tr style="position: sticky; top: 110px">
@@ -336,6 +339,8 @@
             <th class="row1-single orange" id="avg_stock_dividend_yield">0</th>
             <th class="row1-single orange" id="avg_earning_per_share">0</th>
             <th class="row1-single orange" id="avg_annual_dividend_rate">0</th>
+            <th colspan="11" class="border-none" style="background-color: white"></th>
+
         </tr>
 
         <tr style="position: sticky; top: 150px;background-color: white">
@@ -345,6 +350,8 @@
             <th colspan="25" style="padding: 10px;border: none">
                 <a href="https://www.saudiexchange.sa/" target="_blank" style="color: black;text-decoration: none;font-size: 12px">رابط أخبار وأسعار سوق التداول السعودي</a>
             </th>
+            <th colspan="11" class="border-none" style="background-color: white"></th>
+
         </tr>
 
 
@@ -425,9 +432,6 @@
             <th class="border-none"></th>
             <th class="border-none"></th>
             <th class="border-none"></th>
-        </tr>
-        <tr style="position: sticky; top: 400px">
-
         </tr>
         </thead>
 
