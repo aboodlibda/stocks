@@ -315,7 +315,7 @@
             <th colspan="5" class="row2-mergedAll gr-blue-3">ملخص أداء أسهم الشركات في السوق السعودى للتداول</th>
             <th colspan="2" class="row2-mergedAll gr-blue-2">Stock Market Price</th>
             <th colspan="6" class="row2-mergedAll gr-blue-3">Risk measurement Ratios</th>
-            <th colspan="8" class="row2-mergedAll gr-blue-2">Stock Performance</th>
+            <th colspan="9" class="row2-mergedAll gr-blue-2">Stock Performance</th>
             <th colspan="10" class="row2-mergedAll gr-blue-3">Financial Ratios</th>
         </tr>
 
@@ -339,7 +339,7 @@
 
 
             <th colspan="4" class="row2-mergedAll gr-blue-3">Over 3 Years Historical Data</th>
-            <th colspan="4" class="row3-cell14 gr-blue-4">Over 1 Year Historical Data</th>
+            <th colspan="5" class="row3-cell14 gr-blue-4">Over 1 Year Historical Data</th>
 
 
 
@@ -377,7 +377,8 @@
             <th class="row3-cell14 gr-blue-4" style="font-size: 10px">Minimum Daily Return</th>
             <th class="row3-cell14 gr-blue-4" style="font-size: 10px">Maximum Daily Return</th>
             <th class="row3-cell14 gr-blue-4" style="font-size: 10px">Average Daily Return</th>
-            <th class="row3-cell14 gr-blue-4" style="font-size: 10px">25 Week High Price</th>
+            <th class="row3-cell14 gr-blue-4" style="font-size: 10px">52 Week High Price</th>
+            <th class="row3-cell14 gr-blue-4" style="font-size: 10px">52 Week Low Price</th>
             <th class="border-none"></th>
             <th class="border-none"></th>
             <th class="border-none"></th>
@@ -555,7 +556,11 @@
            </td>
 
            <td>
-               <span style="font-weight: bold; color: ${company.week_25_high_price < 0 ? 'red' : 'black'}">${company.week_25_high_price !== null ? '% ' + Number(company.week_25_high_price).toFixed(2) : 'N/A'}</span>
+               <span style="font-weight: bold; color: ${company.week_52_high_price < 0 ? 'red' : 'black'}">${company.week_52_high_price !== null ? '% ' + Number(company.week_52_high_price).toFixed(2) : 'N/A'}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.week_52_low_price < 0 ? 'red' : 'black'}">${company.week_52_low_price !== null ? '% ' + Number(company.week_52_low_price).toFixed(2) : 'N/A'}</span>
            </td>
 
            <td>
