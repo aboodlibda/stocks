@@ -29,7 +29,7 @@ class FetchStockData extends Command
 
 
 // Step 1: Get the target record
-        $target = DB::table('companies')->where('company_num', 3003)->first();
+        $target = DB::table('companies')->where('company_num', 2040)->first();
 
         if ($target) {
             // Step 2: Get all records after it, based on ID
