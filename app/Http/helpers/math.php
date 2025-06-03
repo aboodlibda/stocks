@@ -355,7 +355,8 @@ function financialRatios($ticker): array
     $annual_dividend_rate = $summaryProfile['summaryDetail']['trailingAnnualDividendRate'] ?? null;
 
     $free_cash_flow_yield = null;
-    if ($ordinary_shares_number !== 0 && $regular_market_previous_close !== 0) {
+    if ($ordinary_shares_number && $regular_market_previous_close && 
+        $ordinary_shares_number !== 0 && $regular_market_previous_close !== 0) {
         $free_cash_flow_yield = ($free_cash_flow / $ordinary_shares_number) / $regular_market_previous_close;
     }
 
