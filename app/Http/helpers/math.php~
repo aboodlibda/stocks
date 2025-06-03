@@ -339,19 +339,20 @@ function financialRatios($ticker): array
     $stockOptionsUrl = "https://yh-finance-complete.p.rapidapi.com/stockOptions?ticker=$ticker.SR";
     $stockOptions = fetchDataFromAPI($stockOptionsUrl);
 
+    dd($financials);
     $PIRatio = $summaryProfile['summaryDetail']['trailingPE'] ?? null;
     $returnOnEquity = $financials['financialData']['returnOnEquity'] ?? null;
     $dividendYield = $stockOptions['quote']['dividendYield'] ?? null;
     $revenuePerShare = $stockOptions['quote']['epsTrailingTwelveMonths'] ?? null;
     $lastDividendDate = $defaultKeyStatistics['defaultKeyStatistics']['lastDividendDate'] ?? null;
-    $week_25_high_price = $summaryProfile['summaryDetail']['fiftyTwoWeekHigh'] ?? null;
+    $week_52_high_price = $summaryProfile['summaryDetail']['fiftyTwoWeekHigh'] ?? null;
+    $week_52_low_price = $summaryProfile['summaryDetail']['fiftyTwoWeekLow'] ?? null;
     $market_to_book_ratio = $defaultKeyStatistics['defaultKeyStatistics']['priceToBook'] ?? null;
     $free_cash_flow = $financials['financialData']['freeCashflow'] ?? null;
     $ordinary_shares_number = $defaultKeyStatistics['defaultKeyStatistics']['sharesOutstanding'] ?? null;
     $regular_market_previous_close = $summaryProfile['summaryDetail']['regularMarketPreviousClose'] ?? null;
-    $total_debt = $financials['financialData']['totalDebt'] ?? null;
     $last_fiscal_year = $defaultKeyStatistics['defaultKeyStatistics']['lastFiscalYearEnd'] ?? null;
-    $leverage_ratio = '';
+    $leverage_ratio = $financials['financialData']['debtToEquity'] ?? null;;
     $annual_dividend_rate = $summaryProfile['summaryDetail']['trailingAnnualDividendRate'] ?? null;
 
     $free_cash_flow_yield = ($free_cash_flow / $ordinary_shares_number) / $regular_market_previous_close;
@@ -367,7 +368,8 @@ function financialRatios($ticker): array
         'dividendYield' => $dividendYield,
         'revenuePerShare' => $revenuePerShare,
         'lastDividendDate' => $lastDividendDate,
-        'week_25_high_price' => $week_25_high_price,
+        'week_52_high_price' => $week_52_high_price,
+        'week_52_low_price' => $week_52_low_price,
         'market_to_book_ratio' => $market_to_book_ratio,
         'free_cash_flow_yield' => $free_cash_flow_yield,
         'leverage_ratio' => $leverage_ratio,
@@ -465,7 +467,8 @@ function updateCompanyRatios()
             'minimum_daily_stock_1_year' => $riskMeasurementRatios['minimumDailyStock1Year'],
             'maximum_daily_stock_1_year' => $riskMeasurementRatios['maximumDailyStock1Year'],
             'averageDailyExpectedReturn1Year' => $riskMeasurementRatios['averageDailyExpectedReturn1Year'],
-            'week_25_high_price' => $financialRatios['week_25_high_price'],
+            'week_52_high_price' => $financialRatios['week_52_high_price'],
+            'week_52_low_price' => $financialRatios['week_52_low_price'],
             'market_to_book_ratio' => $financialRatios['market_to_book_ratio'],
             'free_cash_flow_yield' => $financialRatios['free_cash_flow_yield'],
             'leverage_ratio' => $financialRatios['leverage_ratio'],
