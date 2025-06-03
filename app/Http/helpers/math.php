@@ -314,7 +314,7 @@ function riskMeasurementRatios($ticker, $code): array
         'maximumDailyStock3Years' => $maximumDailyStock3Years,
         'minimumDailyStock1Year' => $minimumDailyStock1Year,
         'maximumDailyStock1Year' => $maximumDailyStock1Year,
-        'averageDailyExpectedReturn1Year' => round(averageIfNotEmpty($companyRatios1Year),4),
+        'avg_average_daily_expected_return_1_year' => round(averageIfNotEmpty($companyRatios1Year),4),
 
 
     ];
@@ -355,7 +355,7 @@ function financialRatios($ticker): array
     $annual_dividend_rate = $summaryProfile['summaryDetail']['trailingAnnualDividendRate'] ?? null;
 
     $free_cash_flow_yield = null;
-    if ($ordinary_shares_number && $regular_market_previous_close && 
+    if ($ordinary_shares_number && $regular_market_previous_close &&
         $ordinary_shares_number !== 0 && $regular_market_previous_close !== 0) {
         $free_cash_flow_yield = ($free_cash_flow / $ordinary_shares_number) / $regular_market_previous_close;
     }
@@ -469,7 +469,7 @@ function updateCompanyRatios()
             'maximum_daily_stock_3_years' => $riskMeasurementRatios['maximumDailyStock3Years'],
             'minimum_daily_stock_1_year' => $riskMeasurementRatios['minimumDailyStock1Year'],
             'maximum_daily_stock_1_year' => $riskMeasurementRatios['maximumDailyStock1Year'],
-            'averageDailyExpectedReturn1Year' => $riskMeasurementRatios['averageDailyExpectedReturn1Year'],
+            'avg_average_daily_expected_return_1_year' => $riskMeasurementRatios['avg_average_daily_expected_return_1_year'],
             'week_52_high_price' => $financialRatios['week_52_high_price'],
             'week_52_low_price' => $financialRatios['week_52_low_price'],
             'market_to_book_ratio' => $financialRatios['market_to_book_ratio'],
