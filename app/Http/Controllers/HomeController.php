@@ -77,21 +77,28 @@ class HomeController extends Controller
         AVG(stock_beta_coefficient) AS avg_stock_beta_coefficient,
         AVG(annual_stock_volatility) AS avg_annual_stock_volatility,
         AVG(daily_stock_volatility) AS avg_daily_stock_volatility,
-        AVG(pe_ratio) AS avg_pe_ratio,
-        AVG(return_on_equity) AS avg_return_on_equity,
-        AVG(stock_dividend_yield) AS avg_stock_dividend_yield,
-        AVG(earning_per_share) AS avg_earning_per_share,
-        AVG(avg_daily_expected_stock_return) AS avg_daily_expected_stock_return,
-        AVG(annual_stock_expected_return) AS avg_annual_stock_expected_return,
+
         AVG(minimum_daily_stock_3_years) AS avg_minimum_daily_stock_3_years,
         AVG(maximum_daily_stock_3_years) AS avg_maximum_daily_stock_3_years,
+        AVG(annual_stock_expected_return) AS avg_annual_stock_expected_return,
+
+        AVG(avg_daily_expected_stock_return) AS avg_daily_expected_stock_return,
         AVG(minimum_daily_stock_1_year) AS avg_minimum_daily_stock_1_year,
         AVG(maximum_daily_stock_1_year) AS avg_maximum_daily_stock_1_year,
-        AVG(averageDailyExpectedReturn1Year) AS avg_averageDailyExpectedReturn1Year,
-        AVG(week_25_high_price) AS avg_week_25_high_price
+        AVG(average_daily_expected_return_1_year) AS avg_average_daily_expected_return_1_year,
+
+        AVG(pe_ratio) AS avg_pe_ratio,
+        AVG(market_to_book_ratio) AS avg_market_to_book_ratio,
+        AVG(return_on_equity) AS avg_return_on_equity,
+        AVG(free_cash_flow_yield) AS avg_free_cash_flow_yield,
+        AVG(leverage_ratio) AS avg_leverage_ratio,
+        AVG(stock_dividend_yield) AS avg_stock_dividend_yield,
+        AVG(earning_per_share) AS avg_earning_per_share,
+        AVG(annual_dividend_rate) AS avg_annual_dividend_rate
     ")
             ->get();
 
+//        dd($averages);
         if (!$averages) {
             return response()->json(['message' => 'لا توجد بيانات متاحة لحساب المتوسط.'], 404);
         }
@@ -113,20 +120,27 @@ class HomeController extends Controller
                 'avg_stock_beta_coefficient' => round($value->avg_stock_beta_coefficient, 2),
                 'avg_annual_stock_volatility' => round($value->avg_annual_stock_volatility, 2),
                 'avg_daily_stock_volatility' => round($value->avg_daily_stock_volatility, 2),
+                'stock_risk_rank' => $stockRiskRank,
+
+                'avg_minimum_daily_stock_3_years' => round($value->avg_minimum_daily_stock_3_years,2),
+                'avg_maximum_daily_stock_3_years' => round($value->avg_maximum_daily_stock_3_years,2),
+                'avg_annual_stock_expected_return' => round($value->avg_annual_stock_expected_return, 2),
+                'avg_daily_expected_stock_return' => round($value->avg_daily_expected_stock_return,2),
+
+                'avg_minimum_daily_stock_1_year' => round($value->avg_minimum_daily_stock_1_year,2),
+                'avg_maximum_daily_stock_1_year' => round($value->avg_maximum_daily_stock_1_year,2),
+                'avg_average_daily_expected_return_1_year' => round($value->avg_average_daily_expected_return_1_year,2),
+
                 'avg_pe_ratio' => round($value->avg_pe_ratio, 2),
+                'avg_market_to_book_ratio' => round($value->avg_market_to_book_ratio, 2),
                 'avg_return_on_equity' => round($value->avg_return_on_equity, 2),
+                'avg_free_cash_flow_yield' => round($value->avg_free_cash_flow_yield, 2),
+                'avg_leverage_ratio' => round($value->avg_leverage_ratio, 2),
                 'avg_stock_dividend_yield' => round($value->avg_stock_dividend_yield, 2),
                 'avg_earning_per_share' => round($value->avg_earning_per_share, 2),
-                'avg_daily_expected_stock_return' => $value->avg_daily_expected_stock_return,
-                'avg_annual_stock_expected_return' => round($value->avg_annual_stock_expected_return, 2),
-                'avg_minimum_daily_stock_3_years' => $value->avg_minimum_daily_stock_3_years,
-                'avg_maximum_daily_stock_3_years' => $value->avg_maximum_daily_stock_3_years,
-                'avg_minimum_daily_stock_1_year' => $value->avg_minimum_daily_stock_1_year,
-                'avg_maximum_daily_stock_1_year' => $value->avg_maximum_daily_stock_1_year,
-                'avg_averageDailyExpectedReturn1Year' => $value->avg_averageDailyExpectedReturn1Year,
-                'avg_week_25_high_price' => $value->avg_week_25_high_price,
-                'stock_risk_rank' => $stockRiskRank
-                ];
+                'avg_annual_dividend_rate' => round($value->avg_annual_dividend_rate, 2),
+
+            ];
         });
         return response()->json($averages[0]);
     }
