@@ -314,7 +314,7 @@ function riskMeasurementRatios($ticker, $code): array
         'maximumDailyStock3Years' => $maximumDailyStock3Years,
         'minimumDailyStock1Year' => $minimumDailyStock1Year,
         'maximumDailyStock1Year' => $maximumDailyStock1Year,
-        'avg_average_daily_expected_return_1_year' => round(averageIfNotEmpty($companyRatios1Year),4),
+        'average_daily_expected_return_1_year' => round(averageIfNotEmpty($companyRatios1Year),4),
 
 
     ];
@@ -469,7 +469,7 @@ function updateCompanyRatios()
             'maximum_daily_stock_3_years' => $riskMeasurementRatios['maximumDailyStock3Years'],
             'minimum_daily_stock_1_year' => $riskMeasurementRatios['minimumDailyStock1Year'],
             'maximum_daily_stock_1_year' => $riskMeasurementRatios['maximumDailyStock1Year'],
-            'avg_average_daily_expected_return_1_year' => $riskMeasurementRatios['avg_average_daily_expected_return_1_year'],
+            'average_daily_expected_return_1_year' => $riskMeasurementRatios['average_daily_expected_return_1_year'],
             'week_52_high_price' => $financialRatios['week_52_high_price'],
             'week_52_low_price' => $financialRatios['week_52_low_price'],
             'market_to_book_ratio' => $financialRatios['market_to_book_ratio'],
