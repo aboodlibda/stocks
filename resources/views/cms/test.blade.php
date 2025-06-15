@@ -550,21 +550,14 @@
 
     }
 
-    $(document).on('click', '.bd-example-modal-xl', function () {
-        const recordId = $(this).data('id');
-        console.log('Clicked ID:', recordId);
-
-        // خزّنه مؤقتًا في عنصر المودال
-        $('.bd-example-modal-xl').data('record-id', recordId);
-    });
-
-
     $('.bd-example-modal-xl').on('shown.bs.modal', function (event) {
         // Show loading spinner
         // $(this).find('.modal-loader').html('<div class="text-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
 
-        const recordId = $(this).data('record-id'); // Get the stored ID
-        console.log('Modal Opened for ID:', recordId);
+        const button = event.relatedTarget; // The button that triggered the modal
+        const company_id = button.getAttribute('data-id'); // Native JS way
+
+        console.log('Record ID:', company_id);
 
         $.ajax({
             type: 'POST',
@@ -574,15 +567,14 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             data: {
-              var1: 'value1',
-              var2: 'value2',
+              id: company_id
             },
             beforeSend: function() {
                 $('.modal-loader').html('<div class="text-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
             },
             success: function(data) {
-                console.log(data)
-                newDraw();
+                console.log(data.company.company_name);
+                newDraw(data.company.company_name, data.frequency);
             }
         });
     })
@@ -1074,9 +1066,9 @@
         chart.render();
     }
 
-    function newDraw() {
+    function newDraw(company_name,frequency) {
 
-        var values = {!! json_encode(array_values($frequency)) !!};
+        const values = Object.values(frequency); // ✅ JavaScript version of array_values()
         var dataPointsArray = {
             var_t:values,
 
@@ -1093,7 +1085,7 @@
         var options = {
             animationEnabled: true,
             title:{
-                text: "اس تي سي"
+                text: company_name
             },
             axisX: {
                 title: "",
