@@ -23,10 +23,15 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     })->name('test');
 
     Route::get('/companies', [HomeController::class, 'getCompanies']);
+    Route::post('/stock-performance', [HomeController::class, 'stockPerformance'])->name('stock-performance');
     Route::get('/search', [HomeController::class, 'search']);
     Route::get('read-companies', [StockController::class, 'read_companies'])->name('read-companies');
     Route::get('test_api', [StockController::class,'getApi'])->name('get-api');
     Route::get('execute',function(){
+
+//        $ratios = calculateRatiosByCompany(7010);
+//        $binBoundary = binBoundary(7010);
+//        frequency($ratios,$binBoundary);
         financialRatios(2030);
 //        riskMeasurementRatios(2222,'TENI');
 //        riskMeasurementRatios(7010,'TTSI');
