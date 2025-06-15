@@ -322,22 +322,26 @@ function riskMeasurementRatios($ticker, $code): array
 
 function financialRatios($ticker): array
 {
-//    $sdate = '2023-09-12';
-//    $edate = '2024-09-13';
+    $sdate = '2023-09-12';
+    $edate = '2024-09-13';
 
 
     $summaryProfileUrl = "https://yh-finance-complete.p.rapidapi.com/summaryprofile?symbol=$ticker.SR";
     $summaryProfile = fetchStockDataFromAPI($summaryProfileUrl);
-
+//    null
     $defaultKeyStatisticsUrl = "https://yh-finance-complete.p.rapidapi.com/defaultKeyStatistics?symbol=$ticker.SR";
     $defaultKeyStatistics = fetchDataFromAPI($defaultKeyStatisticsUrl);
+//    "Error: 50"
 
-    $financialsUrl = "https://yh-finance-complete.p.rapidapi.com/financials?symbol=$ticker.SR";
+    $financialsUrl = "https://yahoo-finance15.p.rapidapi.com/financials?symbol=$ticker.SR";
     $financials = fetchDataFromAPI($financialsUrl);
-
+//    "Error: 50"
+    dd($financials);
 
     $stockOptionsUrl = "https://yh-finance-complete.p.rapidapi.com/stockOptions?ticker=$ticker.SR";
     $stockOptions = fetchDataFromAPI($stockOptionsUrl);
+//    "Error: 50"
+
 
     $PIRatio = $summaryProfile['summaryDetail']['trailingPE'] ?? null;
     $returnOnEquity = $financials['financialData']['returnOnEquity'] ?? null;
@@ -415,6 +419,21 @@ function fetchStockDataFromAPI($url)
     return null;
 }
 
+function testAPI()
+{
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, "https://yh-finance-complete.p.rapidapi.com/summaryprofile?symbol=2010.SR");
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        "X-RapidAPI-Key: b2f8db2a89mshecda5e205e7732cp128b17jsn34b4adf6d0b8",
+        "X-RapidAPI-Host: yh-finance-complete.p.rapidapi.com"
+    ]);
+    $response = curl_exec($ch);
+    curl_close($ch);
+    echo $response;
+
+}
 
 
 function stdDeviation($arr): float
@@ -545,4 +564,84 @@ function getMaximumValue(array $values) {
     }
 
     return max($filtered);
+}
+
+
+function numberOfBin($ticker): int {
+    $values = calculateRatiosByCompany($ticker);
+    // Count non-empty values
+    $nonEmptyCount = count(array_filter($values, function ($v) {
+        return $v !== null && $v !== '';
+    }));
+
+    // Square root and round up
+    return (int) ceil(sqrt($nonEmptyCount));
+}
+
+//function binRange($ticker)
+//{
+//    $ratios = calculateRatiosByCompany($ticker);
+//    $min = getMinimumValue($ratios);
+//    $max = getMaximumValue($ratios);
+//    $max_min = $max - $min;
+//    return $max_min / numberOfBin(7010) ;
+//}
+
+function binBoundary($ticker)
+{
+    $ratios = calculateRatiosByCompany($ticker);
+    $min = getMinimumValue($ratios);
+    $max = getMaximumValue($ratios);
+    $max_min = $max - $min;
+    $numberOfBins = numberOfBin($ticker);
+    $binRange = $max_min / $numberOfBins;
+
+    $result = [];
+    for ($i = 0; $i < $numberOfBins; $i++) {
+        $result[] = $min + ($i * $binRange);
+    }
+
+    return $result;
+}
+
+
+function frequency(array $data, array $bins): array {
+    sort($bins);  // Make sure bins are in ascending order
+    $frequencies = array_fill(0, count($bins) + 1, 0); // +1 for values > last bin
+
+    foreach ($data as $value) {
+        if (!is_numeric($value)) continue;
+
+        $placed = false;
+        foreach ($bins as $i => $bin) {
+            if ($value <= $bin) {
+                $frequencies[$i]++;
+                $placed = true;
+                break;
+            }
+        }
+        if (!$placed) {
+            $frequencies[count($bins)]++; // value > last bin
+        }
+    }
+
+    return $frequencies;
+}
+
+
+function normalizeF3Value($dashboardF3, $f3, array $columnA): string|float {
+    if ($dashboardF3 === '' || $dashboardF3 === null) {
+        return '';
+    }
+
+    // Count non-empty cells in column A
+    $nonEmptyCount = count(array_filter($columnA, function ($value) {
+        return $value !== '' && $value !== null;
+    }));
+
+    if ($nonEmptyCount === 0) {
+        return 0;
+    }
+
+    return $f3 / $nonEmptyCount;
 }
