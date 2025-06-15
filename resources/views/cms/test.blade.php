@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
 {{--    <link href="{{asset('assets/plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css">--}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 
     <title>Market Stock Screen</title>
     <style>
@@ -226,6 +229,25 @@
     <img src="{{asset('assets/media/logo.png')}}" alt="Logo" class="logo">
 </div>
 
+<!-- Large modal -->
+
+<div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title text-center w-100">تحليل أداء السهم</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-loader"></div>
+                <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+
+            </div>
+        </div>
+    </div>
+</div>
 <div class="main_search_div">
 {{--    <div class="select-search">--}}
 {{--        <select name="sector" class="sector" id="sector">--}}
@@ -364,8 +386,8 @@
         </tr>
 
         <tr style="position: sticky; top: 218px">
-            <th class="row3-cell1 gr-blue-1">إضافة للمحفظة</th>
-            <th class="row3-cell2 gr-blue-1">ملخص أداء السهم</th>
+            <th class="row3-cell1 gr-blue-1">إضافة السهم للمحفظة</th>
+            <th class="row3-cell2 gr-blue-1">تحليل أداء السهم</th>
             <th class="row3-cell3 gr-blue-1">مؤشر القطاع</th>
             <th class="row3-cell4 gr-blue-1">القطاع</th>
             <th class="row3-cell5 gr-blue-1">الشركة</th>
@@ -439,10 +461,132 @@
         </tbody>
     </table>
 
+@php
+    $ratios = calculateRatiosByCompany(7010);
+    $binBoundary = binBoundary(7010);
+    $frequency = frequency($ratios,$binBoundary);
+@endphp
 </body>
-
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+{{--<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>--}}
+{{--<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>--}}
+
+<script type="text/javascript" src="https://cdn.canvasjs.com/jquery.canvasjs.min.js"></script>
+
+
+<script>
+
+    function drawChart1 () {
+// تحويل بيانات PHP JSON إلى JavaScript
+
+        var values = {!! json_encode(array_values($frequency)) !!};
+        var dataPointsArray = {
+            var_t:values,
+
+            bin_boundaries: []
+        };
+
+        {{--var dataPointsArray = <?php echo $dataPoints_json; ?>;--}}
+        var company_name = "اس تي سي";
+
+
+// التحقق من وجود البيانات
+        if (!dataPointsArray.var_t || !dataPointsArray.bin_boundaries) {
+            var errorMessage = document.createElement('p');
+            errorMessage.innerText = "Data not available for the chart";
+// document.body.appendChild(errorMessage);
+            document.querySelector('.small').appendChild(errorMessage);
+
+            return;
+        }
+
+        var chartDiv = document.createElement('div');
+        chartDiv.setAttribute('id', 'chartContainer');
+        chartDiv.style.cssText = 'height: 300px; width: 100%; margin: 0 auto; display: flex; justify-content: center; align-items: center;';
+
+        // Add a container for the chart with padding
+        var chartContainer = document.createElement('div');
+        chartContainer.style.cssText = 'width: 100%; padding: 20px;'
+        chartContainer.appendChild(chartDiv);
+// document.body.appendChild(chartDiv);
+        document.querySelector('.small').appendChild(chartContainer);
+
+
+// إعداد بيانات الرسم البياني مع التسميات
+        var bin_boundaries = dataPointsArray.bin_boundaries;
+        var chartData = dataPointsArray.var_t.map(function(value, index) {
+            return { y: value * 100, label: (bin_boundaries[index] * 100).toFixed(3) + "%" }; // تحويل التسميات إلى نسبة مئوية وتقريبها لثلاثة أرقام عشرية
+        });
+
+        var chartOptions = {
+            title: { }, // استخدام قيمة المتغير في العنوان
+            axisX: {
+                title: "",
+                labelAngle: -90, // تدوير التسميات لتجنب التداخل
+                interval: 1,
+                labelFontSize: 9 // تقليل حجم الخط لعرض المزيد من النقاط
+            },
+            axisY: {
+                title: "",
+                includeZero: true,
+                suffix: "%", // إضافة علامة النسبة المئوية
+                interval: 2,
+                labelFontSize: 10 // تقليل حجم الخط لعرض المزيد من النقاط
+            },
+            data: [
+                {
+                    type: "column",
+                    color: "#7CB9E8", // تحديد لون العمود
+                    dataPoints: chartData
+                }
+            ]
+        };
+
+        var chart = new CanvasJS.Chart(chartDiv.id, chartOptions);
+        chart.render();
+
+    }
+
+    $(document).on('click', '.bd-example-modal-xl', function () {
+        const recordId = $(this).data('id');
+        console.log('Clicked ID:', recordId);
+
+        // خزّنه مؤقتًا في عنصر المودال
+        $('.bd-example-modal-xl').data('record-id', recordId);
+    });
+
+
+    $('.bd-example-modal-xl').on('shown.bs.modal', function (event) {
+        // Show loading spinner
+        // $(this).find('.modal-loader').html('<div class="text-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
+
+        const recordId = $(this).data('record-id'); // Get the stored ID
+        console.log('Modal Opened for ID:', recordId);
+
+        $.ajax({
+            type: 'POST',
+            url: '/stock-performance',
+            dataType: 'json',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+              var1: 'value1',
+              var2: 'value2',
+            },
+            beforeSend: function() {
+                $('.modal-loader').html('<div class="text-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
+            },
+            success: function(data) {
+                console.log(data)
+                newDraw();
+            }
+        });
+    })
+</script>
 <script>
 
     function fetchStockAverages(value) {
@@ -530,11 +674,16 @@
                     $('#table-data').append(`
                           <tr>
            <td>
-               <span><img src="{{asset('assets/media/svg/mouse-pointer-solid.svg')}}" alt="click" style="height: 30px;width: 30px"></span>
+               <button class="btn btn-primary btn-sm" style="height: 30px; width: 30px; padding: 0;cursor:pointer;border: none;background: transparent;">
+                   <img src="{{asset('assets/media/add.png')}}" alt="Add" style="height: 20px; width: 20px;">
+               </button>
            </td>
 
            <td>
-               <span><img src="{{asset('assets/media/svg/mouse-pointer-solid.svg')}}" alt="click" style="height: 30px;width: 30px"></span>
+               <button type="button" data-toggle="modal" data-target=".bd-example-modal-xl" class="btn btn-info btn-sm" data-id="${company.company_id}"
+                style="height: 30px; width: 30px; padding: 0;cursor:pointer;border: none;background: transparent;">
+                   <img src="{{asset('assets/media/graph.png')}}" alt="Graph" style="height: 30px; width: 30px;">
+               </button>
            </td>
 
            <td>
@@ -846,6 +995,135 @@
         var selectedValue = $(this).val();
        fetchStockAverages(selectedValue);
     });
+
+
 </script>
+
+<script>
+
+    function drawCharts2() {
+        // بيانات ثابتة
+        var dataPointsArray = {
+            log_array1: [0.1, 0.15, 0.2, 0.25, 0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.3,0.1, 0.15, 0.2, 0.25, 0.3,0.1, 0.15, 0.2, 0.25, 0.3],
+            log_array2: [0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,0.12, 0.18, 0.22, 0.28, 0.35,]
+        };
+        var company_name = "Static Company";
+        var index_name = "Static Index";
+
+        if (!dataPointsArray.log_array1 || !dataPointsArray.log_array2) {
+            var errorMessage = document.createElement('p');
+            errorMessage.innerText = "Data not available for the chart";
+            document.querySelector('.grand').appendChild(errorMessage);
+            return;
+        }
+
+        var chartDiv = document.createElement('div');
+        chartDiv.setAttribute('id', 'chart2Container');
+        chartDiv.style.cssText = 'height: 200px; width: 100%;';
+        document.querySelector('.grand').appendChild(chartDiv);
+
+        var chartData1 = dataPointsArray.log_array1.map((value, index) => ({
+            y: value * 100,
+            label: index.toString()
+        }));
+
+        var chartData2 = dataPointsArray.log_array2.map((value, index) => ({
+            y: value * 100,
+            label: index.toString()
+        }));
+
+        var chartOptions = {
+            title: {},
+            axisX: {
+                labelAngle: -45,
+                interval: 10,
+                labelFontSize: 10,
+                labelFormatter: function () { return ""; }
+            },
+            axisY: {
+                includeZero: true,
+                suffix: "%",
+                interval: 2,
+                labelFontSize: 10
+            },
+            legend: {
+                cursor: "pointer",
+                verticalAlign: "bottom",
+                horizontalAlign: "center",
+                dockInsidePlotArea: true
+            },
+            data: [
+                {
+                    type: "line",
+                    color: "#0000FF",
+                    name: company_name,
+                    showInLegend: true,
+                    dataPoints: chartData1
+                },
+                {
+                    type: "line",
+                    color: "#FF7F50",
+                    name: index_name,
+                    showInLegend: true,
+                    dataPoints: chartData2
+                }
+            ]
+        };
+
+        var chart = new CanvasJS.Chart(chartDiv.id, chartOptions);
+        chart.render();
+    }
+
+    function newDraw() {
+
+        var values = {!! json_encode(array_values($frequency)) !!};
+        var dataPointsArray = {
+            var_t:values,
+
+            bin_boundaries: [0.13, 0.00, 0.13, 0.13, 0.53, 0.40, 2.54, 3.07, 6.54, 12.95, 18.56, 22.43, 15.62, 6.94, 4.27, 3.07, 1.20, 0.53, 0.13, 0.27, 0.00, 0.00,
+                0.00, 0.13, 0.00, 0.00, 0.00, 0.00]
+        };
+
+
+        var bin_boundaries = dataPointsArray.bin_boundaries;
+        var chartData = dataPointsArray.var_t.map(function(value, index) {
+            return { y: value * 100, label: (bin_boundaries[index] * 100).toFixed(1) + "%" }; // تحويل التسميات إلى نسبة مئوية وتقريبها لثلاثة أرقام عشرية
+        });
+
+        var options = {
+            animationEnabled: true,
+            title:{
+                text: "اس تي سي"
+            },
+            axisX: {
+                title: "",
+                labelAngle: -0, // تدوير التسميات لتجنب التداخل
+                interval: 1,
+                labelFontSize: 9 // تقليل حجم الخط لعرض المزيد من النقاط
+            },
+            axisY: {
+                title: "",
+                includeZero: true,
+                suffix: "%", // إضافة علامة النسبة المئوية
+                labelFontSize: 10 // تقليل حجم الخط لعرض المزيد من النقاط
+            },
+            toolTip: {
+                shared: true,
+                reversed: true
+            },
+            data: [
+                {
+                    type: "column",
+                    color: "#7CB9E8", // تحديد لون العمود
+                    dataPoints: chartData
+                }
+            ]
+        };
+
+        $("#chartContainer").CanvasJSChart(options);
+    }
+</script>
+
+
 
 </html>
