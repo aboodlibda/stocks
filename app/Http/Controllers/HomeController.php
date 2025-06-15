@@ -153,6 +153,11 @@ class HomeController extends Controller
 
     }
 
+    public function stockPerformance(Request $request)
+    {
+        return response()->json($request->var1);
+    }
+
 // SearchController.php
 
     public function search(Request $request)
