@@ -155,7 +155,14 @@ class HomeController extends Controller
 
     public function stockPerformance(Request $request)
     {
-        return response()->json($request->var1);
+        $company = Company::query()->findOrFail($request->id);
+        $ratios = calculateRatiosByCompany($company->company_num);
+        $binBoundary = binBoundary($company->company_num);
+        $frequency = frequency($ratios,$binBoundary);
+        return response()->json([
+            'company' => $company,
+            'frequency' => $frequency
+        ]);
     }
 
 // SearchController.php
