@@ -156,12 +156,14 @@ class HomeController extends Controller
     public function stockPerformance(Request $request)
     {
         $company = Company::query()->findOrFail($request->id);
-        $ratios = calculateRatiosByCompany($company->company_num);
+        $company_ratios = calculateRatiosByCompany($company->company_num);
+        $sector_ratios = calculateRatiosBySector($company->index_symbol);
         $binBoundary = binBoundary($company->company_num);
-        $frequency = frequency($ratios,$binBoundary);
+        $frequency = frequency($company_ratios,$binBoundary);
         return response()->json([
             'company' => $company,
-            'frequency' => $frequency
+            'frequency' => $frequency,
+            'sector_ratios' => $sector_ratios
         ]);
     }
 
