@@ -242,9 +242,46 @@
             </div>
             <div class="modal-body">
                 <div class="modal-loader"></div>
+                <div  style="float: right; background: rgb(248, 203, 107); padding: 15px; border-radius: 5px;">
+                    <div class="stats-content" style="max-width: 450px;">
+                        <p>
+                            The above normal distribution is a symmetrical distribution centred around the mean,
+                            indicating that data close to the mean occur more frequently than data far from the mean
+                        </p>
+                    </div>
+                </div>
 
-                <div id="chartContainer" style="height: 370px; width: 100%;"></div>
-                <div id="chart2Container" style="height: 370px; width: 100%;"></div>
+                <div  style="float: left; background: rgb(2500,255,0); padding: 4px; border-radius: 5px;">
+                    <div class="stats-content" style="max-width: 450px;">
+                        <p>
+                            Stock Return Probability Chart
+                        </p>
+                    </div>
+                </div>
+
+                <div id="chartContainer" style="height: 370px; width: 100%;padding-top: 100px;padding-bottom: 50px"></div>
+
+                <div  style="float: right; background: rgb(248, 203, 107); padding: 15px; border-radius: 5px;">
+                    <div class="stats-content" style="max-width: 450px;">
+                        <p>
+                            If the index price closely mirrors stock prices, it suggests that the overall market
+                            movement is closely tied to the performance of individual stocks within that index.
+                            Thus, it indicates a strong correlation between the two.
+
+                        </p>
+                    </div>
+                </div>
+
+                <div  style="float: left; background: rgb(2500,255,0); padding: 4px; border-radius: 5px;">
+                    <div class="stats-content" style="max-width: 450px;">
+                        <p>
+                            Index Chart
+                        </p>
+                    </div>
+                </div>
+
+
+                <div id="chart2Container" style="height: 370px; width: 100%;;padding-top: 50px"></div>
 
             </div>
         </div>
@@ -481,85 +518,11 @@
 
 <script>
 
-    function drawChart1 () {
-// تحويل بيانات PHP JSON إلى JavaScript
-
-        var values = {!! json_encode(array_values($frequency)) !!};
-        var dataPointsArray = {
-            var_t:values,
-
-            bin_boundaries: []
-        };
-
-        {{--var dataPointsArray = <?php echo $dataPoints_json; ?>;--}}
-        var company_name = "اس تي سي";
-
-
-// التحقق من وجود البيانات
-        if (!dataPointsArray.var_t || !dataPointsArray.bin_boundaries) {
-            var errorMessage = document.createElement('p');
-            errorMessage.innerText = "Data not available for the chart";
-// document.body.appendChild(errorMessage);
-            document.querySelector('.small').appendChild(errorMessage);
-
-            return;
-        }
-
-        var chartDiv = document.createElement('div');
-        chartDiv.setAttribute('id', 'chartContainer');
-        chartDiv.style.cssText = 'height: 300px; width: 100%; margin: 0 auto; display: flex; justify-content: center; align-items: center;';
-
-        // Add a container for the chart with padding
-        var chartContainer = document.createElement('div');
-        chartContainer.style.cssText = 'width: 100%; padding: 20px;'
-        chartContainer.appendChild(chartDiv);
-// document.body.appendChild(chartDiv);
-        document.querySelector('.small').appendChild(chartContainer);
-
-
-// إعداد بيانات الرسم البياني مع التسميات
-        var bin_boundaries = dataPointsArray.bin_boundaries;
-        var chartData = dataPointsArray.var_t.map(function(value, index) {
-            return { y: value * 100, label: (bin_boundaries[index] * 100).toFixed(3) + "%" }; // تحويل التسميات إلى نسبة مئوية وتقريبها لثلاثة أرقام عشرية
-        });
-
-        var chartOptions = {
-            title: { }, // استخدام قيمة المتغير في العنوان
-            axisX: {
-                title: "",
-                labelAngle: -90, // تدوير التسميات لتجنب التداخل
-                interval: 1,
-                labelFontSize: 9 // تقليل حجم الخط لعرض المزيد من النقاط
-            },
-            axisY: {
-                title: "",
-                includeZero: true,
-                suffix: "%", // إضافة علامة النسبة المئوية
-                interval: 2,
-                labelFontSize: 10 // تقليل حجم الخط لعرض المزيد من النقاط
-            },
-            data: [
-                {
-                    type: "column",
-                    color: "#7CB9E8", // تحديد لون العمود
-                    dataPoints: chartData
-                }
-            ]
-        };
-
-        var chart = new CanvasJS.Chart(chartDiv.id, chartOptions);
-        chart.render();
-
-    }
 
     $('.bd-example-modal-xl').on('shown.bs.modal', function (event) {
-        // Show loading spinner
-        // $(this).find('.modal-loader').html('<div class="text-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
 
         const button = event.relatedTarget; // The button that triggered the modal
         const company_id = button.getAttribute('data-id'); // Native JS way
-
-        console.log('Record ID:', company_id);
 
         $.ajax({
             type: 'POST',
@@ -575,7 +538,6 @@
                 $('.modal-loader').html('<div class="text-center" id="loader"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
             },
             success: function(data) {
-                console.log(data.company.company_name);
                 $("#loader").remove();
                 drawCharts1(data.company.company_name, data.frequency);
                 drawCharts2(data.company.company_name,data.company.index_name,data.sector_ratios);
