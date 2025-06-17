@@ -552,6 +552,12 @@
 <script>
 
 
+    // Clear chart containers when modal closes
+    $('.bd-example-modal-xl').on('hidden.bs.modal', function () {
+        $('#chartContainer').html('');
+        $('#chart2Container').html('');
+    });
+
     $('.bd-example-modal-xl').on('shown.bs.modal', function (event) {
 
         const button = event.relatedTarget; // The button that triggered the modal
@@ -561,12 +567,6 @@
             type: 'GET',
             url: '/stock-performance',
             dataType: 'json',
-            // headers: {
-            //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            // },
-            // xhrFields: {
-            //     withCredentials: true
-            // },
             data: {
               {{--"_token": "{{ csrf_token() }}",--}}
               id: company_id
