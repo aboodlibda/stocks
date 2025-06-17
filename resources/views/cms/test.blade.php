@@ -574,9 +574,10 @@
             beforeSend: function() {
                 $('.modal-loader').html('' +
                     '<div class="text-center" id="loader">' +
-                    '<div class="spinner-border" role="status">' +
+                    '<div class="spinner-border" role="status"></div>' +
+                    '<div class="mt-3">' +
+                    '<span>جار جلب البيانات ...</span>' +
                     '</div>' +
-                    '<span class="text-center">جار جلب البيانات ...</span>' +
                     '</div>' +
                     '');
             },
