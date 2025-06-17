@@ -520,13 +520,9 @@
 
 
     $('.bd-example-modal-xl').on('shown.bs.modal', function (event) {
-        // Show loading spinner
-        // $(this).find('.modal-loader').html('<div class="text-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
 
         const button = event.relatedTarget; // The button that triggered the modal
         const company_id = button.getAttribute('data-id'); // Native JS way
-
-        console.log('Record ID:', company_id);
 
         $.ajax({
             type: 'POST',
@@ -542,7 +538,6 @@
                 $('.modal-loader').html('<div class="text-center" id="loader"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
             },
             success: function(data) {
-                console.log(data.company.company_name);
                 $("#loader").remove();
                 drawCharts1(data.company.company_name, data.frequency);
                 drawCharts2(data.company.company_name,data.company.index_name,data.sector_ratios);
