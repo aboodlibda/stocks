@@ -542,6 +542,7 @@
             },
             success: function(data) {
                 $("#loader").remove();
+                console.log(data);
                 drawCharts1(data.company.company_name, data.frequency);
                 drawCharts2(data.company.company_name,data.company.index_name,data.sector_ratios);
             }
