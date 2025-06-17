@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
+Route::post('/stock-performance', [HomeController::class, 'stockPerformance'])->name('stock-performance');
 
 Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
@@ -23,7 +24,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     })->name('test');
 
     Route::get('/companies', [HomeController::class, 'getCompanies']);
-    Route::post('/stock-performance', [HomeController::class, 'stockPerformance'])->name('stock-performance');
     Route::get('/search', [HomeController::class, 'search']);
     Route::get('read-companies', [StockController::class, 'read_companies'])->name('read-companies');
     Route::get('test_api', [StockController::class,'getApi'])->name('get-api');
