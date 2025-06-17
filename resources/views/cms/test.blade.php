@@ -527,7 +527,7 @@
         $.ajax({
             type: 'GET',
             url: '/stock-performance',
-            // dataType: 'json',
+            dataType: 'json',
             // headers: {
             //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             // },
@@ -535,7 +535,7 @@
             //     withCredentials: true
             // },
             data: {
-              "_token": "{{ csrf_token() }}",
+              {{--"_token": "{{ csrf_token() }}",--}}
               id: company_id
             },
             beforeSend: function() {
@@ -543,6 +543,7 @@
             },
             success: function(data) {
                 $("#loader").remove();
+                console.log(data);
                 drawCharts1(data.company.company_name, data.frequency);
                 drawCharts2(data.company.company_name,data.company.index_name,data.sector_ratios);
             }
