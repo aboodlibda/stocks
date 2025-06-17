@@ -281,7 +281,7 @@
                 </div>
 
 
-                <div id="chart2Container" style="height: 370px; width: 100%;;padding-top: 50px"></div>
+                <div id="chart2Container" style="height: 370px; width: 100%;;padding-top: 250px"></div>
 
             </div>
         </div>
