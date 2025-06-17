@@ -525,7 +525,7 @@
         const company_id = button.getAttribute('data-id'); // Native JS way
 
         $.ajax({
-            type: 'POST',
+            type: 'GET',
             url: '/stock-performance',
             // dataType: 'json',
             // headers: {
