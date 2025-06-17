@@ -326,9 +326,10 @@ function financialRatios($ticker): array
     $edate = '2024-09-13';
 
 
-    $summaryProfileUrl = "https://yh-finance-complete.p.rapidapi.com/summaryprofile?symbol=$ticker.SR";
+    $summaryProfileUrl = "https://yahoo-finance15.p.rapidapi.com/summaryprofile?symbol=$ticker.SR";
     $summaryProfile = fetchStockDataFromAPI($summaryProfileUrl);
 //    null
+    dd($summaryProfile);
 
     $defaultKeyStatisticsUrl = "https://yh-finance-complete.p.rapidapi.com/defaultKeyStatistics?symbol=$ticker.SR";
     $defaultKeyStatistics = fetchDataFromAPI($defaultKeyStatisticsUrl);
