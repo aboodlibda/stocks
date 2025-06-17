@@ -535,6 +535,7 @@
                 withCredentials: true
             },
             data: {
+              "_token": "{{ csrf_token() }}",
               id: company_id
             },
             beforeSend: function() {
