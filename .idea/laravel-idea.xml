@@ -12,6 +12,7 @@
           <map>
             <entry key="createConsoleCommand:classSuffix" value="" />
             <entry key="createEloquentScope:namespace" value="Models\Scopes" />
+            <entry key="createMiddleware:classSuffix" value="" />
             <entry key="createModel:namespace" value="Models" />
           </map>
         </option>
