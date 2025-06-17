@@ -329,6 +329,7 @@ function financialRatios($ticker): array
     $summaryProfileUrl = "https://yh-finance-complete.p.rapidapi.com/summaryprofile?symbol=$ticker.SR";
     $summaryProfile = fetchStockDataFromAPI($summaryProfileUrl);
 //    null
+
     $defaultKeyStatisticsUrl = "https://yh-finance-complete.p.rapidapi.com/defaultKeyStatistics?symbol=$ticker.SR";
     $defaultKeyStatistics = fetchDataFromAPI($defaultKeyStatisticsUrl);
 //    "Error: 50"
@@ -336,7 +337,6 @@ function financialRatios($ticker): array
     $financialsUrl = "https://yahoo-finance15.p.rapidapi.com/financials?symbol=$ticker.SR";
     $financials = fetchDataFromAPI($financialsUrl);
 //    "Error: 50"
-    dd($financials);
 
     $stockOptionsUrl = "https://yh-finance-complete.p.rapidapi.com/stockOptions?ticker=$ticker.SR";
     $stockOptions = fetchDataFromAPI($stockOptionsUrl);
