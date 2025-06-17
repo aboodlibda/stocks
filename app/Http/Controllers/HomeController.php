@@ -164,9 +164,6 @@ class HomeController extends Controller
             'company' => $company,
             'frequency' => $frequency,
             'sector_ratios' => $sector_ratios,
-            'session' => session()->all(),
-            'csrf_token_session' => session()->token(),
-            'csrf_token_request' => $request->header('X-CSRF-TOKEN')
         ]);
     }
 
