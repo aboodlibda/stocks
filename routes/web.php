@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
-Route::post('/stock-performance', [HomeController::class, 'stockPerformance'])->name('stock-performance');
+Route::get('/stock-performance', [HomeController::class, 'stockPerformance'])->name('stock-performance');
 
 Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
