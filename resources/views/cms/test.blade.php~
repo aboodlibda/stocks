@@ -242,46 +242,79 @@
             </div>
             <div class="modal-body">
                 <div class="modal-loader"></div>
-                <div  style="float: right; background: rgb(248, 203, 107); padding: 15px; border-radius: 5px;">
-                    <div class="stats-content" style="max-width: 450px;">
-                        <p>
-                            The above normal distribution is a symmetrical distribution centred around the mean,
-                            indicating that data close to the mean occur more frequently than data far from the mean
-                        </p>
-                    </div>
-                </div>
 
-                <div  style="float: left; background: rgb(2500,255,0); padding: 4px; border-radius: 5px;">
-                    <div class="stats-content" style="max-width: 450px;">
-                        <p>
-                            Stock Return Probability Chart
-                        </p>
-                    </div>
-                </div>
+                <div class="container-fluid" dir="rtl">
+                    <div class="row">
 
-                <div id="chartContainer" style="height: 370px; width: 100%;padding-top: 100px;padding-bottom: 50px"></div>
+                        <div class="col-md-4">
+                            <div style="background: rgb(248, 203, 107); padding: 15px; border-radius: 5px;">
+                                <div class="stats-content" style="max-width: 450px;">
+                                    <p>
+                                        The above normal distribution is a symmetrical distribution centred around the mean,
+                                        indicating that data close to the mean occur more frequently than data far from the mean
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
 
-                <div  style="float: right; background: rgb(248, 203, 107); padding: 15px; border-radius: 5px;">
-                    <div class="stats-content" style="max-width: 450px;">
-                        <p>
-                            If the index price closely mirrors stock prices, it suggests that the overall market
-                            movement is closely tied to the performance of individual stocks within that index.
-                            Thus, it indicates a strong correlation between the two.
+                        <div class="col-md-4">
+                            <div class="text-center">
+                                <h6>احتماليات توزيع عوائد السهم اليومي خلال 3 سنوات بناء على الأسعار التاريخية</h6>
+                            </div>
+                        </div>
 
-                        </p>
-                    </div>
-                </div>
-
-                <div  style="float: left; background: rgb(2500,255,0); padding: 4px; border-radius: 5px;">
-                    <div class="stats-content" style="max-width: 450px;">
-                        <p>
-                            Index Chart
-                        </p>
+                        <div class="col-md-4">
+                            <div style="background: rgb(255,255,0); padding: 4px; border-radius: 5px;">
+                                <div class="stats-content text-center">
+                                    <p>
+                                        Stock Return Probability Chart
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
 
-                <div id="chart2Container" style="height: 370px; width: 100%;;padding-top: 150px"></div>
+                <div id="chartContainer" style="height: 370px; width: 100%;margin-top: 50px;margin-bottom: 50px"></div>
+
+
+                <div class="container-fluid" dir="rtl">
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <div style="background: rgb(248, 203, 107); padding: 15px; border-radius: 5px;">
+                                <div class="stats-content" style="max-width: 450px;">
+                                    <p>
+                                        If the index price closely mirrors stock prices, it suggests that the overall market
+                                        movement is closely tied to the performance of individual stocks within that index.
+                                        Thus, it indicates a strong correlation between the two.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="text-center">
+                                <h6>العائد اليومي للسهم مقابل المؤشر بناءً على الأسعار التاريخية لمدة 3 سنوات
+                                </h6>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div style="background: rgb(255,255,0); padding: 4px; border-radius: 5px;">
+                                <div class="stats-content text-center" style="max-width: 450px;">
+                                    <p>
+                                        Index Chart
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="chart2Container" style="height: 370px; width: 100%;;margin-top: 50px"></div>
 
             </div>
         </div>
@@ -527,7 +560,7 @@
         $.ajax({
             type: 'GET',
             url: '/stock-performance',
-            // dataType: 'json',
+            dataType: 'json',
             // headers: {
             //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             // },
@@ -535,7 +568,7 @@
             //     withCredentials: true
             // },
             data: {
-              "_token": "{{ csrf_token() }}",
+              {{--"_token": "{{ csrf_token() }}",--}}
               id: company_id
             },
             beforeSend: function() {
