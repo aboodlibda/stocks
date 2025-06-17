@@ -279,7 +279,7 @@
                 <div id="chartContainer" style="height: 370px; width: 100%;margin-top: 50px;margin-bottom: 50px"></div>
 
 
-                <div class="container-fluid" dir="rtl">
+                <div class="container-fluid"  dir="rtl">
                     <div class="row">
 
                         <div class="col-md-4">
