@@ -326,22 +326,22 @@ function financialRatios($ticker): array
     $edate = '2024-09-13';
 
 
-    $summaryProfileUrl = "https://yahoo-finance15.p.rapidapi.com/summaryprofile?symbol=$ticker.SR";
+    $summaryProfileUrl = "https://yh-finance-complete.p.rapidapi.com/summaryprofile?symbol=$ticker.SR";
     $summaryProfile = fetchStockDataFromAPI($summaryProfileUrl);
 //    null
-    dd($summaryProfile);
 
     $defaultKeyStatisticsUrl = "https://yh-finance-complete.p.rapidapi.com/defaultKeyStatistics?symbol=$ticker.SR";
     $defaultKeyStatistics = fetchDataFromAPI($defaultKeyStatisticsUrl);
 //    "Error: 50"
 
-    $financialsUrl = "https://yahoo-finance15.p.rapidapi.com/financials?symbol=$ticker.SR";
+    $financialsUrl = "https://yh-finance-complete.p.rapidapi.com/financials?symbol=$ticker.SR";
     $financials = fetchDataFromAPI($financialsUrl);
 //    "Error: 50"
 
     $stockOptionsUrl = "https://yh-finance-complete.p.rapidapi.com/stockOptions?ticker=$ticker.SR";
     $stockOptions = fetchDataFromAPI($stockOptionsUrl);
 //    "Error: 50"
+    dd($stockOptions);
 
 
     $PIRatio = $summaryProfile['summaryDetail']['trailingPE'] ?? null;
