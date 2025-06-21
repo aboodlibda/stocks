@@ -533,11 +533,6 @@
         </tbody>
     </table>
 
-@php
-    $ratios = calculateRatiosByCompany(7010);
-    $binBoundary = binBoundary(7010);
-    $frequency = frequency($ratios,$binBoundary);
-@endphp
 </body>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 
@@ -574,9 +569,10 @@
             beforeSend: function() {
                 $('.modal-loader').html('' +
                     '<div class="text-center" id="loader">' +
-                    '<div class="spinner-border" role="status">' +
+                    '<div class="spinner-border" role="status"></div>' +
+                    '<div class="mt-3">' +
+                    '<span>جار جلب البيانات ...</span>' +
                     '</div>' +
-                    '<span class="text-center">Loading...</span>' +
                     '</div>' +
                     '');
             },
@@ -584,7 +580,7 @@
                 $("#loader").remove();
                 console.log(data);
                 drawCharts1(data.company.company_name, data.frequency);
-                drawCharts2(data.company.company_name,data.company.index_name,data.sector_ratios);
+                drawCharts2(data.company.company_name,data.company.index_name,data.sector_ratios,data.company_ratios);
             }
         });
     })
@@ -1017,10 +1013,10 @@
 
         const values = Object.values(frequency); // ✅ JavaScript version of array_values()
         var dataPointsArray = {
-            var_t:values,
+            var_t:[0.13, 0.00, 0.13, 0.13, 0.53, 0.40, 2.54, 3.07, 6.54, 12.95, 18.56, 22.43, 15.62, 6.94, 4.27, 3.07, 1.20, 0.53, 0.13, 0.27, 0.00, 0.00,
+                0.00, 0.13, 0.00, 0.00, 0.00, 0.00],
 
-            bin_boundaries: [0.13, 0.00, 0.13, 0.13, 0.53, 0.40, 2.54, 3.07, 6.54, 12.95, 18.56, 22.43, 15.62, 6.94, 4.27, 3.07, 1.20, 0.53, 0.13, 0.27, 0.00, 0.00,
-                0.00, 0.13, 0.00, 0.00, 0.00, 0.00]
+            bin_boundaries: values
         };
 
 
@@ -1062,13 +1058,12 @@
         $("#chartContainer").CanvasJSChart(options);
     }
 
-    function drawCharts2(company_name,index_name,sector_ratios) {
-        const values = Object.values(sector_ratios); // ✅ JavaScript version of array_values()
+    function drawCharts2(company_name,index_name,sector_ratios,company_ratios) {
 
         // بيانات ثابتة
         var dataPointsArray = {
-            log_array1:  values,
-            log_array2:  values,
+            log_array1:  company_ratios,
+            log_array2:   sector_ratios,
         };
         // var company_name = "Static Company";
         // var index_name = "Static Index";
@@ -1099,13 +1094,14 @@
             title: {},
             axisX: {
                 labelAngle: -45,
-                interval: 10,
+                // interval: 10,
                 labelFontSize: 10,
                 labelFormatter: function () { return ""; }
             },
             axisY: {
                 includeZero: true,
                 suffix: "%",
+                // interval: 2,
                 labelFontSize: 10
             },
             legend: {
