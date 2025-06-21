@@ -533,11 +533,6 @@
         </tbody>
     </table>
 
-@php
-    $ratios = calculateRatiosByCompany(7010);
-    $binBoundary = binBoundary(7010);
-    $frequency = frequency($ratios,$binBoundary);
-@endphp
 </body>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 
@@ -585,7 +580,7 @@
                 $("#loader").remove();
                 console.log(data);
                 drawCharts1(data.company.company_name, data.frequency);
-                drawCharts2(data.company.company_name,data.company.index_name,data.sector_ratios);
+                drawCharts2(data.company.company_name,data.company.index_name,data.sector_ratios,data.company_ratios);
             }
         });
     })
@@ -1063,13 +1058,12 @@
         $("#chartContainer").CanvasJSChart(options);
     }
 
-    function drawCharts2(company_name,index_name,sector_ratios) {
-        const values = Object.values(sector_ratios); // ✅ JavaScript version of array_values()
+    function drawCharts2(company_name,index_name,sector_ratios,company_ratios) {
 
         // بيانات ثابتة
         var dataPointsArray = {
-            log_array1:  values,
-            log_array2:  values,
+            log_array1:  company_ratios,
+            log_array2:   sector_ratios,
         };
         // var company_name = "Static Company";
         // var index_name = "Static Index";
@@ -1100,13 +1094,14 @@
             title: {},
             axisX: {
                 labelAngle: -45,
-                interval: 10,
+                // interval: 10,
                 labelFontSize: 10,
                 labelFormatter: function () { return ""; }
             },
             axisY: {
                 includeZero: true,
                 suffix: "%",
+                // interval: 2,
                 labelFontSize: 10
             },
             legend: {
