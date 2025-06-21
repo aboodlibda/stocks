@@ -24,15 +24,12 @@ class FetchStockData extends Command
     public function handle()
     {
         // Fetch tickers dynamically using Laravel Query Builder
+        $tickers = DB::table('companies')->pluck('company_num')->toArray();
 //        $tickers = DB::table('companies')->pluck('company_num')->toArray();
-        // Add specific record if needed
-        $specificCompany = DB::table('companies')->where('company_num', 8200)->first();
-        if ($specificCompany) {
-            $tickers[] = $specificCompany->company_num;
-        }
+
 
 // Step 1: Get the target record
-//        $target = DB::table('companies')->where('company_num', 8200)->first();
+//        $target = DB::table('companies')->where('company_num', 8180)->first();
 //
 //        if ($target) {
 //            // Step 2: Get all records after it, based on ID
