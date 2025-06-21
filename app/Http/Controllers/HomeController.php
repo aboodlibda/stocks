@@ -158,11 +158,15 @@ class HomeController extends Controller
         $company = Company::query()->findOrFail($request->id);
         $company_ratios = calculateRatiosByCompany($company->company_num);
         $sector_ratios = calculateRatiosBySector($company->index_symbol);
+
+        $sector_ratios = array_slice($sector_ratios, 0,count($company_ratios));
+
         $binBoundary = binBoundary($company->company_num);
         $frequency = frequency($company_ratios,$binBoundary);
         return response()->json([
             'company' => $company,
             'frequency' => $frequency,
+            'company_ratios' => $company_ratios,
             'sector_ratios' => $sector_ratios,
         ]);
     }
