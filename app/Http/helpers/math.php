@@ -595,6 +595,7 @@ function binBoundary($ticker)
     $max = getMaximumValue($ratios);
     $max_min = $max - $min;
     $numberOfBins = numberOfBin($ticker);
+    $binRange = 0;
     if ($numberOfBins !== 0) {
         $binRange = $max_min / $numberOfBins;
     }
