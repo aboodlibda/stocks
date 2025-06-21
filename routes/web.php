@@ -30,9 +30,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     Route::get('execute',function(){
 
 //        $ratios = calculateRatiosByCompany(7010);
-//        $binBoundary = binBoundary(7010);
+        $binBoundary = binBoundary(7010);
 //        frequency($ratios,$binBoundary);
-        financialRatios(2030);
+//        financialRatios(2030);
 //        riskMeasurementRatios(2222,'TENI');
 //        riskMeasurementRatios(7010,'TTSI');
 //        riskMeasurementRatios(1120,'TBNI');
