@@ -571,13 +571,11 @@
 
     $('#probability').on('click', function (event) {
         const button_id = $("#button_id").val();
-        console.log(button_id);
-        drawCharts1(company_id);
+        drawCharts1(button_id);
     })
     $('#performance').on('click', function (event) {
-        const button = event.relatedTarget; // The button that triggered the modal
-        const company_id = button.getAttribute('data-id'); // Native JS way
-        drawCharts2(company_id);
+        const button_id = $("#button_id").val();
+        drawCharts2(button_id);
     })
 </script>
 <script>
