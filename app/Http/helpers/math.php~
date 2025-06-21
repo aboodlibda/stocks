@@ -118,7 +118,6 @@ function calculateRatiosBySector($code): array
 }
 
 
-
 function variance(array $numbers): float|int|null
 {
     $count = count($numbers);
@@ -329,6 +328,7 @@ function financialRatios($ticker): array
     $summaryProfileUrl = "https://yh-finance-complete.p.rapidapi.com/summaryprofile?symbol=$ticker.SR";
     $summaryProfile = fetchStockDataFromAPI($summaryProfileUrl);
 //    null
+    dd($summaryProfile);
 
     $defaultKeyStatisticsUrl = "https://yh-finance-complete.p.rapidapi.com/defaultKeyStatistics?symbol=$ticker.SR";
     $defaultKeyStatistics = fetchDataFromAPI($defaultKeyStatisticsUrl);
@@ -337,7 +337,6 @@ function financialRatios($ticker): array
     $financialsUrl = "https://yh-finance-complete.p.rapidapi.com/financials?symbol=$ticker.SR";
     $financials = fetchDataFromAPI($financialsUrl);
 //    "Error: 50"
-    dd($financials);
 
     $stockOptionsUrl = "https://yh-finance-complete.p.rapidapi.com/stockOptions?ticker=$ticker.SR";
     $stockOptions = fetchDataFromAPI($stockOptionsUrl);
@@ -595,6 +594,9 @@ function binBoundary($ticker)
     $max = getMaximumValue($ratios);
     $max_min = $max - $min;
     $numberOfBins = numberOfBin($ticker);
+    if ($numberOfBins <= 0) {
+        throw new \Exception('Number of bins must be greater than zero');
+    }
     $binRange = $max_min / $numberOfBins;
 
     $result = [];
