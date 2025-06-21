@@ -241,6 +241,7 @@
                 </button>
             </div>
             <div class="modal-body">
+                <input type="hidden" name="button_id" id="button_id" value="">
                 <div class="modal-loader"></div>
 
                 <div class="container-fluid" dir="rtl">
@@ -266,55 +267,62 @@
                         <div class="col-md-4">
                             <div style="background: rgb(255,255,0); padding: 4px; border-radius: 5px;">
                                 <div class="stats-content text-center">
-                                    <p>
-                                        Stock Return Probability Chart
-                                    </p>
+                                    <div class="dropdown">
+                                        <button class="btn btn-light dropdown-toggle" type="button" id="chartDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            احتماليات توزيع عوائد السهم
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="chartDropdown">
+                                            <a class="dropdown-item" href="#" id="probability" data-chart-type="probability">احتماليات توزيع عوائد السهم</a>
+                                            <a class="dropdown-item" href="#" id="performance" data-chart-type="performance">أداء العائد اليومي للسهم مقابل المؤشر</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
 
 
                 <div id="chartContainer" style="height: 370px; width: 100%;margin-top: 50px;margin-bottom: 50px"></div>
 
 
-                <div class="container-fluid"  dir="rtl">
-                    <div class="row">
+{{--                <div class="container-fluid"  dir="rtl">--}}
+{{--                    <div class="row">--}}
 
-                        <div class="col-md-4">
-                            <div style="background: rgb(248, 203, 107); padding: 15px; border-radius: 5px;">
-                                <div class="stats-content" style="max-width: 450px;">
-                                    <p>
-                                        If the index price closely mirrors stock prices, it suggests that the overall market
-                                        movement is closely tied to the performance of individual stocks within that index.
-                                        Thus, it indicates a strong correlation between the two.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+{{--                        <div class="col-md-4">--}}
+{{--                            <div style="background: rgb(248, 203, 107); padding: 15px; border-radius: 5px;">--}}
+{{--                                <div class="stats-content" style="max-width: 450px;">--}}
+{{--                                    <p>--}}
+{{--                                        If the index price closely mirrors stock prices, it suggests that the overall market--}}
+{{--                                        movement is closely tied to the performance of individual stocks within that index.--}}
+{{--                                        Thus, it indicates a strong correlation between the two.--}}
+{{--                                    </p>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
 
-                        <div class="col-md-4">
-                            <div class="text-center">
-                                <h6>العائد اليومي للسهم مقابل المؤشر بناءً على الأسعار التاريخية لمدة 3 سنوات
-                                </h6>
-                            </div>
-                        </div>
+{{--                        <div class="col-md-4">--}}
+{{--                            <div class="text-center">--}}
+{{--                                <h6>العائد اليومي للسهم مقابل المؤشر بناءً على الأسعار التاريخية لمدة 3 سنوات--}}
+{{--                                </h6>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
 
-                        <div class="col-md-4">
-                            <div style="background: rgb(255,255,0); padding: 4px; border-radius: 5px;">
-                                <div class="stats-content text-center">
-                                    <p>
-                                        Index Chart
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+{{--                        <div class="col-md-4">--}}
+{{--                            <div style="background: rgb(255,255,0); padding: 4px; border-radius: 5px;">--}}
+{{--                                <div class="stats-content text-center">--}}
+{{--                                    <p>--}}
+{{--                                        Index Chart--}}
+{{--                                    </p>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 
 
-                <div id="chart2Container" style="height: 370px; width: 100%;;margin-top: 50px"></div>
+{{--                <div id="chart2Container" style="height: 370px; width: 100%;;margin-top: 50px"></div>--}}
 
             </div>
         </div>
@@ -557,32 +565,17 @@
 
         const button = event.relatedTarget; // The button that triggered the modal
         const company_id = button.getAttribute('data-id'); // Native JS way
+        $("#button_id").val(company_id);
+        drawCharts1(company_id);
+    })
 
-        $.ajax({
-            type: 'GET',
-            url: '/stock-performance',
-            dataType: 'json',
-            data: {
-              {{--"_token": "{{ csrf_token() }}",--}}
-              id: company_id
-            },
-            beforeSend: function() {
-                $('.modal-loader').html('' +
-                    '<div class="text-center" id="loader">' +
-                    '<div class="spinner-border" role="status"></div>' +
-                    '<div class="mt-3">' +
-                    '<span>جار جلب البيانات ...</span>' +
-                    '</div>' +
-                    '</div>' +
-                    '');
-            },
-            success: function(data) {
-                $("#loader").remove();
-                console.log(data);
-                drawCharts1(data.company.company_name, data.frequency);
-                drawCharts2(data.company.company_name,data.company.index_name,data.sector_ratios,data.company_ratios);
-            }
-        });
+    $('#probability').on('click', function (event) {
+        const button_id = $("#button_id").val();
+        drawCharts1(button_id);
+    })
+    $('#performance').on('click', function (event) {
+        const button_id = $("#button_id").val();
+        drawCharts2(button_id);
     })
 </script>
 <script>
@@ -1009,112 +1002,164 @@
 
 <script>
 
-    function drawCharts1(company_name,frequency) {
+    function drawCharts1(company_id) {
 
-        const values = Object.values(frequency); // ✅ JavaScript version of array_values()
-        var dataPointsArray = {
-            var_t:values,
+        $.ajax({
+            type: 'GET',
+            url: '/stock-performance',
+            dataType: 'json',
+            data: {
+                {{--"_token": "{{ csrf_token() }}",--}}
+                id: company_id
+            },
+            beforeSend: function() {
+                $('.modal-loader').html('' +
+                    '<div class="text-center" id="loader">' +
+                    '<div class="spinner-border" role="status"></div>' +
+                    '<div class="mt-3">' +
+                    '<span>جار جلب البيانات ...</span>' +
+                    '</div>' +
+                    '</div>' +
+                    '');
+            },
+            success: function(data) {
+                $("#loader").remove();
 
-            bin_boundaries: [0.13, 0.00, 0.13, 0.13, 0.53, 0.40, 2.54, 3.07, 6.54, 12.95, 18.56, 22.43, 15.62, 6.94, 4.27, 3.07, 1.20, 0.53, 0.13, 0.27, 0.00, 0.00,
-                0.00, 0.13, 0.00, 0.00, 0.00, 0.00]
-        };
+                const values = Object.values(data.frequency); // ✅ JavaScript version of array_values()
+                var dataPointsArray = {
+                    var_t:values,
+
+                    bin_boundaries: [0.13, 0.00, 0.13, 0.13, 0.53, 0.40, 2.54, 3.07, 6.54, 12.95, 18.56, 22.43, 15.62, 6.94, 4.27, 3.07, 1.20, 0.53, 0.13, 0.27, 0.00, 0.00,
+                        0.00, 0.13, 0.00, 0.00, 0.00, 0.00]
+                };
 
 
-        var bin_boundaries = dataPointsArray.bin_boundaries;
-        var chartData = dataPointsArray.var_t.map(function(value, index) {
-            return { y: value * 100, label: (bin_boundaries[index] * 100).toFixed(1) + "%" }; // تحويل التسميات إلى نسبة مئوية وتقريبها لثلاثة أرقام عشرية
+                var bin_boundaries = dataPointsArray.bin_boundaries;
+                var chartData = dataPointsArray.var_t.map(function(value, index) {
+                    return { y: value * 100, label: (bin_boundaries[index] * 100).toFixed(1) + "%" }; // تحويل التسميات إلى نسبة مئوية وتقريبها لثلاثة أرقام عشرية
+                });
+
+                var options = {
+                    animationEnabled: true,
+                    title:{
+                        text: data.company.company_name
+                    },
+                    axisX: {
+                        title: "",
+                        labelAngle: -0, // تدوير التسميات لتجنب التداخل
+                        interval: 1,
+                        labelFontSize: 9 // تقليل حجم الخط لعرض المزيد من النقاط
+                    },
+                    axisY: {
+                        title: "",
+                        includeZero: true,
+                        suffix: "%", // إضافة علامة النسبة المئوية
+                        labelFontSize: 10 // تقليل حجم الخط لعرض المزيد من النقاط
+                    },
+                    toolTip: {
+                        shared: true,
+                        reversed: true
+                    },
+                    data: [
+                        {
+                            type: "column",
+                            color: "#7CB9E8", // تحديد لون العمود
+                            dataPoints: chartData
+                        }
+                    ]
+                };
+
+                $("#chartContainer").CanvasJSChart(options);
+
+            }
         });
 
-        var options = {
-            animationEnabled: true,
-            title:{
-                text: company_name
-            },
-            axisX: {
-                title: "",
-                labelAngle: -0, // تدوير التسميات لتجنب التداخل
-                interval: 1,
-                labelFontSize: 9 // تقليل حجم الخط لعرض المزيد من النقاط
-            },
-            axisY: {
-                title: "",
-                includeZero: true,
-                suffix: "%", // إضافة علامة النسبة المئوية
-                labelFontSize: 10 // تقليل حجم الخط لعرض المزيد من النقاط
-            },
-            toolTip: {
-                shared: true,
-                reversed: true
-            },
-            data: [
-                {
-                    type: "column",
-                    color: "#7CB9E8", // تحديد لون العمود
-                    dataPoints: chartData
-                }
-            ]
-        };
 
-        $("#chartContainer").CanvasJSChart(options);
     }
 
-    function drawCharts2(company_name,index_name,sector_ratios,company_ratios) {
+    function drawCharts2(company_id) {
 
-        // بيانات ثابتة
-        var dataPointsArray = {
-            log_array1:  company_ratios,
-            log_array2:   sector_ratios,
-        };
 
-        var chartData1 = dataPointsArray.log_array1.map((value, index) => ({
-            y: value * 100,
-            label: index.toString()
-        }));
-
-        var chartData2 = dataPointsArray.log_array2.map((value, index) => ({
-            y: value * 100,
-            label: index.toString()
-        }));
-
-        var chartOptions = {
-            title: {},
-            axisX: {
-                labelAngle: -45,
-                // interval: 10,
-                labelFontSize: 10,
-                labelFormatter: function () { return ""; }
+        $.ajax({
+            type: 'GET',
+            url: '/stock-performance',
+            dataType: 'json',
+            data: {
+                {{--"_token": "{{ csrf_token() }}",--}}
+                id: company_id
             },
-            axisY: {
-                includeZero: true,
-                suffix: "%",
-                // interval: 2,
-                labelFontSize: 10
+            beforeSend: function() {
+                $('.modal-loader').html('' +
+                    '<div class="text-center" id="loader">' +
+                    '<div class="spinner-border" role="status"></div>' +
+                    '<div class="mt-3">' +
+                    '<span>جار جلب البيانات ...</span>' +
+                    '</div>' +
+                    '</div>' +
+                    '');
             },
-            legend: {
-                cursor: "pointer",
-                verticalAlign: "bottom",
-                horizontalAlign: "center",
-                dockInsidePlotArea: true
-            },
-            data: [
-                {
-                    type: "line",
-                    color: "#0000FF",
-                    name: company_name,
-                    showInLegend: true,
-                    dataPoints: chartData1
-                },
-                {
-                    type: "line",
-                    color: "#FF7F50",
-                    name: index_name,
-                    showInLegend: true,
-                    dataPoints: chartData2
-                }
-            ]
-        };
+            success: function(data) {
+                $("#loader").remove();
 
-        $("#chart2Container").CanvasJSChart(chartOptions);
+                // بيانات ثابتة
+                var dataPointsArray = {
+                    log_array1:  data.company_ratios,
+                    log_array2:  data.sector_ratios,
+                };
+
+                var chartData1 = dataPointsArray.log_array1.map((value, index) => ({
+                    y: value * 100,
+                    label: index.toString()
+                }));
+
+                var chartData2 = dataPointsArray.log_array2.map((value, index) => ({
+                    y: value * 100,
+                    label: index.toString()
+                }));
+
+                var chartOptions = {
+                    title: {},
+                    axisX: {
+                        labelAngle: -45,
+                        // interval: 10,
+                        labelFontSize: 10,
+                        labelFormatter: function () { return ""; }
+                    },
+                    axisY: {
+                        includeZero: true,
+                        suffix: "%",
+                        // interval: 2,
+                        labelFontSize: 10
+                    },
+                    legend: {
+                        cursor: "pointer",
+                        verticalAlign: "bottom",
+                        horizontalAlign: "center",
+                        dockInsidePlotArea: true
+                    },
+                    data: [
+                        {
+                            type: "line",
+                            color: "#0000FF",
+                            name: data.company.company_name,
+                            showInLegend: true,
+                            dataPoints: chartData1
+                        },
+                        {
+                            type: "line",
+                            color: "#FF7F50",
+                            name: data.company.index_name,
+                            showInLegend: true,
+                            dataPoints: chartData2
+                        }
+                    ]
+                };
+
+                $("#chartContainer").CanvasJSChart(chartOptions);
+
+            }
+        });
+
 
     }
 
