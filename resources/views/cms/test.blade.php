@@ -558,7 +558,6 @@
     // Clear chart containers when modal closes
     $('.bd-example-modal-xl').on('hidden.bs.modal', function () {
         $('#chartContainer').html('');
-        $('#chart2Container').html('');
     });
 
     $('.bd-example-modal-xl').on('shown.bs.modal', function (event) {
