@@ -1065,20 +1065,6 @@
             log_array1:  company_ratios,
             log_array2:   sector_ratios,
         };
-        // var company_name = "Static Company";
-        // var index_name = "Static Index";
-
-        // if (!dataPointsArray.log_array1 || !dataPointsArray.log_array2) {
-        //     var errorMessage = document.createElement('p');
-        //     errorMessage.innerText = "Data not available for the chart";
-        //     document.querySelector('.grand').appendChild(errorMessage);
-        //     return;
-        // }
-
-        // var chartDiv = document.createElement('div');
-        // chartDiv.setAttribute('id', 'chart2Container');
-        // chartDiv.style.cssText = 'height: 200px; width: 100%;';
-        // document.querySelector('.grand').appendChild(chartDiv);
 
         var chartData1 = dataPointsArray.log_array1.map((value, index) => ({
             y: value * 100,
