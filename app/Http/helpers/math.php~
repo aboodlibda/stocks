@@ -602,7 +602,6 @@ function binBoundary($ticker)
         $result[] = $min + ($i * $binRange);
     }
 
-    dd($result);
     return $result;
 }
 
