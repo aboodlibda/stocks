@@ -158,15 +158,18 @@ class HomeController extends Controller
         $company = Company::query()->findOrFail($request->id);
         $company_ratios = calculateRatiosByCompany($company->company_num);
         $sector_ratios = calculateRatiosBySector($company->index_symbol);
+
+        $test_sector = array_slice($sector_ratios, 0,count($company_ratios));
+
+//        $sector_ratios_percentage = calculateRatiosBySectorPercentage($company->index_symbol);
         $binBoundary = binBoundary($company->company_num);
         $frequency = frequency($company_ratios,$binBoundary);
         return response()->json([
             'company' => $company,
             'frequency' => $frequency,
-            'sector_ratios' => $sector_ratios,
-            'session' => session()->all(),
-            'csrf_token_session' => session()->token(),
-            'csrf_token_request' => $request->header('X-CSRF-TOKEN')
+            'company_ratios' => $company_ratios,
+            'sector_ratios' => $test_sector,
+//            'sector_ratios_percentage' => $sector_ratios_percentage,
         ]);
     }
 
