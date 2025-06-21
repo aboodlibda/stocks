@@ -595,17 +595,9 @@ function binBoundary($ticker)
     $max = getMaximumValue($ratios);
     $max_min = $max - $min;
     $numberOfBins = numberOfBin($ticker);
-    
-    // Handle edge cases where we might have division by zero
-    if ($numberOfBins <= 0) {
-        throw new \Exception('Number of bins must be greater than zero');
+    if ($max_min !== 0) {
+        $binRange = $max_min / $numberOfBins;
     }
-    if ($max_min == 0) {
-        // If max and min are the same, we can't create meaningful bins
-        return [$min]; // Return single bin with the value
-    }
-    
-    $binRange = $max_min / $numberOfBins;
 
     $result = [];
     for ($i = 0; $i < $numberOfBins; $i++) {
