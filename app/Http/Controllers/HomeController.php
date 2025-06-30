@@ -171,6 +171,11 @@ class HomeController extends Controller
         ]);
     }
 
+    public function stockPerformanceAnalysis()
+    {
+        return view('cms.stock-preformance');
+    }
+
 // SearchController.php
 
     public function search(Request $request)
