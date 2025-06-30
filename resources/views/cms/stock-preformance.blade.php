@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحليل الأسهم</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('assets/css/stock-preformance-style.css')}}">
+</head>
+<body>
+
+<div class="container py-3">
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-end">
+            <img src="{{asset('assets/media/small chart.jpg')}}" alt="" class="header-img me-2">
+            <a href="#" class="fs-5 bold-text">رابط أسعار جميع أسهم تداول وأخبار السوق</a>
+        </div>
+        <h4 class="text-center title-banner">تحليل أداء الأسهم واختيار أسهم المحفظة</h4>
+        <img src="{{asset('assets/media/dan logo.jpg')}}" alt="الشعار" class="logo-img">
+    </div>
+</div>
+
+<div class="container my-4">
+    <div class="row g-3">
+        <div class="col-md-6">
+            <h5 class="caption-1">أسماء الشركات المدرجة في سوق التداول السعودي</h5>
+            <input type="text" id="search-input" class="form-control text-center" placeholder="البحث بإسم أو رمز الشركة">
+
+            <div class="table-container">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th class="text-center">اسم ورمز الشركة</th>
+                        <th class="text-center">القطاع</th>
+                        <th style="width: 20%;" class="text-center">مؤشر القطاع</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="3" class="text-center loading-state">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="error-message text-danger d-none"></div>
+            </div>
+        </div>
+
+        <div class="col-md-6 right-section">
+            <div class="button-group">
+                <button class="custom-btn btn-analysis">تحليل أداء السهم</button>
+                <button class="custom-btn btn-portfolio">إضافة السهم للمحفظة</button>
+            </div>
+            <img src="{{asset('assets/media/big chart.jpg')}}" alt="صورة جانبية">
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        loadCompanyData();
+    });
+
+    function loadCompanyData() {
+        const tbody = $('.table tbody');
+        const errorMessage = $('.error-message');
+
+        // Show loading state
+        tbody.html(''+
+            '<tr><td colspan="3" class="text-center loading-state">'+
+            '<div class="spinner-border text-primary" role="status">'+
+                '<span class="visually-hidden">Loading...</span>'+
+            '</div>'+
+        '</td></tr>' + ''
+        );
+        errorMessage.addClass('d-none');
+
+        $.ajax({
+            url: '/companies',
+            method: 'GET',
+            success: function(response) {
+                tbody.empty();
+
+                if (response.length === 0) {
+                    tbody.html('<tr><td colspan="3" class="text-center">لا توجد بيانات متاحة</td></tr>');
+                    return;
+                }
+
+                response.forEach(company => {
+                    const row = `
+                        <tr>
+                            <td>${company.company_name}</td>
+                            <td>${company.index_name}</td>
+                            <td>${company.index_symbol}</td>
+                        </tr>
+                    `;
+                    tbody.append(row);
+                });
+            },
+            error: function(xhr, status, error) {
+                errorMessage.text('حدث خطأ أثناء تحميل البيانات. يرجى المحاولة مرة أخرى لاحقاً');
+                errorMessage.removeClass('d-none');
+                tbody.html('<tr><td colspan="3" class="text-center">حدث خطأ أثناء تحميل البيانات</td></tr>');
+            }
+        });
+    }
+
+
+
+    $('#search-input').on('keyup', function() {
+
+        const tbody = $('.table tbody');
+        const errorMessage = $('.error-message');
+
+        // Show loading state
+        tbody.html(''+
+            '<tr><td colspan="3" class="text-center loading-state">'+
+            '<div class="spinner-border text-primary" role="status">'+
+            '<span class="visually-hidden">Loading...</span>'+
+            '</div>'+
+            '</td></tr>' + ''
+        );
+        errorMessage.addClass('d-none');
+
+
+        var searchQuery = $(this).val();
+        $.ajax({
+            type: 'GET',
+            url: '/search', // replace with your search endpoint
+            dataType: 'json',
+            data: { query: searchQuery },
+            success: function(response) {
+                tbody.empty();
+
+                if (response.length === 0) {
+                    tbody.html('<tr><td colspan="3" class="text-center">لا توجد بيانات متاحة</td></tr>');
+                    return;
+                }
+
+                response.forEach(company => {
+                    const row = `
+                        <tr>
+                            <td>${company.company_name}</td>
+                            <td>${company.index_name}</td>
+                            <td>${company.index_symbol}</td>
+                        </tr>
+                    `;
+                    tbody.append(row);
+                });
+            },
+            error: function(xhr, status, error) {
+                errorMessage.text('حدث خطأ أثناء تحميل البيانات. يرجى المحاولة مرة أخرى لاحقاً');
+                errorMessage.removeClass('d-none');
+                tbody.html('<tr><td colspan="3" class="text-center">حدث خطأ أثناء تحميل البيانات</td></tr>');
+            }
+        });
+    });
+</script>
+</body>
+</html>
