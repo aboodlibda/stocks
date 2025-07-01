@@ -257,6 +257,7 @@
 
     function drawCharts1(company_id) {
 
+        var chart = $("#chart-02");
 
         $.ajax({
             type: 'GET',
@@ -268,11 +269,11 @@
             },
             beforeSend: function() {
                 // Show loading spinner
-                $("#chart-02").html('<div class="text-center"><div class="spinner-border" role="status"></div><div class="mt-3">Loading...</div></div>');
+                chart.html('<div class="text-center"><div class="spinner-border" role="status"></div><div class="mt-3">Loading...</div></div>');
             },
             success: function(data) {
                 // Remove loading spinner and show data
-                $("#chart-02").html('');
+                chart.html('');
 
                 const values = Object.values(data.frequency);
                 var dataPointsArray = {
@@ -316,7 +317,8 @@
                     ]
                 };
 
-                $("#chart-02").CanvasJSChart(options);
+                chart.CanvasJSChart(options);
+
             },
         });
 
@@ -325,6 +327,7 @@
 
     function drawCharts2(company_id) {
 
+        var chart = $("#chart-01");
 
         $.ajax({
             type: 'GET',
@@ -335,11 +338,11 @@
                 id: company_id
             },
             beforeSend: function() {
-                $("#chart-01").html('<div class="text-center"><div class="spinner-border" role="status"></div><div class="mt-3">Loading...</div></div>');
+                chart.html('<div class="text-center"><div class="spinner-border" role="status"></div><div class="mt-3">Loading...</div></div>');
             },
             success: function(data) {
                 // Remove loading spinner and show data
-                $("#chart-01").html('');
+                chart.html('');
 
                 // بيانات ثابتة
                 var dataPointsArray = {
@@ -395,7 +398,7 @@
                     ]
                 };
 
-                $("#chart-01").CanvasJSChart(chartOptions);
+                chart.CanvasJSChart(chartOptions);
 
             }
         });
