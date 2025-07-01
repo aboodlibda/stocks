@@ -171,9 +171,25 @@ class HomeController extends Controller
         ]);
     }
 
-    public function stockPerformanceAnalysis()
+    public function selectStock()
     {
-        return view('cms.stock-preformance');
+        return view('cms.select_stock');
+    }
+
+    public function stockAnalysis(Request $request)
+    {
+        return response()->json([
+            'status' => 'success',
+            'redirect_url' => route('stock-analysis-screen', ['company_id' => $request->company_id, 'message' => 'done']) // /dashboard?user=5&message=done
+        ]);
+
+    }
+
+    public function stockAnalysisScreen(Request $request)
+    {
+        $company_id = $request->query('company_id');
+        $company = Company::query()->where('company_id','=',$company_id)->first();
+        return view('cms.stock-analysis', compact('company'));
     }
 
 // SearchController.php
