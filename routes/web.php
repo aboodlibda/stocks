@@ -11,7 +11,7 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 Route::get('/stock-performance', [HomeController::class, 'stockPerformance'])->name('stock-performance');
 Route::get('/select-stock', [HomeController::class, 'selectStock'])->name('select-stock');
-Route::post('/stock-analysis', [HomeController::class, 'stockAnalysis'])->name('stock-analysis');
+Route::get('/stock-analysis', [HomeController::class, 'stockAnalysis'])->name('stock-analysis');
 Route::get('/stock-analysis-screen', [HomeController::class, 'stockAnalysisScreen'])->name('stock-analysis-screen');
 
 Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
