@@ -85,6 +85,7 @@
             $.ajax({
                 url: '/companies',
                 method: 'GET',
+                dataType: 'json',
                 success: function(response) {
                     tbody.empty();
 
