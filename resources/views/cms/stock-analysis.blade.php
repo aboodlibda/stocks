@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تحليل الأسهم</title>
+    <title>تحليل السهم</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{{asset('assets/css/stock-preformance-style.css')}}">
@@ -36,7 +36,7 @@
             </table>
         </div>
         <button class="custom-btn btn-analysis text-center title-banner-2">تحليل أداء السهم</button>
-        <button class="custom-btn btn-analysis text-center title-banner">الرجوع لشاشة إختيار أسهم المحفظة</button>
+        <a href="{{ route('select-stock') }}" class="custom-btn btn-analysis text-center title-banner text-decoration-none">الرجوع لشاشة إختيار أسهم المحفظة</a>
         <img src="{{asset('assets/media/dan logo.jpg')}}" alt="الشعار" class="logo-img">
     </div>
     <div id="stock-tables">
