@@ -149,9 +149,7 @@ class HomeController extends Controller
     public function getCompanies()
     {
         $companies = Company::all();
-        return response()->json([
-            'companies' => $companies
-        ]);
+        return response()->json($companies);
 
     }
 
