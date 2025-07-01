@@ -213,9 +213,9 @@
             $('body').append(loadingSpinner);
             $.ajax({
                 url: '/stock-analysis',
-                method: 'POST',
+                method: 'GET',
                 data: {
-                    _token: "{{ csrf_token() }}",
+                    {{--_token: "{{ csrf_token() }}",--}}
                     company_id: id
                 },
                 success: function(response) {
