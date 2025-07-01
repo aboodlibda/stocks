@@ -36,7 +36,7 @@
             </table>
         </div>
         <button class="custom-btn btn-analysis text-center title-banner-2">تحليل أداء السهم</button>
-        <a href="" class="custom-btn btn-analysis text-center title-banner text-decoration-none">الرجوع لشاشة إختيار أسهم المحفظة</a>
+        <a href="{{ route('select-stock') }}" class="custom-btn btn-analysis text-center title-banner text-decoration-none">الرجوع لشاشة إختيار أسهم المحفظة</a>
         <img src="{{asset('assets/media/dan logo.jpg')}}" alt="الشعار" class="logo-img">
     </div>
     <div id="stock-tables">
@@ -50,16 +50,22 @@
                     <table class="table table-bordered mb-0">
                         <tbody>
                         <tr>
-                            <td class="text-center">Market Price (Closing Price)</td>
+                            <td class="text-center">Market Price (Closing Price)
+                                <span class="text-danger">{{number_format($company->close,2)}}</span>
+                            </td>
                         </tr>
                         <tr>
                             <td class="text-center">Average Price Midpoint</td>
                         </tr>
                         <tr>
-                            <td class="text-center">52 Week High</td>
+                            <td class="text-center">52 Week High
+                                <span class="text-danger">{{number_format($company->week_52_high_price,2)}}</span>
+                            </td>
                         </tr>
                         <tr>
-                            <td class="text-center">52 Week Low</td>
+                            <td class="text-center">52 Week Low
+                                <span class="text-danger">{{number_format($company->week_52_low_price,2)}}</span>
+                            </td>
                         </tr>
                         <tr>
                             <td class="text-center">Maximum Stock Return over 250 Days Trading</td>
@@ -81,7 +87,9 @@
                     <table class="table table-bordered mb-0">
                         <tbody>
                         <tr>
-                            <td class="text-center">Stock Value at Risk (VaR %)</td>
+                            <td class="text-center">Stock Value at Risk (VaR %)
+                                <span class="text-danger">{{number_format($company->stock_var_percent,2)}}</span>
+                            </td>
                         </tr>
                         <tr>
                             <td class="text-center">Stock Value at Risk (VaR )
@@ -89,17 +97,24 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="text-center">Stock - Sharp Risk Ratio</td>
+                            <td class="text-center">Stock - Sharp Risk Ratio
+                                <span class="text-danger">{{number_format($company->stock_sharp_ratio,2)}}</span>
+                            </td>
                         </tr>
                         <tr>
-                            <td class="text-center">Stock Beta Coefficient (β)(Market Sensitivity</td>
+                            <td class="text-center">Stock Beta Coefficient (β)(Market Sensitivity
+                                <span class="text-danger">{{number_format($company->stock_beta_coefficient,2)}}</span>
+                            </td>
                         </tr>
                         <tr>
-                            <td class="text-center">Daily Stock Volatility %
-                                (Risk Level)</td>
+                            <td class="text-center">Daily Stock Volatility % (Risk Level)
+                                <span class="text-danger">{{number_format($company->daily_stock_volatility,2)}}</span>
+                            </td>
                         </tr>
                         <tr>
-                            <td class="text-center">Stock Risk Ranking</td>
+                            <td class="text-center">Stock Risk Ranking<br>
+                                <span class="text-danger">{{$company->stock_risk_rank}}</span>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -116,28 +131,36 @@
                     <table class="table table-bordered mb-0">
                         <tbody>
                         <tr>
-                            <td class="text-center">P/E Ratio</td>
+                            <td class="text-center">P/E Ratio
+                                <span class="text-danger">{{number_format($company->pe_ratio,2)}}</span></td>
                         </tr>
                         <tr>
-                            <td class="text-center">Market to Book Ratio</td>
+                            <td class="text-center">Market to Book Ratio
+                                <span class="text-danger">{{number_format($company->market_to_book_ratio,2)}}</span></td>
                         </tr>
                         <tr>
-                            <td class="text-center">Free Cash Flow Yield</td>
+                            <td class="text-center">Free Cash Flow Yield
+                                <span class="text-danger">{{number_format($company->free_cash_flow_yield,2)}}</span></td>
                         </tr>
                         <tr>
-                            <td class="text-center">Leverage Ratio</td>
+                            <td class="text-center">Leverage Ratio
+                                <span class="text-danger">{{number_format($company->leverage_ratio,2)}}</span></td>
                         </tr>
                         <tr>
-                            <td class="text-center">Return on Equity</td>
+                            <td class="text-center">Return on Equity
+                                <span class="text-danger">{{number_format($company->return_on_equity,2)}}</span></td>
                         </tr>
                         <tr>
-                            <td class="text-center">Stock Dividend Yield</td>
+                            <td class="text-center">Stock Dividend Yield
+                                <span class="text-danger">{{number_format($company->stock_dividend_yield,2)}}</span></td>
                         </tr>
                         <tr>
-                            <td class="text-center">Earning Per Share</td>
+                            <td class="text-center">Earning Per Share
+                                <span class="text-danger">{{number_format($company->earning_per_share,2)}}</span></td>
                         </tr>
                         <tr>
-                            <td class="text-center">Annual Dividend Rate</td>
+                            <td class="text-center">Annual Dividend Rate
+                            </td>
                         </tr>
                         </tbody>
                     </table>
