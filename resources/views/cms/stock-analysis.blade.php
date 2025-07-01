@@ -178,12 +178,12 @@
                         <table class="table table-bordered mb-0">
                             <tbody>
                             <tr>
-                                <td class="text-center">Expected Annual Stock Return%
-                                    (Based on CAPM Model)</td>
+                                <td class="text-center">Expected Annual Stock Return% (Based on CAPM Model)
+                                    <span class="text-danger">{{number_format($company->annual_stock_expected_return,2)}}</span></td>
                             </tr>
                             <tr>
-                                <td class="text-center">Daily Expected Stock Return %
-                                    (Based on Average of  3 Years Historical Data)</td>
+                                <td class="text-center">Daily Expected Stock Return % (Based on Average of  3 Years Historical Data)
+                                    <span class="text-danger">{{number_format($company->avg_daily_expected_stock_return,2)}}</span></td>
                             </tr>
                             </tbody>
                         </table>
@@ -196,7 +196,9 @@
                         <table class="table table-bordered mb-0">
                             <tbody>
                             <tr>
-                                <td class="text-center">اخر تاريخ لتوزيع الأرباح</td>
+                                <td class="text-center">اخر تاريخ لتوزيع الأرباح<br>
+                                    <span class="text-danger">{{$company->last_dividend_date}}</span>
+                                </td>
                             </tr>
                             <tr >
                                 <td class="text-center">Last Updated Income Statement</td>
