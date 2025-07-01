@@ -67,52 +67,9 @@
 
 
 <script>
-
-
-            const tbody = $('.table tbody');
-            const errorMessage = $('.error-message');
-
-            // Show loading state
-            tbody.html(''+
-                '<tr><td colspan="3" class="text-center loading-state">'+
-                '<div class="spinner-border text-primary" role="status">'+
-                '<span class="visually-hidden">Loading...</span>'+
-                '</div>'+
-                '</td></tr>' + ''
-            );
-            errorMessage.addClass('d-none');
-
-            $.ajax({
-                url: '/companies',
-                method: 'GET',
-                dataType: 'json',
-                success: function(response) {
-                    tbody.empty();
-
-                    if (response.length === 0) {
-                        tbody.html('<tr><td colspan="3" class="text-center">لا توجد بيانات متاحة</td></tr>');
-                        return;
-                    }
-
-                    response.forEach(company => {
-                        const row = `
-                        <tr>
-                            <td>${company.company_name}</td>
-                            <td>${company.index_name}</td>
-                            <td>${company.index_symbol}</td>
-                            <td class="d-none">${company.company_id}</td>
-                        </tr>
-                    `;
-                        tbody.append(row);
-                    });
-                },
-                error: function(xhr, status, error) {
-                    errorMessage.text('حدث خطأ أثناء تحميل البيانات. يرجى المحاولة مرة أخرى لاحقاً');
-                    errorMessage.removeClass('d-none');
-                    tbody.html('<tr><td colspan="3" class="text-center">حدث خطأ أثناء تحميل البيانات</td></tr>');
-                }
-            });
-
+    document.addEventListener('DOMContentLoaded', function() {
+        loadCompanyData();
+    });
 
     function loadCompanyData() {
         const tbody = $('.table tbody');
@@ -131,6 +88,7 @@
         $.ajax({
             url: '/companies',
             method: 'GET',
+            dataType: 'json',
             success: function(response) {
                 tbody.empty();
 
@@ -257,6 +215,7 @@
             $.ajax({
                 url: '/stock-analysis',
                 method: 'GET',
+                dataType: 'json',
                 data: {
                     {{--_token: "{{ csrf_token() }}",--}}
                     company_id: id
