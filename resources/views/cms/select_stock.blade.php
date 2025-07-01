@@ -96,7 +96,7 @@
                     return;
                 }
 
-                response.forEach(company => {
+                response.companies.forEach(company => {
                     const row = `
                         <tr>
                             <td>${company.company_name}</td>
