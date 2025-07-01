@@ -1,3 +1,20 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+:root {
+    --main-color: #1c3156;
+    --second-color: #2f5597;
+    --third-color: #b4c7e7;
+    --red-color: #c00000;
+    --yellow-color: #ffff00;
+    --orange-color: #ffc000;
+    --orange-2-color: #ffd966;
+    --green-color: #c5e0b4;
+    --brown-color: #8a3f0c;
+    --gray-color: #d9d9d9;
+}
 body {
     background-color: #f8f9fa;
 }
@@ -5,7 +22,17 @@ body {
     max-height: 500px;
     overflow-y: auto;
 }
-thead th {
+.selected-row > td{
+    background-color: #0d6efd !important;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+}
+table tbody tr:hover {
+    background-color: #cce5ff;
+    cursor: pointer;
+}
+thead th, .table-caption {
     position: sticky;
     top: 0;
 }
@@ -58,7 +85,7 @@ thead th {
     display: inline-block;
     position: relative;
     left: 80px;
-    font-size: 20px;
+    font-size: 18px;
     border: 0;
     border-radius: 1px;
 }
@@ -78,4 +105,148 @@ table tr > td:nth-child(3) {
 }
 .bold-text {
     font-weight: bold;
+}
+#stock-section .table-container {
+    max-height: 320px !important;
+}
+
+#stock-section .title-banner {
+    left: 20px;
+}
+#stock-section .header-table {
+    direction: ltr;
+    border: black 1px solid;
+}
+#stock-section .header-table > thead > tr > th {
+    background: var(--red-color) !important;
+    padding: 4px;
+    border: black 1px solid;
+}
+#stock-section .header-table > tbody > tr > td:nth-child(1) {
+    background: var(--yellow-color);
+    padding: 4px;
+    border: black 1px solid;
+}
+#stock-section .header-table > tbody > tr > td:nth-child(2) {
+    background: var(--orange-color);
+    padding: 4px;
+    border: black 1px solid;
+}
+#stock-section .header-table > tbody > tr > td:nth-child(3) {
+    background: var(--orange-color);
+    padding: 4px;
+    border: black 1px solid;
+}
+.bg-brown{
+    background: var(--brown-color) !important;
+    color: white;
+}
+.bg-red{
+    background: var(--red-color) !important;
+    color: white;
+}
+.title-banner-2 {
+    padding: 10px 20px;
+    border: 2px solid #3366cc;
+    border-radius: 8px;
+    font-weight: bold;
+    box-shadow: 9px 10px 8px rgb(0 0 0 / 40%);
+    display: inline-block;
+    font-size: 14px;
+    border: 0;
+    border-radius: 1px;
+}
+#stock-tables {
+    direction: ltr;
+    margin-top: 30px;
+}
+#stock-tables .table-container:nth-child(1) table {
+    border-color: black;
+}
+#stock-tables .table-container:nth-child(1) td  {
+    background-color: var(--gray-color);
+    color: black;
+}
+caption {
+    caption-side: top;
+}
+#stock-tables table + .border {
+    width: 30px;
+    background-color: var(--green-color);
+    margin-left: 10px;
+}
+
+#stock-tables .table-container:nth-child(2) table {
+    border-color: black;
+}
+#stock-tables .table-container:nth-child(2) td  {
+    background-color: var(--third-color);
+    color: black;
+}
+#stock-tables .table-container:nth-child(2) > .border {
+    width: 30px;
+    height: 100%;
+    background-color: var(--green-color);
+    margin-left: 10px;
+}
+
+#stock-tables .table-container:nth-child(3) table {
+    border-color: black;
+}
+#stock-tables .table-container:nth-child(3) td  {
+    background-color: var(--green-color);
+    color: black;
+}
+#stock-tables .table-container:nth-child(3) > .border {
+    width: 30px;
+    height: 100%;
+    background-color: var(--green-color);
+    margin-left: 10px;
+}
+
+#stock-tables .col-lg-3 .table-container:nth-child(1) table {
+    border-color: black;
+}
+#stock-tables .col-lg-3 .table-container:nth-child(1) td {
+    background-color: var(--orange-color);
+    color: black;
+}
+#stock-tables .col-lg-3 .table-container:nth-child(1) > .border {
+    width: 30px;
+    height: 150px;
+    background-color: var(--green-color);
+    margin-left: 10px;
+}
+
+#stock-tables .col-lg-3 .table-container:nth-child(2) table {
+    border-color: black;
+}
+#stock-tables .col-lg-3 .table-container:nth-child(2) td {
+    background-color: var(--main-color);
+    color: white;
+}
+#stock-tables .col-lg-3 .table-container:nth-child(2) > .border {
+    width: 30px;
+    height: 150px;
+    background-color: var(--main-color);
+    margin-left: 10px;
+}
+.icon-container {
+    display: inline-block;
+    padding: 6px;
+    background-color: var(--gray-color);
+    color: black;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+#kpi {
+    direction: ltr;
+}
+.chart-text {
+    background-color: #f8cbad;
+    color: black;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+    margin: 10px 0;
 }
