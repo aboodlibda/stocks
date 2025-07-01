@@ -67,7 +67,6 @@
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
 
 
             const tbody = $('.table tbody');
@@ -113,8 +112,6 @@
                 }
             });
 
-
-    });
 
     function loadCompanyData() {
         const tbody = $('.table tbody');
