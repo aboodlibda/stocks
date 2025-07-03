@@ -189,7 +189,7 @@ class HomeController extends Controller
     {
         $company_id = $request->query('company_id');
         $company = Company::query()->where('company_id','=',$company_id)->first();
-        return view('cms.stock-analysis', compact('company'));
+        return view('cms.test_stock', compact('company'));
     }
 
 // SearchController.php
