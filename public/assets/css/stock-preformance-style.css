@@ -85,7 +85,7 @@ thead th, .table-caption {
     display: inline-block;
     position: relative;
     left: 80px;
-    font-size: 18px;
+    font-size: 20px;
     border: 0;
     border-radius: 1px;
 }
@@ -146,13 +146,13 @@ table tr > td:nth-child(3) {
     color: white;
 }
 .title-banner-2 {
-    padding: 10px 20px;
+    padding: 10px 5px;
     border: 2px solid #3366cc;
     border-radius: 8px;
     font-weight: bold;
     box-shadow: 9px 10px 8px rgb(0 0 0 / 40%);
     display: inline-block;
-    font-size: 14px;
+    font-size: 16px;
     border: 0;
     border-radius: 1px;
 }
@@ -247,6 +247,32 @@ caption {
     color: black;
     padding: 5px;
     border-radius: 5px;
-    font-size: 14px;
+    font-size: 18px;
     margin: 10px 0;
+}
+.bg-blue {
+    background-color: var(--main-color);
+    color: white;
+}
+.bg-blue-2 {
+    background-color: var(--third-color);
+    color: white;
+}
+.date-box {
+    font-size: 12px;
+    padding: 15px 12px;
+    border-radius: 5px;
+    font-weight: bold;
+    min-width: 100px;
+    text-align: center;
+}
+.num-cell {
+    width: 5%;
+    padding: 0;
+    background-color: var(--green-color) !important;
+    color: var(--red-color) !important;
+}
+
+.border-left-white {
+    border-left: 10px solid white !important;
 }
