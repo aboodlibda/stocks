@@ -298,7 +298,6 @@
             <div class="col-lg-12">
                 <!-- CHART 02 -->
                 <div id="chart">
-                    CHART DATA
                 </div>
                 <p class="chart-text"> Lorem ipsum dolor, sit amet consectetur adipisicing elit. At, perferendis! Nam maiores dicta iusto deserunt, voluptatum placeat omnis perferendis quasi. </p>
             </div>
@@ -376,15 +375,15 @@
     $(document).ready(function() {
 
         $("#stock_probability").on('click', function (){
-            drawCharts1()
+            drawCharts1({{$company->company_num}})
             })
 
         $("#stock_index").on('click', function (){
-            drawCharts2()
+            drawCharts2({{$company->company_num}})
         })
 
         $("#support_and_resistance").on('click', function (){
-            drawCharts3()
+            drawCharts3({{$company->company_num}})
         })
 
 
