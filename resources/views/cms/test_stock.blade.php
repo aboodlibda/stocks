@@ -375,15 +375,15 @@
     $(document).ready(function() {
 
         $("#stock_probability").on('click', function (){
-            drawCharts1()
+            drawCharts1({{$company->company_id}})
             })
 
         $("#stock_index").on('click', function (){
-            drawCharts2()
+            drawCharts2({{$company->company_id}})
         })
 
         $("#support_and_resistance").on('click', function (){
-            drawCharts3()
+            drawCharts3({{$company->company_id}})
         })
 
 
