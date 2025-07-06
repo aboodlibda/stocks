@@ -56,7 +56,15 @@
                 <button class="custom-btn btn-analysis">تحليل أداء السهم</button>
                 <button class="custom-btn btn-portfolio">إضافة السهم للمحفظة</button>
             </div>
-            <img src="{{asset('assets/media/big chart.jpg')}}" alt="صورة جانبية">
+            <h5 class="text-center mt-3">فترة تحميل أسعار الأسهم التاريخية ( اَخر 3 سنوات )</h5>
+            <span class="text-center">من ++++++++ الى +++++++++</span>
+
+            <h5 class="text-center mt-3">فترة تحميل أسعار القطاع الصناعي التاريخية ( اَخر 10 سنوات )</h5>
+            <span class="text-center">من ++++++++ الى +++++++++</span>
+
+            <h6 class="text-center mt-3">تاريخ اَخر تحديث لأسعار الأسهم +++++++++ الوقت : 3:45 PM</h6>
+
+            <img src="{{asset('assets/media/big chart.jpg')}}" style="height: 300px" alt="صورة جانبية">
         </div>
     </div>
 </div>
