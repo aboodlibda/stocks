@@ -52,7 +52,7 @@
                         <tbody>
 
                         <tr>
-                            <td class="text-center text-dark p-2">{{$company->company_name}}</td>
+                            <td class="text-center text-dark p-2">اسم المؤشر</td>
                             <td class="text-center"> <span class=" text-dark p-2">السهم</span> </td>
                             <td class="text-center"> <span class=" text-dark p-2">متوسط القطاع الصناعي</span> </td>
                         </tr>
@@ -100,21 +100,21 @@
                     <table class="table table-bordered mb-0">
                         <tbody>
                         <tr>
-                            <td class="text-center text-dark p-2">{{$company->company_name}}</td>
+                            <td class="text-center text-dark p-2">اسم المؤشر</td>
                             <td class="text-center"> <span class=" text-dark p-2">السهم</span> </td>
                             <td class="text-center"> <span class=" text-dark p-2">متوسط القطاع الصناعي</span> </td>
                         </tr>
 
-                        <tr>
-                            <td class="text-center">Stock Value at Risk (VaR %)</td>
-                            <td class="text-center num-cell"> {{number_format($company->stock_var_percent,2)}} </td>
-                            <td class="text-center num-cell" id="avg_stock_var_percent"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">Stock Value at Risk (VaR ) Expected Maximum Loss SR</td>
-                            <td class="text-center num-cell"> N/A </td>
-                            <td class="text-center num-cell"> N/A </td>
-                        </tr>
+{{--                        <tr>--}}
+{{--                            <td class="text-center">Stock Value at Risk (VaR %)</td>--}}
+{{--                            <td class="text-center num-cell"> {{number_format($company->stock_var_percent,2)}} </td>--}}
+{{--                            <td class="text-center num-cell" id="avg_stock_var_percent"></td>--}}
+{{--                        </tr>--}}
+{{--                        <tr>--}}
+{{--                            <td class="text-center">Stock Value at Risk (VaR ) Expected Maximum Loss SR</td>--}}
+{{--                            <td class="text-center num-cell"> N/A </td>--}}
+{{--                            <td class="text-center num-cell"> N/A </td>--}}
+{{--                        </tr>--}}
                         <tr>
                             <td class="text-center">Stock - Sharp Risk Ratio</td>
                             <td class="text-center num-cell"> {{number_format($company->stock_sharp_ratio,2)}} </td>
@@ -155,7 +155,7 @@
                         <tbody>
 
                         <tr>
-                            <td class="text-center text-dark p-2">{{$company->company_name}}</td>
+                            <td class="text-center text-dark p-2">اسم المؤشر</td>
                             <td class="text-center"> <span class=" text-dark p-2">السهم</span> </td>
                             <td class="text-center"> <span class=" text-dark p-2">متوسط القطاع الصناعي</span> </td>
                         </tr>
@@ -209,7 +209,7 @@
                 <div class="table-container">
                     <div class="d-flex align-items-center gap-2">
                         <h4 class="text-center bg-red w-100 title-banner-2">Expected Stock Return Based on Historical Data & CAPM Model</h4>
-                        <span class="icon-container"><i class="fa fa-user"></i></span>
+{{--                        <span class="icon-container"><i class="fa fa-user"></i></span>--}}
                     </div>
                     <div class="d-flex">
                         <table class="table table-bordered mb-0">
@@ -224,8 +224,53 @@
                             </tr>
                             </tbody>
                         </table>
-                        <div class="border"></div>
                     </div>
+                    <h4 class="text-center bg-red w-100 title-banner-2 mt-2">Expected Stock VaR %</h4>
+                    <table class="table table-bordered mb-0">
+                        <tbody>
+                        <tr>
+                            <td class="text-center bg-blue-2">Stock Value at Risk (VaR %)</td>
+                            <td class="text-center num-cell" style="font-size: 13px"> {{number_format($company->stock_var_percent,2)}} </td>
+                            <td class="text-center  bg-blue"> <span>1</span> </td>
+                            <td class="text-center num-cell">
+                                <button type="button" class="btn btn-primary" style="font-size: 13px" data-bs-toggle="modal" data-bs-target="#updateDaysModal">
+                                    Updating No of Days
+                                </button>
+                            </td>
+                        </tr>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="updateDaysModal" tabindex="-1" aria-labelledby="updateDaysModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="updateDaysModalLabel">Select Number of Days</h5>
+                                        <button type="button" dir="ltr" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <select class="form-select" id="daysSelect">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                        </select>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary" id="updateDaysBtn">Update</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </tbody>
+                    </table>
+
                 </div>
             </div>
         </div>
