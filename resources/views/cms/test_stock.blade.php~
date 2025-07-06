@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحليل سهم {{$company->company_name}} | {{$company->company_num}}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="{{asset('assets/css/stock-preformance-style.css')}}">
+    <style>
+
+    </style>
+</head>
+
+<body>
+
+<div id="stock-section" class="container py-3">
+    <div class="d-flex justify-content-between align-items-center">
+        <a href="{{ route('select-stock') }}" class="custom-btn btn-analysis text-center title-banner text-decoration-none">الرجوع لشاشة إختيار أسهم المحفظة</a>
+        <div class="d-flex align-items-end">
+            <table class="header-table">
+                <thead>
+                <tr>
+                    <th class="red-bg">Symbol Code</th>
+                    <th class="red-bg">Stock Name</th>
+                    <th class="red-bg">Industry Type</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="yellow-bg">{{$company->company_num}}</td>
+                    <td class="orange-bg">{{$company->company_name}}</td>
+                    <td class="orange-bg">{{$company->index_name}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <img src="{{asset('assets/media/dan logo.jpg')}}" alt="الشعار" class="logo-img">
+    </div>
+    <div class="text-center">
+        <button class="custom-btn btn-analysis text-center title-banner-2">تحليل أداء السهم</button>
+    </div>
+    <div id="stock-tables">
+        <div class="row">
+            <div class="col-lg-3 table-container">
+                <div class="d-flex align-items-center gap-2 table-caption mb-2 bg-white">
+                    <h4 class="text-center bg-red w-100 title-banner-2 mb-0">Stock Movement</h4>
+                </div>
+                <div class="d-flex content">
+                    <table class="table table-bordered mb-0">
+                        <tbody>
+
+                        <tr>
+                            <td class="text-center text-dark p-2">اسم المؤشر</td>
+                            <td class="text-center"> <span class=" text-dark p-2">السهم</span> </td>
+                            <td class="text-center"> <span class=" text-dark p-2">متوسط القطاع الصناعي</span> </td>
+                        </tr>
+
+
+                        <tr>
+                            <td class="text-center">Market Price (Closing Price)</td>
+                            <td class="text-center num-cell"> {{number_format($company->close,2)}} </td>
+                            <td class="text-center num-cell"> {{number_format($company->week_52_high_price,2)}} </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">Average Price Midpoint</td>
+                            <td class="text-center num-cell"> N/A </td>
+                            <td class="text-center num-cell"> N/A </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">52 Week High</td>
+                            <td class="text-center num-cell"> {{number_format($company->week_52_high_price,2)}} </td>
+                            <td class="text-center num-cell"> {{number_format($company->week_52_high_price,2)}} </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">52 Week Low</td>
+                            <td class="text-center num-cell"> {{number_format($company->week_52_low_price,2)}} </td>
+                            <td class="text-center num-cell"> {{number_format($company->week_52_low_price,2)}} </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">Maximum Stock Return over 250 Days Trading</td>
+                            <td class="text-center num-cell"> N/A </td>
+                            <td class="text-center num-cell"> N/A </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">Minimum Stock Return over 250 Days Trading</td>
+                            <td class="text-center num-cell"> N/A </td>
+                            <td class="text-center num-cell"> N/A </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-lg-3 table-container">
+                <div class="d-flex align-items-center gap-2 table-caption mb-2 bg-white">
+                    <h4 class="text-center bg-red w-100 title-banner-2 mb-0">Stock Risk Measurement</h4>
+                </div>
+                <div class="d-flex content">
+                    <table class="table table-bordered mb-0">
+                        <tbody>
+                        <tr>
+                            <td class="text-center text-dark p-2">اسم المؤشر</td>
+                            <td class="text-center"> <span class=" text-dark p-2">السهم</span> </td>
+                            <td class="text-center"> <span class=" text-dark p-2">متوسط القطاع الصناعي</span> </td>
+                        </tr>
+
+{{--                        <tr>--}}
+{{--                            <td class="text-center">Stock Value at Risk (VaR %)</td>--}}
+{{--                            <td class="text-center num-cell"> {{number_format($company->stock_var_percent,2)}} </td>--}}
+{{--                            <td class="text-center num-cell" id="avg_stock_var_percent"></td>--}}
+{{--                        </tr>--}}
+{{--                        <tr>--}}
+{{--                            <td class="text-center">Stock Value at Risk (VaR ) Expected Maximum Loss SR</td>--}}
+{{--                            <td class="text-center num-cell"> N/A </td>--}}
+{{--                            <td class="text-center num-cell"> N/A </td>--}}
+{{--                        </tr>--}}
+                        <tr>
+                            <td class="text-center">Stock - Sharp Risk Ratio</td>
+                            <td class="text-center num-cell"> {{number_format($company->stock_sharp_ratio,2)}} </td>
+                            <td class="text-center num-cell" id="avg_stock_sharp_ratio"></td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">Stock Beta Coefficient (β)(Market Sensitivity</td>
+                            <td class="text-center num-cell"> {{number_format($company->stock_beta_coefficient,2)}} </td>
+                            <td class="text-center num-cell" id="avg_stock_beta_coefficient"></td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">Daily Stock Volatility % (Risk Level)</td>
+                            <td class="text-center num-cell"> {{number_format($company->daily_stock_volatility,2)}} </td>
+                            <td class="text-center num-cell" id="avg_daily_stock_volatility"></td>
+                        </tr>
+
+                        <tr>
+                            <td class="text-center">Annual Stock Volatility % (Risk Level)</td>
+                            <td class="text-center num-cell"> {{number_format($company->annual_stock_volatility,2)}} </td>
+                            <td class="text-center num-cell" id="avg_annual_stock_volatility"></td>
+                        </tr>
+
+                        <tr>
+                            <td class="text-center">Stock Risk Ranking</td>
+                            <td class="text-center num-cell"> {{$company->stock_risk_rank}} </td>
+                            <td class="text-center num-cell" id="stock_rank_risk"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-lg-3 table-container">
+                <div class="d-flex align-items-center gap-2 table-caption mb-2 bg-white">
+                    <h4 class="text-center bg-red w-100 title-banner-2">Stock Performance (Key Financial Ratios)</h4>
+                </div>
+                <div class="d-flex content">
+                    <table class="table table-bordered mb-0">
+                        <tbody>
+
+                        <tr>
+                            <td class="text-center text-dark p-2">اسم المؤشر</td>
+                            <td class="text-center"> <span class=" text-dark p-2">السهم</span> </td>
+                            <td class="text-center"> <span class=" text-dark p-2">متوسط القطاع الصناعي</span> </td>
+                        </tr>
+
+
+                        <tr>
+                            <td class="text-center ">P/E Ratio</td>
+                            <td class="text-center num-cell "> {{number_format($company->pe_ratio,2)}} </td>
+                            <td class="text-center num-cell "> {{number_format($company->pe_ratio,2)}} </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center ">Market to Book Ratio</td>
+                            <td class="text-center num-cell "> {{number_format($company->market_to_book_ratio,2)}} </td>
+                            <td class="text-center num-cell "> {{number_format($company->market_to_book_ratio,2)}} </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center ">Free Cash Flow Yield</td>
+                            <td class="text-center num-cell "> {{number_format($company->free_cash_flow_yield,2)}} </td>
+                            <td class="text-center num-cell "> {{number_format($company->free_cash_flow_yield,2)}} </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center ">Leverage Ratio</td>
+                            <td class="text-center num-cell "> {{number_format($company->leverage_ratio,2)}} </td>
+                            <td class="text-center num-cell "> {{number_format($company->leverage_ratio,2)}} </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center ">Return on Equity</td>
+                            <td class="text-center num-cell "> {{number_format($company->return_on_equity,2)}} </td>
+                            <td class="text-center num-cell "> {{number_format($company->return_on_equity,2)}} </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">Stock Dividend Yield</td>
+                            <td class="text-center num-cell "> {{number_format($company->stock_dividend_yield,2)}} </td>
+                            <td class="text-center num-cell "> {{number_format($company->stock_dividend_yield,2)}} </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">Earning Per Share</td>
+                            <td class="text-center num-cell "> {{number_format($company->earning_per_share,2)}} </td>
+                            <td class="text-center num-cell "> {{number_format($company->earning_per_share,2)}} </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">Annual Dividend Rate</td>
+                            <td class="text-center num-cell "> {{number_format($company->annual_dividend_rate,2)}} </td>
+                            <td class="text-center num-cell "> {{number_format($company->annual_dividend_rate,2)}} </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="table-container">
+                    <div class="d-flex align-items-center gap-2">
+                        <h4 class="text-center bg-red w-100 title-banner-2">Expected Stock Return Based on Historical Data & CAPM Model</h4>
+                        <span class="icon-container"><i class="fa fa-user"></i></span>
+                    </div>
+                    <div class="d-flex">
+                        <table class="table table-bordered mb-0">
+                            <tbody>
+                            <tr>
+                                <td class="text-center">Expected Annual Stock Return% (Based on CAPM Model)</td>
+                                <td class="text-center num-cell"> {{number_format($company->stock_beta_coefficient,2)}} </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">Daily Expected Stock Return % (Based on Average of  3 Years Historical Data)</td>
+                                <td class="text-center num-cell"> {{number_format($company->stock_beta_coefficient,2)}} </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h4 class="text-center bg-red w-100 title-banner-2 mt-2">Expected Stock VaR %</h4>
+                    <table class="table table-bordered mb-0">
+                        <tbody>
+                        <tr>
+                            <td class="text-center bg-blue-2">Stock Value at Risk (VaR %)</td>
+                            <td class="text-center num-cell" style="font-size: 13px"> {{number_format($company->stock_var_percent,2)}} </td>
+                            <td class="text-center  bg-blue"> <span>1</span> </td>
+                            <td class="text-center num-cell">
+                                <button type="button" class="btn btn-primary" style="font-size: 13px" data-bs-toggle="modal" data-bs-target="#updateDaysModal">
+                                    Updating No of Days
+                                </button>
+                            </td>
+                        </tr>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="updateDaysModal" tabindex="-1" aria-labelledby="updateDaysModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="updateDaysModalLabel">Select Number of Days</h5>
+                                        <button type="button" dir="ltr" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <select class="form-select" id="daysSelect">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                        </select>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary" id="updateDaysBtn">Update</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4 align-items-center">
+            <div class="col-lg-3">
+                <p class="bg-red p-3 mb-0 title-banner-2">Financial Statements Issuance Dates</p>
+            </div>
+            <div class="col-lg-3">
+                <div class="d-flex align-items-center gap-3">
+                    <p class="bg-blue p-2 mb-0">اخر تاريخ لتوزيع الأرباح</p>
+                    <div class="bg-blue-2 border text-dark date-box">{{$company->last_dividend_date}}</div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="d-flex align-items-center gap-3">
+                    <p class="bg-blue p-2 mb-0">Last Updated Income Statement</p>
+                    <div class="bg-blue-2 border text-dark date-box">2025-06-27</div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="d-flex align-items-center gap-3">
+                    <p class="bg-blue p-2 mb-0">Last Updated Balance Sheet</p>
+                    <div class="bg-blue-2 border text-dark date-box">2025-06-27</div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row mt-4 align-items-center">
+            <div class="col-lg-3">
+                <p class="bg-red p-2 mb-0 title-banner-2">View Chart Analysis For: </p>
+            </div>
+            <div class="col-lg-3">
+                <div class="d-flex align-items-center gap-3">
+                    <p class="bg-blue-2 p-2 mb-0 text-dark">احتماليات توزيع عوائد الأسهم</p>
+                    <button class="btn btn-primary btn-sm bg-blue-2" id="stock_probability" style="height: 40px; width: 40px; padding: 0;cursor:pointer;border: none;">
+                        <img src="{{asset('assets/media/graph.png')}}" alt="Add" style="height: 40px; width: 40px;">
+                    </button>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="d-flex align-items-center gap-3">
+                    <p class="bg-blue-2 p-2 mb-0 text-dark">Stock vs. Index Return</p>
+                    <button class="btn btn-primary btn-sm bg-blue-2" id="stock_index" style="height: 40px; width: 40px; padding: 0;cursor:pointer;border: none;">
+                        <img src="{{asset('assets/media/graph.png')}}" alt="Add" style="height: 40px; width: 40px;">
+                    </button>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="d-flex align-items-center gap-3">
+                    <p class="bg-blue-2 p-2 mb-0 text-dark">Support and Resistance Price Level</p>
+                    <button class="btn btn-primary btn-sm bg-blue-2" id="support_and_resistance" style="height: 40px; width: 40px; padding: 0;cursor:pointer;border: none;">
+                        <img src="{{asset('assets/media/graph.png')}}" alt="Add" style="height: 40px; width: 40px;">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="kpi" class="mt-4">
+{{--        <div class="form-group">--}}
+{{--            <label for="">View Chart Analysis For: </label>--}}
+{{--            <select name="chart_type" id="chart_type">--}}
+{{--                <option value="stock_probability">احتماليات توزيع عوائد الأسهم</option>--}}
+{{--                <option value="stock_index">Stock vs. Index Return</option>--}}
+{{--                <option value="support_and_resistance">Support and Resistance Price Level</option>--}}
+{{--            </select>--}}
+{{--        </div>--}}
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- CHART 02 -->
+                <div id="chart">
+                </div>
+                <p class="chart-text"> Lorem ipsum dolor, sit amet consectetur adipisicing elit. At, perferendis! Nam maiores dicta iusto deserunt, voluptatum placeat omnis perferendis quasi. </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="https://cdn.canvasjs.com/jquery.canvasjs.min.js"></script>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+        drawCharts1({{$company->company_id}});
+        fetchStockAverages(@json($company->index_symbol));
+    });
+
+    function fetchStockAverages(value) {
+        var risk_rank = $("#stock_rank_risk");
+        $.ajax({
+            url: "{{route('get-stock-averages')}}", // Adjust the URL if needed
+            method: "GET",
+            dataType: "json",
+            data: { sector_code: value },
+            success: function (response) {
+                // Assuming response contains keys matching the ID attributes in the table
+                $("#avg_stock_var_percent").text("%" + response.avg_stock_var_percent || "0");
+                $("#avg_stock_sharp_ratio").text("%" + response.avg_stock_sharp_ratio || "0");
+                $("#avg_stock_beta_coefficient").text("%" + response.avg_stock_beta_coefficient || "0");
+                $("#avg_annual_stock_volatility").text("%" + response.avg_annual_stock_volatility || "0");
+                $("#avg_daily_stock_volatility").text("%" + response.avg_daily_stock_volatility || "0");
+                risk_rank.text(response.stock_risk_rank || "-");
+
+                $("#avg_minimum_daily_stock_3_years").text("%" + response.avg_minimum_daily_stock_3_years.toFixed(2) || "0");
+                $("#avg_maximum_daily_stock_3_years").text("%" + response.avg_maximum_daily_stock_3_years.toFixed(2) || "0");
+                $("#avg_annual_stock_expected_return").text("%" + response.avg_annual_stock_expected_return || "0");
+                $("#avg_daily_expected_stock_return").text("%" + response.avg_daily_expected_stock_return || "0");
+
+                $("#avg_minimum_daily_stock_1_year").text("%" + response.avg_minimum_daily_stock_1_year || "0");
+                $("#avg_maximum_daily_stock_1_year").text("%" + response.avg_maximum_daily_stock_1_year || "0");
+                $("#avg_average_daily_expected_return_1_year").text("%" + response.avg_average_daily_expected_return_1_year || "0");
+
+                $("#avg_pe_ratio").text("%" + response.avg_pe_ratio || "0");
+                $("#avg_market_to_book_ratio").text("%" + response.avg_market_to_book_ratio || "0");
+                $("#avg_return_on_equity").text("%" + response.avg_return_on_equity || "0");
+                $("#avg_free_cash_flow_yield").text("%" + response.avg_free_cash_flow_yield || "0");
+                $("#avg_leverage_ratio").text("%" + response.avg_leverage_ratio || "0");
+                $("#avg_stock_dividend_yield").text("%" + response.avg_stock_dividend_yield || "0");
+                $("#avg_annual_dividend_rate").text("%"+ response.avg_annual_dividend_rate || "0");
+
+
+                var riskRank = response.stock_risk_rank;
+                if (riskRank === "Conservative") {
+                    risk_rank.css("background-color", "lightgreen");
+                } else if (riskRank === "Moderately Conservative") {
+                    risk_rank.css("background-color", "yellow");
+                } else if (riskRank === "Aggressive") {
+                    risk_rank.css("background-color", "orange");
+                } else if (riskRank === "Very Aggressive") {
+                    risk_rank.css("background-color", "red");
+                } else {
+                    risk_rank.css("background-color", "gray");
+                }
+            },
+
+            error: function () {
+                console.error("Failed to fetch stock averages.");
+            }
+        });
+    }
+
+    $(document).ready(function() {
+
+        $("#stock_probability").on('click', function (){
+            drawCharts1({{$company->company_id}})
+            })
+
+        $("#stock_index").on('click', function (){
+            drawCharts2({{$company->company_id}})
+        })
+
+        $("#support_and_resistance").on('click', function (){
+            drawCharts3({{$company->company_id}})
+        })
+
+
+
+        });
+
+
+    function drawCharts1(company_id) {
+
+        var chart = $("#chart");
+        chart.html();
+
+        $.ajax({
+            type: 'GET',
+            url: '/stock-performance',
+            dataType: 'json',
+            data: {
+                {{--"_token": "{{ csrf_token() }}",--}}
+                id: company_id
+            },
+            beforeSend: function() {
+                // Show loading spinner
+                chart.html('<div class="text-center"><div class="spinner-border" role="status"></div><div class="mt-3">Loading...</div></div>');
+            },
+            success: function(data) {
+                // Remove loading spinner and show data
+                chart.html('');
+
+                const values = Object.values(data.frequency);
+                var dataPointsArray = {
+                    var_t: values,
+                    bin_boundaries: [0.13, 0.00, 0.13, 0.13, 0.53, 0.40, 2.54, 3.07, 6.54, 12.95, 18.56, 22.43, 15.62, 6.94, 4.27, 3.07, 1.20, 0.53, 0.13, 0.27, 0.00, 0.00,
+                        0.00, 0.13, 0.00, 0.00, 0.00, 0.00]
+                };
+
+                var bin_boundaries = dataPointsArray.bin_boundaries;
+                var chartData = dataPointsArray.var_t.map(function(value, index) {
+                    return { y: value * 100, label: (bin_boundaries[index] * 100).toFixed(1) + "%" };
+                });
+
+                var options = {
+                    animationEnabled: true,
+                    title: {
+                        text: data.company.company_name
+                    },
+                    axisX: {
+                        title: "",
+                        labelAngle: -0,
+                        interval: 1,
+                        labelFontSize: 9
+                    },
+                    axisY: {
+                        title: "",
+                        includeZero: true,
+                        suffix: "%",
+                        labelFontSize: 10
+                    },
+                    toolTip: {
+                        shared: true,
+                        reversed: true
+                    },
+                    data: [
+                        {
+                            type: "column",
+                            color: "#7CB9E8",
+                            dataPoints: chartData
+                        }
+                    ]
+                };
+
+                chart.CanvasJSChart(options);
+
+            },
+        });
+
+
+    }
+
+    function drawCharts2(company_id) {
+
+        var chart = $("#chart");
+        chart.html();
+
+        $.ajax({
+            type: 'GET',
+            url: '/stock-performance',
+            dataType: 'json',
+            data: {
+                {{--"_token": "{{ csrf_token() }}",--}}
+                id: company_id
+            },
+            beforeSend: function() {
+                chart.html('<div class="text-center"><div class="spinner-border" role="status"></div><div class="mt-3">Loading...</div></div>');
+            },
+            success: function(data) {
+                // Remove loading spinner and show data
+                chart.html('');
+
+                // بيانات ثابتة
+                var dataPointsArray = {
+                    log_array1:  data.company_ratios,
+                    log_array2:  data.sector_ratios,
+                };
+
+                var chartData1 = dataPointsArray.log_array1.map((value, index) => ({
+                    y: value * 100,
+                    label: index.toString()
+                }));
+
+                var chartData2 = dataPointsArray.log_array2.map((value, index) => ({
+                    y: value * 100,
+                    label: index.toString()
+                }));
+
+                var chartOptions = {
+                    title: {},
+                    axisX: {
+                        labelAngle: -45,
+                        // interval: 10,
+                        labelFontSize: 10,
+                        labelFormatter: function () { return ""; }
+                    },
+                    axisY: {
+                        includeZero: true,
+                        suffix: "%",
+                        // interval: 2,
+                        labelFontSize: 10
+                    },
+                    legend: {
+                        cursor: "pointer",
+                        verticalAlign: "bottom",
+                        horizontalAlign: "center",
+                        dockInsidePlotArea: true
+                    },
+                    data: [
+                        {
+                            type: "line",
+                            color: "#0000FF",
+                            name: data.company.company_name,
+                            showInLegend: true,
+                            dataPoints: chartData1
+                        },
+                        {
+                            type: "line",
+                            color: "#FF7F50",
+                            name: data.company.index_name,
+                            showInLegend: true,
+                            dataPoints: chartData2
+                        }
+                    ]
+                };
+
+                chart.CanvasJSChart(chartOptions);
+
+            }
+        });
+
+
+    }
+
+    function drawCharts3(company_id) {
+
+        var chart = $("#chart");
+        chart.html();
+
+        $.ajax({
+            type: 'GET',
+            url: '/stock-performance',
+            dataType: 'json',
+            data: {
+                {{--"_token": "{{ csrf_token() }}",--}}
+                id: company_id
+            },
+            beforeSend: function() {
+                chart.html('<div class="text-center"><div class="spinner-border" role="status"></div><div class="mt-3">Loading...</div></div>');
+            },
+            success: function(data) {
+                // Remove loading spinner and show data
+                chart.html('');
+
+                // بيانات ثابتة
+                var dataPointsArray = {
+                    log_array1:  data.company_ratios,
+                    log_array2:  data.sector_ratios,
+                };
+
+                var chartData1 = dataPointsArray.log_array1.map((value, index) => ({
+                    y: value * 100,
+                    label: index.toString()
+                }));
+
+                var chartData2 = dataPointsArray.log_array2.map((value, index) => ({
+                    y: value * 100,
+                    label: index.toString()
+                }));
+
+                var chartOptions = {
+                    title: {},
+                    axisX: {
+                        labelAngle: -45,
+                        // interval: 10,
+                        labelFontSize: 10,
+                        labelFormatter: function () { return ""; }
+                    },
+                    axisY: {
+                        includeZero: true,
+                        suffix: "%",
+                        // interval: 2,
+                        labelFontSize: 10
+                    },
+                    legend: {
+                        cursor: "pointer",
+                        verticalAlign: "bottom",
+                        horizontalAlign: "center",
+                        dockInsidePlotArea: true
+                    },
+                    data: [
+                        {
+                            type: "line",
+                            color: "#0000FF",
+                            name: data.company.company_name,
+                            showInLegend: true,
+                            dataPoints: chartData1
+                        },
+                        {
+                            type: "line",
+                            color: "#FF7F50",
+                            name: data.company.index_name,
+                            showInLegend: true,
+                            dataPoints: chartData2
+                        }
+                    ]
+                };
+
+                chart.CanvasJSChart(chartOptions);
+
+            }
+        });
+
+
+    }
+
+</script>
+
+</html>
