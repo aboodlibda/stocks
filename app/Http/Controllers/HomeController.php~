@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\Sector;
+use App\Models\Stock;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
@@ -69,7 +71,6 @@ class HomeController extends Controller
 
     public function getStockAverages(Request $request)
     {
-        dd($request);
         $averages = Company::query()
             ->where('index_symbol', '=', $request->sector_code)
             ->selectRaw("
@@ -174,7 +175,9 @@ class HomeController extends Controller
 
     public function selectStock()
     {
-        return view('cms.select_stock');
+        $lastStockDate = Stock::query()->orderBy('updated_at', 'desc')->first();
+        $lastSectorDate = Sector::query()->orderBy('updated_at', 'desc')->first();
+        return view('cms.select_stock', compact('lastStockDate','lastSectorDate'));
     }
 
     public function stockAnalysis(Request $request)
