@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\Sector;
+use App\Models\Stock;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
@@ -173,7 +175,9 @@ class HomeController extends Controller
 
     public function selectStock()
     {
-        return view('cms.select_stock');
+        $lastStockDate = Stock::query()->orderBy('updated_at', 'desc')->first(['updated_at']);
+        $lastSectorDate = Sector::query()->orderBy('updated_at', 'desc')->first(['updated_at']);
+        return view('cms.select_stock', compact('lastStockDate','lastSectorDate'));
     }
 
     public function stockAnalysis(Request $request)
