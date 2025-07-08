@@ -57,12 +57,13 @@
                 <button class="custom-btn btn-portfolio">إضافة السهم للمحفظة</button>
             </div>
             <h5 class="text-center mt-3">فترة تحميل أسعار الأسهم التاريخية ( اَخر 3 سنوات )</h5>
-            <span class="text-center">من ++++++++ الى +++++++++</span>
+            <span class="text-center">من 12-09-2023 الى 12-09-2024</span>
 
             <h5 class="text-center mt-3">فترة تحميل أسعار القطاع الصناعي التاريخية ( اَخر 10 سنوات )</h5>
             <span class="text-center">من ++++++++ الى +++++++++</span>
 
-            <h6 class="text-center mt-3">تاريخ اَخر تحديث لأسعار الأسهم +++++++++ الوقت : 3:45 PM</h6>
+            <h6 class="text-center mt-3">تاريخ اَخر تحديث لأسعار الأسهم {{$lastStockDate->updated_at->format('Y-m-d')}} الوقت :
+                {{$lastStockDate->updated_at->format('H:m A')}}</h6>
 
             <img src="{{asset('assets/media/big chart.jpg')}}" style="height: 300px" alt="صورة جانبية">
         </div>
