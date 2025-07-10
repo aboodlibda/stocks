@@ -42,6 +42,7 @@
                         <th class="text-center">اسم ورمز الشركة</th>
                         <th class="text-center">القطاع</th>
                         <th style="width: 20%;" class="text-center">مؤشر القطاع</th>
+                        <th class="text-center">رمز الشركة</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -112,6 +113,7 @@
                             <td>${company.company_name}</td>
                             <td>${company.index_name}</td>
                             <td>${company.index_symbol}</td>
+                            <td>${company.company_num}</td>
                             <td class="d-none">${company.company_id}</td>
                         </tr>
                     `;
@@ -161,6 +163,7 @@
                             <td>${company.company_name}</td>
                             <td>${company.index_name}</td>
                             <td>${company.index_symbol}</td>
+                            <td>${company.company_num}</td>
                             <td class="d-none">${company.company_id}</td>
 
                         </tr>
@@ -199,7 +202,7 @@
             const company = cells.eq(0).text();
             const sector = cells.eq(1).text();
             const indicator = cells.eq(2).text();
-            const id = cells.eq(3).text();
+            const id = cells.eq(4).text();
 
             alert(`تم اختيار:\n${company} - ${sector} - المؤشر: ${indicator} - اي دي: ${id}`);
         });
@@ -211,7 +214,7 @@
                 return;
             }
 
-            const id = selectedRow.find('td').eq(3).text();
+            const id = selectedRow.find('td').eq(4).text();
 /* <<<<<<<<<<<<<<  ✨ Windsurf Command ⭐ >>>>>>>>>>>>>>>> */
             const loadingSpinner = `
                 <div class="position-fixed fixed-top fixed-bottom fixed-right fixed-left d-flex justify-content-center align-items-center" style="background-color: rgba(0,0,0,0.5); z-index: 10;">
