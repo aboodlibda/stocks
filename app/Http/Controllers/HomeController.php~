@@ -151,6 +151,8 @@ class HomeController extends Controller
     public function getCompanies()
     {
         $companies = Company::all();
+        $SupportPriceLevel= {2 X ((High Price ​+Low Price ​+ Close Price for last trading Price​)​ / 3 ) } – High Price
+
         return response()->json($companies);
 
     }
@@ -175,8 +177,8 @@ class HomeController extends Controller
 
     public function selectStock()
     {
-        $lastStockDate = Stock::query()->orderBy('updated_at', 'desc')->first();
-        $lastSectorDate = Sector::query()->orderBy('updated_at', 'desc')->first();
+        $lastStockDate = Stock::query()->orderBy('updated_at', 'desc')->first(['updated_at']);
+        $lastSectorDate = Sector::query()->orderBy('updated_at', 'desc')->first(['updated_at']);
         return view('cms.select_stock', compact('lastStockDate','lastSectorDate'));
     }
 
