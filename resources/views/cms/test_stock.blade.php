@@ -9,7 +9,32 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{{asset('assets/css/stock-preformance-style.css')}}">
     <style>
+        .bar-wrapper {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
 
+        .label-text {
+            width: 200px;
+            font-size: 15px;
+        }
+
+        .bar-container {
+            flex: 1;
+            background-color: #f0f0f0;
+            margin-left: 10px;
+        }
+
+        .bar {
+            height: 15px;
+            background-color: #3b6cc0;
+            text-align: right;
+            padding-right: 5px;
+            color: white;
+            font-weight: bold;
+            font-size: 10px;
+        }
     </style>
 </head>
 
@@ -591,6 +616,13 @@
 
     function drawCharts3(company_id) {
 
+        const chartData = [
+            { label: "Support Price", value: 33.53 },
+            { label: "Average Price Midpoint", value: 38.58 },
+            { label: "Market Close Price", value: 42.3 },
+            { label: "Resistance Price", value: 43.63 }
+        ];
+
         var chart = $("#chart");
         chart.html();
 
@@ -609,62 +641,37 @@
                 // Remove loading spinner and show data
                 chart.html('');
 
-                // بيانات ثابتة
-                var dataPointsArray = {
-                    log_array1:  data.company_ratios,
-                    log_array2:  data.sector_ratios,
-                };
+                const maxValue = 45; // maximum value for scaling
+                const chart1 = document.getElementById('chart');
 
-                var chartData1 = dataPointsArray.log_array1.map((value, index) => ({
-                    y: value * 100,
-                    label: index.toString()
-                }));
+                const heading = document.createElement('h6');
+                heading.textContent = "Chart Analysis of Support and Resistance Price Level - Over Past 30 Days";
+                heading.className = 'text-center pb-3';
+                chart1.appendChild(heading);
 
-                var chartData2 = dataPointsArray.log_array2.map((value, index) => ({
-                    y: value * 100,
-                    label: index.toString()
-                }));
 
-                var chartOptions = {
-                    title: {},
-                    axisX: {
-                        labelAngle: -45,
-                        // interval: 10,
-                        labelFontSize: 10,
-                        labelFormatter: function () { return ""; }
-                    },
-                    axisY: {
-                        includeZero: true,
-                        suffix: "%",
-                        // interval: 2,
-                        labelFontSize: 10
-                    },
-                    legend: {
-                        cursor: "pointer",
-                        verticalAlign: "bottom",
-                        horizontalAlign: "center",
-                        dockInsidePlotArea: true
-                    },
-                    data: [
-                        {
-                            type: "line",
-                            color: "#0000FF",
-                            name: data.company.company_name,
-                            showInLegend: true,
-                            dataPoints: chartData1
-                        },
-                        {
-                            type: "line",
-                            color: "#FF7F50",
-                            name: data.company.index_name,
-                            showInLegend: true,
-                            dataPoints: chartData2
-                        }
-                    ]
-                };
+                chartData.forEach(item => {
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'bar-wrapper';
 
-                chart.CanvasJSChart(chartOptions);
+                    const label = document.createElement('div');
+                    label.className = 'label-text';
+                    label.textContent = item.label;
 
+                    const barContainer = document.createElement('div');
+                    barContainer.className = 'bar-container';
+
+                    const bar = document.createElement('div');
+                    bar.className = 'bar';
+                    const widthPercent = (item.value / maxValue) * 100;
+                    bar.style.width = `${widthPercent}%`;
+                    bar.textContent = item.value;
+
+                    barContainer.appendChild(bar);
+                    wrapper.appendChild(label);
+                    wrapper.appendChild(barContainer);
+                    chart1.appendChild(wrapper);
+                });
             }
         });
 
