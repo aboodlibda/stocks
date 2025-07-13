@@ -15,6 +15,7 @@ Route::get('/stock-analysis', [HomeController::class, 'stockAnalysis'])->name('s
 Route::get('/stock-analysis-screen', [HomeController::class, 'stockAnalysisScreen'])->name('stock-analysis-screen');
 Route::get('/resistance-support', [HomeController::class, 'getResistanceAndSupport'])->name('get-resistance-and-support');
 Route::get('/get-close-prices', [HomeController::class, 'getClosePrices'])->name('get-close-prices');
+Route::get('/update-stock-var', [HomeController::class, 'updateStockVar'])->name('update-stock-var');
 
 Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
