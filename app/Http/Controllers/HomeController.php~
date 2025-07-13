@@ -151,8 +151,6 @@ class HomeController extends Controller
     public function getCompanies()
     {
         $companies = Company::all();
-        $SupportPriceLevel= {2 X ((High Price ​+Low Price ​+ Close Price for last trading Price​)​ / 3 ) } – High Price
-
         return response()->json($companies);
 
     }
@@ -215,6 +213,26 @@ class HomeController extends Controller
 
         // Return the search results as JSON
         return response()->json($results);
+    }
+
+    public function getResistanceAndSupport(Request $request)
+    {
+        return response()->json(resistanceSupport($request->id));
+    }
+
+    public function getClosePrices(Request $request)
+    {
+        $ticker = $request->query('ticker');
+        $prices = Stock::where('ticker', $ticker)
+            ->orderBy('date', 'desc')
+            ->limit(30)
+            ->get(['close'])
+            ->pluck('close')
+            ->toArray();
+
+        return response()->json([
+            'prices' => $prices
+        ]);
     }
 
 }
