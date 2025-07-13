@@ -365,11 +365,14 @@
 {{--            </select>--}}
 {{--        </div>--}}
         <div class="row">
-            <div class="col-lg-12">
-                <!-- CHART 02 -->
+            <div  id="chartDiv1" class="col-lg-12">
                 <div id="chart">
                 </div>
-                <p class="chart-text"> Lorem ipsum dolor, sit amet consectetur adipisicing elit. At, perferendis! Nam maiores dicta iusto deserunt, voluptatum placeat omnis perferendis quasi. </p>
+            </div>
+
+            <div  id="chartDiv2" class="col-lg-6">
+                <div id="lastChart" class="d-none">
+                </div>
             </div>
         </div>
     </div>
@@ -453,9 +456,9 @@
         })
 
         $("#support_and_resistance").on('click', function (){
-            drawCharts3({{$company->company_id}})
+            drawCharts3({{$company->company_num}})
+            drawCharts4({{$company->company_num}})
         })
-
 
 
         });
@@ -464,6 +467,7 @@
     function drawCharts1(company_id) {
 
         var chart = $("#chart");
+
         chart.html();
 
         $.ajax({
@@ -480,6 +484,11 @@
             },
             success: function(data) {
                 // Remove loading spinner and show data
+                document.getElementById("chartDiv1").classList.remove("col-lg-6");
+                document.getElementById("chartDiv1").classList.add("col-lg-12");
+                document.getElementById("lastChart").classList.add("d-none");
+
+
                 chart.html('');
 
                 const values = Object.values(data.frequency);
@@ -535,6 +544,7 @@
     function drawCharts2(company_id) {
 
         var chart = $("#chart");
+
         chart.html();
 
         $.ajax({
@@ -550,6 +560,11 @@
             },
             success: function(data) {
                 // Remove loading spinner and show data
+                document.getElementById("chartDiv1").classList.remove("col-lg-6");
+                document.getElementById("chartDiv1").classList.add("col-lg-12");
+                document.getElementById("lastChart").classList.add("d-none");
+
+
                 chart.html('');
 
                 // بيانات ثابتة
@@ -590,14 +605,14 @@
                     },
                     data: [
                         {
-                            type: "line",
+                            type: "column",
                             color: "#0000FF",
                             name: data.company.company_name,
                             showInLegend: true,
                             dataPoints: chartData1
                         },
                         {
-                            type: "line",
+                            type: "column",
                             color: "#FF7F50",
                             name: data.company.index_name,
                             showInLegend: true,
@@ -614,70 +629,240 @@
 
     }
 
-    function drawCharts3(company_id) {
-
-        const chartData = [
-            { label: "Support Price", value: 33.53 },
-            { label: "Average Price Midpoint", value: 38.58 },
-            { label: "Market Close Price", value: 42.3 },
-            { label: "Resistance Price", value: 43.63 }
-        ];
+    function drawCharts3(company_num) {
 
         var chart = $("#chart");
         chart.html();
 
         $.ajax({
             type: 'GET',
-            url: '/stock-performance',
+            url: '/resistance-support',
             dataType: 'json',
             data: {
-                {{--"_token": "{{ csrf_token() }}",--}}
-                id: company_id
+                id: company_num
             },
             beforeSend: function() {
                 chart.html('<div class="text-center"><div class="spinner-border" role="status"></div><div class="mt-3">Loading...</div></div>');
             },
             success: function(data) {
-                // Remove loading spinner and show data
+                console.log(data)
+
+                document.getElementById("chartDiv1").classList.remove("col-lg-12");
+                document.getElementById("chartDiv1").classList.add("col-lg-6");
                 chart.html('');
 
-                const maxValue = 45; // maximum value for scaling
-                const chart1 = document.getElementById('chart');
 
-                const heading = document.createElement('h6');
-                heading.textContent = "Chart Analysis of Support and Resistance Price Level - Over Past 30 Days";
-                heading.className = 'text-center pb-3';
-                chart1.appendChild(heading);
+                var options = {
+                    animationEnabled: true,
+                    theme: "light3",
+                    title:{
+                        text: "Chart Analysis of Support and Resistance Price Level - Over Past 10 Days",
+                        fontSize: 18
+                    },
+                    axisX:{
+                        title: "",
+                        labelAngle: -0,
+                        interval: 1,
+                        labelFontSize: 10
+                    },
+                    axisY: {
+                        // title: "Number of Sales",
+                        minimum: 10,
+                        maximum: 100,
+                        interval: 10,
+                    },
+                    toolTip:{
+                        shared:true
+                    },
+                    legend:{
+                        cursor:"pointer",
+                        verticalAlign: "bottom",
+                        horizontalAlign: "left",
+                        dockInsidePlotArea: true,
+                    },
+                    data: [{
+                        type: "line",
+                        showInLegend: true,
+                        name: "Support and Resistance",
+                        markerType: "square",
+                        // xValueFormatString: "DD MMM, YYYY",
+                        color: "#4e7bd1",
+                        // yValueFormatString: "#,##0K",
+                        dataPoints: [
+                            { label: 'Resistance Price',indexLabel: "\u2191 Resistance Price", y: data.resistance_price },
+                            { label: 'Market Close Price',indexLabel: "Market Close Price", y: data.market_close_price },
+                            { label: 'Average Price Midpoint',indexLabel: "Average Price Midpoint", y: data.average_price_midpoint },
+                            { label: 'Support Price',indexLabel: "\u2193 Support Price", y: data.support_price },
+                        ]
+
+                    }]
+                };
+                chart.CanvasJSChart(options);
 
 
-                chartData.forEach(item => {
-                    const wrapper = document.createElement('div');
-                    wrapper.className = 'bar-wrapper';
 
-                    const label = document.createElement('div');
-                    label.className = 'label-text';
-                    label.textContent = item.label;
-
-                    const barContainer = document.createElement('div');
-                    barContainer.className = 'bar-container';
-
-                    const bar = document.createElement('div');
-                    bar.className = 'bar';
-                    const widthPercent = (item.value / maxValue) * 100;
-                    bar.style.width = `${widthPercent}%`;
-                    bar.textContent = item.value;
-
-                    barContainer.appendChild(bar);
-                    wrapper.appendChild(label);
-                    wrapper.appendChild(barContainer);
-                    chart1.appendChild(wrapper);
-                });
+                // const chartData = [
+                //     { label: "Support Price", value: data.support_price.toFixed(2) },
+                //     { label: "Average Price Midpoint", value: data.average_price_midpoint.toFixed(2) },
+                //     { label: "Market Close Price", value: data.market_close_price.toFixed(2) },
+                //     { label: "Resistance Price", value: data.resistance_price.toFixed(2) }
+                // ];
+                //
+                // const maxValue = 100; // maximum value for scaling
+                // const chart1 = document.getElementById('chart');
+                //
+                // const heading = document.createElement('h6');
+                // heading.textContent = "Chart Analysis of Support and Resistance Price Level - Over Past 30 Days";
+                // heading.className = 'text-center pb-3';
+                // chart1.appendChild(heading);
+                //
+                //
+                // chartData.forEach(item => {
+                //     const wrapper = document.createElement('div');
+                //     wrapper.className = 'bar-wrapper';
+                //
+                //     const label = document.createElement('div');
+                //     label.className = 'label-text';
+                //     label.textContent = item.label;
+                //
+                //     const barContainer = document.createElement('div');
+                //     barContainer.className = 'bar-container';
+                //
+                //     const bar = document.createElement('div');
+                //     bar.className = 'bar';
+                //     const widthPercent = (item.value / maxValue) * 100;
+                //     bar.style.width = `${widthPercent}%`;
+                //     bar.textContent = item.value;
+                //
+                //     barContainer.appendChild(bar);
+                //     wrapper.appendChild(label);
+                //     wrapper.appendChild(barContainer);
+                //     chart1.appendChild(wrapper);
+                // });
             }
         });
 
 
     }
 
+    function drawCharts4(company_num) {
+
+        var chart = $("#lastChart");
+        chart.html();
+
+        $.ajax({
+            type: 'GET',
+            url: '/get-close-prices',
+            dataType: 'json',
+            data: {
+                ticker: company_num
+            },
+            beforeSend: function() {
+                chart.html('<div class="text-center"><div class="spinner-border" role="status"></div><div class="mt-3">Loading...</div></div>');
+            },
+            success: function(data) {
+                var max = Math.max.apply(null, data.prices);
+                var min = Math.min.apply(null, data.prices);
+
+                // document.getElementById("chartDiv1").classList.remove("col-lg-12");
+                // document.getElementById("chartDiv1").classList.add("col-lg-6");
+                document.getElementById("lastChart").classList.remove("d-none");
+                chart.html('');
+
+
+                var options = {
+                    animationEnabled: true,
+                    theme: "light3",
+                    title:{
+                        text: "Stock Price Performance Over Past 30 Days",
+                        fontSize: 18
+                    },
+                    axisX:{
+                        title: "",
+                        labelAngle: -0,
+                        interval: 1,
+                        labelFontSize: 10
+                    },
+                    axisY: {
+                        // title: "Number of Sales",
+                        minimum: min,
+                        maximum: max,
+                        labelFontSize: 10
+                    },
+                    toolTip:{
+                        shared:true
+                    },
+                    legend:{
+                        cursor:"pointer",
+                        verticalAlign: "bottom",
+                        horizontalAlign: "left",
+                        dockInsidePlotArea: true,
+                    },
+                    data: [{
+                        type: "line",
+                        showInLegend: true,
+                        name: "Closing Price",
+                        markerType: "none",
+                        // xValueFormatString: "DD MMM, YYYY",
+                        color: "#4e7bd1",
+                        // yValueFormatString: "#,##0K",
+                        dataPoints: data.prices.map((price, index) => ({
+                            x: index + 1,
+                            y: parseFloat(price)
+                        }))
+
+                    }]
+                };
+                chart.CanvasJSChart(options);
+
+
+
+                // const chartData = [
+                //     { label: "Support Price", value: data.support_price.toFixed(2) },
+                //     { label: "Average Price Midpoint", value: data.average_price_midpoint.toFixed(2) },
+                //     { label: "Market Close Price", value: data.market_close_price.toFixed(2) },
+                //     { label: "Resistance Price", value: data.resistance_price.toFixed(2) }
+                // ];
+                //
+                // const maxValue = 100; // maximum value for scaling
+                // const chart1 = document.getElementById('chart');
+                //
+                // const heading = document.createElement('h6');
+                // heading.textContent = "Chart Analysis of Support and Resistance Price Level - Over Past 30 Days";
+                // heading.className = 'text-center pb-3';
+                // chart1.appendChild(heading);
+                //
+                //
+                // chartData.forEach(item => {
+                //     const wrapper = document.createElement('div');
+                //     wrapper.className = 'bar-wrapper';
+                //
+                //     const label = document.createElement('div');
+                //     label.className = 'label-text';
+                //     label.textContent = item.label;
+                //
+                //     const barContainer = document.createElement('div');
+                //     barContainer.className = 'bar-container';
+                //
+                //     const bar = document.createElement('div');
+                //     bar.className = 'bar';
+                //     const widthPercent = (item.value / maxValue) * 100;
+                //     bar.style.width = `${widthPercent}%`;
+                //     bar.textContent = item.value;
+                //
+                //     barContainer.appendChild(bar);
+                //     wrapper.appendChild(label);
+                //     wrapper.appendChild(barContainer);
+                //     chart1.appendChild(wrapper);
+                // });
+            }
+        });
+
+
+    }
+
+
 </script>
 
 </html>
+
