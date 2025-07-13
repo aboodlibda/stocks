@@ -215,4 +215,24 @@ class HomeController extends Controller
         return response()->json($results);
     }
 
+    public function getResistanceAndSupport(Request $request)
+    {
+        return response()->json(resistanceSupport($request->id));
+    }
+
+    public function getClosePrices(Request $request)
+    {
+        $ticker = $request->query('ticker');
+        $prices = Stock::where('ticker', $ticker)
+            ->orderBy('date', 'desc')
+            ->limit(30)
+            ->get(['adjclose'])
+            ->pluck('adjclose')
+            ->toArray();
+
+        return response()->json([
+            'prices' => $prices
+        ]);
+    }
+
 }
