@@ -639,7 +639,7 @@
                     animationEnabled: true,
                     theme: "light3",
                     title:{
-                        text: "Chart Analysis of Support and Resistance Price Level - Over Past 10 Days",
+                        text: "Chart Analysis of Support and Resistance Price Level - Over Past 30 Days",
                         fontSize: 18
                     },
                     axisX:{
@@ -650,7 +650,7 @@
                     },
                     axisY: {
                         // title: "Number of Sales",
-                        minimum: 10,
+                        minimum: 0,
                         maximum: 100,
                         interval: 10,
                     },
@@ -673,9 +673,9 @@
                         // yValueFormatString: "#,##0K",
                         dataPoints: [
                             { label: 'Resistance Price',indexLabel: data.resistance_price.toFixed(2).toString(), y: data.resistance_price },
-                            { label: 'Market Close Price',indexLabel: "Market Close Price", y: data.market_close_price },
-                            { label: 'Average Price Midpoint',indexLabel: "Average Price Midpoint", y: data.average_price_midpoint },
-                            { label: 'Support Price',indexLabel: "\u2193 Support Price", y: data.support_price },
+                            { label: 'Market Close Price',indexLabel: data.market_close_price.toFixed(2).toString(), y: data.market_close_price },
+                            { label: 'Average Price Midpoint',indexLabel: data.average_price_midpoint.toFixed(2).toString(), y: data.average_price_midpoint },
+                            { label: 'Support Price',indexLabel: data.support_price.toFixed(2).toString(), y: data.support_price },
                         ]
 
                     }]
