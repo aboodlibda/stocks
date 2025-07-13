@@ -43,6 +43,9 @@
 <div id="stock-section" class="container py-3">
     <div class="d-flex justify-content-between align-items-center">
         <a href="{{ route('select-stock') }}" class="custom-btn btn-analysis text-center title-banner text-decoration-none">الرجوع لشاشة إختيار أسهم المحفظة</a>
+        <div class="text-center">
+            <a class="custom-btn btn-analysis text-center title-banner-2 text-decoration-none">تحليل أداء السهم</a>
+        </div>
         <div class="d-flex align-items-end">
             <table class="header-table">
                 <thead>
@@ -63,9 +66,7 @@
         </div>
         <img src="{{asset('assets/media/dan logo.jpg')}}" alt="الشعار" class="logo-img">
     </div>
-    <div class="text-center">
-        <button class="custom-btn btn-analysis text-center title-banner-2">تحليل أداء السهم</button>
-    </div>
+
     <div id="stock-tables">
         <div class="row">
             <div class="col-lg-3 table-container">
@@ -270,21 +271,13 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="updateDaysModalLabel">Select Number of Days</h5>
-                                        <button type="button" dir="ltr" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <select class="form-select" id="daysSelect">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                            <option value="6">6</option>
-                                            <option value="7">7</option>
-                                            <option value="8">8</option>
-                                            <option value="9">9</option>
-                                            <option value="10">10</option>
-                                        </select>
+                                        <div class="input-group">
+                                            <span class="input-group-text">Days</span>
+                                            <input type="number" class="form-control" id="daysSelect" required min="1" max="100" value="1" style="border-radius: 0;border: 1px solid #4e7bd1">
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -299,7 +292,7 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-4 align-items-center">
+        <div class="row mt-2 align-items-center">
             <div class="col-lg-3">
                 <p class="bg-red p-3 mb-0 title-banner-2">Financial Statements Issuance Dates</p>
             </div>
@@ -324,7 +317,7 @@
         </div>
 
 
-        <div class="row mt-4 align-items-center">
+        <div class="row mt-2 align-items-center">
             <div class="col-lg-3">
                 <p class="bg-red p-2 mb-0 title-banner-2">View Chart Analysis For: </p>
             </div>
@@ -355,15 +348,6 @@
         </div>
     </div>
 
-    <div id="kpi" class="mt-4">
-{{--        <div class="form-group">--}}
-{{--            <label for="">View Chart Analysis For: </label>--}}
-{{--            <select name="chart_type" id="chart_type">--}}
-{{--                <option value="stock_probability">احتماليات توزيع عوائد الأسهم</option>--}}
-{{--                <option value="stock_index">Stock vs. Index Return</option>--}}
-{{--                <option value="support_and_resistance">Support and Resistance Price Level</option>--}}
-{{--            </select>--}}
-{{--        </div>--}}
         <div class="row">
             <div  id="chartDiv1" class="col-lg-12">
                 <div id="chart">
@@ -375,7 +359,6 @@
                 </div>
             </div>
         </div>
-    </div>
 </div>
 
 </body>
@@ -605,14 +588,14 @@
                     },
                     data: [
                         {
-                            type: "line",
+                            type: "column",
                             color: "#0000FF",
                             name: data.company.company_name,
                             showInLegend: true,
                             dataPoints: chartData1
                         },
                         {
-                            type: "line",
+                            type: "column",
                             color: "#FF7F50",
                             name: data.company.index_name,
                             showInLegend: true,
@@ -863,6 +846,47 @@
 
 
 </script>
+
+
+<script>
+    $("#updateDaysBtn").click(function(e){
+        e.preventDefault();
+        var days = $("#daysSelect").val();
+        if(days === ""){
+            alert("Please select number of days");
+            return;
+        }
+        $.ajax({
+            url: "{{route('update-stock-var')}}",
+            type: "GET",
+            dataType: 'json',
+            data: {
+                days: days,
+                company_id: '{{$company->company_id}}'
+            },
+            beforeSend: function() {
+                // Show loading spinner
+                $("#updateDaysModal").append(`
+                                                        <div class="position-absolute fixed-top fixed-bottom fixed-right fixed-left d-flex justify-content-center align-items-center" style="background-color: rgba(0,0,0,0.5); z-index: 10;color: white;">
+                                                        <div class="text-center">
+                                                        <div class="spinner-border" role="status"></div>
+                                                        <div class="mt-3 text-white">Loading...</div></div>
+                                                        </div>
+
+                                                    `);
+            },
+            success: function(response) {
+                if(response.success){
+                    location.reload();
+                }else{
+                    alert(response.message);
+                }
+                $(".position-fixed").remove();
+            }
+        });
+    });
+</script>
+
 
 </html>
 
