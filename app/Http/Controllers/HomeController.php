@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use App\Models\Sector;
 use App\Models\Stock;
-use Illuminate\Support\Facades\DB;
+use PhpOffice\PhpSpreadsheet\Calculation\Statistical\Distributions\Normal;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
 
@@ -233,6 +233,26 @@ class HomeController extends Controller
         return response()->json([
             'prices' => $prices
         ]);
+    }
+
+    public function updateStockVar(Request $request)
+    {
+        $company = Company::query()->where('company_id','=',$request->company_id)->first();
+        $ticker = $company->company_num;
+        $companyRatios = calculateRatiosByCompany($ticker);
+//        0.95 is the Confidence Level
+        $stockVar = Normal::inverse((1 - 0.95), calculateAverage($companyRatios), stdDeviation($companyRatios)) * sqrt($request->days);
+        $company->stock_var_percent = round($stockVar,2);
+        $isSaved = $company->save();
+        if ($isSaved) {
+            return response()->json([
+                'success' => true,
+            ]);
+        }else{
+            return response()->json([
+                'success' => false,
+            ]);
+        }
     }
 
 }
