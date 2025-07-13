@@ -13,6 +13,8 @@ Route::get('/stock-performance', [HomeController::class, 'stockPerformance'])->n
 Route::get('/select-stock', [HomeController::class, 'selectStock'])->name('select-stock');
 Route::get('/stock-analysis', [HomeController::class, 'stockAnalysis'])->name('stock-analysis');
 Route::get('/stock-analysis-screen', [HomeController::class, 'stockAnalysisScreen'])->name('stock-analysis-screen');
+Route::get('/resistance-support', [HomeController::class, 'getResistanceAndSupport'])->name('get-resistance-and-support');
+Route::get('/get-close-prices', [HomeController::class, 'getClosePrices'])->name('get-close-prices');
 
 Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
@@ -32,10 +34,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     Route::get('test_api', [StockController::class,'getApi'])->name('get-api');
     Route::get('execute',function(){
 
+        resistanceSupport(7010);
 //        $ratios = calculateRatiosByCompany(7010);
 //        $binBoundary = binBoundary(7010);
 //        frequency($ratios,$binBoundary);
-        financialRatios(7010);
+//        financialRatios(7010);
 //        riskMeasurementRatios(2222,'TENI');
 //        riskMeasurementRatios(7010,'TTSI');
 //        riskMeasurementRatios(1120,'TBNI');
