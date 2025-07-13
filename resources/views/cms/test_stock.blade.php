@@ -639,7 +639,7 @@
                     animationEnabled: true,
                     theme: "light3",
                     title:{
-                        text: "Chart Analysis of Support and Resistance Price Level - Over Past 10 Days",
+                        text: "Chart Analysis of Support and Resistance Price Level - Over Past 30 Days",
                         fontSize: 18
                     },
                     axisX:{
@@ -650,9 +650,9 @@
                     },
                     axisY: {
                         // title: "Number of Sales",
-                        minimum: 10,
+                        minimum: 0,
                         maximum: 100,
-                        interval: 10,
+                        interval: 5,
                     },
                     toolTip:{
                         shared:true
