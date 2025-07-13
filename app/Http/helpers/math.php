@@ -118,6 +118,42 @@ function calculateRatiosBySector($code): array
 }
 
 
+function resistanceSupport($ticker)
+{
+
+    $company = Company::query()->where('company_num','=',$ticker)->first();
+    $close = $company->close;
+    $stock = Stock::where('ticker', $ticker)->orderBy('date', 'desc')  // Use 'date' if your table has it
+    ->get(['date','adjclose','high','low'])->toArray();
+
+    $stock = array_slice($stock, 0,30);
+
+    $HP = [];
+    $LP = [];
+    $last_trading_close_price = 0;
+    for ($i = 0; $i < 30; $i++) {
+        $HP[] = $stock[$i]['high'];
+        $LP[] = $stock[$i]['low'];
+        if ($i == 29){
+            $last_trading_close_price = $stock[$i]['adjclose'];
+        }
+    }
+
+    $HP_max = getMaximumValue($HP);
+    $LP_min = getMinimumValue($LP);
+
+    $resistance_price = (2 * (( $HP_max + $LP_min + $last_trading_close_price) / 3)) - $LP_min;
+    $support_price = (2 * (( $HP_max + $LP_min + $last_trading_close_price) / 3)) - $HP_max;
+    $average_price_midpoint = ($resistance_price + $support_price) / 2;
+
+    return [
+        'support_price' => $support_price,
+        'average_price_midpoint' => $average_price_midpoint,
+        'market_close_price' => $close,
+        'resistance_price' => $resistance_price,
+    ];
+}
+
 
 function variance(array $numbers): float|int|null
 {
