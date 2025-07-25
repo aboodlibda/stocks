@@ -9,32 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{{asset('assets/css/stock-preformance-style.css')}}">
     <style>
-        .bar-wrapper {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-        }
 
-        .label-text {
-            width: 200px;
-            font-size: 15px;
-        }
-
-        .bar-container {
-            flex: 1;
-            background-color: #f0f0f0;
-            margin-left: 10px;
-        }
-
-        .bar {
-            height: 15px;
-            background-color: #3b6cc0;
-            text-align: right;
-            padding-right: 5px;
-            color: white;
-            font-weight: bold;
-            font-size: 10px;
-        }
     </style>
 </head>
 
@@ -142,12 +117,80 @@
 {{--                            <td class="text-center num-cell"> N/A </td>--}}
 {{--                        </tr>--}}
                         <tr>
-                            <td class="text-center">Stock - Sharp Risk Ratio</td>
+                            <td class="text-center" data-bs-toggle="tooltip" data-bs-placement="right" data-ar="معدل مخاطر السهم" data-en="Stock Risk Ratio"
+                                onclick="showModal(this.getAttribute('data-ar'), this.getAttribute('data-en'))">
+                                <i class="fa fa-info-circle text-primary fs-5"></i>
+                                Stock - Sharp Risk Ratio
+                            </td>
                             <td class="text-center num-cell"> {{number_format($company->stock_sharp_ratio,2)}} </td>
                             <td class="text-center num-cell" id="avg_stock_sharp_ratio"></td>
                         </tr>
                         <tr>
-                            <td class="text-center">Stock Beta Coefficient (β)(Market Sensitivity</td>
+                            <td class="text-center" data-bs-toggle="tooltip" data-bs-placement="right"
+                                data-ar="
+
+                            القيمة الارشادية #9 – حساسية حركة سعر السهم تجاه السوق (معامل بيتا) -Stock Price Sensitivity to Market Movements (Beta Coefficient) :
+
+ معامل بيتا هو مقياس لمدى تقلب (مخاطرة) السهم مقارنةً بالسوق ككل، ويقيس المخاطر النظامية، وهي المخاطر التي تؤثر على السوق بأكمله ولا يمكن التخلص منها عن طريق تنويع المحفظة الاستثمارية — فهي مُتضمَّنة في السوق بطبيعتها، مثل:
+
+                            حالات الركود الاقتصادي
+                            تغيّرات أسعار الفائدة
+                            التضخم
+                            عدم الاستقرار السياسي
+                            الكوارث الطبيعية التي تؤثر على سلاسل الإمداد العالمية
+
+                            معامل بيتا (Beta) هو مقياس يستخدم لتحديد حساسية حركة سعر السهم تجاه حركة السوق ككل. يوضح هذا المعامل كيف يتحرك السهم مقارنةً بتحركات السوق (عادة ما يتم استخدام مؤشر سوق تداول وفقا لقطاعات الصناعات المختلفة للأسهم المتداولة كمؤشر للسوق بشكل عام).
+                            شرح معامل بيتا:
+                            إذا كان بيتا = 1: السهم يتحرك بنفس درجة حركة السوق. بمعنى أنه إذا زاد السوق بنسبة 10%، فمن المتوقع أن يزيد السهم بنفس النسبة (10%).
+                            إذا كان بيتا > 1: السهم أكثر تقلبًا من السوق. مثلاً، إذا كان بيتا للسهم 1.5، فهذا يعني أن السهم متوقع للتحرك بنسبة 15% في نفس الاتجاه عندما يتحرك السوق بنسبة 10%. أي أن السهم يكون أكثر خطورة (أو ربحًا) من السوق.
+                            إذا كان بيتا < 1: السهم أقل تقلبًا من السوق. إذا كان بيتا للسهم 0.5، فهذا يعني أن السهم متوقع للتحرك بنسبة 5% عندما يتحرك السوق بنسبة 10%. أي أن السهم يعتبر أقل خطورة (وأيضًا قد يكون أقل ربحًا) مقارنة بالسوق.
+
+إذا كان بيتا = 0: السهم غير مرتبط بحركة السوق. قد يكون هذا السهم مستقلًا عن تأثيرات السوق العام.
+إذا كان بيتا سالبًا: السهم يتحرك في اتجاه معاكس للسوق. مثلاً، إذا كان بيتا للسهم -1، فهذا يعني أن السهم يتحرك عكس حركة السوق. إذا زاد السوق بنسبة 10%، من المتوقع أن ينخفض السهم بنسبة 10%.
+
+كيفية استخدام معامل بيتا:
+المستثمرون المحافظون قد يفضلون الأسهم ذات البيتا المنخفضة لأنها أقل تقلبًا وبالتالي أقل عرضة للخسائر الكبيرة.
+المستثمرون الباحثون عن النمو قد يفضلون الأسهم ذات البيتا العالية لأن هذه الأسهم تميل إلى تقديم عوائد أعلى، لكنها تحمل أيضًا مخاطر أكبر.
+مثال:
+إذا كان لديك سهم مع بيتا 1.2، فإن ذلك يعني أن السهم يميل للتحرك بنسبة 12% إذا تحرك السوق بنسبة 10%. إذا كان السوق قد ارتفع بنسبة 5%، من المتوقع أن يرتفع السهم بنسبة 6.(5% × 1.2) %
+معامل بيتا هو أداة هامة في تقييم مخاطر الاستثمار لأنه يساعد في مقارنة التقلبات المحتملة للسهم مع تقلبات السوق.
+
+يستخدم المستثمرون معامل بيتا لتقييم المخاطر. تميل الأسهم ذات معامل بيتا المرتفع إلى أن تكون أكثر خطورة لكنها توفر إمكانية تحقيق عوائد أعلى؛ أما الأسهم ذات معامل بيتا المنخفض، فتكون أقل مخاطرة لكنها عادةً ما تحقق عوائد أقل.
+
+                            "
+                                data-en="
+                                Guiding Value #9 – Stock Price Sensitivity to Market Movements (Beta Coefficient):
+
+Beta is a measure of a stock's volatility (risk) compared to the overall market. It measures systematic risk, which is the risk that affects the entire market and cannot be eliminated through portfolio diversification. It is inherent to the market, such as:
+
+Economic recessions
+Changes in interest rates
+Inflation
+Political instability
+Natural disasters that affect global supply chains
+
+Beta is a measure used to determine the sensitivity of a stock's price movement to the overall market. It shows how a stock moves relative to the overall market (the Tadawul All-Industry Index is typically used as an indicator of the overall market).
+Beta Explanation:
+If Beta = 1: The stock moves at the same rate as the overall market. This means that if the market increases by 10%, the stock is expected to increase by the same rate (10%).
+If beta > 1: The stock is more volatile than the market. For example, if a stock's beta is 1.5, it means the stock is expected to move 15% in the same direction when the market moves 10%. This means the stock is riskier (or more profitable) than the market.
+If beta < 1: The stock is less volatile than the market. If a stock's beta is 0.5, it means the stock is expected to move 5% when the market moves 10%. This means the stock is considered less risky (and potentially less profitable) than the market.
+
+If beta = 0: The stock is uncorrelated with market movements. This stock may be independent of the effects of the general market.
+If beta is negative: The stock moves in the opposite direction to the market. For example, if a stock's beta is -1, it means the stock moves in the opposite direction of the market. If the market increases by 10%, the stock is expected to decrease by 10%.
+
+How to Use Beta:
+Conservative investors may prefer stocks with a low beta because they are less volatile and therefore less prone to large losses.
+Growth-seeking investors may prefer stocks with a high beta because these stocks tend to offer higher returns, but they also carry greater risk.
+Example:
+If you have a stock with a beta of 1.2, it means that the stock is expected to move 12% if the market moves 10%. If the market rises 5%, the stock is expected to rise 6.(5% x 1.2)%.
+Beta is an important tool in assessing investment risk because it helps compare a stock's potential volatility with that of the market.
+
+Investors use beta to assess risk. Stocks with a high beta tend to be riskier but offer the potential for higher returns; stocks with a low beta are less risky but typically offer lower returns.
+                                "
+                                onclick="showModal(this.getAttribute('data-ar'), this.getAttribute('data-en'))">
+                                <i class="fa fa-info-circle text-primary fs-5"></i>
+
+                                Stock Beta Coefficient (β)(Market Sensitivity</td>
                             <td class="text-center num-cell"> {{number_format($company->stock_beta_coefficient,2)}} </td>
                             <td class="text-center num-cell" id="avg_stock_beta_coefficient"></td>
                         </tr>
@@ -359,6 +402,23 @@
                 </div>
             </div>
         </div>
+
+    <div class="modal fade" id="toolTipModal" tabindex="-1" aria-labelledby="toolTipModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="max-width: 800px;width: 800px">
+                <div class="modal-header justify-content-center w-100">
+                    <h5 class="modal-title modal-title position-absolute start-50 translate-middle-x" id="toolTipModalLabel">Description</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <button type="button" class="btn btn-primary" onclick="showTranslation('ar')">arabic</button>
+                    <button type="button" class="btn btn-primary" onclick="showTranslation('en')">english</button>
+                    <div id="translationText" class="mt-3" ></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 </body>
@@ -367,6 +427,21 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="https://cdn.canvasjs.com/jquery.canvasjs.min.js"></script>
 
+<script>
+    function showModal(ar, en) {
+        $('#toolTipModal').modal('show');
+        window.translationData = { ar, en };
+        // showTranslation('en');
+    }
+    $('#toolTipModal').on('hidden.bs.modal', function (e) {
+        $('#translationText').text('');
+    });
+
+    function showTranslation(language) {
+        const text = window.translationData[language];
+        document.getElementById('translationText').innerText = text;
+    }
+</script>
 <script>
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -475,15 +550,15 @@
                 chart.html('');
 
                 const values = Object.values(data.frequency);
+                const binBoundary = Object.values(data.binBoundary);
                 var dataPointsArray = {
                     var_t: values,
-                    bin_boundaries: [0.13, 0.00, 0.13, 0.13, 0.53, 0.40, 2.54, 3.07, 6.54, 12.95, 18.56, 22.43, 15.62, 6.94, 4.27, 3.07, 1.20, 0.53, 0.13, 0.27, 0.00, 0.00,
-                        0.00, 0.13, 0.00, 0.00, 0.00, 0.00]
+                    bin_boundaries: binBoundary
                 };
 
                 var bin_boundaries = dataPointsArray.bin_boundaries;
                 var chartData = dataPointsArray.var_t.map(function(value, index) {
-                    return { y: value * 100, label: (bin_boundaries[index] * 100).toFixed(1) + "%" };
+                    return { y: value * 0.1 , label: (parseFloat(bin_boundaries[index]) ? bin_boundaries[index].toFixed(2)  : 0) + "%" };
                 });
 
                 var options = {
@@ -557,17 +632,20 @@
                 };
 
                 var chartData1 = dataPointsArray.log_array1.map((value, index) => ({
-                    y: value * 100,
+                    y: value ,
                     label: index.toString()
                 }));
 
                 var chartData2 = dataPointsArray.log_array2.map((value, index) => ({
-                    y: value * 100,
+                    y: value ,
                     label: index.toString()
                 }));
 
                 var chartOptions = {
-                    title: {},
+                    title:{
+                        text: "Stock vs. Index Chart - Daily Return Based on Last 6 Months Historical Data",
+                        fontSize: 18
+                    },
                     axisX: {
                         labelAngle: -45,
                         // interval: 10,
@@ -628,7 +706,16 @@
                 chart.html('<div class="text-center"><div class="spinner-border" role="status"></div><div class="mt-3">Loading...</div></div>');
             },
             success: function(data) {
-                console.log(data)
+var values = [
+    data.support_price,
+    data.average_price_midpoint,
+    data.market_close_price,
+    data.resistance_price
+];
+
+var max = Math.max.apply(null, values);
+var min = Math.min.apply(null, values);
+                console.log(max)
 
                 document.getElementById("chartDiv1").classList.remove("col-lg-12");
                 document.getElementById("chartDiv1").classList.add("col-lg-6");
@@ -650,9 +737,9 @@
                     },
                     axisY: {
                         // title: "Number of Sales",
-                        minimum: 0,
-                        maximum: 100,
-                        interval: 5,
+                        minimum: min - 2,
+                        maximum: max + 2,
+                        interval: 2,
                     },
                     toolTip:{
                         shared:true
@@ -744,9 +831,9 @@
                 chart.html('<div class="text-center"><div class="spinner-border" role="status"></div><div class="mt-3">Loading...</div></div>');
             },
             success: function(data) {
+                console.log(data.prices);
                 var max = Math.max.apply(null, data.prices);
                 var min = Math.min.apply(null, data.prices);
-
                 // document.getElementById("chartDiv1").classList.remove("col-lg-12");
                 // document.getElementById("chartDiv1").classList.add("col-lg-6");
                 document.getElementById("lastChart").classList.remove("d-none");
@@ -762,14 +849,15 @@
                     },
                     axisX:{
                         title: "",
-                        labelAngle: -0,
+                        labelAngle: -90,
                         interval: 1,
                         labelFontSize: 10
                     },
                     axisY: {
                         // title: "Number of Sales",
-                        minimum: min,
-                        maximum: max,
+                        minimum: min-2,
+                        maximum: max+2,
+                        interval: 2,
                         labelFontSize: 10
                     },
                     toolTip:{
@@ -784,13 +872,13 @@
                     data: [{
                         type: "line",
                         showInLegend: true,
-                        name: "Closing Price",
+                        name: "",
                         markerType: "none",
-                        // xValueFormatString: "DD MMM, YYYY",
+                        xValueFormatString: "DD MMM, YYYY",
                         color: "#4e7bd1",
                         // yValueFormatString: "#,##0K",
                         dataPoints: data.prices.map((price, index) => ({
-                            x: index + 1,
+                            label: new Date(data.dates[index < 30 ? index : 29]).toLocaleDateString('en-GB'),
                             y: parseFloat(price)
                         }))
 
