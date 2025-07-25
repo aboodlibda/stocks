@@ -161,7 +161,8 @@ class HomeController extends Controller
         $company_ratios = calculateRatiosByCompany($company->company_num);
         $sector_ratios = calculateRatiosBySector($company->index_symbol);
 
-        $sector_ratios = array_slice($sector_ratios, 0,count($company_ratios));
+        $sector_ratios = array_slice($sector_ratios, 0,180);
+        $company_ratios = array_slice($company_ratios, 0,180);
 
         $binBoundary = binBoundary($company->company_num);
         $frequency = frequency($company_ratios,$binBoundary);
@@ -170,6 +171,7 @@ class HomeController extends Controller
             'frequency' => $frequency,
             'company_ratios' => $company_ratios,
             'sector_ratios' => $sector_ratios,
+            'binBoundary' => $binBoundary
         ]);
     }
 
@@ -223,15 +225,16 @@ class HomeController extends Controller
     public function getClosePrices(Request $request)
     {
         $ticker = $request->query('ticker');
-        $prices = Stock::where('ticker', $ticker)
+        $stocks = Stock::where('ticker', $ticker)
             ->orderBy('date', 'desc')
             ->limit(30)
-            ->get(['adjclose'])
-            ->pluck('adjclose')
-            ->toArray();
+            ->get(['adjclose','date']);
 
+        $x = $stocks->pluck('date')->toArray();
+//        dd($x);
         return response()->json([
-            'prices' => $prices
+            'prices' => $stocks->pluck('adjclose')->toArray(),
+            'dates' => $stocks->pluck('date')->toArray()
         ]);
     }
 
