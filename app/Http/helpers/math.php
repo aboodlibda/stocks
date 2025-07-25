@@ -124,7 +124,7 @@ function resistanceSupport($ticker)
     $company = Company::query()->where('company_num','=',$ticker)->first();
     $close = $company->close;
     $stock = Stock::where('ticker', $ticker)->orderBy('date', 'desc')  // Use 'date' if your table has it
-    ->get(['date','adjclose','high','low'])->toArray();
+    ->get(['date','close','high','low'])->toArray();
 
     $stock = array_slice($stock, 0,30);
 
@@ -135,7 +135,7 @@ function resistanceSupport($ticker)
         $HP[] = $stock[$i]['high'];
         $LP[] = $stock[$i]['low'];
         if ($i == 29){
-            $last_trading_close_price = $stock[$i]['adjclose'];
+            $last_trading_close_price = $stock[$i]['close'];
         }
     }
 
