@@ -117,8 +117,9 @@
 {{--                            <td class="text-center num-cell"> N/A </td>--}}
 {{--                        </tr>--}}
                         <tr>
-                            <td class="text-center" data-bs-toggle="tooltip" data-bs-placement="right" data-ar="معدل مخاطر السهم" data-en="Stock Risk Ratio"
-                                onclick="showModal(this.getAttribute('data-ar'), this.getAttribute('data-en'))">
+                            <td class="text-center" data-bs-toggle="tooltip" data-bs-placement="right"
+                                data-key="beta_coefficient"
+                                onclick="showTooltipFromKey(this)">
                                 <i class="fa fa-info-circle text-primary fs-5"></i>
                                 Stock - Sharp Risk Ratio
                             </td>
@@ -127,69 +128,9 @@
                         </tr>
                         <tr>
                             <td class="text-center" data-bs-toggle="tooltip" data-bs-placement="right"
-                                data-ar="
-
-                            القيمة الارشادية #9 – حساسية حركة سعر السهم تجاه السوق (معامل بيتا) -Stock Price Sensitivity to Market Movements (Beta Coefficient) :
-
- معامل بيتا هو مقياس لمدى تقلب (مخاطرة) السهم مقارنةً بالسوق ككل، ويقيس المخاطر النظامية، وهي المخاطر التي تؤثر على السوق بأكمله ولا يمكن التخلص منها عن طريق تنويع المحفظة الاستثمارية — فهي مُتضمَّنة في السوق بطبيعتها، مثل:
-
-                            حالات الركود الاقتصادي
-                            تغيّرات أسعار الفائدة
-                            التضخم
-                            عدم الاستقرار السياسي
-                            الكوارث الطبيعية التي تؤثر على سلاسل الإمداد العالمية
-
-                            معامل بيتا (Beta) هو مقياس يستخدم لتحديد حساسية حركة سعر السهم تجاه حركة السوق ككل. يوضح هذا المعامل كيف يتحرك السهم مقارنةً بتحركات السوق (عادة ما يتم استخدام مؤشر سوق تداول وفقا لقطاعات الصناعات المختلفة للأسهم المتداولة كمؤشر للسوق بشكل عام).
-                            شرح معامل بيتا:
-                            إذا كان بيتا = 1: السهم يتحرك بنفس درجة حركة السوق. بمعنى أنه إذا زاد السوق بنسبة 10%، فمن المتوقع أن يزيد السهم بنفس النسبة (10%).
-                            إذا كان بيتا > 1: السهم أكثر تقلبًا من السوق. مثلاً، إذا كان بيتا للسهم 1.5، فهذا يعني أن السهم متوقع للتحرك بنسبة 15% في نفس الاتجاه عندما يتحرك السوق بنسبة 10%. أي أن السهم يكون أكثر خطورة (أو ربحًا) من السوق.
-                            إذا كان بيتا < 1: السهم أقل تقلبًا من السوق. إذا كان بيتا للسهم 0.5، فهذا يعني أن السهم متوقع للتحرك بنسبة 5% عندما يتحرك السوق بنسبة 10%. أي أن السهم يعتبر أقل خطورة (وأيضًا قد يكون أقل ربحًا) مقارنة بالسوق.
-
-إذا كان بيتا = 0: السهم غير مرتبط بحركة السوق. قد يكون هذا السهم مستقلًا عن تأثيرات السوق العام.
-إذا كان بيتا سالبًا: السهم يتحرك في اتجاه معاكس للسوق. مثلاً، إذا كان بيتا للسهم -1، فهذا يعني أن السهم يتحرك عكس حركة السوق. إذا زاد السوق بنسبة 10%، من المتوقع أن ينخفض السهم بنسبة 10%.
-
-كيفية استخدام معامل بيتا:
-المستثمرون المحافظون قد يفضلون الأسهم ذات البيتا المنخفضة لأنها أقل تقلبًا وبالتالي أقل عرضة للخسائر الكبيرة.
-المستثمرون الباحثون عن النمو قد يفضلون الأسهم ذات البيتا العالية لأن هذه الأسهم تميل إلى تقديم عوائد أعلى، لكنها تحمل أيضًا مخاطر أكبر.
-مثال:
-إذا كان لديك سهم مع بيتا 1.2، فإن ذلك يعني أن السهم يميل للتحرك بنسبة 12% إذا تحرك السوق بنسبة 10%. إذا كان السوق قد ارتفع بنسبة 5%، من المتوقع أن يرتفع السهم بنسبة 6.(5% × 1.2) %
-معامل بيتا هو أداة هامة في تقييم مخاطر الاستثمار لأنه يساعد في مقارنة التقلبات المحتملة للسهم مع تقلبات السوق.
-
-يستخدم المستثمرون معامل بيتا لتقييم المخاطر. تميل الأسهم ذات معامل بيتا المرتفع إلى أن تكون أكثر خطورة لكنها توفر إمكانية تحقيق عوائد أعلى؛ أما الأسهم ذات معامل بيتا المنخفض، فتكون أقل مخاطرة لكنها عادةً ما تحقق عوائد أقل.
-
-                            "
-                                data-en="
-                                Guiding Value #9 – Stock Price Sensitivity to Market Movements (Beta Coefficient):
-
-Beta is a measure of a stock's volatility (risk) compared to the overall market. It measures systematic risk, which is the risk that affects the entire market and cannot be eliminated through portfolio diversification. It is inherent to the market, such as:
-
-Economic recessions
-Changes in interest rates
-Inflation
-Political instability
-Natural disasters that affect global supply chains
-
-Beta is a measure used to determine the sensitivity of a stock's price movement to the overall market. It shows how a stock moves relative to the overall market (the Tadawul All-Industry Index is typically used as an indicator of the overall market).
-Beta Explanation:
-If Beta = 1: The stock moves at the same rate as the overall market. This means that if the market increases by 10%, the stock is expected to increase by the same rate (10%).
-If beta > 1: The stock is more volatile than the market. For example, if a stock's beta is 1.5, it means the stock is expected to move 15% in the same direction when the market moves 10%. This means the stock is riskier (or more profitable) than the market.
-If beta < 1: The stock is less volatile than the market. If a stock's beta is 0.5, it means the stock is expected to move 5% when the market moves 10%. This means the stock is considered less risky (and potentially less profitable) than the market.
-
-If beta = 0: The stock is uncorrelated with market movements. This stock may be independent of the effects of the general market.
-If beta is negative: The stock moves in the opposite direction to the market. For example, if a stock's beta is -1, it means the stock moves in the opposite direction of the market. If the market increases by 10%, the stock is expected to decrease by 10%.
-
-How to Use Beta:
-Conservative investors may prefer stocks with a low beta because they are less volatile and therefore less prone to large losses.
-Growth-seeking investors may prefer stocks with a high beta because these stocks tend to offer higher returns, but they also carry greater risk.
-Example:
-If you have a stock with a beta of 1.2, it means that the stock is expected to move 12% if the market moves 10%. If the market rises 5%, the stock is expected to rise 6.(5% x 1.2)%.
-Beta is an important tool in assessing investment risk because it helps compare a stock's potential volatility with that of the market.
-
-Investors use beta to assess risk. Stocks with a high beta tend to be riskier but offer the potential for higher returns; stocks with a low beta are less risky but typically offer lower returns.
-                                "
-                                onclick="showModal(this.getAttribute('data-ar'), this.getAttribute('data-en'))">
+                                data-key="sharp_risk_ratio"
+                                onclick="showTooltipFromKey(this)">
                                 <i class="fa fa-info-circle text-primary fs-5"></i>
-
                                 Stock Beta Coefficient (β)(Market Sensitivity</td>
                             <td class="text-center num-cell"> {{number_format($company->stock_beta_coefficient,2)}} </td>
                             <td class="text-center num-cell" id="avg_stock_beta_coefficient"></td>
@@ -231,37 +172,61 @@ Investors use beta to assess risk. Stocks with a high beta tend to be riskier bu
 
 
                         <tr>
-                            <td class="text-center ">P/E Ratio</td>
+                            <td class="text-center" data-bs-toggle="tooltip" data-bs-placement="right"
+                                data-key="p_e_ratio"
+                                onclick="showTooltipFromKey(this)">
+                                <i class="fa fa-info-circle text-primary fs-5"></i>
+                                P/E Ratio</td>
                             <td class="text-center num-cell "> {{number_format($company->pe_ratio,2)}} </td>
                             <td class="text-center num-cell "> {{number_format($company->pe_ratio,2)}} </td>
                         </tr>
                         <tr>
-                            <td class="text-center ">Market to Book Ratio</td>
+                            <td class="text-center" data-bs-toggle="tooltip" data-bs-placement="right"
+                                data-key="market_to_book_ratio"
+                                onclick="showTooltipFromKey(this)">
+                                <i class="fa fa-info-circle text-primary fs-5"></i>
+                                Market to Book Ratio</td>
                             <td class="text-center num-cell "> {{number_format($company->market_to_book_ratio,2)}} </td>
                             <td class="text-center num-cell "> {{number_format($company->market_to_book_ratio,2)}} </td>
                         </tr>
                         <tr>
-                            <td class="text-center ">Free Cash Flow Yield</td>
+                            <td class="text-center" data-bs-toggle="tooltip" data-bs-placement="right"
+                                data-key="free_cash_flow_yield"
+                                onclick="showTooltipFromKey(this)">
+                                <i class="fa fa-info-circle text-primary fs-5"></i>
+                                Free Cash Flow Yield</td>
                             <td class="text-center num-cell "> {{number_format($company->free_cash_flow_yield,2)}} </td>
                             <td class="text-center num-cell "> {{number_format($company->free_cash_flow_yield,2)}} </td>
                         </tr>
                         <tr>
-                            <td class="text-center ">Leverage Ratio</td>
+                            <td class="text-center" >Leverage Ratio</td>
                             <td class="text-center num-cell "> {{number_format($company->leverage_ratio,2)}} </td>
                             <td class="text-center num-cell "> {{number_format($company->leverage_ratio,2)}} </td>
                         </tr>
                         <tr>
-                            <td class="text-center ">Return on Equity</td>
+                            <td class="text-center" data-bs-toggle="tooltip" data-bs-placement="right"
+                                data-key="return_on_equity"
+                                onclick="showTooltipFromKey(this)">
+                                <i class="fa fa-info-circle text-primary fs-5"></i>
+                                Return on Equity</td>
                             <td class="text-center num-cell "> {{number_format($company->return_on_equity,2)}} </td>
                             <td class="text-center num-cell "> {{number_format($company->return_on_equity,2)}} </td>
                         </tr>
                         <tr>
-                            <td class="text-center">Stock Dividend Yield</td>
+                            <td class="text-center" data-bs-toggle="tooltip" data-bs-placement="right"
+                                data-key="dividend_yield"
+                                onclick="showTooltipFromKey(this)">
+                                <i class="fa fa-info-circle text-primary fs-5"></i>
+                                Stock Dividend Yield</td>
                             <td class="text-center num-cell "> {{number_format($company->stock_dividend_yield,2)}} </td>
                             <td class="text-center num-cell "> {{number_format($company->stock_dividend_yield,2)}} </td>
                         </tr>
                         <tr>
-                            <td class="text-center">Earning Per Share</td>
+                            <td class="text-center" data-bs-toggle="tooltip" data-bs-placement="right"
+                                data-key="earning_per_share"
+                                onclick="showTooltipFromKey(this)">
+                                <i class="fa fa-info-circle text-primary fs-5"></i>
+                                Earning Per Share</td>
                             <td class="text-center num-cell "> {{number_format($company->earning_per_share,2)}} </td>
                             <td class="text-center num-cell "> {{number_format($company->earning_per_share,2)}} </td>
                         </tr>
@@ -298,7 +263,11 @@ Investors use beta to assess risk. Stocks with a high beta tend to be riskier bu
                     <table class="table table-bordered mb-0">
                         <tbody>
                         <tr>
-                            <td class="text-center bg-blue-2">Stock Value at Risk (VaR %)</td>
+                            <td class="text-center bg-blue-2" data-bs-toggle="tooltip" data-bs-placement="right"
+                                data-key="value_at_risk"
+                                onclick="showTooltipFromKey(this)">
+                                <i class="fa fa-info-circle text-primary fs-5"></i>
+                                Stock Value at Risk (VaR %)</td>
                             <td class="text-center num-cell" style="font-size: 13px"> {{number_format($company->stock_var_percent,2)}} </td>
                             <td class="text-center  bg-blue"> <span>1</span> </td>
                             <td class="text-center num-cell">
@@ -405,7 +374,7 @@ Investors use beta to assess risk. Stocks with a high beta tend to be riskier bu
 
     <div class="modal fade" id="toolTipModal" tabindex="-1" aria-labelledby="toolTipModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content" style="max-width: 800px;width: 800px">
+            <div class="modal-content justify-content-center w-800" style="max-width: 800px;width: 800px">
                 <div class="modal-header justify-content-center w-100">
                     <h5 class="modal-title modal-title position-absolute start-50 translate-middle-x" id="toolTipModalLabel">Description</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -426,14 +395,19 @@ Investors use beta to assess risk. Stocks with a high beta tend to be riskier bu
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="https://cdn.canvasjs.com/jquery.canvasjs.min.js"></script>
+<script src="{{asset('assets/js/tooltip-content.js')}}"></script>
+
+
 
 <script>
+    var modal = $('#toolTipModal');
+
     function showModal(ar, en) {
-        $('#toolTipModal').modal('show');
+        modal.modal('show');
         window.translationData = { ar, en };
-        // showTranslation('en');
+        showTranslation("ar");
     }
-    $('#toolTipModal').on('hidden.bs.modal', function (e) {
+    modal.on('hidden.bs.modal', function (e) {
         $('#translationText').text('');
     });
 
@@ -441,7 +415,24 @@ Investors use beta to assess risk. Stocks with a high beta tend to be riskier bu
         const text = window.translationData[language];
         document.getElementById('translationText').innerText = text;
     }
+
+
+
+
+    function showTooltipFromKey(element) {
+        const key = element.getAttribute('data-key');
+        const content = window.tooltipContent[key];
+
+        if (!content) {
+            console.warn(`No tooltip content found for key: ${key}`);
+            return;
+        }
+
+        showModal(content.ar, content.en); // Your existing modal function
+    }
 </script>
+
+
 <script>
 
     document.addEventListener('DOMContentLoaded', function() {
