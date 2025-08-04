@@ -405,7 +405,7 @@
     function showModal(ar, en) {
         modal.modal('show');
         window.translationData = { ar, en };
-        showTranslation('en');
+        showTranslation("ar");
     }
     modal.on('hidden.bs.modal', function (e) {
         $('#translationText').text('');
@@ -822,9 +822,10 @@ var min = Math.min.apply(null, values);
                 chart.html('<div class="text-center"><div class="spinner-border" role="status"></div><div class="mt-3">Loading...</div></div>');
             },
             success: function(data) {
-                console.log(data.prices);
                 var max = Math.max.apply(null, data.prices);
                 var min = Math.min.apply(null, data.prices);
+                console.log("min : " . min)
+
                 // document.getElementById("chartDiv1").classList.remove("col-lg-12");
                 // document.getElementById("chartDiv1").classList.add("col-lg-6");
                 document.getElementById("lastChart").classList.remove("d-none");
@@ -835,21 +836,23 @@ var min = Math.min.apply(null, values);
                     animationEnabled: true,
                     theme: "light3",
                     title:{
-                        text: "Stock Price Performance Over Past 30 Days",
+                        text: "Stock Price () Performance Over Past 30 Days",
                         fontSize: 18
                     },
                     axisX:{
                         title: "",
-                        labelAngle: -90,
+                        labelAngle: -60,
                         interval: 1,
                         labelFontSize: 10
                     },
                     axisY: {
                         // title: "Number of Sales",
-                        minimum: min-2,
-                        maximum: max+2,
-                        interval: 2,
-                        labelFontSize: 10
+                        minimum: min - data.binRange,
+                        maximum: max + data.binRange,
+                        interval: data.binRange,
+                        labelFontSize: 10,
+                        labelFontStyle: "bold",
+                        // valueFormatString: "DD MMM"
                     },
                     toolTip:{
                         shared:true
@@ -869,7 +872,7 @@ var min = Math.min.apply(null, values);
                         color: "#4e7bd1",
                         // yValueFormatString: "#,##0K",
                         dataPoints: data.prices.map((price, index) => ({
-                            label: new Date(data.dates[index < 30 ? index : 29]).toLocaleDateString('en-GB'),
+                            label: new Date(data.dates[index < 30 ? index : 29]).toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }),
                             y: parseFloat(price)
                         }))
 
