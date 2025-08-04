@@ -235,7 +235,7 @@ class HomeController extends Controller
         $min = getMinimumValue($stocks->pluck('low')->toArray());
         $max_min = $max - $min;
         $numberOfBin = round(sqrt(30));
-        $binRange = round($max_min / $numberOfBin);
+        $binRange = roundup($max_min / $numberOfBin);
 //        dd($binRange);
         return response()->json([
             'prices' => $stocks->pluck('close')->toArray(),
