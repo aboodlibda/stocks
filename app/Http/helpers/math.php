@@ -614,14 +614,14 @@ function numberOfBin($ticker): int {
     return (int) ceil(sqrt($nonEmptyCount));
 }
 
-//function binRange($ticker)
-//{
-//    $ratios = calculateRatiosByCompany($ticker);
-//    $min = getMinimumValue($ratios);
-//    $max = getMaximumValue($ratios);
-//    $max_min = $max - $min;
-//    return $max_min / numberOfBin(7010) ;
-//}
+function binRange($ticker)
+{
+    $ratios = calculateRatiosByCompany($ticker);
+    $min = getMinimumValue($ratios);
+    $max = getMaximumValue($ratios);
+    $max_min = $max - $min;
+    return $max_min / numberOfBin(7010) ;
+}
 
 function binBoundary($ticker)
 {
