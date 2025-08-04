@@ -135,7 +135,7 @@ function resistanceSupport($ticker)
         $HP[] = $stock[$i]['high'];
         $LP[] = $stock[$i]['low'];
         if ($i == 29){
-            $last_trading_close_price = $stock[$i]['adjclose'];
+            $last_trading_close_price = $stock[$i]['close'];
         }
     }
 
@@ -610,18 +610,19 @@ function numberOfBin($ticker): int {
         return $v !== null && $v !== '';
     }));
 
+    dd((int) ceil(sqrt($nonEmptyCount)));
     // Square root and round up
     return (int) ceil(sqrt($nonEmptyCount));
 }
 
-//function binRange($ticker)
-//{
-//    $ratios = calculateRatiosByCompany($ticker);
-//    $min = getMinimumValue($ratios);
-//    $max = getMaximumValue($ratios);
-//    $max_min = $max - $min;
-//    return $max_min / numberOfBin(7010) ;
-//}
+function binRange($ticker)
+{
+    $ratios = calculateRatiosByCompany($ticker);
+    $min = getMinimumValue($ratios);
+    $max = getMaximumValue($ratios);
+    $max_min = $max - $min;
+    return $max_min / numberOfBin(7010) ;
+}
 
 function binBoundary($ticker)
 {
@@ -681,3 +682,5 @@ function normalizeF3Value($dashboardF3, $f3, array $columnA): string|float {
 
     return $f3 / $nonEmptyCount;
 }
+
+
