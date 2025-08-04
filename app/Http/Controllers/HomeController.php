@@ -8,6 +8,7 @@ use App\Models\Stock;
 use PhpOffice\PhpSpreadsheet\Calculation\Statistical\Distributions\Normal;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
+use function Psy\bin;
 
 class HomeController extends Controller
 {
@@ -228,13 +229,18 @@ class HomeController extends Controller
         $stocks = Stock::where('ticker', $ticker)
             ->orderBy('date', 'desc')
             ->limit(30)
-            ->get(['adjclose','date']);
+            ->get(['close','date','high','low']);
 
-        $x = $stocks->pluck('date')->toArray();
-//        dd($x);
+        $max = getMaximumValue($stocks->pluck('high')->toArray());
+        $min = getMinimumValue($stocks->pluck('low')->toArray());
+        $max_min = $max - $min;
+        $numberOfBin = round(sqrt(30));
+        $binRange = round($max_min / $numberOfBin);
+//        dd($binRange);
         return response()->json([
-            'prices' => $stocks->pluck('adjclose')->toArray(),
-            'dates' => $stocks->pluck('date')->toArray()
+            'prices' => $stocks->pluck('close')->toArray(),
+            'dates' => $stocks->pluck('date')->toArray(),
+            'binRange' => $binRange
         ]);
     }
 
