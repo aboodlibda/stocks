@@ -35,7 +35,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     Route::get('test_api', [StockController::class,'getApi'])->name('get-api');
     Route::get('execute',function(){
 
-        resistanceSupport(7010);
+        numberOfBin(7010);
 //        $ratios = calculateRatiosByCompany(7010);
 //        $binBoundary = binBoundary(7010);
 //        frequency($ratios,$binBoundary);
