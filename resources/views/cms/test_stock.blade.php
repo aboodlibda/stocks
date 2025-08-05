@@ -728,9 +728,9 @@ var min = Math.min.apply(null, values);
                     },
                     axisY: {
                         // title: "Number of Sales",
-                        minimum: min - 2,
-                        maximum: max + 2,
-                        interval: 2,
+                        minimum: min - data.binRange,
+                        maximum: max + data.binRange,
+                        interval: data.binRange,
                     },
                     toolTip:{
                         shared:true
@@ -744,7 +744,7 @@ var min = Math.min.apply(null, values);
                     data: [{
                         type: "line",
                         showInLegend: true,
-                        name: "Support and Resistance",
+                        name: "",
                         markerType: "square",
                         // xValueFormatString: "DD MMM, YYYY",
                         color: "#4e7bd1",
@@ -752,7 +752,7 @@ var min = Math.min.apply(null, values);
                         dataPoints: [
                             { label: 'Resistance Price',indexLabel: data.resistance_price.toFixed(2).toString(), y: data.resistance_price },
                             { label: 'Market Close Price',indexLabel: data.market_close_price.toFixed(2).toString(), y: data.market_close_price },
-                            { label: 'Average Price Midpoint',indexLabel: data.average_price_midpoint.toFixed(2).toString(), y: data.average_price_midpoint },
+                            { label: 'Price Midpoint',indexLabel: data.average_price_midpoint.toFixed(2).toString(), y: data.average_price_midpoint },
                             { label: 'Support Price',indexLabel: data.support_price.toFixed(2).toString(), y: data.support_price },
                         ]
 
