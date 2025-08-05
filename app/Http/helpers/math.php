@@ -134,7 +134,7 @@ function resistanceSupport($ticker)
     for ($i = 0; $i < 30; $i++) {
         $HP[] = $stock[$i]['high'];
         $LP[] = $stock[$i]['low'];
-        if ($i == 29){
+        if ($i == 0){
             $last_trading_close_price = $stock[$i]['close'];
         }
     }
@@ -146,11 +146,15 @@ function resistanceSupport($ticker)
     $support_price = (2 * (( $HP_max + $LP_min + $last_trading_close_price) / 3)) - $HP_max;
     $average_price_midpoint = ($resistance_price + $support_price) / 2;
 
+    $max_min = round($resistance_price - $support_price);
+    $numberOfBin = sqrt(30);
+    $binRange = roundup($max_min / $numberOfBin);
     return [
         'support_price' => $support_price,
         'average_price_midpoint' => $average_price_midpoint,
         'market_close_price' => $close,
         'resistance_price' => $resistance_price,
+        'binRange' => $binRange
     ];
 }
 
