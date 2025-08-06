@@ -724,13 +724,16 @@ var min = Math.min.apply(null, values);
                         title: "",
                         labelAngle: -0,
                         interval: 1,
-                        labelFontSize: 10
+                        labelFontSize: 15,
+                        labelFontStyle: "bold"
                     },
                     axisY: {
                         // title: "Number of Sales",
                         minimum: min - data.binRange,
                         maximum: max + data.binRange,
                         interval: data.binRange,
+                        labelFontSize: 15,
+                        labelFontStyle: "bold"
                     },
                     toolTip:{
                         shared:true
@@ -843,14 +846,16 @@ var min = Math.min.apply(null, values);
                         title: "",
                         labelAngle: -60,
                         interval: 1,
-                        labelFontSize: 10
+                        labelFontSize: 15,
+                        labelFontStyle: "bold",
+
                     },
                     axisY: {
                         // title: "Number of Sales",
                         minimum: min - data.binRange,
                         maximum: max + data.binRange,
                         interval: data.binRange,
-                        labelFontSize: 10,
+                        labelFontSize: 15,
                         labelFontStyle: "bold",
                         // valueFormatString: "DD MMM"
                     },
