@@ -229,8 +229,15 @@ class HomeController extends Controller
         $stocks = Stock::where('ticker', $ticker)
             ->orderBy('date', 'desc')
             ->limit(30)
-            ->get(['close','date','high','low']);
+            ->get(['adjclose','date','high','low']);
 
+        $dates = array_reverse($stocks->pluck('date')->toArray());
+        $prices = array_reverse($stocks->pluck('adjclose')->toArray());
+
+//        foreach ($dates as $key => $price) {
+//            echo $price . '<br>';
+//        }
+//        dd(count($prices));
         $max = getMaximumValue($stocks->pluck('high')->toArray());
         $min = getMinimumValue($stocks->pluck('low')->toArray());
         $max_min = $max - $min;
@@ -238,8 +245,8 @@ class HomeController extends Controller
         $binRange = roundup($max_min / $numberOfBin);
 //        dd($binRange);
         return response()->json([
-            'prices' => $stocks->pluck('close')->toArray(),
-            'dates' => $stocks->pluck('date')->toArray(),
+            'prices' => $prices,
+            'dates' => $dates,
             'binRange' => $binRange
         ]);
     }
