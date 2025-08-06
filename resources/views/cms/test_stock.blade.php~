@@ -744,7 +744,7 @@ var min = Math.min.apply(null, values);
                     data: [{
                         type: "line",
                         showInLegend: true,
-                        name: "Support and Resistance",
+                        name: "",
                         markerType: "square",
                         // xValueFormatString: "DD MMM, YYYY",
                         color: "#4e7bd1",
@@ -843,14 +843,16 @@ var min = Math.min.apply(null, values);
                         title: "",
                         labelAngle: -60,
                         interval: 1,
-                        labelFontSize: 10
+                        labelFontSize: 15,
+                        labelFontStyle: "bold",
+
                     },
                     axisY: {
                         // title: "Number of Sales",
                         minimum: min - data.binRange,
                         maximum: max + data.binRange,
                         interval: data.binRange,
-                        labelFontSize: 10,
+                        labelFontSize: 15,
                         labelFontStyle: "bold",
                         // valueFormatString: "DD MMM"
                     },
