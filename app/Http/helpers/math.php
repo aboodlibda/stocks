@@ -369,28 +369,38 @@ function financialRatios($ticker): array
     $sdate = '2023-09-12';
     $edate = '2024-09-13';
 
-
     try {
-
         $summaryProfileUrl = "https://yh-finance-complete.p.rapidapi.com/summaryprofile?symbol=$ticker.SR";
         $summaryProfile = fetchStockDataFromAPI($summaryProfileUrl);
-//    null
+    } catch (\Throwable $e) {
+        echo "Error fetching summary profile for $ticker: " . $e->getMessage() . PHP_EOL;
+        $summaryProfile = null;
+    }
 
+    try {
         $defaultKeyStatisticsUrl = "https://yh-finance-complete.p.rapidapi.com/defaultKeyStatistics?symbol=$ticker.SR";
         $defaultKeyStatistics = fetchDataFromAPI($defaultKeyStatisticsUrl);
-//    "Error: 50"
+    } catch (\Throwable $e) {
+        echo "Error fetching key statistics for $ticker: " . $e->getMessage() . PHP_EOL;
+        $defaultKeyStatistics = null;
+    }
 
+    try {
         $financialsUrl = "https://yh-finance-complete.p.rapidapi.com/financials?symbol=$ticker.SR";
         $financials = fetchDataFromAPI($financialsUrl);
-//    "Error: 50"
+    } catch (\Throwable $e) {
+        echo "Error fetching financials for $ticker: " . $e->getMessage() . PHP_EOL;
+        $financials = null;
+    }
 
+    try {
         $stockOptionsUrl = "https://yh-finance-complete.p.rapidapi.com/stockOptions?ticker=$ticker.SR";
         $stockOptions = fetchDataFromAPI($stockOptionsUrl);
-//    "Error: 50"
-
-    } catch (\Exception $e) {
-        echo "Error fetching data for ticker {$ticker}: " . $e->getMessage() . PHP_EOL;
+    } catch (\Throwable $e) {
+        echo "Error fetching stock options for $ticker: " . $e->getMessage() . PHP_EOL;
+        $stockOptions = null;
     }
+
 
 
 
