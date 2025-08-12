@@ -480,11 +480,11 @@ function testAPI()
 }
 
 
-function stdDeviation($arr): ?float
+function stdDeviation($arr): float
 {
     $arr_size = count($arr);
     if ($arr_size === 0) {
-        return null;
+        throw new InvalidArgumentException('Input array cannot be empty');
     }
     $mu = array_sum($arr) / $arr_size;
     $ans = 0;
@@ -500,13 +500,18 @@ function stdDeviation($arr): ?float
  */
 function updateCompanyRatios()
 {
-//    $companies = Company::all();
-    $companies = Company::where('company_num', '=', 4006)->get();
+    $companies = Company::all();
+//    $companies = Company::where('company_num', '=', 2010)->get();
 
     foreach ($companies as $company) {
         if ($company->company_num == 3001 || $company->company_num == 4010) {
             continue;
         }
+
+        if (!Stock::where('ticker', $company->company_num)->exists()) {
+            continue;
+        }
+
         $riskMeasurementRatios = riskMeasurementRatios($company->company_num, $company->index_symbol);
         $financialRatios = financialRatios($company->company_num);
         $stockMarketPrice = stockMarketPrice($company->company_num);
