@@ -229,15 +229,15 @@ class HomeController extends Controller
         $stocks = Stock::where('ticker', $ticker)
             ->orderBy('date', 'desc')
             ->limit(30)
-            ->get(['adjclose','date','high','low','open','volume']);
+            ->get(['adjclose','date','high','low']);
 
-        $dates = ($stocks->pluck('volume')->toArray());
-        $prices = array_reverse($stocks->pluck('close')->toArray());
-//
-        foreach ($dates as $key => $price) {
-            echo $price . '<br>';
-        }
-        dd(count($prices));
+        $dates = array_reverse($stocks->pluck('date')->toArray());
+        $prices = array_reverse($stocks->pluck('adjclose')->toArray());
+
+//        foreach ($dates as $key => $price) {
+//            echo $price . '<br>';
+//        }
+//        dd(count($prices));
         $max = getMaximumValue($stocks->pluck('high')->toArray());
         $min = getMinimumValue($stocks->pluck('low')->toArray());
         $max_min = $max - $min;
