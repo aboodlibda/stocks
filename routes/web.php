@@ -12,12 +12,12 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 Route::get('/stock-performance', [HomeController::class, 'stockPerformance'])->name('stock-performance');
 Route::get('/select-stock', [HomeController::class, 'selectStock'])->name('select-stock');
 Route::get('/stock-analysis', [HomeController::class, 'stockAnalysis'])->name('stock-analysis');
-Route::get('/stock-analysis-screen', [HomeController::class, 'stockAnalysisScreen'])->name('stock-analysis-screen');
 Route::get('/resistance-support', [HomeController::class, 'getResistanceAndSupport'])->name('get-resistance-and-support');
 Route::get('/get-close-prices', [HomeController::class, 'getClosePrices'])->name('get-close-prices');
 Route::get('/update-stock-var', [HomeController::class, 'updateStockVar'])->name('update-stock-var');
 
 Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
+    Route::get('/stock-analysis-screen', [HomeController::class, 'stockAnalysisScreen'])->name('stock-analysis-screen');
 
     Route::get('/stock', [StockController::class, 'getStock']);
     Route::get('market-stock-screen', [HomeController::class, 'marketStockScreen'])->name('market-stock-screen');
@@ -35,7 +35,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     Route::get('test_api', [StockController::class,'getApi'])->name('get-api');
     Route::get('execute',function(){
 
-        resistanceSupport(7010);
+        $sectorRatios = calculateRatiosBySector('TMTI');
+        $companyRatios = calculateRatiosByCompany(2010);
+
+        calculateBeta($companyRatios,$sectorRatios);
+//        resistanceSupport(7010);
 //        $ratios = calculateRatiosByCompany(7010);
 //        $binBoundary = binBoundary(7010);
 //        frequency($ratios,$binBoundary);
