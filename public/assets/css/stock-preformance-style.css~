@@ -113,10 +113,24 @@ table tr > td:nth-child(3) {
 #stock-section .title-banner {
     left: 20px;
 }
-#stock-section .header-table {
+/*#stock-section .header-table {*/
+/*    direction: ltr;*/
+/*    border: black 1px solid;*/
+/*}*/
+
+/* English (LTR) */
+html[dir="ltr"] #stock-section .header-table {
     direction: ltr;
     border: black 1px solid;
 }
+
+/* Arabic (RTL) */
+html[dir="rtl"] #stock-section .header-table {
+    direction: rtl;
+    border: black 1px solid;
+}
+
+
 #stock-section .header-table > thead > tr > th {
     background: var(--red-color) !important;
     padding: 4px;
@@ -156,10 +170,26 @@ table tr > td:nth-child(3) {
     border: 0;
     border-radius: 1px;
 }
-#stock-tables {
+/*#stock-tables {*/
+/*    direction: ltr;*/
+/*    margin-top: 30px;*/
+/*}*/
+
+
+/* English (LTR) */
+html[dir="ltr"] #stock-tables {
     direction: ltr;
     margin-top: 30px;
 }
+
+/* Arabic (RTL) */
+html[dir="rtl"] #stock-tables {
+    direction: rtl;
+    margin-top: 30px;
+}
+
+
+
 #stock-tables .table-container:nth-child(1) table {
     border-color: black;
 }
@@ -268,6 +298,7 @@ caption {
 }
 .num-cell {
     width: 5%;
+    padding: 0;
     background-color: var(--green-color) !important;
     color: var(--red-color) !important;
 }
