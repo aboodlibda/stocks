@@ -124,7 +124,7 @@ function resistanceSupport($ticker)
     $company = Company::query()->where('company_num','=',$ticker)->first();
     $close = $company->close;
     $stock = Stock::where('ticker', $ticker)->orderBy('date', 'desc')  // Use 'date' if your table has it
-    ->get(['date','close','high','low'])->toArray();
+    ->get(['date','adjclose','high','low'])->toArray();
 
     $stock = array_slice($stock, 0,30);
 
@@ -135,7 +135,7 @@ function resistanceSupport($ticker)
         $HP[] = $stock[$i]['high'];
         $LP[] = $stock[$i]['low'];
         if ($i == 0){
-            $last_trading_close_price = $stock[$i]['close'];
+            $last_trading_close_price = $stock[$i]['adjclose'];
         }
     }
 
@@ -209,14 +209,19 @@ function sharpRatio($annualStockExpectedReturn, $dailyStockVolatility): float|in
 
 
 function calculateBeta(array $stockRatios, array $sectorRatios) {
-    $sectorRatios = array_slice($sectorRatios, 0,count($stockRatios));
+    // Assume $stockRatios and $sectorRatios are arrays of the same length
+    // this pic of code for 3 years of data $sectorRatios = array_slice($sectorRatios, 0,count($stockRatios));
+    // this pic of code for 6 months of data $sectorRatios = array_slice($sectorRatios, 0,180);
 
+    $sectorRatios = array_slice($sectorRatios, 0,180);
+    $stockRatios = array_slice($stockRatios, 0,180);
 
-    $n = count($stockRatios);
+    $n = 180;
 
     if ($n !== count($sectorRatios) || $n < 2) {
         return null; // Data mismatch or not enough points
     }
+    dd(count($sectorRatios));
 
     $meanStock = array_sum($stockRatios) / $n;
     $meanSector = array_sum($sectorRatios) / $n;
@@ -289,6 +294,7 @@ function sampleStandardDeviation(array $values) {
  */
 function riskMeasurementRatios($ticker, $code): array
 {
+    $company = Company::where('company_num', '=', $ticker)->first();
     // start of calculate $company_daily_stock_volatility
     $companyRatios = calculateRatiosByCompany($ticker);
     $companyVariance = variance($companyRatios);
@@ -305,7 +311,7 @@ function riskMeasurementRatios($ticker, $code): array
     $sector_return_avg = calculateAverage($sectorRatios);
     $annualStockExpectedReturn = annualStockExpectedReturn(dash_C6, $company_daily_stock_volatility, $sector_return_avg, $sector_daily_stock_volatility);
 
-    $stockVar = Normal::inverse((1-0.95), calculateAverage($companyRatios), stdDeviation($companyRatios)) * sqrt(1);
+    $stockVar = Normal::inverse((1-0.95), calculateAverage($companyRatios), stdDeviation($companyRatios)) * sqrt($company->stock_var_days);
     $sharpRatio = sharpRatio($annualStockExpectedReturn, $company_daily_stock_volatility);
     $stockBetaCoefficient = calculateBeta($companyRatios, $sectorRatios);
     $annualStockVolatility = (($company_daily_stock_volatility) * sqrt(250)) / 100;
