@@ -209,10 +209,14 @@ function sharpRatio($annualStockExpectedReturn, $dailyStockVolatility): float|in
 
 
 function calculateBeta(array $stockRatios, array $sectorRatios) {
-    $sectorRatios = array_slice($sectorRatios, 0,count($stockRatios));
+    // Assume $stockRatios and $sectorRatios are arrays of the same length
+    // this pic of code for 3 years of data $sectorRatios = array_slice($sectorRatios, 0,count($stockRatios));
+    // this pic of code for 6 months of data $sectorRatios = array_slice($sectorRatios, 0,180);
 
+    $sectorRatios = array_slice($sectorRatios, 0,180);
+    $stockRatios = array_slice($stockRatios, 0,180);
 
-    $n = count($stockRatios);
+    $n = 180;
 
     if ($n !== count($sectorRatios) || $n < 2) {
         return null; // Data mismatch or not enough points
@@ -237,7 +241,7 @@ function calculateBeta(array $stockRatios, array $sectorRatios) {
         return null; // To avoid division by zero
     }
 
-//    dd(round(($covariance / $varianceSector) ,3));
+    dd(round(($covariance / $varianceSector) ,3));
     return round(($covariance / $varianceSector) ,3);
 }
 
@@ -289,6 +293,7 @@ function sampleStandardDeviation(array $values) {
  */
 function riskMeasurementRatios($ticker, $code): array
 {
+    $company = Company::where('company_num', '=', $ticker)->first();
     // start of calculate $company_daily_stock_volatility
     $companyRatios = calculateRatiosByCompany($ticker);
     $companyVariance = variance($companyRatios);
@@ -305,7 +310,7 @@ function riskMeasurementRatios($ticker, $code): array
     $sector_return_avg = calculateAverage($sectorRatios);
     $annualStockExpectedReturn = annualStockExpectedReturn(dash_C6, $company_daily_stock_volatility, $sector_return_avg, $sector_daily_stock_volatility);
 
-    $stockVar = Normal::inverse((1-0.95), calculateAverage($companyRatios), stdDeviation($companyRatios)) * sqrt(1);
+    $stockVar = Normal::inverse((1-0.95), calculateAverage($companyRatios), stdDeviation($companyRatios)) * sqrt($company->stock_var_days);
     $sharpRatio = sharpRatio($annualStockExpectedReturn, $company_daily_stock_volatility);
     $stockBetaCoefficient = calculateBeta($companyRatios, $sectorRatios);
     $annualStockVolatility = (($company_daily_stock_volatility) * sqrt(250)) / 100;
