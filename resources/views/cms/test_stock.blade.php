@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+@if(App::getLocale()=='ar')
+    <html dir="rtl" lang="ar">
+    @else
+        <html dir="ltr" lang="en">
+    @endif
 
 <head>
     <meta charset="UTF-8">
@@ -17,17 +21,33 @@
 
 <div id="stock-section" class="container py-3">
     <div class="d-flex justify-content-between align-items-center">
-        <a href="{{ route('select-stock') }}" class="custom-btn btn-analysis text-center title-banner text-decoration-none">الرجوع لشاشة إختيار أسهم المحفظة</a>
+        <a href="{{ route('select-stock') }}" class="custom-btn btn-analysis text-center title-banner text-decoration-none">{{ __('trans.Return to the portfolio stock selection screen') }}</a>
         <div class="text-center">
-            <a class="custom-btn btn-analysis text-center title-banner-2 text-decoration-none">تحليل أداء السهم</a>
+            <a class="custom-btn btn-analysis text-center title-banner-2 text-decoration-none">{{__('trans.Stock performance analysis')}}</a>
         </div>
         <div class="d-flex align-items-end">
             <table class="header-table">
                 <thead>
+                <div style="position: fixed; top: 10px; right: 10px; z-index: 1000;">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="flag-icon flag-icon-sa"></i>
+                        {{ LaravelLocalization::getCurrentLocaleNative() }}
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        @foreach(LaravelLocalization::getSupportedLocales()  as $localeCode => $properties)
+                            <li>
+                                <a class="dropdown-item" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}" hreflang="{{ $localeCode }}">
+                                    <i class="flag-icon flag-icon-sa"></i>
+                                    {{ $properties['native'] }}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
                 <tr>
-                    <th class="red-bg">Symbol Code</th>
-                    <th class="red-bg">Stock Name</th>
-                    <th class="red-bg">Industry Type</th>
+                    <th class="red-bg">{{__('trans.Stock Code')}}</th>
+                    <th class="red-bg">{{__('trans.Stock Name')}}</th>
+                    <th class="red-bg">{{__('trans.Industry Type')}}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -46,46 +66,46 @@
         <div class="row">
             <div class="col-lg-3 table-container">
                 <div class="d-flex align-items-center gap-2 table-caption mb-2 bg-white">
-                    <h4 class="text-center bg-red w-100 title-banner-2 mb-0">Stock Movement</h4>
+                    <h4 class="text-center bg-red w-100 title-banner-2 mb-0">{{__('trans.Stock Movement')}}</h4>
                 </div>
                 <div class="d-flex content">
                     <table class="table table-bordered mb-0">
                         <tbody>
 
                         <tr>
-                            <td class="text-center text-dark p-2">اسم المؤشر</td>
-                            <td class="text-center"> <span class=" text-dark p-2">السهم</span> </td>
-                            <td class="text-center"> <span class=" text-dark p-2">متوسط القطاع الصناعي</span> </td>
+                            <td class="text-center text-dark p-2">{{__('trans.Indicator name')}}</td>
+                            <td class="text-center"> <span class=" text-dark p-2">{{__('trans.stock')}}</span> </td>
+                            <td class="text-center"> <span class=" text-dark p-2">{{__('trans.Average industrial sector')}}</span> </td>
                         </tr>
 
 
                         <tr>
-                            <td class="text-center">Market Price (Closing Price)</td>
+                            <td class="text-center">{{__('trans.Market Price (Closing Price)')}}</td>
                             <td class="text-center num-cell"> {{number_format($company->close,2)}} </td>
                             <td class="text-center num-cell"> {{number_format($company->week_52_high_price,2)}} </td>
                         </tr>
                         <tr>
-                            <td class="text-center">Average Price Midpoint</td>
+                            <td class="text-center">{{__('trans.Average Price Midpoint')}}</td>
                             <td class="text-center num-cell"> N/A </td>
                             <td class="text-center num-cell"> N/A </td>
                         </tr>
                         <tr>
-                            <td class="text-center">52 Week High</td>
+                            <td class="text-center">{{__('trans.52 Week High')}}</td>
                             <td class="text-center num-cell"> {{number_format($company->week_52_high_price,2)}} </td>
                             <td class="text-center num-cell"> {{number_format($company->week_52_high_price,2)}} </td>
                         </tr>
                         <tr>
-                            <td class="text-center">52 Week Low</td>
+                            <td class="text-center">{{__('trans.52 Week Low')}}</td>
                             <td class="text-center num-cell"> {{number_format($company->week_52_low_price,2)}} </td>
                             <td class="text-center num-cell"> {{number_format($company->week_52_low_price,2)}} </td>
                         </tr>
                         <tr>
-                            <td class="text-center">Maximum Stock Return over 250 Days Trading</td>
+                            <td class="text-center">{{__('trans.Maximum Stock Return over 250 Days Trading')}}</td>
                             <td class="text-center num-cell"> N/A </td>
                             <td class="text-center num-cell"> N/A </td>
                         </tr>
                         <tr>
-                            <td class="text-center">Minimum Stock Return over 250 Days Trading</td>
+                            <td class="text-center">{{__('trans.Minimum Stock Return over 250 Days Trading')}}</td>
                             <td class="text-center num-cell"> N/A </td>
                             <td class="text-center num-cell"> N/A </td>
                         </tr>
@@ -95,15 +115,15 @@
             </div>
             <div class="col-lg-3 table-container">
                 <div class="d-flex align-items-center gap-2 table-caption mb-2 bg-white">
-                    <h4 class="text-center bg-red w-100 title-banner-2 mb-0">Stock Risk Measurement</h4>
+                    <h4 class="text-center bg-red w-100 title-banner-2 mb-0">{{__('trans.Stock Risk Measurement')}}</h4>
                 </div>
                 <div class="d-flex content">
                     <table class="table table-bordered mb-0">
                         <tbody>
                         <tr>
-                            <td class="text-center text-dark p-2">اسم المؤشر</td>
-                            <td class="text-center"> <span class=" text-dark p-2">السهم</span> </td>
-                            <td class="text-center"> <span class=" text-dark p-2">متوسط القطاع الصناعي</span> </td>
+                            <td class="text-center text-dark p-2">{{__('trans.Indicator name')}}</td>
+                            <td class="text-center"> <span class=" text-dark p-2">{{__('trans.stock')}}</span> </td>
+                            <td class="text-center"> <span class=" text-dark p-2">{{__('trans.Average industrial sector')}}</span> </td>
                         </tr>
 
 {{--                        <tr>--}}
@@ -121,7 +141,7 @@
                                 data-key="beta_coefficient"
                                 onclick="showTooltipFromKey(this)">
                                 <i class="fa fa-info-circle text-primary fs-5"></i>
-                                Stock - Sharp Risk Ratio
+                                {{__('trans.Sharp Risk Ratio')}}
                             </td>
                             <td class="text-center num-cell"> {{number_format($company->stock_sharp_ratio,2)}} </td>
                             <td class="text-center num-cell" id="avg_stock_sharp_ratio"></td>
@@ -131,24 +151,24 @@
                                 data-key="sharp_risk_ratio"
                                 onclick="showTooltipFromKey(this)">
                                 <i class="fa fa-info-circle text-primary fs-5"></i>
-                                Stock Beta Coefficient (β)(Market Sensitivity</td>
+                                {{__('trans.Beta Coefficient')}}</td>
                             <td class="text-center num-cell"> {{number_format($company->stock_beta_coefficient,2)}} </td>
                             <td class="text-center num-cell" id="avg_stock_beta_coefficient"></td>
                         </tr>
                         <tr>
-                            <td class="text-center">Daily Stock Volatility % (Risk Level)</td>
+                            <td class="text-center">{{__('trans.Daily Stock Volatility')}}</td>
                             <td class="text-center num-cell"> {{number_format($company->daily_stock_volatility,2)}} </td>
                             <td class="text-center num-cell" id="avg_daily_stock_volatility"></td>
                         </tr>
 
                         <tr>
-                            <td class="text-center">Annual Stock Volatility % (Risk Level)</td>
+                            <td class="text-center">{{__('trans.Annual Stock Volatility')}}</td>
                             <td class="text-center num-cell"> {{number_format($company->annual_stock_volatility,2)}} </td>
                             <td class="text-center num-cell" id="avg_annual_stock_volatility"></td>
                         </tr>
 
                         <tr>
-                            <td class="text-center">Stock Risk Ranking</td>
+                            <td class="text-center">{{__('trans.Stock Risk Ranking')}}</td>
                             <td class="text-center num-cell"> {{$company->stock_risk_rank}} </td>
                             <td class="text-center num-cell" id="stock_rank_risk"></td>
                         </tr>
@@ -158,16 +178,16 @@
             </div>
             <div class="col-lg-3 table-container">
                 <div class="d-flex align-items-center gap-2 table-caption mb-2 bg-white">
-                    <h4 class="text-center bg-red w-100 title-banner-2">Stock Performance (Key Financial Ratios)</h4>
+                    <h4 class="text-center bg-red w-100 title-banner-2">{{__('trans.Stock Performance (Key Financial Ratios)')}}</h4>
                 </div>
                 <div class="d-flex content">
                     <table class="table table-bordered mb-0">
                         <tbody>
 
                         <tr>
-                            <td class="text-center text-dark p-2">اسم المؤشر</td>
-                            <td class="text-center"> <span class=" text-dark p-2">السهم</span> </td>
-                            <td class="text-center"> <span class=" text-dark p-2">متوسط القطاع الصناعي</span> </td>
+                            <td class="text-center text-dark p-2">{{__('trans.Indicator name')}}</td>
+                            <td class="text-center"> <span class=" text-dark p-2">{{__('trans.stock')}}</span> </td>
+                            <td class="text-center"> <span class=" text-dark p-2">{{__('trans.Average industrial sector')}}</span> </td>
                         </tr>
 
 
@@ -176,7 +196,7 @@
                                 data-key="p_e_ratio"
                                 onclick="showTooltipFromKey(this)">
                                 <i class="fa fa-info-circle text-primary fs-5"></i>
-                                P/E Ratio</td>
+                                {{__('trans.Price Earning Ratio')}}</td>
                             <td class="text-center num-cell "> {{number_format($company->pe_ratio,2)}} </td>
                             <td class="text-center num-cell "> {{number_format($company->pe_ratio,2)}} </td>
                         </tr>
@@ -185,7 +205,7 @@
                                 data-key="market_to_book_ratio"
                                 onclick="showTooltipFromKey(this)">
                                 <i class="fa fa-info-circle text-primary fs-5"></i>
-                                Market to Book Ratio</td>
+                                {{__('trans.Market to Book Ratio')}}</td>
                             <td class="text-center num-cell "> {{number_format($company->market_to_book_ratio,2)}} </td>
                             <td class="text-center num-cell "> {{number_format($company->market_to_book_ratio,2)}} </td>
                         </tr>
@@ -194,12 +214,12 @@
                                 data-key="free_cash_flow_yield"
                                 onclick="showTooltipFromKey(this)">
                                 <i class="fa fa-info-circle text-primary fs-5"></i>
-                                Free Cash Flow Yield</td>
+                                {{__('trans.Free Cash Flow')}}</td>
                             <td class="text-center num-cell "> {{number_format($company->free_cash_flow_yield,2)}} </td>
                             <td class="text-center num-cell "> {{number_format($company->free_cash_flow_yield,2)}} </td>
                         </tr>
                         <tr>
-                            <td class="text-center" >Leverage Ratio</td>
+                            <td class="text-center" >{{__('trans.Leverage Ratio')}}</td>
                             <td class="text-center num-cell "> {{number_format($company->leverage_ratio,2)}} </td>
                             <td class="text-center num-cell "> {{number_format($company->leverage_ratio,2)}} </td>
                         </tr>
@@ -208,7 +228,7 @@
                                 data-key="return_on_equity"
                                 onclick="showTooltipFromKey(this)">
                                 <i class="fa fa-info-circle text-primary fs-5"></i>
-                                Return on Equity</td>
+                                {{__('trans.Return on Equity')}}</td>
                             <td class="text-center num-cell "> {{number_format($company->return_on_equity,2)}} </td>
                             <td class="text-center num-cell "> {{number_format($company->return_on_equity,2)}} </td>
                         </tr>
@@ -217,7 +237,7 @@
                                 data-key="dividend_yield"
                                 onclick="showTooltipFromKey(this)">
                                 <i class="fa fa-info-circle text-primary fs-5"></i>
-                                Stock Dividend Yield</td>
+                                {{__('trans.Dividend Yield')}}</td>
                             <td class="text-center num-cell "> {{number_format($company->stock_dividend_yield,2)}} </td>
                             <td class="text-center num-cell "> {{number_format($company->stock_dividend_yield,2)}} </td>
                         </tr>
@@ -226,12 +246,12 @@
                                 data-key="earning_per_share"
                                 onclick="showTooltipFromKey(this)">
                                 <i class="fa fa-info-circle text-primary fs-5"></i>
-                                Earning Per Share</td>
+                                {{__('trans.Earning Per Share')}}</td>
                             <td class="text-center num-cell "> {{number_format($company->earning_per_share,2)}} </td>
                             <td class="text-center num-cell "> {{number_format($company->earning_per_share,2)}} </td>
                         </tr>
                         <tr>
-                            <td class="text-center">Annual Dividend Rate</td>
+                            <td class="text-center">{{__('trans.Annual Dividend Rate')}}</td>
                             <td class="text-center num-cell "> {{number_format($company->annual_dividend_rate,2)}} </td>
                             <td class="text-center num-cell "> {{number_format($company->annual_dividend_rate,2)}} </td>
                         </tr>
@@ -242,24 +262,24 @@
             <div class="col-lg-3">
                 <div class="table-container">
                     <div class="d-flex align-items-center gap-2">
-                        <h4 class="text-center bg-red w-100 title-banner-2">Expected Stock Return Based on Historical Data & CAPM Model</h4>
+                        <h4 class="text-center bg-red w-100 title-banner-2">{{__('trans.Expected Stock Return Based on Historical Data & CAPM Model')}}</h4>
 {{--                        <span class="icon-container"><i class="fa fa-user"></i></span>--}}
                     </div>
                     <div class="d-flex">
                         <table class="table table-bordered mb-0">
                             <tbody>
                             <tr>
-                                <td class="text-center">Expected Annual Stock Return% (Based on CAPM Model)</td>
-                                <td class="text-center num-cell"> {{number_format($company->stock_beta_coefficient,2)}} </td>
+                                <td class="text-center">{{__('trans.Expected Annual Stock Return')}}</td>
+                                <td class="text-center num-cell"> {{number_format($company->annual_stock_expected_return,2)}} </td>
                             </tr>
                             <tr>
-                                <td class="text-center">Daily Expected Stock Return % (Based on Average of  3 Years Historical Data)</td>
-                                <td class="text-center num-cell"> {{number_format($company->stock_beta_coefficient,2)}} </td>
+                                <td class="text-center">{{__('trans.Daily Expected Stock Return')}}</td>
+                                <td class="text-center num-cell"> {{number_format($company->avg_daily_expected_stock_return,2)}} </td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
-                    <h4 class="text-center bg-red w-100 title-banner-2 mt-2">Expected Stock VaR %</h4>
+                    <h4 class="text-center bg-red w-100 title-banner-2 mt-2">{{__('trans.Expected Stock VaR')}}</h4>
                     <table class="table table-bordered mb-0">
                         <tbody>
                         <tr>
@@ -267,12 +287,12 @@
                                 data-key="value_at_risk"
                                 onclick="showTooltipFromKey(this)">
                                 <i class="fa fa-info-circle text-primary fs-5"></i>
-                                Stock Value at Risk (VaR %)</td>
+                                {{__('trans.Stock Value at Risk')}}</td>
                             <td class="text-center num-cell" style="font-size: 13px"> {{number_format($company->stock_var_percent,2)}} </td>
-                            <td class="text-center  bg-blue"> <span>1</span> </td>
+                            <td class="text-center bg-blue"> <span>{{$company->stock_var_days}}</span> </td>
                             <td class="text-center num-cell">
                                 <button type="button" class="btn btn-primary" style="font-size: 13px" data-bs-toggle="modal" data-bs-target="#updateDaysModal">
-                                    Updating No of Days
+                                    {{__('trans.updating number of days')}}
                                 </button>
                             </td>
                         </tr>
@@ -282,18 +302,18 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="updateDaysModalLabel">Select Number of Days</h5>
+                                        <h5 class="modal-title" id="updateDaysModalLabel">{{__('trans.select Number of Days')}}</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                         <div class="input-group">
-                                            <span class="input-group-text">Days</span>
-                                            <input type="number" class="form-control" id="daysSelect" required min="1" max="100" value="1" style="border-radius: 0;border: 1px solid #4e7bd1">
+                                            <span class="input-group-text">{{__('trans.Day')}}</span>
+                                            <input type="number" class="form-control" id="daysSelect" required min="1" max="100" value="{{$company->stock_var_days}}" style="border-radius: 0;border: 1px solid #4e7bd1">
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary" id="updateDaysBtn">Update</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('trans.close')}}</button>
+                                        <button type="button" class="btn btn-primary" id="updateDaysBtn">{{__('trans.update')}}</button>
                                     </div>
                                 </div>
                             </div>
@@ -306,23 +326,23 @@
         </div>
         <div class="row mt-2 align-items-center">
             <div class="col-lg-3">
-                <p class="bg-red p-3 mb-0 title-banner-2">Financial Statements Issuance Dates</p>
+                <p class="bg-red p-3 mb-0 title-banner-2">{{__('trans.Financial Statements Issuance Dates')}}</p>
             </div>
             <div class="col-lg-3">
                 <div class="d-flex align-items-center gap-3">
-                    <p class="bg-blue p-2 mb-0">اخر تاريخ لتوزيع الأرباح</p>
+                    <p class="bg-blue p-2 mb-0">{{__('trans.Last date for dividend distribution')}}</p>
                     <div class="bg-blue-2 border text-dark date-box">{{$company->last_dividend_date}}</div>
                 </div>
             </div>
             <div class="col-lg-3">
                 <div class="d-flex align-items-center gap-3">
-                    <p class="bg-blue p-2 mb-0">Last Updated Income Statement</p>
+                    <p class="bg-blue p-2 mb-0">{{__('trans.Last Updated Income Statement')}}</p>
                     <div class="bg-blue-2 border text-dark date-box">2025-06-27</div>
                 </div>
             </div>
             <div class="col-lg-3">
                 <div class="d-flex align-items-center gap-3">
-                    <p class="bg-blue p-2 mb-0">Last Updated Balance Sheet</p>
+                    <p class="bg-blue p-2 mb-0">{{__('trans.Last Updated Balance Sheet')}}</p>
                     <div class="bg-blue-2 border text-dark date-box">2025-06-27</div>
                 </div>
             </div>
@@ -331,11 +351,11 @@
 
         <div class="row mt-2 align-items-center">
             <div class="col-lg-3">
-                <p class="bg-red p-2 mb-0 title-banner-2">View Chart Analysis For: </p>
+                <p class="bg-red p-2 mb-0 title-banner-2">{{__('trans.View Chart Analysis For:')}}</p>
             </div>
             <div class="col-lg-3">
                 <div class="d-flex align-items-center gap-3">
-                    <p class="bg-blue-2 p-2 mb-0 text-dark">احتماليات توزيع عوائد الأسهم</p>
+                    <p class="bg-blue-2 p-2 mb-0 text-dark">{{__('trans.Stock dividend distribution possibilities')}}</p>
                     <button class="btn btn-primary btn-sm bg-blue-2" id="stock_probability" style="height: 40px; width: 40px; padding: 0;cursor:pointer;border: none;">
                         <img src="{{asset('assets/media/graph.png')}}" alt="Add" style="height: 40px; width: 40px;">
                     </button>
@@ -343,7 +363,7 @@
             </div>
             <div class="col-lg-3">
                 <div class="d-flex align-items-center gap-3">
-                    <p class="bg-blue-2 p-2 mb-0 text-dark">Stock vs. Index Return</p>
+                    <p class="bg-blue-2 p-2 mb-0 text-dark">{{__('trans.Stock vs. Index Return')}}</p>
                     <button class="btn btn-primary btn-sm bg-blue-2" id="stock_index" style="height: 40px; width: 40px; padding: 0;cursor:pointer;border: none;">
                         <img src="{{asset('assets/media/graph.png')}}" alt="Add" style="height: 40px; width: 40px;">
                     </button>
@@ -351,7 +371,7 @@
             </div>
             <div class="col-lg-3">
                 <div class="d-flex align-items-center gap-3">
-                    <p class="bg-blue-2 p-2 mb-0 text-dark">Support and Resistance Price Level</p>
+                    <p class="bg-blue-2 p-2 mb-0 text-dark">{{__('trans.Support and Resistance Price Level')}}</p>
                     <button class="btn btn-primary btn-sm bg-blue-2" id="support_and_resistance" style="height: 40px; width: 40px; padding: 0;cursor:pointer;border: none;">
                         <img src="{{asset('assets/media/graph.png')}}" alt="Add" style="height: 40px; width: 40px;">
                     </button>
