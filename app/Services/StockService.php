@@ -71,6 +71,9 @@ class StockService
 
     public function getStockData($tickers, $sdate, $edate)
     {
+
+        Stock::truncate();
+
         $data = null;
 
         if ($data === null) {
