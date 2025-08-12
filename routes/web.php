@@ -36,8 +36,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     Route::get('execute',function(){
 
         $sectorRatios = calculateRatiosBySector('TMTI');
-        $companyRatios = calculateRatiosByCompany(2010);
+        $companyRatios = calculateRatiosByCompany(4006);
 
+        dd($companyRatios);
         calculateBeta($companyRatios,$sectorRatios);
 //        resistanceSupport(7010);
 //        $ratios = calculateRatiosByCompany(7010);
