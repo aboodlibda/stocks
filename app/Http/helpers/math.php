@@ -241,7 +241,6 @@ function calculateBeta(array $stockRatios, array $sectorRatios) {
         return null; // To avoid division by zero
     }
 
-    dd(round(($covariance / $varianceSector) ,3));
     return round(($covariance / $varianceSector) ,3);
 }
 
