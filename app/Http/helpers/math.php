@@ -450,7 +450,7 @@ function financialRatios($ticker): array
 function stockMarketPrice($ticker)
 {
     $stock = DB::table('stocks')->where('ticker', $ticker)->orderBy('date', 'desc')->first(['low', 'high', 'adjclose','date']);
-    dd($stock->date);
+    dd($stock->adjclose);
     if ($stock) {
         $low = $stock->low;
         $high = $stock->high;
