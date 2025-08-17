@@ -82,7 +82,7 @@
                         <tr>
                             <td class="text-center">{{__('trans.Market Price (Closing Price)')}}</td>
                             <td class="text-center num-cell"> {{number_format($company->close,2)}} </td>
-                            <td class="text-center num-cell"> {{number_format($company->week_52_high_price,2)}} </td>
+                            <td class="text-center num-cell"> {{number_format($company->close,2)}} </td>
                         </tr>
                         <tr>
                             <td class="text-center">{{__('trans.Average Price Midpoint')}}</td>
