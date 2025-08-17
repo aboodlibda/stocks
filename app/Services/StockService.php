@@ -72,7 +72,12 @@ class StockService
     public function getStockData($tickers, $sdate, $edate)
     {
 
-        Stock::truncate();
+        $truncateResult = Stock::truncate();
+        if ($truncateResult) {
+            echo "Stocks Table truncated successfully." . PHP_EOL;
+        } else {
+            echo "Failed to truncate the table." . PHP_EOL;
+        }
 
         $data = null;
 
