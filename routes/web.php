@@ -35,11 +35,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     Route::get('test_api', [StockController::class,'getApi'])->name('get-api');
     Route::get('execute',function(){
 
-        $sectorRatios = calculateRatiosBySector('TMTI');
-        $companyRatios = calculateRatiosByCompany(4006);
-
-        dd($companyRatios);
-        calculateBeta($companyRatios,$sectorRatios);
+        stockMarketPrice(2270);
+//        $sectorRatios = calculateRatiosBySector('TMTI');
+//        $companyRatios = calculateRatiosByCompany(4006);
+//
+//        dd($companyRatios);
+//        calculateBeta($companyRatios,$sectorRatios);
 //        resistanceSupport(7010);
 //        $ratios = calculateRatiosByCompany(7010);
 //        $binBoundary = binBoundary(7010);
