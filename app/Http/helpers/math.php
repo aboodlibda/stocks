@@ -449,10 +449,7 @@ function financialRatios($ticker): array
 
 function stockMarketPrice($ticker)
 {
-    $stock = DB::table('stocks')->where('ticker', $ticker)->orderBy('date', 'desc')->get(['low', 'high', 'close']);
-    $closes = $stock->pluck('close');
-    $averageClose = $closes->avg();
-    dd($averageClose);
+    $stock = DB::table('stocks')->where('ticker', $ticker)->orderBy('date', 'desc')->first(['low', 'high', 'close']);
     if ($stock) {
         $low = $stock->low;
         $high = $stock->high;
@@ -574,7 +571,6 @@ function updateCompanyRatios()
     echo  'All Companies Updated'. PHP_EOL;
 
 }
-
 
 
 function calculateCovariance($x, $y)
