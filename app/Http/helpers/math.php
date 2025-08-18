@@ -20,9 +20,8 @@ function calculateRatiosByCompany($ticker): array
 
 
 //    foreach ($adjCloses as $key => $ratio) {
-//        if ($ratio->date == '2024-04-14') {
-//            echo $ratio->ticker . " : " . $ratio->date . "<br>";
-//        }
+//        $adjCloses[$key] = $ratio->adjclose;
+//        echo $ratio->volume . '<br>';
 //    }
 //
 //    dd("test");
@@ -401,6 +400,7 @@ function financialRatios($ticker): array
         $stockOptions = null;
     }
 
+    
 
 
 
