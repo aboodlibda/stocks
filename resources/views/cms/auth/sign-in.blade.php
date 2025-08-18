@@ -110,7 +110,7 @@
                 <div
                     class="d-flex flex-column-fluid flex-lg-row-auto justify-content-center justify-content-lg-end p-12">
                     <!--begin::Wrapper-->
-                    <div class="bg-body d-flex flex-column flex-center rounded-4 w-md-600px p-10">
+                    <div class="bg-body d-flex flex-column rounded-4 w-md-600px p-10">
                         <!--begin::Content-->
                         <div class="d-flex flex-center flex-column align-items-stretch h-lg-100 w-md-400px">
                             <!--begin::Wrapper-->
@@ -268,8 +268,9 @@
         <script src="{{asset('assets/js/scripts.bundle.js')}}"></script>
         <!--end::Global Javascript Bundle-->
         <!--begin::Custom Javascript(used for this page only)-->
-        <script src="{{asset('assets/js/custom/authentication/sign-in/general.js')}}"></script>
-        <script src="{{asset('assets/js/custom/authentication/sign-in/i18n.js')}}"></script>
+{{--        <script src="{{asset('assets/js/custom/authentication/sign-in/general.js')}}"></script>--}}
+{{--        <script src="{{asset('assets/js/custom/authentication/sign-in/i18n.js')}}"></script>--}}
+        <script src="{{asset('assets/js/custom/authentication/sign-in/login.js')}}"></script>
         <!--end::Custom Javascript-->
         {{--<x-notify::notify />--}}
         {{--@notifyJs--}}
