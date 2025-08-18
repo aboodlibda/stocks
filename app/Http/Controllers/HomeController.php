@@ -20,7 +20,8 @@ class HomeController extends Controller
 
     public function marketStockScreen()
     {
-        return view('cms.market-stock-screen');
+        $companies = Company::query()->distinct()->get(['index_name', 'index_symbol']);
+        return view('cms.market-stock-screen', compact('companies'));
     }
 
     public function ajaxIndex()
