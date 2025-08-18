@@ -7,7 +7,7 @@
         <!--begin::Head-->
         <head>
             <base href="../../../"/>
-            <title>Stocks - {{trans('dashboard_trans.Sign In')}}</title>
+            <title>DAN - {{trans('dashboard_trans.Sign In')}}</title>
             {{--    @notifyCss--}}
             <meta charset="utf-8"/>
             <meta name="description"
@@ -68,7 +68,7 @@
         <div class="d-flex flex-column flex-root">
             <!--begin::Page bg image-->
             <style>body {
-                    background-image: url('{{asset('assets/media/auth/bg10.jpeg')}}');
+                    background-image: url('{{asset('assets/media/auth/bg10-dark.jpeg')}}');
                 }
 
                 [data-bs-theme="dark"] body {
@@ -114,7 +114,7 @@
                             <!--begin::Wrapper-->
                             <div class="d-flex flex-center flex-column flex-column-fluid pb-15 pb-lg-20">
                                 <!--begin::Form-->
-                                <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form"
+                                <form class="form w-100"  id="kt_sign_in_form"
                                       data-kt-redirect-url="{{route('dashboard')}}" action="{{route('do-login')}}"
                                       method="POST" enctype="multipart/form-data">
                                     @csrf
@@ -129,31 +129,31 @@
                                     </div>
                                     <!--begin::Heading-->
                                     <!--begin::Login options-->
-{{--                                    <div class="row g-3 mb-9">--}}
-{{--                                        <div class="text-center align-items-center">--}}
-{{--                                            <!--begin::Symbol-->--}}
-{{--                                            <a href="#" class="symbol symbol-circle symbol-50px w-50px bg-light me-3">--}}
-{{--                                                <img alt="Logo"--}}
-{{--                                                     src="{{asset('assets/media/svg/brand-logos/google-icon.svg')}}"--}}
-{{--                                                     class="p-4">--}}
-{{--                                            </a>--}}
-{{--                                            <!--end::Symbol-->--}}
-{{--                                            <!--begin::Symbol-->--}}
-{{--                                            <a href="#" class="symbol symbol-circle symbol-50px w-50px bg-light me-3">--}}
-{{--                                                <img alt="Logo"--}}
-{{--                                                     src="{{trans('assets/media/svg/brand-logos/facebook-3.svg')}}"--}}
-{{--                                                     class="p-4">--}}
-{{--                                            </a>--}}
-{{--                                            <!--end::Symbol-->--}}
+                                    <div class="row g-3 mb-9">
+                                        <div class="text-center align-items-center">
+                                            <!--begin::Symbol-->
+                                            <a href="#" class="symbol symbol-circle symbol-50px w-50px bg-light me-3">
+                                                <img alt="Logo"
+                                                     src="{{asset('assets/media/svg/brand-logos/google-icon.svg')}}"
+                                                     class="p-4">
+                                            </a>
+                                            <!--end::Symbol-->
+                                            <!--begin::Symbol-->
+                                            <a href="#" class="symbol symbol-circle symbol-50px w-50px bg-light me-3">
+                                                <img alt="Logo"
+                                                     src="{{trans('assets/media/svg/brand-logos/facebook-3.svg')}}"
+                                                     class="p-4">
+                                            </a>
+                                            <!--end::Symbol-->
 
-{{--                                        </div>--}}
-{{--                                    </div>--}}
+                                        </div>
+                                    </div>
                                     <!--end::Login options-->
                                     <!--begin::Separator-->
-{{--                                    <div class="separator separator-content my-14">--}}
-{{--                                        <span--}}
-{{--                                            class="w-125px text-gray-500 fw-semibold fs-7">{{trans('dashboard_trans.Or with email')}}</span>--}}
-{{--                                    </div>--}}
+                                    <div class="separator separator-content my-14">
+                                        <span
+                                            class="w-125px text-gray-500 fw-semibold fs-7">{{trans('dashboard_trans.Or with email')}}</span>
+                                    </div>
                                     <!--end::Separator-->
                                     <!--begin::Input group=-->
                                     <div class="fv-row mb-8">
