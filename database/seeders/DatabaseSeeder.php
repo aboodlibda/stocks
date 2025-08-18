@@ -21,7 +21,8 @@ class DatabaseSeeder extends Seeder
 //        ]);
         $this->call([
 //            UserSeeder::class,
-            SectorsTableSeeder::class,
+//            SectorsTableSeeder::class,
+            NotesSeeder::class,
         ]);
     }
 }
