@@ -15,8 +15,6 @@ $(document).ready(function () {
         submitButton.prop('disabled', true);
 
         let formData = new FormData(this);
-        let token = $('meta[name="csrf-token"]').attr('content');
-        formData.append('_token', token);
 
         $.ajax({
             url: form.attr('action'),
