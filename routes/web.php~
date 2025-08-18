@@ -17,7 +17,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'doLogin'])->name('do-login');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
-
+    Route::get('/get-tooltip-content', [\App\Http\Controllers\NotesController::class, 'getTooltipContent'])->name('get-tooltip-content');
 
 /////////////////////////////////// Dashboard Routes ///////////////////////////////////////////
     Route::group(['prefix' => 'cms', 'middleware' => ['auth:user']], function () {
@@ -29,7 +29,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::get('/select-stock', [HomeController::class, 'selectStock'])->name('select-stock');
     });
 
-    
+
     Route::get('/stock-analysis-screen', [HomeController::class, 'stockAnalysisScreen'])->name('stock-analysis-screen');
 
     Route::get('/stock', [StockController::class, 'getStock']);
@@ -68,4 +68,3 @@ Route::get('/stock-analysis', [HomeController::class, 'stockAnalysis'])->name('s
 Route::get('/resistance-support', [HomeController::class, 'getResistanceAndSupport'])->name('get-resistance-and-support');
 Route::get('/get-close-prices', [HomeController::class, 'getClosePrices'])->name('get-close-prices');
 Route::get('/update-stock-var', [HomeController::class, 'updateStockVar'])->name('update-stock-var');
-
