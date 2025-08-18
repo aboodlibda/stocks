@@ -85,7 +85,7 @@
                     <div class="menu menu-column menu-rounded menu-sub-indention menu-active-bg fw-semibold my-auto" id="#kt_aside_menu" data-kt-menu="true">
                         <!--begin:Menu item-->
                         <div  class="menu-item here">
-                            <a class="menu-link active" href="">
+                            <a class="menu-link active" href="{{ route('dashboard') }}">
 										<span class="menu-icon">
 											<!--begin::Svg Icon | path: icons/duotune/arrows/arr001.svg-->
 											<span class="svg-icon svg-icon-5">
@@ -159,14 +159,14 @@
 											</span>
                                             <!--end::Svg Icon-->
 										</span>
-                                <span class="menu-title">{{trans('dashboard_trans.Market stock screen')}}</span>
+                                <span class="menu-title">{{'شاشة الأسهم المالية'}}</span>
                             </a>
                         </div>
                         <!--end:Menu item-->
 
                         <!--begin:Menu item-->
                         <div  class="menu-item ">
-                            <a class="menu-link" href="{{ route('test') }}">
+                            <a class="menu-link" href="{{ route('notes.index') }}">
 										<span class="menu-icon">
 											<!--begin::Svg Icon | path: icons/duotune/arrows/arr001.svg-->
 											<span class="svg-icon svg-icon-5">
@@ -177,7 +177,7 @@
 											</span>
                                             <!--end::Svg Icon-->
 										</span>
-                                <span class="menu-title">{{'تجريبي - شاشة الأسهم المالية'}}</span>
+                                <span class="menu-title">{{'الملاحظات'}}</span>
                             </a>
                         </div>
                         <!--end:Menu item-->
