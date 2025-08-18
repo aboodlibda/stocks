@@ -9,6 +9,8 @@
             <base href="../../../"/>
             <title>DAN - {{trans('dashboard_trans.Sign In')}}</title>
             {{--    @notifyCss--}}
+            <meta name="csrf-token" content="{{ csrf_token() }}">
+
             <meta charset="utf-8"/>
             <meta name="description"
                   content="The most advanced Bootstrap 5 Admin Theme with 40 unique prebuilt layouts on Themeforest trusted by 100,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel versions. Grab your copy now and get life-time updates for free."/>
@@ -108,7 +110,7 @@
                 <div
                     class="d-flex flex-column-fluid flex-lg-row-auto justify-content-center justify-content-lg-end p-12">
                     <!--begin::Wrapper-->
-                    <div class="bg-body d-flex flex-column flex-center rounded-4 w-md-600px p-10">
+                    <div class="bg-body d-flex flex-column rounded-4 w-md-600px p-10">
                         <!--begin::Content-->
                         <div class="d-flex flex-center flex-column align-items-stretch h-lg-100 w-md-400px">
                             <!--begin::Wrapper-->
@@ -268,6 +270,7 @@
         <!--begin::Custom Javascript(used for this page only)-->
         <script src="{{asset('assets/js/custom/authentication/sign-in/general.js')}}"></script>
         <script src="{{asset('assets/js/custom/authentication/sign-in/i18n.js')}}"></script>
+        <script src="{{asset('assets/js/custom/authentication/sign-in/login.js')}}"></script>
         <!--end::Custom Javascript-->
         {{--<x-notify::notify />--}}
         {{--@notifyJs--}}
