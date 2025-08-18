@@ -35,7 +35,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     Route::get('test_api', [StockController::class,'getApi'])->name('get-api');
     Route::get('execute',function(){
 
-        stockMarketPrice(2270);
+        calculateRatiosByCompany(2270);
+//        financialRatios(2270);
+//        stockMarketPrice(2270);
 //        $sectorRatios = calculateRatiosBySector('TMTI');
 //        $companyRatios = calculateRatiosByCompany(4006);
 //
