@@ -259,6 +259,7 @@ class HomeController extends Controller
 //        0.95 is the Confidence Level
         $stockVar = Normal::inverse((1 - 0.95), calculateAverage($companyRatios), stdDeviation($companyRatios)) * sqrt($request->days);
         $company->stock_var_percent = round($stockVar,2);
+        $company->stock_var_days = $request->days;
         $isSaved = $company->save();
         if ($isSaved) {
             return response()->json([
