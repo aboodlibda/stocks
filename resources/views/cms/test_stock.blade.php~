@@ -80,9 +80,13 @@
 
 
                         <tr>
-                            <td class="text-center">{{__('trans.Market Price (Closing Price)')}}</td>
+                            <td class="text-center" data-bs-toggle="tooltip" data-bs-placement="right"
+                                data-key="closing_price"
+                                onclick="showTooltipFromKey(this)">
+                                <i class="fa fa-info-circle text-primary fs-5"></i>
+                                {{ __('trans.Market Price (Closing Price)')}}</td>
                             <td class="text-center num-cell"> {{number_format($company->close,2)}} </td>
-                            <td class="text-center num-cell"> {{number_format($company->week_52_high_price,2)}} </td>
+                            <td class="text-center num-cell"> {{number_format($company->close,2)}} </td>
                         </tr>
                         <tr>
                             <td class="text-center">{{__('trans.Average Price Midpoint')}}</td>
@@ -90,22 +94,38 @@
                             <td class="text-center num-cell"> N/A </td>
                         </tr>
                         <tr>
-                            <td class="text-center">{{__('trans.52 Week High')}}</td>
+                            <td class="text-center"data-bs-toggle="tooltip" data-bs-placement="right"
+                                data-key="52_week_high"
+                                onclick="showTooltipFromKey(this)">
+                                <i class="fa fa-info-circle text-primary fs-5"></i>
+                                {{__('trans.52 Week High')}}</td>
                             <td class="text-center num-cell"> {{number_format($company->week_52_high_price,2)}} </td>
                             <td class="text-center num-cell"> {{number_format($company->week_52_high_price,2)}} </td>
                         </tr>
                         <tr>
-                            <td class="text-center">{{__('trans.52 Week Low')}}</td>
+                            <td class="text-center"data-bs-toggle="tooltip" data-bs-placement="right"
+                                data-key="52_week_low"
+                                onclick="showTooltipFromKey(this)">
+                                <i class="fa fa-info-circle text-primary fs-5"></i>
+                                {{__('trans.52 Week Low')}}</td>
                             <td class="text-center num-cell"> {{number_format($company->week_52_low_price,2)}} </td>
                             <td class="text-center num-cell"> {{number_format($company->week_52_low_price,2)}} </td>
                         </tr>
                         <tr>
-                            <td class="text-center">{{__('trans.Maximum Stock Return over 250 Days Trading')}}</td>
+                            <td class="text-center"data-bs-toggle="tooltip" data-bs-placement="right"
+                                data-key="maximum_stock_return_over_250_days"
+                                onclick="showTooltipFromKey(this)">
+                                <i class="fa fa-info-circle text-primary fs-5"></i>
+                                {{__('trans.Maximum Stock Return over 250 Days Trading')}}</td>
                             <td class="text-center num-cell"> N/A </td>
                             <td class="text-center num-cell"> N/A </td>
                         </tr>
                         <tr>
-                            <td class="text-center">{{__('trans.Minimum Stock Return over 250 Days Trading')}}</td>
+                            <td class="text-center"data-bs-toggle="tooltip" data-bs-placement="right"
+                                data-key="minimum_stock_return_over_250_days"
+                                onclick="showTooltipFromKey(this)">
+                                <i class="fa fa-info-circle text-primary fs-5"></i>
+                                {{__('trans.Minimum Stock Return over 250 Days Trading')}}</td>
                             <td class="text-center num-cell"> N/A </td>
                             <td class="text-center num-cell"> N/A </td>
                         </tr>
@@ -126,19 +146,9 @@
                             <td class="text-center"> <span class=" text-dark p-2">{{__('trans.Average industrial sector')}}</span> </td>
                         </tr>
 
-{{--                        <tr>--}}
-{{--                            <td class="text-center">Stock Value at Risk (VaR %)</td>--}}
-{{--                            <td class="text-center num-cell"> {{number_format($company->stock_var_percent,2)}} </td>--}}
-{{--                            <td class="text-center num-cell" id="avg_stock_var_percent"></td>--}}
-{{--                        </tr>--}}
-{{--                        <tr>--}}
-{{--                            <td class="text-center">Stock Value at Risk (VaR ) Expected Maximum Loss SR</td>--}}
-{{--                            <td class="text-center num-cell"> N/A </td>--}}
-{{--                            <td class="text-center num-cell"> N/A </td>--}}
-{{--                        </tr>--}}
                         <tr>
                             <td class="text-center" data-bs-toggle="tooltip" data-bs-placement="right"
-                                data-key="beta_coefficient"
+                                data-key="sharp_risk_ratio"
                                 onclick="showTooltipFromKey(this)">
                                 <i class="fa fa-info-circle text-primary fs-5"></i>
                                 {{__('trans.Sharp Risk Ratio')}}
@@ -148,7 +158,7 @@
                         </tr>
                         <tr>
                             <td class="text-center" data-bs-toggle="tooltip" data-bs-placement="right"
-                                data-key="sharp_risk_ratio"
+                                data-key="beta_coefficient"
                                 onclick="showTooltipFromKey(this)">
                                 <i class="fa fa-info-circle text-primary fs-5"></i>
                                 {{__('trans.Beta Coefficient')}}</td>
@@ -156,19 +166,31 @@
                             <td class="text-center num-cell" id="avg_stock_beta_coefficient"></td>
                         </tr>
                         <tr>
-                            <td class="text-center">{{__('trans.Daily Stock Volatility')}}</td>
+                            <td class="text-center"data-bs-toggle="tooltip" data-bs-placement="right"
+                                data-key="daily_stock_volatility"
+                                onclick="showTooltipFromKey(this)">
+                                <i class="fa fa-info-circle text-primary fs-5"></i>
+                                {{__('trans.Daily Stock Volatility')}}</td>
                             <td class="text-center num-cell"> {{number_format($company->daily_stock_volatility,2)}} </td>
                             <td class="text-center num-cell" id="avg_daily_stock_volatility"></td>
                         </tr>
 
                         <tr>
-                            <td class="text-center">{{__('trans.Annual Stock Volatility')}}</td>
+                            <td class="text-center"data-bs-toggle="tooltip" data-bs-placement="right"
+                                data-key="annual_stock_volatility"
+                                onclick="showTooltipFromKey(this)">
+                                <i class="fa fa-info-circle text-primary fs-5"></i>
+                                {{__('trans.Annual Stock Volatility')}}</td>
                             <td class="text-center num-cell"> {{number_format($company->annual_stock_volatility,2)}} </td>
                             <td class="text-center num-cell" id="avg_annual_stock_volatility"></td>
                         </tr>
 
                         <tr>
-                            <td class="text-center">{{__('trans.Stock Risk Ranking')}}</td>
+                            <td class="text-center"data-bs-toggle="tooltip" data-bs-placement="right"
+                                data-key="stock_risk_ranking"
+                                onclick="showTooltipFromKey(this)">
+                                <i class="fa fa-info-circle text-primary fs-5"></i>
+                                {{__('trans.Stock Risk Ranking')}}</td>
                             <td class="text-center num-cell"> {{$company->stock_risk_rank}} </td>
                             <td class="text-center num-cell" id="stock_rank_risk"></td>
                         </tr>
@@ -219,7 +241,11 @@
                             <td class="text-center num-cell "> {{number_format($company->free_cash_flow_yield,2)}} </td>
                         </tr>
                         <tr>
-                            <td class="text-center" >{{__('trans.Leverage Ratio')}}</td>
+                            <td class="text-center"data-bs-toggle="tooltip" data-bs-placement="right"
+                                data-key="leverage_ratio"
+                                onclick="showTooltipFromKey(this)">
+                                <i class="fa fa-info-circle text-primary fs-5"></i>
+                                {{__('trans.Leverage Ratio')}}</td>
                             <td class="text-center num-cell "> {{number_format($company->leverage_ratio,2)}} </td>
                             <td class="text-center num-cell "> {{number_format($company->leverage_ratio,2)}} </td>
                         </tr>
@@ -251,7 +277,11 @@
                             <td class="text-center num-cell "> {{number_format($company->earning_per_share,2)}} </td>
                         </tr>
                         <tr>
-                            <td class="text-center">{{__('trans.Annual Dividend Rate')}}</td>
+                            <td class="text-center"data-bs-toggle="tooltip" data-bs-placement="right"
+                                data-key="annual_dividend_rate"
+                                onclick="showTooltipFromKey(this)">
+                                <i class="fa fa-info-circle text-primary fs-5"></i>
+                                {{__('trans.Annual Dividend Rate')}}</td>
                             <td class="text-center num-cell "> {{number_format($company->annual_dividend_rate,2)}} </td>
                             <td class="text-center num-cell "> {{number_format($company->annual_dividend_rate,2)}} </td>
                         </tr>
@@ -269,11 +299,19 @@
                         <table class="table table-bordered mb-0">
                             <tbody>
                             <tr>
-                                <td class="text-center">{{__('trans.Expected Annual Stock Return')}}</td>
+                                <td class="text-center"data-bs-toggle="tooltip" data-bs-placement="right"
+                                    data-key="expected_annual_stock_return"
+                                    onclick="showTooltipFromKey(this)">
+                                    <i class="fa fa-info-circle text-primary fs-5"></i>
+                                    {{__('trans.Expected Annual Stock Return')}}</td>
                                 <td class="text-center num-cell"> {{number_format($company->annual_stock_expected_return,2)}} </td>
                             </tr>
                             <tr>
-                                <td class="text-center">{{__('trans.Daily Expected Stock Return')}}</td>
+                                <td class="text-center"data-bs-toggle="tooltip" data-bs-placement="right"
+                                    data-key="daily_expected_stock_return"
+                                    onclick="showTooltipFromKey(this)">
+                                    <i class="fa fa-info-circle text-primary fs-5"></i>
+                                    {{__('trans.Daily Expected Stock Return')}}</td>
                                 <td class="text-center num-cell"> {{number_format($company->avg_daily_expected_stock_return,2)}} </td>
                             </tr>
                             </tbody>
@@ -329,23 +367,45 @@
                 <p class="bg-red p-3 mb-0 title-banner-2">{{__('trans.Financial Statements Issuance Dates')}}</p>
             </div>
             <div class="col-lg-3">
-                <div class="d-flex align-items-center gap-3">
-                    <p class="bg-blue p-2 mb-0">{{__('trans.Last date for dividend distribution')}}</p>
+                <div class="d-flex align-items-center gap-3"
+                     data-bs-toggle="tooltip"
+                     data-bs-placement="right"
+                     data-key="last_date_for_dividend_distribution"
+                     onclick="showTooltipFromKey(this)"
+                     style="cursor:pointer"> <!-- optional to show pointer -->
+                    <i class="fa fa-info-circle text-primary fs-5"></i>
+                    <p class="bg-blue p-2 mb-0" style="font-size: 12px">{{__('trans.Last date for dividend distribution')}}</p>
                     <div class="bg-blue-2 border text-dark date-box">{{$company->last_dividend_date}}</div>
                 </div>
             </div>
+
             <div class="col-lg-3">
-                <div class="d-flex align-items-center gap-3">
-                    <p class="bg-blue p-2 mb-0">{{__('trans.Last Updated Income Statement')}}</p>
+                <div class="d-flex align-items-center gap-3"
+                     data-bs-toggle="tooltip"
+                     data-bs-placement="right"
+                     data-key="last_updated_income_statement"
+                     onclick="showTooltipFromKey(this)"
+                     style="cursor:pointer"> <!-- optional to show pointer -->
+                    <i class="fa fa-info-circle text-primary fs-5"></i>
+                    <p class="bg-blue p-2 mb-0" style="font-size: 12px">{{__('trans.Last Updated Income Statement')}}</p>
                     <div class="bg-blue-2 border text-dark date-box">2025-06-27</div>
                 </div>
             </div>
+
             <div class="col-lg-3">
-                <div class="d-flex align-items-center gap-3">
-                    <p class="bg-blue p-2 mb-0">{{__('trans.Last Updated Balance Sheet')}}</p>
+                <div class="d-flex align-items-center gap-3"
+                     data-bs-toggle="tooltip"
+                     data-bs-placement="right"
+                     data-key="last_updated_balance_sheet"
+                     onclick="showTooltipFromKey(this)"
+                     style="cursor:pointer"> <!-- optional to show pointer -->
+                    <i class="fa fa-info-circle text-primary fs-5"></i>
+                    <p class="bg-blue p-2 mb-0" style="font-size: 12px">{{__('trans.Last Updated Balance Sheet')}}</p>
                     <div class="bg-blue-2 border text-dark date-box">2025-06-27</div>
                 </div>
             </div>
+
+
         </div>
 
 
@@ -354,24 +414,42 @@
                 <p class="bg-red p-2 mb-0 title-banner-2">{{__('trans.View Chart Analysis For:')}}</p>
             </div>
             <div class="col-lg-3">
-                <div class="d-flex align-items-center gap-3">
-                    <p class="bg-blue-2 p-2 mb-0 text-dark">{{__('trans.Stock dividend distribution possibilities')}}</p>
+                <div class="d-flex align-items-center gap-3"
+                     data-bs-toggle="tooltip"
+                     data-bs-placement="right"
+                     data-key="stock_dividend_distribution_possibilities_chart"
+                     onclick="showTooltipFromKey(this)"
+                     style="cursor:pointer">
+                    <i class="fa fa-info-circle text-primary fs-5"></i>
+                    <p class="bg-blue-2 p-2 mb-0 text-dark" style="font-size: 12px">{{__('trans.Stock dividend distribution possibilities')}}</p>
                     <button class="btn btn-primary btn-sm bg-blue-2" id="stock_probability" style="height: 40px; width: 40px; padding: 0;cursor:pointer;border: none;">
                         <img src="{{asset('assets/media/graph.png')}}" alt="Add" style="height: 40px; width: 40px;">
                     </button>
                 </div>
             </div>
             <div class="col-lg-3">
-                <div class="d-flex align-items-center gap-3">
-                    <p class="bg-blue-2 p-2 mb-0 text-dark">{{__('trans.Stock vs. Index Return')}}</p>
+                <div class="d-flex align-items-center gap-3"
+                     data-bs-toggle="tooltip"
+                     data-bs-placement="right"
+                     data-key="last_stock_vs_index_return_chart"
+                     onclick="showTooltipFromKey(this)"
+                     style="cursor:pointer">
+                    <i class="fa fa-info-circle text-primary fs-5"></i>
+                    <p class="bg-blue-2 p-2 mb-0 text-dark" style="font-size: 12px">{{__('trans.Stock vs. Index Return')}}</p>
                     <button class="btn btn-primary btn-sm bg-blue-2" id="stock_index" style="height: 40px; width: 40px; padding: 0;cursor:pointer;border: none;">
                         <img src="{{asset('assets/media/graph.png')}}" alt="Add" style="height: 40px; width: 40px;">
                     </button>
                 </div>
             </div>
             <div class="col-lg-3">
-                <div class="d-flex align-items-center gap-3">
-                    <p class="bg-blue-2 p-2 mb-0 text-dark">{{__('trans.Support and Resistance Price Level')}}</p>
+                <div class="d-flex align-items-center gap-3"
+                     data-bs-toggle="tooltip"
+                     data-bs-placement="right"
+                     data-key="support_and_resistance_price_level_chart"
+                     onclick="showTooltipFromKey(this)"
+                     style="cursor:pointer">
+                    <i class="fa fa-info-circle text-primary fs-5"></i>
+                    <p class="bg-blue-2 p-2 mb-0 text-dark" style="font-size: 12px">{{__('trans.Support and Resistance Price Level')}}</p>
                     <button class="btn btn-primary btn-sm bg-blue-2" id="support_and_resistance" style="height: 40px; width: 40px; padding: 0;cursor:pointer;border: none;">
                         <img src="{{asset('assets/media/graph.png')}}" alt="Add" style="height: 40px; width: 40px;">
                     </button>
@@ -392,17 +470,17 @@
             </div>
         </div>
 
-    <div class="modal fade" id="toolTipModal" tabindex="-1" aria-labelledby="toolTipModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content justify-content-center w-800" style="max-width: 800px;width: 800px">
-                <div class="modal-header justify-content-center w-100">
+    <div class="modal fade bd-example-modal-lg" id="toolTipModal" tabindex="-1" aria-labelledby="toolTipModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" style="width: auto; height: auto;">
+            <div class="modal-content" style="width: auto; height: auto;">
+                <div class="modal-header ">
                     <h5 class="modal-title modal-title position-absolute start-50 translate-middle-x" id="toolTipModalLabel">Description</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-center">
                     <button type="button" class="btn btn-primary" onclick="showTranslation('ar')">arabic</button>
                     <button type="button" class="btn btn-primary" onclick="showTranslation('en')">english</button>
-                    <div id="translationText" class="mt-3" ></div>
+                    <div id="translationText" class="mt-3" style="width: auto;"></div>
                 </div>
             </div>
         </div>
@@ -427,29 +505,34 @@
         window.translationData = { ar, en };
         showTranslation("ar");
     }
+
     modal.on('hidden.bs.modal', function (e) {
-        $('#translationText').text('');
+        $('#translationText').html(''); // clear as HTML
     });
 
     function showTranslation(language) {
         const text = window.translationData[language];
-        document.getElementById('translationText').innerText = text;
+
+        // Use innerHTML to render TinyMCE HTML
+        document.getElementById('translationText').innerHTML = text;
     }
-
-
-
 
     function showTooltipFromKey(element) {
         const key = element.getAttribute('data-key');
-        const content = window.tooltipContent[key];
-
-        if (!content) {
-            console.warn(`No tooltip content found for key: ${key}`);
-            return;
-        }
-
-        showModal(content.ar, content.en); // Your existing modal function
+        $.ajax({
+            url: "{{route('get-tooltip-content')}}", // Adjust the URL if needed
+            method: "GET",
+            dataType: "json",
+            data: { key: key },
+            success: function (response) {
+                showModal(response.ar, response.en); // Your existing modal function
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
     }
+
 </script>
 
 
