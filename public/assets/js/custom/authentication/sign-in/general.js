@@ -45,7 +45,12 @@ var KTSigninGeneral = (function () {
 
                         let formData = new FormData(form);
 
-                        axios.post(form.getAttribute("action"), formData)
+                        axios.post(form.getAttribute("action"), formData, {
+                            headers: {
+                                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
+                                "Accept": "application/json"
+                            }
+                        })
                             .then(function (response) {
                                 submitButton.removeAttribute("data-kt-indicator");
                                 submitButton.disabled = false;
@@ -64,6 +69,7 @@ var KTSigninGeneral = (function () {
                                         icon: "error",
                                         confirmButtonText: "Try Again"
                                     });
+                                    form.querySelector('[name="password"]').value = ""; // clear password field
                                 }
                             })
                             .catch(function (error) {
@@ -75,6 +81,7 @@ var KTSigninGeneral = (function () {
                                     icon: "error",
                                     confirmButtonText: "Ok"
                                 });
+                                form.querySelector('[name="password"]').value = ""; // clear password field
                             });
                     } else {
                         Swal.fire({
