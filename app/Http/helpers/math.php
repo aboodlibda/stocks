@@ -400,7 +400,7 @@ function financialRatios($ticker): array
         $stockOptions = null;
     }
 
-    
+
 
 
 
@@ -450,14 +450,14 @@ function financialRatios($ticker): array
 function stockMarketPrice($ticker)
 {
     $stock = DB::table('stocks')->where('ticker', $ticker)->orderBy('date', 'desc')->first(['low', 'high', 'adjclose','date']);
-    dd($stock->adjclose);
+//    dd($stock->adjclose);
     if ($stock) {
         $low = $stock->low;
         $high = $stock->high;
-        $close = $stock->close;
-        $typicalPrice = ($low + $high + $close) / 3;
+        $adjclose = $stock->adjclose;
+        $typicalPrice = ($low + $high + $adjclose) / 3;
         return [
-            'close' => $close,
+            'close' => $adjclose,
             'typicalPrice' => $typicalPrice
         ];
     }
