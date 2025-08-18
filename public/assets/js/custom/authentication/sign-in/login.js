@@ -1,12 +1,6 @@
 "use strict";
 
 $(document).ready(function () {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
     const form = $('#kt_sign_in_form');
     const submitButton = $('#kt_sign_in_submit');
 
@@ -20,14 +14,10 @@ $(document).ready(function () {
         submitButton.attr('data-kt-indicator', 'on');
         submitButton.prop('disabled', true);
 
-        let formData = new FormData(this);
-
         $.ajax({
             url: form.attr('action'),
             type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
+            data: form.serialize(),
             success: function (response) {
                 if (response.success) {
                     Swal.fire({
