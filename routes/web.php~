@@ -9,14 +9,27 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
-Route::get('/stock-performance', [HomeController::class, 'stockPerformance'])->name('stock-performance');
-Route::get('/select-stock', [HomeController::class, 'selectStock'])->name('select-stock');
-Route::get('/stock-analysis', [HomeController::class, 'stockAnalysis'])->name('stock-analysis');
-Route::get('/resistance-support', [HomeController::class, 'getResistanceAndSupport'])->name('get-resistance-and-support');
-Route::get('/get-close-prices', [HomeController::class, 'getClosePrices'])->name('get-close-prices');
-Route::get('/update-stock-var', [HomeController::class, 'updateStockVar'])->name('update-stock-var');
 
+/////////////////////////////////// Localization Route For En And Ar ///////////////////////////////////////////
 Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
+
+/////////////////////////////////// Authentication Routes ///////////////////////////////////////////
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AuthController::class, 'doLogin'])->name('do-login');
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
+/////////////////////////////////// Dashboard Routes ///////////////////////////////////////////
+    Route::group(['prefix' => 'cms', 'middleware' => ['auth:user']], function () {
+        Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
+        Route::resource('portfolios', PortfolioController::class);
+        Route::get('notes',[\App\Http\Controllers\NotesController::class,'index'])->name('notes.index');
+        Route::get('notes/{note}',[\App\Http\Controllers\NotesController::class,'edit'])->name('notes.edit');
+        Route::put('notes/{note}',[\App\Http\Controllers\NotesController::class,'update'])->name('notes.update');
+        Route::get('/select-stock', [HomeController::class, 'selectStock'])->name('select-stock');
+    });
+
+    
     Route::get('/stock-analysis-screen', [HomeController::class, 'stockAnalysisScreen'])->name('stock-analysis-screen');
 
     Route::get('/stock', [StockController::class, 'getStock']);
@@ -29,27 +42,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     Route::get('read-companies', [StockController::class, 'read_companies'])->name('read-companies');
     Route::get('test_api', [StockController::class,'getApi'])->name('get-api');
     Route::get('execute',function(){
-
         calculateRatiosByCompany(2270);
-//        financialRatios(2270);
-//        stockMarketPrice(2270);
-//        $sectorRatios = calculateRatiosBySector('TMTI');
-//        $companyRatios = calculateRatiosByCompany(4006);
-//
-//        dd($companyRatios);
-//        calculateBeta($companyRatios,$sectorRatios);
-//        resistanceSupport(7010);
-//        $ratios = calculateRatiosByCompany(7010);
-//        $binBoundary = binBoundary(7010);
-//        frequency($ratios,$binBoundary);
-//        financialRatios(7010);
-//        riskMeasurementRatios(2222,'TENI');
-//        riskMeasurementRatios(7010,'TTSI');
-//        riskMeasurementRatios(1120,'TBNI');
-//        riskMeasurementRatios(6002,'TCSI');
-//        riskMeasurementRatios(4263,'TTNI');
-//        financialRatios(2010);
-//        stockMarketPrice(2010);
     });
 
     Route::get('new_test',function(){
@@ -64,17 +57,15 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
 
     });
-    Route::group(['prefix' => 'cms', 'middleware' => ['auth:user']], function () {
-        Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
-        Route::resource('portfolios', PortfolioController::class);
-        Route::get('notes',[\App\Http\Controllers\NotesController::class,'index'])->name('notes.index');
-        Route::get('note/{note}',[\App\Http\Controllers\NotesController::class,'edit'])->name('notes.edit');
-        Route::put('notes/{note}',[\App\Http\Controllers\NotesController::class,'update'])->name('notes.update');
-
-
-    });
-
-    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-    Route::post('/login', [AuthController::class, 'doLogin'])->name('do-login');
-    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });
+
+
+
+
+
+Route::get('/stock-performance', [HomeController::class, 'stockPerformance'])->name('stock-performance');
+Route::get('/stock-analysis', [HomeController::class, 'stockAnalysis'])->name('stock-analysis');
+Route::get('/resistance-support', [HomeController::class, 'getResistanceAndSupport'])->name('get-resistance-and-support');
+Route::get('/get-close-prices', [HomeController::class, 'getClosePrices'])->name('get-close-prices');
+Route::get('/update-stock-var', [HomeController::class, 'updateStockVar'])->name('update-stock-var');
+
