@@ -15,7 +15,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
 /////////////////////////////////// Authentication Routes ///////////////////////////////////////////
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-    Route::post('/login', [AuthController::class, 'doLogin'])->name('do-login');
+    Route::get('/login', [AuthController::class, 'doLogin'])->name('do-login');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 /////////////////////////////////// Dashboard Routes ///////////////////////////////////////////
