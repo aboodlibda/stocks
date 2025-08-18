@@ -17,7 +17,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'doLogin'])->name('do-login');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/get-tooltip-content', [\App\Http\Controllers\NotesController::class, 'getTooltipContent'])->name('get-tooltip-content');
 
 /////////////////////////////////// Dashboard Routes ///////////////////////////////////////////
     Route::group(['prefix' => 'cms', 'middleware' => ['auth:user']], function () {
@@ -27,6 +26,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::get('notes/{note}',[\App\Http\Controllers\NotesController::class,'edit'])->name('notes.edit');
         Route::put('notes/{note}',[\App\Http\Controllers\NotesController::class,'update'])->name('notes.update');
         Route::get('/select-stock', [HomeController::class, 'selectStock'])->name('select-stock');
+        Route::get('/get-tooltip-content', [\App\Http\Controllers\NotesController::class, 'getTooltipContent'])->name('get-tooltip-content');
+
     });
 
 
