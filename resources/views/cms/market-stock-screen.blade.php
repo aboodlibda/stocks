@@ -1,243 +1,1169 @@
-@extends('cms.layout.master')
-@section('title',trans('dashboard_trans.All portfolios'))
-@section('style')
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
+    {{--    <link href="{{asset('assets/plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css">--}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+    <title>Market Stock Screen</title>
     <style>
+        body {
+            font-family: Tajawal, sans-serif;
+            margin: 20px;
+        }
 
-        /*html, body {*/
-        /*    width: 100%;*/
-        /*    height: 100%;*/
-        /*    font-family: Arial, sans-serif;*/
-        /*    display: flex;*/
-        /*    justify-content: center;*/
-        /*    align-items: center;*/
-        /*}*/
-        /*.table-container {*/
-        /*    width: 100%;*/
-        /*    height: 100%;*/
-        /*    display: flex;*/
-        /*    justify-content: center;*/
-        /*    align-items: center;*/
-        /*    padding: 20px;*/
-        /*}*/
         table {
             width: 100%;
-            height: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 11px;
         }
+
+        th, td {
+            border: 1px solid #000;
+            padding: 2px;
+            text-align: center;
+        }
+
+        .row1-merged {
+            background-color: #c00202;
+            color: white;
+        }
+
+        .row1-single {
+            background-color: #e1e1e1;
+        }
+
+
+        .row2-merged1 {
+            background-color: #203562;
+            color: white;
+        }
+
+        .row2-merged2 {
+            background-color: #315492;
+            color: white;
+        }
+
+        .row2-merged3 {
+            background-color: #8faadd;
+        }
+
+        .row2-merged4 {
+            background-color: #b3c6e8;
+        }
+
+        .row2-merged5 {
+            background-color: #9ba4b3;
+        }
+
+        .row2-mergedAll {
+            background-color: #c00202;
+            color: white;
+            font-weight: bold;
+        }
+
+
+        .gr-blue-1 {
+            background-color: #203562;
+            color: white;
+        }
+        .gr-blue-2 {
+            background-color: #315492;
+            color: white;
+        }
+        .gr-blue-3 {
+            background-color: #8faadd;
+            color: black;
+        }
+        .gr-blue-4 {
+            background-color: #b3c6e8;
+        }
+        .gr-blue-5 {
+            background-color: #9ba4b3;
+        }
+
+        .orange { background-color: #ffb823; }
+
+        .main_search_div {
+            /*background: linear-gradient(25deg, #8600b3 50%, #cc33ff 50%);*/
+            /*height: 100vh;*/
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /*padding-bottom: 10px;*/
+        }
+
+
+        h1 {
+            /*position: absolute;*/
+            top: 30%;
+
+            font-size: 60px;
+            color: #c00202;
+        }
+
+        .box {
+            width: 500px;
+            height: 15px;
+            background-color: white;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border: 3px solid #4e7bd1;
+        }
+
+        .box>i {
+            font-size: 20px;
+            color: #777;
+        }
+
+        .box>input {
+            flex: 1;
+            height: 15px;
+            border: none;
+            outline: none;
+            font-size: 18px;
+            padding-left: 10px;
+        }
+
+        #search-button {
+            width: 30%;
+            height: 40px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        #search-button:hover {
+            background-color: #3e8e41;
+        }
+
+        .gray{
+            background-color: #a6a6a6;
+        }
+
+        /*thead th, thead td  {*/
+        /*    position: sticky;*/
+        /*    top: 0;*/
+        /*    background-color: white; !* Or any color that fits your design *!*/
+        /*    z-index: 1;*/
+        /*    border-bottom: 1px solid #ccc;*/
+        /*}*/
+
+        /*.table-container {*/
+        /*    overflow-y: auto;*/
+        /*}*/
+
+
+        .select-search {
+            margin: 20px;
+            /*padding: 10px;*/
+            border: none;
+        }
+
+        /* Style the select element */
+        .sector {
+            width: 100%;
+            padding: 9px;
+            font-size: 16px;
+            border: 2px solid #006a83;
+            border-radius: 30px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+        }
+
+        /* Style the options */
+        .sector option {
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        /* Style the selected option */
+        .sector option[selected] {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        /* Style the disabled option */
+        .sector option[disabled] {
+            color: #ccc;
+        }
+
+        /* CSS */
+        .logo-container {
+            width: 200px; /* adjust the width as needed */
+            height: 90px; /* adjust the height as needed */
+            /*background-color: #8faadd; !* light gray background *!*/
+            border-radius: 10px; /* rounded corners */
+            display: grid;
+            justify-content: left;
+            /*align-items: start;*/
+            /*margin:  auto; !* add some margin *!*/
+        }
+
+        .logo {
+            width: 150%; /* adjust the logo size */
+            height: auto;
+            object-fit: contain;
+        }
+
+        .border-none{
+            border: none;
+        }
+
     </style>
+</head>
+<body>
 
-    @if(App::getLocale()=='ar')
-        <link href="{{asset('assets/plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css">
-    @else
-        <link href="{{asset('assets/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
-    @endif
-@endsection
-@section('content')
-    <!--begin::Page title-->
-    <div class="page-title d-flex flex-column align-items-start justify-content-center flex-wrap me-lg-2 pb-10 pb-lg-0" data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', lg: '#kt_header_container'}">
-        <!--begin::Heading-->
-        <h1 class="d-flex flex-column text-dark fw-bold my-0 fs-1">شاشة سوق الأسهم</h1>
-        <!--end::Heading-->
-        <!--begin::Breadcrumb-->
-        <ul class="breadcrumb breadcrumb-dot fw-semibold fs-base my-1">
-            <li class="breadcrumb-item text-muted">
-                <a href="{{ route('dashboard') }}" class="text-muted text-hover-primary">{{trans('dashboard_trans.Home')}}</a>
-            </li>
-            <li class="breadcrumb-item text-dark">شاشة سوق الأسهم</li>
+<!-- HTML -->
+<div class="logo-container">
+    <img src="{{asset('assets/media/logo.png')}}" alt="Logo" class="logo">
+</div>
 
-        </ul>
-        <!--end::Breadcrumb-->
-    </div>
-    <!--end::Page title=-->
-    <!--begin::Content-->
-    <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-        <!--begin::Container-->
-        <div class="container-xxl" id="kt_content_container">
-            <!--begin::Table-->
-            <div class="card-title">
-                <!--begin::Search-->
-                <div class="d-flex align-items-center position-relative my-1">
-                    <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-4">
-                        <span class="path1"></span>
-                        <span class="path2"></span>
-                    </i>
-                    <input type="text" data-kt-ecommerce-coupons-filter="search" id="searchInput" class="form-control form-control-solid w-250px ps-12" placeholder="{{'ابحث في سوق الأسهم'}}" />
-                </div>
-                <!--end::Search-->
+<!-- Large modal -->
+
+<div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title text-center w-100">تحليل أداء السهم</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <table class="table table-row-dashed table dataTable "
-                   id="kt_ecommerce_coupons_table">
-                <thead>
-                <tr>
-                    <th colspan="4" class="color1">رابط اخبار و اسعار سوق التداول السعودى</th>
-                    <th colspan="2" class="bg-danger text-white">average industry</th>
-                    <th  class="bg-warning text-dark" id="avg_stock_var_percent"></th>
-                    <th  class="bg-warning text-dark" id="avg_stock_sharp_ratio"></th>
-                    <th  class="bg-warning text-dark" id="avg_stock_beta_coefficient"></th>
-                    <th  class="bg-warning text-dark" id="avg_annual_stock_volatility"></th>
-                    <th  class="bg-warning text-dark" id="avg_daily_stock_volatility"></th>
-                    <th  class="color2"></th>
-                    <th  class="bg-warning text-dark" id="avg_pe_ratio"></th>
+            <div class="modal-body">
+                <input type="hidden" name="button_id" id="button_id" value="">
+                <div class="modal-loader"></div>
+
+                <div class="container-fluid" dir="rtl">
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <div style="background: rgb(248, 203, 107); padding: 15px; border-radius: 5px;">
+                                <div class="stats-content" style="max-width: 450px;">
+                                    <p>
+                                        The above normal distribution is a symmetrical distribution centred around the mean,
+                                        indicating that data close to the mean occur more frequently than data far from the mean
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="text-center">
+                                <h6>احتماليات توزيع عوائد السهم اليومي خلال 3 سنوات بناء على الأسعار التاريخية</h6>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div style="background: rgb(255,255,0); padding: 4px; border-radius: 5px;">
+                                <div class="stats-content text-center">
+                                    <div class="dropdown">
+                                        <button class="btn btn-light dropdown-toggle" type="button" id="chartDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            احتماليات توزيع عوائد السهم
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="chartDropdown">
+                                            <a class="dropdown-item" href="#" id="probability" data-chart-type="probability">احتماليات توزيع عوائد السهم</a>
+                                            <a class="dropdown-item" href="#" id="performance" data-chart-type="performance">أداء العائد اليومي للسهم مقابل المؤشر</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 
-                    <th  class="bg-warning text-dark" id="avg_return_on_equity"></th>
-                    <th  class="bg-warning text-dark" id="avg_stock_dividend_yield"></th>
-                    <th  class="bg-warning text-dark" id="avg_earning_per_share"></th>
-                    <th  class="bg-warning text-dark" id="avg_annual_stock_expected_return"></th>
-                    <th  class="bg-warning text-dark" id="avg_avg_daily_expected_stock_return"></th>
 
-                </tr>
-
-                <tr>
-                    <th colspan="6" class="color1">اسماء الشركات فى سوق التداول السعودى</th>
-                    <th colspan="6" class="color2">Risk measurement Ratios</th>
-                    <th colspan="2" class="color3">Earning Ratios</th>
-                    <th colspan="4" class="color4">Financial Ratios</th>
-                </tr>
+                <div id="chartContainer" style="height: 370px; width: 100%;margin-top: 50px;margin-bottom: 50px"></div>
 
 
-                <tr class="text-start text-white fw-bold fs-7 text-uppercase gs-0">
-{{--                    <th scope="col" class="bg-secondary">add to portfilio</th>--}}
-{{--                    <th scope="col" class="bg-secondary">view stock performance</th>--}}
-{{--                    <th scope="col" class="bg-success">Symbol Code</th>--}}
-{{--                    <th scope="col" class="bg-success">Company Name</th>--}}
-{{--                    <th scope="col" class="bg-success">Industry Type</th>--}}
-{{--                    <th scope="col" class="bg-success">Index Code</th>--}}
-{{--                    <th class="bg-danger">Stock Value at Risk (VaR %)</th>--}}
-{{--                    <th class="bg-danger">Stock - Sharp Risk Ratio</th>--}}
-{{--                    <th class="bg-danger">Stock Beta Coefficient</th>--}}
-{{--                    <th class="bg-danger">Annual Stock Volatility % (Risk Level)</th>--}}
-{{--                    <th class="bg-danger">Daily Stock Volatility % (Risk Level)</th>--}}
-{{--                    <th class="bg-danger">Stock Risk Rank</th>--}}
-{{--                    <th class="bg-warning">P/E Ratio</th>--}}
-{{--                    <th class="bg-warning">Return on Equity (ROE %)</th>--}}
-{{--                    <th class="bg-info">Stock Dividend Yield</th>--}}
-{{--                    <th class="bg-info">Earning Per Share</th>--}}
-{{--                    <th class="bg-info">Annual Stock Expected Return (3 Years)</th>--}}
-{{--                    <th class="bg-info">Avg Daily Expected Stock Return (3 Years)</th>--}}
+                {{--                <div class="container-fluid"  dir="rtl">--}}
+                {{--                    <div class="row">--}}
 
-                                        <th class="min-w-50px bg-info">Avg Daily Expected Stock Return (3 Years)</th>
-                    <th class="min-w-50px bg-info">Annual Stock Expected Return (3 Years)</th>
-                    <th class="min-w-50px bg-info">Earning Per Share</th>
-                    <th class="min-w-50px bg-info">Stock Dividend Yield</th>
-                    <th class="min-w-50px bg-warning">Return on Equity (ROE %)</th>
-                    <th class="min-w-50px bg-warning">P/E Ratio</th>
-                    <th class="min-w-50px bg-danger">Stock Risk Rank</th>
-                    <th class="min-w-50px bg-danger">Daily Stock Volatility</th>
-                    <th class="min-w-50px bg-danger">Annual Stock Volatility % (Risk Level)</th>
-                    <th class="min-w-50px bg-danger">Stock Beta Coefficient</th>
-                    <th class="min-w-50px bg-danger">Stock - Sharp Risk Ratio</th>
-                    <th class="min-w-50px bg-danger">Stock Value at Risk (VaR %)</th>
-                    <th class="min-w-50px bg-success">Index Code</th>
-                    <th class="min-w-50px bg-success">Industry Type</th>
-                    <th class="min-w-50px bg-success">Company Name</th>
-                    <th class="min-w-50px bg-success">Symbol Code</th>
-                    <th class="min-w-50px">View Stock Performance</th>
-                    <th class="min-w-50px">Add to Portfolio</th>
-                </tr>
-                </thead>
-                <tbody class="fw-semibold text-gray-600">
-                </tbody>
-            </table>
-            <!--end::Table-->
+                {{--                        <div class="col-md-4">--}}
+                {{--                            <div style="background: rgb(248, 203, 107); padding: 15px; border-radius: 5px;">--}}
+                {{--                                <div class="stats-content" style="max-width: 450px;">--}}
+                {{--                                    <p>--}}
+                {{--                                        If the index price closely mirrors stock prices, it suggests that the overall market--}}
+                {{--                                        movement is closely tied to the performance of individual stocks within that index.--}}
+                {{--                                        Thus, it indicates a strong correlation between the two.--}}
+                {{--                                    </p>--}}
+                {{--                                </div>--}}
+                {{--                            </div>--}}
+                {{--                        </div>--}}
+
+                {{--                        <div class="col-md-4">--}}
+                {{--                            <div class="text-center">--}}
+                {{--                                <h6>العائد اليومي للسهم مقابل المؤشر بناءً على الأسعار التاريخية لمدة 3 سنوات--}}
+                {{--                                </h6>--}}
+                {{--                            </div>--}}
+                {{--                        </div>--}}
+
+                {{--                        <div class="col-md-4">--}}
+                {{--                            <div style="background: rgb(255,255,0); padding: 4px; border-radius: 5px;">--}}
+                {{--                                <div class="stats-content text-center">--}}
+                {{--                                    <p>--}}
+                {{--                                        Index Chart--}}
+                {{--                                    </p>--}}
+                {{--                                </div>--}}
+                {{--                            </div>--}}
+                {{--                        </div>--}}
+                {{--                    </div>--}}
+                {{--                </div>--}}
+
+
+                {{--                <div id="chart2Container" style="height: 370px; width: 100%;;margin-top: 50px"></div>--}}
+
+            </div>
         </div>
-        <!--end::Container-->
     </div>
-    <!--end::Content-->
-@endsection
-@section('script')
-    <script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
-    <script src="{{asset('assets/js/custom/utilities/modals/users-search.js')}}"></script>
+</div>
+<div class="main_search_div">
+    {{--    <div class="select-search">--}}
+    {{--        <select name="sector" class="sector" id="sector">--}}
+    {{--            <option  selected>اختر القطاع</option>--}}
+    {{--            @foreach($companies as $sector)--}}
+    {{--                <option value="{{$sector->index_symbol}}">{{$sector->index_name}}</option>--}}
+    {{--            @endforeach--}}
+    {{--        </select>--}}
+    {{--    </div>--}}
+    <div class="box">
+        <i class="fa-brands fa-searching"></i>
+        <input type="text" name="" dir="rtl" placeholder="البحث بإسم أو رقم الشركة / إسم أو رمز القطاع" id="search-input">
+    </div>
 
-    <script>
+</div>
 
-        var lang = $('html').attr('lang');
+<table id="stock_table" class="table-container">
 
-        const currentLanguage = document.documentElement.lang || "ar";
-        const dataTableLanguage = currentLanguage === "ar"
-            ? '//cdn.datatables.net/plug-ins/2.1.8/i18n/ar.json'
-            : '';
-        $(document).ready(function () {
-            $('#kt_ecommerce_coupons_table').DataTable({
-                processing: true,
-                serverSide: true,
-                language: { url: dataTableLanguage },
-                scrollX: false,
-                paging: true,
-                searching: true,
-                responsive: false,
-                ajax: '{{ route("companies.index.ajax") }}', // Adjust route name as appropriate
-                columns: [
-                    { data: 'avg_daily_expected_stock_return', name: 'avg_daily_expected_stock_return' },
-                    { data: 'annual_stock_expected_return', name: 'annual_stock_expected_return' },
-                    { data: 'earning_per_share', name: 'earning_per_share' },
-                    { data: 'stock_dividend_yield', name: 'stock_dividend_yield' },
-                    { data: 'return_on_equity', name: 'return_on_equity' },
-                    { data: 'pe_ratio', name: 'pe_ratio' },
-                    { data: 'stock_risk_rank', name: 'stock_risk_rank' },
-                    { data: 'daily_stock_volatility', name: 'daily_stock_volatility' },
-                    { data: 'annual_stock_volatility', name: 'annual_stock_volatility' },
-                    { data: 'stock_beta_coefficient', name: 'stock_beta_coefficient' },
-                    { data: 'stock_sharp_ratio', name: 'stock_sharp_ratio' },
-                    { data: 'stock_var_percent', name: 'stock_var_percent' },
-                    { data: 'index_symbol', name: 'index_symbol' },
-                    { data: 'index_name', name: 'index_name' },
-                    { data: 'company_name', name: 'company_name' },
-                    { data: 'company_num', name: 'company_num' },
-                    { data: 'view_stock_performance', name: 'view_stock_performance', orderable: false, searchable: false },
-                    { data: 'add_to_portfolio', name: 'add_to_portfolio', orderable: false, searchable: false },
-                ]
-            });
+    <thead>
+
+    <tr style="position: sticky; top: 0">
+        <th colspan="13" class="border-none" style="background-color: white"></th>
+        <th colspan="8" class="row2-mergedAll gr-blue-2">Industry Performance</th>
+        <th colspan="11" class="border-none" style="background-color: white"></th>
+    </tr>
+    <tr style="position: sticky; top: 20px">
+        <th colspan="7" class="border-none" style="background-color: white"></th>
+        <th colspan="6" class="row2-mergedAll gr-blue-3">Risk measurement Ratios</th>
+        <th colspan="4" class="row2-mergedAll gr-blue-3">Over 3 Years Historical Data</th>
+        <th colspan="3" class="row3-cell14 gr-blue-4">Over 1 Year Historical Data</th>
+        <th colspan="1" class="row2-mergedAll gr-blue-2"></th>
+
+        <th colspan="8" class="row2-mergedAll gr-blue-3">Financial Ratios</th>
+        <th colspan="11" class="border-none" style="background-color: white"></th>
+
+    </tr>
+    <tr style="position: sticky; top: 40px">
+        <th colspan="4" style="border: 1px solid black;background: white">
+            <span style="color: black;font-size: 11px;font-weight: bold">فترة تحميل أسعار الأسهم التاريخية من 12-09-2021 الى 12-09-2024 والقطاع الصناعي من 12-09-2021 الى 12-09-2024</span>
+        </th>
+        <th colspan="3" style="font-weight: bold;background: white;border: 1px solid black">
+            أضغط على السهم أدناة
+            لأحتساب متوسط القطاع آليا
+        </th>
+        <th class="row3-cell6 gr-blue-2">VaR % For 1 Day</th>
+        <th class="row3-cell7 gr-blue-2">Sharp Ratio</th>
+        <th class="row3-cell8 gr-blue-2">Beta Coefficient</th>
+        <th class="row3-cell9 gr-blue-2">Daily Volatility</th>
+        <th class="row3-cell10 gr-blue-2">Annual Volatility</th>
+        <th class="row3-cell11 gr-blue-2">Risk Ranking</th>
+
+
+        <th class="row3-cell14 gr-blue-3" style="font-size: 10px">Minimum Daily Return</th>
+        <th class="row3-cell14 gr-blue-3" style="font-size: 10px">Maximum Daily Return</th>
+        <th class="row3-cell14 gr-blue-3" style="font-size: 10px">Annual Expected Return</th>
+        <th class="row3-cell14 gr-blue-3" style="font-size: 10px">Average Return</th>
+        <th class="row3-cell14 gr-blue-4" style="font-size: 10px">Minimum Daily Return</th>
+        <th class="row3-cell14 gr-blue-4" style="font-size: 10px">Maximum Daily Return</th>
+        <th class="row3-cell14 gr-blue-4" style="font-size: 10px">Average Return</th>
+        <th class="row3-cell14 gr-blue-2"></th>
+
+
+        <th class="row3-cell14 gr-blue-2">P/E Ratio</th>&nbsp;
+        <th class="row3-cell15 gr-blue-2">Market to Book Ratio</th>
+        <th class="row3-cell15 gr-blue-2">ROE</th>
+        <th class="row3-cell15 gr-blue-2">Free Cash Flow Yield</th>
+        <th class="row3-cell15 gr-blue-2">Leverage Ratio</th>
+        <th class="row3-cell16 gr-blue-2">Dividend Yield</th>
+        <th class="row3-cell17 gr-blue-2">
+            EPS<img src="{{asset('assets/media/Saudi_Riyal_Symbol.svg')}}" alt="Saudi Exchange Logo" style="width: 30px; height: 15px;">
+        </th>
+        <th class="row3-cell18 gr-blue-2">Annual Dividend Rate</th>
+        <th colspan="11" class="border-none" style="background-color: white"></th>
+
+    </tr>
+    <tr style="position: sticky; top: 110px">
+        <th colspan="4" style="border: 1px solid #000;background: white">
+            <span style="color: black;;font-size: 11px">PM 01:45:00 | تاريخ تحديث البيانات 30-04-2024 </span>
+        </th>
+        <th colspan="3" class="row1-merged gr-blue-2">
+            Average Industry
+            <select id="sector" name="sector" style="border: 1px solid black;width: 100%;background-color: #8faadd;color:black;font-family: Tajawal, sans-serif;text-align: center">
+                <option  selected>اختر القطاع</option>
+                @foreach($companies as $sector)
+                    <option value="{{$sector->index_symbol}}">{{$sector->index_name}}</option>
+                @endforeach
+            </select>
+        </th>
+        <th class="row1-single orange" id="avg_stock_var_percent">0</th>
+        <th class="row1-single orange" id="avg_stock_sharp_ratio">0</th>
+        <th class="row1-single orange" id="avg_stock_beta_coefficient">0</th>
+        <th class="row1-single orange" id="avg_daily_stock_volatility">0</th>
+        <th class="row1-single orange" id="avg_annual_stock_volatility">0</th>
+        <th class="gr-blue-3 gray" id="stock_rank_risk"></th>
+
+        <th class="row1-single orange" id="avg_minimum_daily_stock_3_years">0</th>
+        <th class="row1-single orange" id="avg_maximum_daily_stock_3_years">0</th>
+        <th class="row1-single orange" id="avg_annual_stock_expected_return">0</th>
+        <th class="row1-single orange" id="avg_daily_expected_stock_return">0</th>
+
+        <th class="row1-single orange" id="avg_minimum_daily_stock_1_year">0</th>
+        <th class="row1-single orange" id="avg_maximum_daily_stock_1_year">0</th>
+        <th class="row1-single orange" id="avg_average_daily_expected_return_1_year">0</th>
+        <th class="row1-single gr-blue-2"></th>
+
+        <th class="row1-single orange" id="avg_pe_ratio">0</th>
+        <th class="row1-single orange" id="avg_market_to_book_ratio">0</th>
+        <th class="row1-single orange" id="avg_return_on_equity">0</th>
+        <th class="row1-single orange" id="avg_free_cash_flow_yield">0</th>
+        <th class="row1-single orange" id="avg_leverage_ratio">0</th>
+        <th class="row1-single orange" id="avg_stock_dividend_yield">0</th>
+        <th class="row1-single orange" id="avg_earning_per_share">0</th>
+        <th class="row1-single orange" id="avg_annual_dividend_rate">0</th>
+        <th colspan="11" class="border-none" style="background-color: white"></th>
+
+    </tr>
+
+    <tr style="position: sticky; top: 150px;background-color: white">
+        <th colspan="4" style="border: none">
+        </th>
+
+        <th colspan="25" style="padding: 10px;border: none">
+            <a href="https://www.saudiexchange.sa/" target="_blank" style="color: black;text-decoration: none;font-size: 12px">رابط أخبار وأسعار سوق التداول السعودي</a>
+        </th>
+        <th colspan="11" class="border-none" style="background-color: white"></th>
+
+    </tr>
+
+
+    <tr style="position: sticky; top: 180px">
+        <th colspan="5" class="row2-mergedAll gr-blue-3">ملخص أداء أسهم الشركات في السوق السعودى للتداول</th>
+        <th colspan="2" class="row2-mergedAll gr-blue-2">Stock Market Price</th>
+        <th colspan="6" class="row2-mergedAll gr-blue-3">Risk measurement Ratios</th>
+        <th colspan="9" class="row2-mergedAll gr-blue-2">Stock Performance</th>
+        <th colspan="10" class="row2-mergedAll gr-blue-3">Financial Ratios</th>
+    </tr>
+
+    <tr style="position: sticky; top: 218px">
+        <th class="row3-cell1 gr-blue-1">إضافة السهم للمحفظة</th>
+        <th class="row3-cell2 gr-blue-1">تحليل أداء السهم</th>
+        <th class="row3-cell3 gr-blue-1">مؤشر القطاع</th>
+        <th class="row3-cell4 gr-blue-1">القطاع</th>
+        <th class="row3-cell5 gr-blue-1">الشركة</th>
+
+
+        <th class="row3-cell6 gr-blue-3">Closing Price</th>
+        <th class="row3-cell7 gr-blue-3">Typical Price</th>
+
+        <th class="row3-cell6 gr-blue-2" title="VaR % For 1 Day">VaR % For 1 Day</th>
+        <th class="row3-cell7 gr-blue-2">Sharp Ratio</th>
+        <th class="row3-cell8 gr-blue-2">Beta Coefficient</th>
+        <th class="row3-cell9 gr-blue-2">Daily Volatility</th>
+        <th class="row3-cell10 gr-blue-2">Annual Volatility</th>
+        <th class="row3-cell11 gr-blue-2">Risk Ranking</th>
+
+
+        <th colspan="4" class="row2-mergedAll gr-blue-3">Over 3 Years Historical Data</th>
+        <th colspan="5" class="row3-cell14 gr-blue-4">Over 1 Year Historical Data</th>
+
+
+
+        <th class="row3-cell14 gr-blue-2">P/E Ratio</th>&nbsp;
+        <th class="row3-cell15 gr-blue-2">Market to Book Ratio</th>
+        <th class="row3-cell15 gr-blue-2">ROE</th>
+        <th class="row3-cell15 gr-blue-2">Free Cash Flow Yield</th>
+        <th class="row3-cell15 gr-blue-2">Leverage Ratio</th>
+        <th class="row3-cell16 gr-blue-2">Dividend Yield</th>
+        <th class="row3-cell17 gr-blue-2">
+            EPS<img src="{{asset('assets/media/Saudi_Riyal_Symbol.svg')}}" alt="Saudi Exchange Logo" style="width: 30px; height: 15px;">
+        </th>
+        <th class="row3-cell18 gr-blue-2">Annual Dividend Rate</th>
+        <th class="row3-cell18 gr-blue-2">Last Updated fiscal Year</th>
+        <th class="row3-cell18 gr-blue-2">Latest Dividend Date</th>
+    </tr>
+    <tr style="position: sticky; top: 290px;">
+        <th class="border-none"></th>
+        <th class="border-none"></th>
+        <th class="border-none"></th>
+        <th class="border-none"></th>
+        <th class="border-none"></th>
+        <th class="border-none"></th>
+        <th class="border-none"></th>
+        <th class="border-none"></th>
+        <th class="border-none"></th>
+        <th class="border-none"></th>
+        <th class="border-none"></th>
+        <th class="border-none"></th>
+        <th class="border-none"></th>
+        <th class="row3-cell14 gr-blue-3" style="font-size: 10px">Minimum Daily Return</th>
+        <th class="row3-cell14 gr-blue-3" style="font-size: 10px">Maximum Daily Return</th>
+        <th class="row3-cell14 gr-blue-3" style="font-size: 10px">Annual Expected Return</th>
+        <th class="row3-cell14 gr-blue-3" style="font-size: 10px">Average Daily Return</th>
+        <th class="row3-cell14 gr-blue-4" style="font-size: 10px">Minimum Daily Return</th>
+        <th class="row3-cell14 gr-blue-4" style="font-size: 10px">Maximum Daily Return</th>
+        <th class="row3-cell14 gr-blue-4" style="font-size: 10px">Average Daily Return</th>
+        <th class="row3-cell14 gr-blue-4" style="font-size: 10px">
+            52 Week High Price<img src="{{asset('assets/media/Saudi_Riyal_Symbol black.svg')}}" alt="Saudi Exchange Logo" style="width: 30px; height: 15px;fill: black">
+        </th>
+        <th class="row3-cell14 gr-blue-4" style="font-size: 10px">
+            52 Week Low Price<img src="{{asset('assets/media/Saudi_Riyal_Symbol black.svg')}}" alt="Saudi Exchange Logo" style="width: 30px; height: 15px;">
+        </th>
+        <th class="border-none"></th>
+        <th class="border-none"></th>
+        <th class="border-none"></th>
+        <th class="border-none"></th>
+        <th class="border-none"></th>
+    </tr>
+    </thead>
+
+    <tbody id="table-data">
+    </tbody>
+</table>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+{{--<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>--}}
+{{--<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>--}}
+
+<script type="text/javascript" src="https://cdn.canvasjs.com/jquery.canvasjs.min.js"></script>
+
+
+<script>
+
+
+    // Clear chart containers when modal closes
+    $('.bd-example-modal-xl').on('hidden.bs.modal', function () {
+        $('#chartContainer').html('');
+    });
+
+    $('.bd-example-modal-xl').on('shown.bs.modal', function (event) {
+
+        const button = event.relatedTarget; // The button that triggered the modal
+        const company_id = button.getAttribute('data-id'); // Native JS way
+        $("#button_id").val(company_id);
+        drawCharts1(company_id);
+    })
+
+    $('#probability').on('click', function (event) {
+        const button_id = $("#button_id").val();
+        drawCharts1(button_id);
+    })
+    $('#performance').on('click', function (event) {
+        const button_id = $("#button_id").val();
+        drawCharts2(button_id);
+    })
+</script>
+<script>
+
+    function fetchStockAverages(value) {
+        $.ajax({
+            url: "{{route('get-stock-averages')}}", // Adjust the URL if needed
+            method: "GET",
+            dataType: "json",
+            data: { sector_code: value },
+            success: function (response) {
+                // Assuming response contains keys matching the ID attributes in the table
+                $("#avg_stock_var_percent").text("%" + response.avg_stock_var_percent || "0");
+                $("#avg_stock_sharp_ratio").text("%" + response.avg_stock_sharp_ratio || "0");
+                $("#avg_stock_beta_coefficient").text("%" + response.avg_stock_beta_coefficient || "0");
+                $("#avg_annual_stock_volatility").text("%" + response.avg_annual_stock_volatility || "0");
+                $("#avg_daily_stock_volatility").text("%" + response.avg_daily_stock_volatility || "0");
+                $("#stock_rank_risk").text(response.stock_risk_rank || "-");
+
+                $("#avg_minimum_daily_stock_3_years").text("%" + response.avg_minimum_daily_stock_3_years.toFixed(2) || "0");
+                $("#avg_maximum_daily_stock_3_years").text("%" + response.avg_maximum_daily_stock_3_years.toFixed(2) || "0");
+                $("#avg_annual_stock_expected_return").text("%" + response.avg_annual_stock_expected_return || "0");
+                $("#avg_daily_expected_stock_return").text("%" + response.avg_daily_expected_stock_return || "0");
+
+                $("#avg_minimum_daily_stock_1_year").text("%" + response.avg_minimum_daily_stock_1_year || "0");
+                $("#avg_maximum_daily_stock_1_year").text("%" + response.avg_maximum_daily_stock_1_year || "0");
+                $("#avg_average_daily_expected_return_1_year").text("%" + response.avg_average_daily_expected_return_1_year || "0");
+
+                $("#avg_pe_ratio").text("%" + response.avg_pe_ratio || "0");
+                $("#avg_market_to_book_ratio").text("%" + response.avg_market_to_book_ratio || "0");
+                $("#avg_return_on_equity").text("%" + response.avg_return_on_equity || "0");
+                $("#avg_free_cash_flow_yield").text("%" + response.avg_free_cash_flow_yield || "0");
+                $("#avg_leverage_ratio").text("%" + response.avg_leverage_ratio || "0");
+                $("#avg_stock_dividend_yield").text("%" + response.avg_stock_dividend_yield || "0");
+                $("#avg_annual_dividend_rate").text("%"+ response.avg_annual_dividend_rate || "0");
+
+
+                var riskRank = response.stock_risk_rank;
+                if (riskRank === "Conservative") {
+                    $("#stock_rank_risk").css("background-color", "lightgreen");
+                } else if (riskRank === "Moderately Conservative") {
+                    $("#stock_rank_risk").css("background-color", "yellow");
+                } else if (riskRank === "Aggressive") {
+                    $("#stock_rank_risk").css("background-color", "orange");
+                } else if (riskRank === "Very Aggressive") {
+                    $("#stock_rank_risk").css("background-color", "red");
+                } else {
+                    $("#stock_rank_risk").css("background-color", "gray");
+                }
+            },
+
+            error: function () {
+                console.error("Failed to fetch stock averages.");
+            }
         });
+    }
+    function getCompanies() {
+        $.ajax({
+            type: 'GET',
+            url: '/companies',
+            dataType: 'json',
+            beforeSend: function() {
+                $('#table-data').append('<tr><td colspan="31" style="text-align: center;font-weight: bold">جاري التحميل ...</td></tr>');
+            },
+            success: function(data) {
+                $('#table-data').empty();
+                $.each(data, function(index, company) {
 
-
-
-        $(document).ready(function () {
-            function fetchStockAverages() {
-                $.ajax({
-                    url: "{{route('get-stock-averages')}}", // Adjust the URL if needed
-                    method: "GET",
-                    dataType: "json",
-                    success: function (response) {
-                        // Assuming response contains keys matching the ID attributes in the table
-                        $("#avg_stock_var_percent").text(response.avg_stock_var_percent || "N/A");
-                        $("#avg_stock_sharp_ratio").text(response.avg_stock_sharp_ratio || "N/A");
-                        $("#avg_stock_beta_coefficient").text(response.avg_stock_beta_coefficient || "N/A");
-                        $("#avg_annual_stock_volatility").text(response.avg_annual_stock_volatility || "N/A");
-                        $("#avg_daily_stock_volatility").text(response.avg_daily_stock_volatility || "N/A");
-                        $("#avg_pe_ratio").text(response.avg_pe_ratio || "N/A");
-                        $("#avg_return_on_equity").text(response.avg_return_on_equity || "N/A");
-                        $("#avg_stock_dividend_yield").text(response.avg_stock_dividend_yield || "N/A");
-                        $("#avg_earning_per_share").text(response.avg_earning_per_share || "N/A");
-                        $("#avg_annual_stock_expected_return").text(response.avg_annual_stock_expected_return || "N/A");
-                        $("#avg_avg_daily_expected_stock_return").text(response.avg_avg_daily_expected_stock_return || "N/A");
-                    },
-
-                error: function () {
-                        console.error("Failed to fetch stock averages.");
+                    let color;
+                    switch (company.stock_risk_rank) {
+                        case 'Conservative':
+                            color = 'lightgreen';
+                            break;
+                        case 'Moderately Conservative':
+                            color = 'yellow';
+                            break;
+                        case 'Aggressive':
+                            color = 'orange';
+                            break;
+                        case 'Very Aggressive':
+                            color = 'red';
+                            break;
+                        default:
+                            color = 'gray'; // fallback
                     }
+
+                    $('#table-data').append(`
+                          <tr>
+           <td>
+               <button class="btn btn-primary btn-sm" style="height: 30px; width: 30px; padding: 0;cursor:pointer;border: none;background: transparent;">
+                   <img src="{{asset('assets/media/add.png')}}" alt="Add" style="height: 20px; width: 20px;">
+               </button>
+           </td>
+
+           <td>
+               <button type="button" data-toggle="modal" data-target=".bd-example-modal-xl" class="btn btn-info btn-sm" data-id="${company.company_id}"
+                style="height: 30px; width: 30px; padding: 0;cursor:pointer;border: none;background: transparent;">
+                   <img src="{{asset('assets/media/graph.png')}}" alt="Graph" style="height: 30px; width: 30px;">
+               </button>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.index_symbol}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.index_name}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold" dir="rtl">${company.company_num} <br> ${company.company_name}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.close < 0 ? 'red' : 'black'}">${company.close !== null ? Number(company.close).toFixed(2) : '00.00'}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.typical_price < 0 ? 'red' : 'black'}">${company.typical_price !== null ? Number(company.typical_price).toFixed(2) : '00.00'}</span>
+           </td>
+
+
+           <td>
+               <span style="font-weight: bold; color: ${company.stock_var_percent < 0 ? 'red' : 'black'}">${'% ' + company.stock_var_percent}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.stock_sharp_ratio < 0 ? 'red' : 'black'}">${company.stock_sharp_ratio}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.stock_beta_coefficient < 0 ? 'red' : 'black'}">${company.stock_beta_coefficient}</span>
+           </td>
+
+             <td>
+               <span style="font-weight: bold; color: ${company.daily_stock_volatility < 0 ? 'red' : 'black'}">${'% ' + company.daily_stock_volatility}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.annual_stock_volatility < 0 ? 'red' : 'black'}">${'% ' + company.annual_stock_volatility}</span>
+           </td>
+
+
+           <td style="background-color: ${color}">
+                            <span style="font-weight: bold">${company.stock_risk_rank !== null ? company.stock_risk_rank : '-'}</span>
+                        </td>
+
+            <td>
+               <span style="font-weight: bold; color: ${company.minimum_daily_stock_3_years < 0 ? 'red' : 'black'}">${'% ' + company.minimum_daily_stock_3_years}</span>
+           </td>
+
+               <td>
+               <span style="font-weight: bold; color: ${company.maximum_daily_stock_3_years < 0 ? 'red' : 'black'}">${'% ' + Number(company.maximum_daily_stock_3_years).toFixed(2)}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.annual_stock_expected_return < 0 ? 'red' : 'black'}">${company.annual_stock_expected_return !== null ? '% ' + company.annual_stock_expected_return : 'N/A'}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.avg_daily_expected_stock_return < 0 ? 'red' : 'black'}">${company.avg_daily_expected_stock_return !== null ? '% ' + company.avg_daily_expected_stock_return : 'N/A'}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.minimum_daily_stock_1_year < 0 ? 'red' : 'black'}">${company.minimum_daily_stock_1_year !== null ? '% ' + Number(company.minimum_daily_stock_1_year).toFixed(2) : 'N/A'}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.maximum_daily_stock_1_year < 0 ? 'red' : 'black'}">${company.maximum_daily_stock_1_year !== null ? '% ' + Number(company.maximum_daily_stock_1_year).toFixed(2) : 'N/A'}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.average_daily_expected_return_1_year < 0 ? 'red' : 'black'}">${company.average_daily_expected_return_1_year !== null ? '% ' + Number(company.average_daily_expected_return_1_year).toFixed(2) : 'N/A'}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.week_52_high_price < 0 ? 'red' : 'black'}">${company.week_52_high_price !== null ? Number(company.week_52_high_price).toFixed(2) : 'N/A'}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.week_52_low_price < 0 ? 'red' : 'black'}">${company.week_52_low_price !== null ? Number(company.week_52_low_price).toFixed(2) : 'N/A'}</span>
+           </td>
+
+           <td>
+                <span style="font-weight: bold; color: ${company.pe_ratio < 0 ? 'red' : 'black'}">${company.pe_ratio !== null ? company.pe_ratio : 'N/A'}</span>
+           </td>
+
+
+           <td>
+                <span style="font-weight: bold; color: ${company.market_to_book_ratio < 0 ? 'red' : 'black'}">${company.market_to_book_ratio !== null ? Number(company.market_to_book_ratio).toFixed(2) : 'N/A'}</span>
+           </td>
+
+
+           <td>
+               <span style="font-weight: bold; color: ${company.return_on_equity < 0 ? 'red' : 'black'}">${company.return_on_equity !== null ? '% ' + company.return_on_equity : 'N/A'}</span>
+           </td>
+
+           <td>
+                <span style="font-weight: bold; color: ${company.free_cash_flow_yield < 0 ? 'red' : 'black'}">${company.free_cash_flow_yield !== null ? '%' + Number(company.free_cash_flow_yield).toFixed(2) : 'N/A'}</span>
+           </td>
+
+           <td>
+                <span style="font-weight: bold; color: ${company.leverage_ratio < 0 ? 'red' : 'black'}">${company.leverage_ratio !== null ? '%' + company.leverage_ratio : 'N/A'}</span>
+           </td>
+
+           <td>
+                <span style="font-weight: bold; color: ${company.stock_dividend_yield < 0 ? 'red' : 'black'}">${company.stock_dividend_yield !== null ? '%' + company.stock_dividend_yield : 'N/A'}</span>
+           </td>
+
+
+           <td>
+               <span style="font-weight: bold; color: ${company.earning_per_share < 0 ? 'red' : 'black'}">${company.earning_per_share !== null ? company.earning_per_share : 'N/A'}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.annual_dividend_rate < 0 ? 'red' : 'black'}">${company.annual_dividend_rate !== null ? company.annual_dividend_rate : 'N/A'}</span>
+           </td>
+
+            <td>
+               <span style="font-weight: bold; color: ${company.last_fiscal_year < 0 ? 'red' : 'black'}">${company.last_fiscal_year !== null ? company.last_fiscal_year : 'N/A'}</span>
+           </td>
+
+           <td>
+               <span  style="font-weight: bold;width: 100%">${company.last_dividend_date !== null ? company.last_dividend_date : '-'}</span>
+           </td>
+       </tr>
+
+                `);
                 });
             }
+        });
+    }
 
-            // Fetch data initially
-            fetchStockAverages();
+    $('#search-input').on('keyup', function() {
+        var searchQuery = $(this).val();
+        $.ajax({
+            type: 'GET',
+            url: '/search', // replace with your search endpoint
+            dataType: 'json',
+            data: { query: searchQuery },
+            beforeSend: function() {
+                $('#table-data').append('<tr><td colspan="21" style="text-align: center;font-weight: bold">جاري التحميل ...</td></tr>');
+            },
+            success: function(data) {
+                $('#table-data').empty();
+                $.each(data, function(index, company) {
 
-            // Optional: Refresh data every 60 seconds
-            setInterval(fetchStockAverages, 60000);
+                    let color;
+                    switch (company.stock_risk_rank) {
+                        case 'Conservative':
+                            color = 'lightgreen';
+                            break;
+                        case 'Moderately Conservative':
+                            color = 'yellow';
+                            break;
+                        case 'Aggressive':
+                            color = 'orange';
+                            break;
+                        case 'Very Aggressive':
+                            color = 'red';
+                            break;
+                        default:
+                            color = 'gray'; // fallback
+                    }
+
+                    $('#table-data').append(`
+                          <tr>
+           <td>
+               <button class="btn btn-primary btn-sm" style="height: 30px; width: 30px; padding: 0;cursor:pointer;border: none;background: transparent;">
+                   <img src="{{asset('assets/media/add.png')}}" alt="Add" style="height: 20px; width: 20px;">
+               </button>
+           </td>
+
+           <td>
+               <button type="button" data-toggle="modal" data-target=".bd-example-modal-xl" class="btn btn-info btn-sm" data-id="${company.company_id}"
+                style="height: 30px; width: 30px; padding: 0;cursor:pointer;border: none;background: transparent;">
+                   <img src="{{asset('assets/media/graph.png')}}" alt="Graph" style="height: 30px; width: 30px;">
+               </button>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.index_symbol}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold">${company.index_name}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold" dir="rtl">${company.company_num} <br> ${company.company_name}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.close < 0 ? 'red' : 'black'}">${company.close !== null ? Number(company.close).toFixed(2) : '00.00'}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.typical_price < 0 ? 'red' : 'black'}">${company.typical_price !== null ? Number(company.typical_price).toFixed(2) : '00.00'}</span>
+           </td>
+
+
+           <td>
+               <span style="font-weight: bold; color: ${company.stock_var_percent < 0 ? 'red' : 'black'}">${'% ' + company.stock_var_percent}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.stock_sharp_ratio < 0 ? 'red' : 'black'}">${company.stock_sharp_ratio}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.stock_beta_coefficient < 0 ? 'red' : 'black'}">${company.stock_beta_coefficient}</span>
+           </td>
+
+             <td>
+               <span style="font-weight: bold; color: ${company.daily_stock_volatility < 0 ? 'red' : 'black'}">${'% ' + company.daily_stock_volatility}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.annual_stock_volatility < 0 ? 'red' : 'black'}">${'% ' + company.annual_stock_volatility}</span>
+           </td>
+
+
+           <td style="background-color: ${color}">
+                            <span style="font-weight: bold">${company.stock_risk_rank !== null ? company.stock_risk_rank : '-'}</span>
+                        </td>
+
+            <td>
+               <span style="font-weight: bold; color: ${company.minimum_daily_stock_3_years < 0 ? 'red' : 'black'}">${'% ' + company.minimum_daily_stock_3_years}</span>
+           </td>
+
+               <td>
+               <span style="font-weight: bold; color: ${company.maximum_daily_stock_3_years < 0 ? 'red' : 'black'}">${'% ' + Number(company.maximum_daily_stock_3_years).toFixed(2)}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.annual_stock_expected_return < 0 ? 'red' : 'black'}">${company.annual_stock_expected_return !== null ? '% ' + company.annual_stock_expected_return : 'N/A'}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.avg_daily_expected_stock_return < 0 ? 'red' : 'black'}">${company.avg_daily_expected_stock_return !== null ? '% ' + company.avg_daily_expected_stock_return : 'N/A'}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.minimum_daily_stock_1_year < 0 ? 'red' : 'black'}">${company.minimum_daily_stock_1_year !== null ? '% ' + Number(company.minimum_daily_stock_1_year).toFixed(2) : 'N/A'}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.maximum_daily_stock_1_year < 0 ? 'red' : 'black'}">${company.maximum_daily_stock_1_year !== null ? '% ' + Number(company.maximum_daily_stock_1_year).toFixed(2) : 'N/A'}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.average_daily_expected_return_1_year < 0 ? 'red' : 'black'}">${company.average_daily_expected_return_1_year !== null ? '% ' + Number(company.average_daily_expected_return_1_year).toFixed(2) : 'N/A'}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.week_52_high_price < 0 ? 'red' : 'black'}">${company.week_52_high_price !== null ? Number(company.week_52_high_price).toFixed(2) : 'N/A'}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.week_52_low_price < 0 ? 'red' : 'black'}">${company.week_52_low_price !== null ? Number(company.week_52_low_price).toFixed(2) : 'N/A'}</span>
+           </td>
+
+           <td>
+                <span style="font-weight: bold; color: ${company.pe_ratio < 0 ? 'red' : 'black'}">${company.pe_ratio !== null ? company.pe_ratio : 'N/A'}</span>
+           </td>
+
+
+           <td>
+                <span style="font-weight: bold; color: ${company.market_to_book_ratio < 0 ? 'red' : 'black'}">${company.market_to_book_ratio !== null ? Number(company.market_to_book_ratio).toFixed(2) : 'N/A'}</span>
+           </td>
+
+
+           <td>
+               <span style="font-weight: bold; color: ${company.return_on_equity < 0 ? 'red' : 'black'}">${company.return_on_equity !== null ? '% ' + company.return_on_equity : 'N/A'}</span>
+           </td>
+
+           <td>
+                <span style="font-weight: bold; color: ${company.free_cash_flow_yield < 0 ? 'red' : 'black'}">${company.free_cash_flow_yield !== null ? '%' + Number(company.free_cash_flow_yield).toFixed(2) : 'N/A'}</span>
+           </td>
+
+           <td>
+                <span style="font-weight: bold; color: ${company.leverage_ratio < 0 ? 'red' : 'black'}">${company.leverage_ratio !== null ? '%' + company.leverage_ratio : 'N/A'}</span>
+           </td>
+
+           <td>
+                <span style="font-weight: bold; color: ${company.stock_dividend_yield < 0 ? 'red' : 'black'}">${company.stock_dividend_yield !== null ? '%' + company.stock_dividend_yield : 'N/A'}</span>
+           </td>
+
+
+           <td>
+               <span style="font-weight: bold; color: ${company.earning_per_share < 0 ? 'red' : 'black'}">${company.earning_per_share !== null ? company.earning_per_share : 'N/A'}</span>
+           </td>
+
+           <td>
+               <span style="font-weight: bold; color: ${company.annual_dividend_rate < 0 ? 'red' : 'black'}">${company.annual_dividend_rate !== null ? company.annual_dividend_rate : 'N/A'}</span>
+           </td>
+
+            <td>
+               <span style="font-weight: bold; color: ${company.last_fiscal_year < 0 ? 'red' : 'black'}">${company.last_fiscal_year !== null ? company.last_fiscal_year : 'N/A'}</span>
+           </td>
+
+           <td>
+               <span  style="font-weight: bold;width: 100%">${company.last_dividend_date !== null ? company.last_dividend_date : '-'}</span>
+           </td>
+       </tr>
+
+                `);
+                });
+
+            }
+        });
+    });
+    $(document).ready(function () {
+        getCompanies();
+    });
+
+    $('#sector').on('change', function() {
+        var selectedValue = $(this).val();
+        fetchStockAverages(selectedValue);
+    });
+
+
+</script>
+
+<script>
+
+    function drawCharts1(company_id) {
+
+        $.ajax({
+            type: 'GET',
+            url: '/stock-performance',
+            dataType: 'json',
+            data: {
+                {{--"_token": "{{ csrf_token() }}",--}}
+                id: company_id
+            },
+            beforeSend: function() {
+                $('.modal-loader').html('' +
+                    '<div class="text-center" id="loader">' +
+                    '<div class="spinner-border" role="status"></div>' +
+                    '<div class="mt-3">' +
+                    '<span>جار جلب البيانات ...</span>' +
+                    '</div>' +
+                    '</div>' +
+                    '');
+            },
+            success: function(data) {
+                $("#loader").remove();
+
+                const values = Object.values(data.frequency); // ✅ JavaScript version of array_values()
+                var dataPointsArray = {
+                    var_t:values,
+
+                    bin_boundaries: [0.13, 0.00, 0.13, 0.13, 0.53, 0.40, 2.54, 3.07, 6.54, 12.95, 18.56, 22.43, 15.62, 6.94, 4.27, 3.07, 1.20, 0.53, 0.13, 0.27, 0.00, 0.00,
+                        0.00, 0.13, 0.00, 0.00, 0.00, 0.00]
+                };
+
+
+                var bin_boundaries = dataPointsArray.bin_boundaries;
+                var chartData = dataPointsArray.var_t.map(function(value, index) {
+                    return { y: value * 100, label: (bin_boundaries[index] * 100).toFixed(1) + "%" }; // تحويل التسميات إلى نسبة مئوية وتقريبها لثلاثة أرقام عشرية
+                });
+
+                var options = {
+                    animationEnabled: true,
+                    title:{
+                        text: data.company.company_name
+                    },
+                    axisX: {
+                        title: "",
+                        labelAngle: -0, // تدوير التسميات لتجنب التداخل
+                        interval: 1,
+                        labelFontSize: 9 // تقليل حجم الخط لعرض المزيد من النقاط
+                    },
+                    axisY: {
+                        title: "",
+                        includeZero: true,
+                        suffix: "%", // إضافة علامة النسبة المئوية
+                        labelFontSize: 10 // تقليل حجم الخط لعرض المزيد من النقاط
+                    },
+                    toolTip: {
+                        shared: true,
+                        reversed: true
+                    },
+                    data: [
+                        {
+                            type: "column",
+                            color: "#7CB9E8", // تحديد لون العمود
+                            dataPoints: chartData
+                        }
+                    ]
+                };
+
+                $("#chartContainer").CanvasJSChart(options);
+
+            }
         });
 
-        // oTable = $('#kt_ecommerce_coupons_table').DataTable();   //pay attention to capital D, which is mandatory to retrieve "api" datatables' object, as @Lionel said
-        // $('#searchInput').keyup(function(){
-        //     oTable.search($(this).val()).draw() ;
-        // })
+
+    }
+
+    function drawCharts2(company_id) {
 
 
-        $('#searchInput').keyup(function() {
-            var table = $('#kt_ecommerce_coupons_table').DataTable();
-            table.search($(this).val()).draw();
+        $.ajax({
+            type: 'GET',
+            url: '/stock-performance',
+            dataType: 'json',
+            data: {
+                {{--"_token": "{{ csrf_token() }}",--}}
+                id: company_id
+            },
+            beforeSend: function() {
+                $('.modal-loader').html('' +
+                    '<div class="text-center" id="loader">' +
+                    '<div class="spinner-border" role="status"></div>' +
+                    '<div class="mt-3">' +
+                    '<span>جار جلب البيانات ...</span>' +
+                    '</div>' +
+                    '</div>' +
+                    '');
+            },
+            success: function(data) {
+                $("#loader").remove();
+
+                // بيانات ثابتة
+                var dataPointsArray = {
+                    log_array1:  data.company_ratios,
+                    log_array2:  data.sector_ratios,
+                };
+
+                var chartData1 = dataPointsArray.log_array1.map((value, index) => ({
+                    y: value * 100,
+                    label: index.toString()
+                }));
+
+                var chartData2 = dataPointsArray.log_array2.map((value, index) => ({
+                    y: value * 100,
+                    label: index.toString()
+                }));
+
+                var chartOptions = {
+                    title: {},
+                    axisX: {
+                        labelAngle: -45,
+                        // interval: 10,
+                        labelFontSize: 10,
+                        labelFormatter: function () { return ""; }
+                    },
+                    axisY: {
+                        includeZero: true,
+                        suffix: "%",
+                        // interval: 2,
+                        labelFontSize: 10
+                    },
+                    legend: {
+                        cursor: "pointer",
+                        verticalAlign: "bottom",
+                        horizontalAlign: "center",
+                        dockInsidePlotArea: true
+                    },
+                    data: [
+                        {
+                            type: "line",
+                            color: "#0000FF",
+                            name: data.company.company_name,
+                            showInLegend: true,
+                            dataPoints: chartData1
+                        },
+                        {
+                            type: "line",
+                            color: "#FF7F50",
+                            name: data.company.index_name,
+                            showInLegend: true,
+                            dataPoints: chartData2
+                        }
+                    ]
+                };
+
+                $("#chartContainer").CanvasJSChart(chartOptions);
+
+            }
         });
-    </script>
+
+
+    }
+
+</script>
 
 
 
-@endsection
+</html>
