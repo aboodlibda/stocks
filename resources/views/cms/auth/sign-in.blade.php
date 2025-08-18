@@ -118,7 +118,7 @@
                                 <!--begin::Form-->
                                 <form class="form w-100"  id="kt_sign_in_form"
                                       data-kt-redirect-url="{{route('dashboard')}}" action="{{route('do-login')}}"
-                                      method="POST" enctype="multipart/form-data">
+                                      method="POST">
                                     @csrf
                                     <!--begin::Heading-->
                                     <div class="text-center mb-11">
