@@ -1,6 +1,12 @@
 "use strict";
 
 $(document).ready(function () {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
     const form = $('#kt_sign_in_form');
     const submitButton = $('#kt_sign_in_submit');
 
@@ -15,8 +21,6 @@ $(document).ready(function () {
         submitButton.prop('disabled', true);
 
         let formData = new FormData(this);
-        let token = $('meta[name="csrf-token"]').attr('content');
-        formData.append('_token', token);
 
         $.ajax({
             url: form.attr('action'),
