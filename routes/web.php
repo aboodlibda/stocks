@@ -23,11 +23,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     Route::get('market-stock-screen', [HomeController::class, 'marketStockScreen'])->name('market-stock-screen');
     Route::get('/get-stock-averages', [HomeController::class, 'getStockAverages'])->name('get-stock-averages');
     Route::get('/companies/ajax', [HomeController::class, 'ajaxIndex'])->name('companies.index.ajax');
-    Route::get('new-market-stock-screen', function () {
-//        $companies = Company::query()->get(['index_name', 'index_symbol']);
-        $companies = Company::query()->distinct()->get(['index_name', 'index_symbol']);
-        return view('cms.test',compact('companies'));
-    })->name('test');
 
     Route::get('/companies', [HomeController::class, 'getCompanies']);
     Route::get('/search', [HomeController::class, 'search']);
@@ -72,6 +67,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     Route::group(['prefix' => 'cms', 'middleware' => ['auth:user']], function () {
         Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
         Route::resource('portfolios', PortfolioController::class);
+        Route::get('notes',[\App\Http\Controllers\NotesController::class,'index'])->name('notes.index');
+        Route::get('notes/{note}',[\App\Http\Controllers\NotesController::class,'edit'])->name('notes.edit');
+        Route::put('notes/{note}',[\App\Http\Controllers\NotesController::class,'update'])->name('notes.update');
 
 
     });
