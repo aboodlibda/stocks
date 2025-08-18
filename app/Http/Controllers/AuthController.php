@@ -16,21 +16,21 @@ class AuthController extends Controller
     public function doLogin(Request $request)
     {
 
-        $request->validate([
-            'email' => 'required|email|exists:users,email',
-            'password' => 'required|min:6',
-        ]);
-
-
         $credentials = $request->only('email', 'password');
-        if (Auth::guard('user')->attempt($credentials)) {
+
+        if (Auth::guard('user')->attempt($credentials, $request->filled('remember'))) {
             $request->session()->regenerate();
-            return redirect()->route('dashboard');
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Successfully logged in',
+            ]);
         }
 
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
+        return response()->json([
+            'success' => false,
+            'message' => 'Invalid credentials, please try again.',
+        ], 401);
     }
 
     public function logout()
