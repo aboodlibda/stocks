@@ -22,16 +22,18 @@ class AuthController extends Controller
         if (Auth::guard('user')->attempt($credentials, $request->filled('remember'))) {
             $request->session()->regenerate();
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Successfully logged in',
-            ]);
+//            return response()->json([
+//                'success' => true,
+//                'message' => 'Successfully logged in',
+//            ]);
+            return redirect()->route('dashboard');
         }
 
-        return response()->json([
-            'success' => false,
-            'message' => 'Invalid credentials, please try again.',
-        ], 401);
+//        return response()->json([
+//            'success' => false,
+//            'message' => 'Invalid credentials, please try again.',
+//        ], 401);
+        return back()->with('error', 'Invalid credentials, please try again.');
     }
 
     public function logout()
