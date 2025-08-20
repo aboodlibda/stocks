@@ -16,10 +16,10 @@ class AuthController extends Controller
     public function doLogin(Request $request)
     {
 
-        \Log::info('Form token: ' . $request->_token);
-        \Log::info('Session token: ' . session()->token());
+        // \Log::info('Form token: ' . $request->_token);
+        // \Log::info('Session token: ' . session()->token());
 
-        dd('Form token = '.$request->_token, 'Session token = '.session()->token());
+        // dd('Form token = '.$request->_token, 'Session token = '.session()->token());
 
         
 //        dd('login fun');
