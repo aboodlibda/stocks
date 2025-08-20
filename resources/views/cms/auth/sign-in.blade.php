@@ -119,7 +119,7 @@
                                 <form class="form w-100"  id="kt_sign_in_form"
                                       data-kt-redirect-url="{{route('dashboard')}}" action="{{route('do-login')}}"
                                       method="POST">
-{{--                                    @csrf--}}
+                                    @csrf
                                     <!--begin::Heading-->
                                     <div class="text-center mb-11">
                                         <!--begin::Title-->
@@ -185,7 +185,9 @@
                                     <!--end::Wrapper-->
                                     <!--begin::Submit button-->
                                     <div class="d-grid mb-10">
-                                        <button type="submit" class="btn btn-primary" id="kt_sign_in_submit">
+                                        <button type="submit" class="btn btn-primary"
+{{--                                                id="kt_sign_in_submit"--}}
+                                        >
                                             <!--begin::Indicator label-->
                                             <span class="indicator-label">{{trans('dashboard_trans.Sign In')}}</span>
                                             <!--end::Indicator label-->
@@ -276,92 +278,92 @@
         {{--@notifyJs--}}
         <!--end::Javascript-->
 
-        <script>
+{{--        <script>--}}
 
-            $(document).ready(function () {
-                const form = $('#kt_sign_in_form');
-                const submitButton = $('#kt_sign_in_submit');
+{{--            $(document).ready(function () {--}}
+{{--                const form = $('#kt_sign_in_form');--}}
+{{--                const submitButton = $('#kt_sign_in_submit');--}}
 
-                form.on('submit', function (e) {
-                    e.preventDefault();
+{{--                form.on('submit', function (e) {--}}
+{{--                    e.preventDefault();--}}
 
-                    // Clear previous errors
-                    $('.error-message').text('');
+{{--                    // Clear previous errors--}}
+{{--                    $('.error-message').text('');--}}
 
-                    // Show loading indication
-                    submitButton.attr('data-kt-indicator', 'on');
-                    submitButton.prop('disabled', true);
+{{--                    // Show loading indication--}}
+{{--                    submitButton.attr('data-kt-indicator', 'on');--}}
+{{--                    submitButton.prop('disabled', true);--}}
 
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-
-
-                    $.ajax({
-                        url: form.attr('action'),
-                        type: 'POST',
-                        data: form.serialize(),
-                        success: function (response) {
-                            if (response.success) {
-                                Swal.fire({
-                                    text: response.message,
-                                    icon: "success",
-                                    buttonsStyling: false,
-                                    confirmButtonText: "Ok, got it!",
-                                    customClass: {
-                                        confirmButton: "btn btn-primary"
-                                    }
-                                }).then(function (result) {
-                                    if (result.isConfirmed) {
-                                        window.location.href = form.data('kt-redirect-url');
-                                    }
-                                });
-                            } else {
-                                Swal.fire({
-                                    text: response.message,
-                                    icon: "error",
-                                    buttonsStyling: false,
-                                    confirmButtonText: "Ok, got it!",
-                                    customClass: {
-                                        confirmButton: "btn btn-primary"
-                                    }
-                                });
-                            }
-                        },
-                        error: function (xhr) {
-                            let errors = xhr.responseJSON.errors;
-                            if (errors) {
-                                if (errors.email) {
-                                    $('#email-error').text(errors.email[0]);
-                                }
-                                if (errors.password) {
-                                    $('#password-error').text(errors.password[0]);
-                                }
-                            } else if(xhr.responseJSON.message) {
-                                Swal.fire({
-                                    text: xhr.responseJSON.message,
-                                    icon: "error",
-                                    buttonsStyling: false,
-                                    confirmButtonText: "Ok, got it!",
-                                    customClass: {
-                                        confirmButton: "btn btn-primary"
-                                    }
-                                });
-                            }
-                        },
-                        complete: function () {
-                            // Hide loading indication
-                            submitButton.removeAttr('data-kt-indicator');
-                            submitButton.prop('disabled', false);
-                        }
-                    });
-                });
-            });
+{{--                    $.ajaxSetup({--}}
+{{--                        headers: {--}}
+{{--                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
+{{--                        }--}}
+{{--                    });--}}
 
 
-        </script>
+{{--                    $.ajax({--}}
+{{--                        url: form.attr('action'),--}}
+{{--                        type: 'POST',--}}
+{{--                        data: form.serialize(),--}}
+{{--                        success: function (response) {--}}
+{{--                            if (response.success) {--}}
+{{--                                Swal.fire({--}}
+{{--                                    text: response.message,--}}
+{{--                                    icon: "success",--}}
+{{--                                    buttonsStyling: false,--}}
+{{--                                    confirmButtonText: "Ok, got it!",--}}
+{{--                                    customClass: {--}}
+{{--                                        confirmButton: "btn btn-primary"--}}
+{{--                                    }--}}
+{{--                                }).then(function (result) {--}}
+{{--                                    if (result.isConfirmed) {--}}
+{{--                                        window.location.href = form.data('kt-redirect-url');--}}
+{{--                                    }--}}
+{{--                                });--}}
+{{--                            } else {--}}
+{{--                                Swal.fire({--}}
+{{--                                    text: response.message,--}}
+{{--                                    icon: "error",--}}
+{{--                                    buttonsStyling: false,--}}
+{{--                                    confirmButtonText: "Ok, got it!",--}}
+{{--                                    customClass: {--}}
+{{--                                        confirmButton: "btn btn-primary"--}}
+{{--                                    }--}}
+{{--                                });--}}
+{{--                            }--}}
+{{--                        },--}}
+{{--                        error: function (xhr) {--}}
+{{--                            let errors = xhr.responseJSON.errors;--}}
+{{--                            if (errors) {--}}
+{{--                                if (errors.email) {--}}
+{{--                                    $('#email-error').text(errors.email[0]);--}}
+{{--                                }--}}
+{{--                                if (errors.password) {--}}
+{{--                                    $('#password-error').text(errors.password[0]);--}}
+{{--                                }--}}
+{{--                            } else if(xhr.responseJSON.message) {--}}
+{{--                                Swal.fire({--}}
+{{--                                    text: xhr.responseJSON.message,--}}
+{{--                                    icon: "error",--}}
+{{--                                    buttonsStyling: false,--}}
+{{--                                    confirmButtonText: "Ok, got it!",--}}
+{{--                                    customClass: {--}}
+{{--                                        confirmButton: "btn btn-primary"--}}
+{{--                                    }--}}
+{{--                                });--}}
+{{--                            }--}}
+{{--                        },--}}
+{{--                        complete: function () {--}}
+{{--                            // Hide loading indication--}}
+{{--                            submitButton.removeAttr('data-kt-indicator');--}}
+{{--                            submitButton.prop('disabled', false);--}}
+{{--                        }--}}
+{{--                    });--}}
+{{--                });--}}
+{{--            });--}}
+
+
+{{--        </script>--}}
         </body>
 
         <!--end::Body-->
