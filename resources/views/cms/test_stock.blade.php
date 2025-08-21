@@ -215,7 +215,7 @@
 
                         <tr>
                             <td class="text-center" data-bs-toggle="tooltip" data-bs-placement="right"
-                                data-key="p_e_ratio"
+                                data-key="price_earning_ratio"
                                 onclick="showTooltipFromKey(this)">
                                 <i class="fa fa-info-circle text-primary fs-5"></i>
                                 {{__('trans.Price Earning Ratio')}}</td>
@@ -233,7 +233,7 @@
                         </tr>
                         <tr>
                             <td class="text-center" data-bs-toggle="tooltip" data-bs-placement="right"
-                                data-key="free_cash_flow_yield"
+                                data-key="free_cash_flow"
                                 onclick="showTooltipFromKey(this)">
                                 <i class="fa fa-info-circle text-primary fs-5"></i>
                                 {{__('trans.Free Cash Flow')}}</td>
@@ -322,7 +322,7 @@
                         <tbody>
                         <tr>
                             <td class="text-center bg-blue-2" data-bs-toggle="tooltip" data-bs-placement="right"
-                                data-key="value_at_risk"
+                                data-key="stock_value_at_risk"
                                 onclick="showTooltipFromKey(this)">
                                 <i class="fa fa-info-circle text-primary fs-5"></i>
                                 {{__('trans.Stock Value at Risk')}}</td>
