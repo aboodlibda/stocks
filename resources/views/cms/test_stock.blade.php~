@@ -215,7 +215,7 @@
 
                         <tr>
                             <td class="text-center" data-bs-toggle="tooltip" data-bs-placement="right"
-                                data-key="p_e_ratio"
+                                data-key="price_earning_ratio"
                                 onclick="showTooltipFromKey(this)">
                                 <i class="fa fa-info-circle text-primary fs-5"></i>
                                 {{__('trans.Price Earning Ratio')}}</td>
@@ -233,7 +233,7 @@
                         </tr>
                         <tr>
                             <td class="text-center" data-bs-toggle="tooltip" data-bs-placement="right"
-                                data-key="free_cash_flow_yield"
+                                data-key="free_cash_flow"
                                 onclick="showTooltipFromKey(this)">
                                 <i class="fa fa-info-circle text-primary fs-5"></i>
                                 {{__('trans.Free Cash Flow')}}</td>
@@ -421,7 +421,7 @@
                      onclick="showTooltipFromKey(this)"
                      style="cursor:pointer">
                     <i class="fa fa-info-circle text-primary fs-5"></i>
-                    <p class="bg-blue-2 p-2 mb-0 text-dark" style="font-size: 12px">{{__('trans.Stock dividend distribution possibilities')}}</p>
+                    <p class="bg-blue-2 p-2 mb-0 text-dark" >{{__('trans.Stock dividend distribution possibilities')}}</p>
                     <button class="btn btn-primary btn-sm bg-blue-2" id="stock_probability" style="height: 40px; width: 40px; padding: 0;cursor:pointer;border: none;">
                         <img src="{{asset('assets/media/graph.png')}}" alt="Add" style="height: 40px; width: 40px;">
                     </button>
@@ -435,7 +435,7 @@
                      onclick="showTooltipFromKey(this)"
                      style="cursor:pointer">
                     <i class="fa fa-info-circle text-primary fs-5"></i>
-                    <p class="bg-blue-2 p-2 mb-0 text-dark" style="font-size: 12px">{{__('trans.Stock vs. Index Return')}}</p>
+                    <p class="bg-blue-2 p-2 mb-0 text-dark">{{__('trans.Stock vs. Index Return')}}</p>
                     <button class="btn btn-primary btn-sm bg-blue-2" id="stock_index" style="height: 40px; width: 40px; padding: 0;cursor:pointer;border: none;">
                         <img src="{{asset('assets/media/graph.png')}}" alt="Add" style="height: 40px; width: 40px;">
                     </button>
@@ -449,7 +449,7 @@
                      onclick="showTooltipFromKey(this)"
                      style="cursor:pointer">
                     <i class="fa fa-info-circle text-primary fs-5"></i>
-                    <p class="bg-blue-2 p-2 mb-0 text-dark" style="font-size: 12px">{{__('trans.Support and Resistance Price Level')}}</p>
+                    <p class="bg-blue-2 p-2 mb-0 text-dark">{{__('trans.Support and Resistance Price Level')}}</p>
                     <button class="btn btn-primary btn-sm bg-blue-2" id="support_and_resistance" style="height: 40px; width: 40px; padding: 0;cursor:pointer;border: none;">
                         <img src="{{asset('assets/media/graph.png')}}" alt="Add" style="height: 40px; width: 40px;">
                     </button>
