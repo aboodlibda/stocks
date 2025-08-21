@@ -26,10 +26,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::get('notes/{note}',[\App\Http\Controllers\NotesController::class,'edit'])->name('notes.edit');
         Route::put('notes/{note}',[\App\Http\Controllers\NotesController::class,'update'])->name('notes.update');
         Route::get('/select-stock', [HomeController::class, 'selectStock'])->name('select-stock');
-        Route::get('/get-tooltip-content', [\App\Http\Controllers\NotesController::class, 'getTooltipContent'])->name('get-tooltip-content');
 
     });
 
+    Route::get('/get-tooltip-content', [\App\Http\Controllers\NotesController::class, 'getTooltipContent'])->name('get-tooltip-content');
 
     Route::get('/stock-analysis-screen', [HomeController::class, 'stockAnalysisScreen'])->name('stock-analysis-screen');
 
