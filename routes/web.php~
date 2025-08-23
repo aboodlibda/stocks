@@ -30,9 +30,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::post('upload-sector-data', [\App\Http\Controllers\SectorController::class, 'uploadData'])->name('upload-sector-data');
         Route::get('update-lang-key', [\App\Http\Controllers\NotesController::class,'updateLangKey'])->name('update-lang-key');
         Route::get('titles',[\App\Http\Controllers\TitlesController::class,'index'])->name('titles.index');
-        Route::get('titles',[\App\Http\Controllers\TitlesController::class,'edit'])->name('titles.edit');
-        Route::put('titles/{title}',[\App\Http\Controllers\NotesController::class,'update'])->name('titles.update');
+        Route::get('edit-title',[\App\Http\Controllers\TitlesController::class,'edit'])->name('titles.edit');
+        Route::put('update-titles/{title}',[\App\Http\Controllers\TitlesController::class,'update'])->name('titles.update');
 
+        Route::post('/upload-excel', [UploadController::class, 'uploadExcel'])->name('upload.excel');
 
     });
 
