@@ -26,8 +26,21 @@
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
         <!--begin::Container-->
         <div class="container-xxl" id="kt_content_container">
+
+            <div class="card-title ">
+                <!--begin::Search-->
+                                        <div class="d-flex align-items-center position-relative my-1">
+                                            <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-4">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                            </i>
+                                            <input type="text" data-kt-ecommerce-coupons-filter="search"
+                                                   class="form-control form-control-solid w-250px ps-12" placeholder="Search Notes" />
+                                        </div>
+                <!--end::Search-->
+            </div>
             <!--begin::Form-->
-            <form id="kt_ecommerce_edit_coupon_form" method="POST" action="{{route('titles.update','')}}"
+            <form id="kt_ecommerce_edit_coupon_form" method="POST" action="{{route('titles.update','test')}}"
                   class="form d-flex flex-column flex-lg-row" data-kt-redirect="{{route('titles.index')}}">
                 @csrf
                 @method('PUT')
@@ -61,13 +74,13 @@
                                                     '52 Week Low',
                                                     'Maximum Stock Return over 250 Days Trading',
                                                     'Minimum Stock Return over 250 Days Trading',
-'Stock Movement',
-                                                    'Market Price (Closing Price)',
-                                                    'Average Price Midpoint',
-                                                    '52 Week High',
-                                                    '52 Week Low',
-                                                    'Maximum Stock Return over 250 Days Trading',
-                                                    'Minimum Stock Return over 250 Days Trading',
+'Stock Risk Measurement',
+                                                    'Sharp Risk Ratio',
+                                                    'Beta Coefficient',
+                                                    'Daily Stock Volatility',
+                                                    'Annual Stock Volatility',
+                                                    'Stock Risk Ranking',
+
 'Stock Performance (Key Financial Ratios)',
                                                     'Indicator name',
                                                     'stock',
@@ -159,68 +172,95 @@
                                         @endphp
 
                                         @foreach ($sections as $title => $sectionFields)
-                                            <h2 class="mb-5">{{ $title }}</h2>
-                                            @foreach ($sectionFields as $field)
-                                                @if (in_array($field, $fields))
-                                                    <div class="row mb-10">
-                                                        <div class="col-md-6 fv-row">
-                                                            <div class="accordion" id="kt_accordion_{{ $field }}_en">
-                                                                <div class="accordion-item">
-                                                                    <h2 class="accordion-header"
-                                                                        id="kt_accordion_{{ $field }}_en_header">
-                                                                        <button
-                                                                            class="accordion-button fs-4 fw-semibold collapsed"
-                                                                            type="button" data-bs-toggle="collapse"
-                                                                            data-bs-target="#kt_accordion_{{ $field }}_en_body"
-                                                                            aria-expanded="false"
-                                                                            aria-controls="kt_accordion_{{ $field }}_en_body">
-                                                                            {{ ucwords(str_replace('_', ' ', $field)) }}
-                                                                            (English)
-                                                                        </button>
-                                                                    </h2>
-                                                                    <div id="kt_accordion_{{ $field }}_en_body"
-                                                                         class="accordion-collapse collapse"
-                                                                         aria-labelledby="kt_accordion_{{ $field }}_en_header"
-                                                                         data-bs-parent="#kt_accordion_{{ $field }}_en">
-                                                                        <div class="accordion-body">
-                                                                            <textarea class="editor"
-                                                                                      name="{{ $field }}[en]">{{ trans('trans.' . $field, [], 'en') }}</textarea>
+                                            @php($titleSlug = Str::slug($title))
+                                            <div class="accordion mb-10" id="kt_accordion_{{ $titleSlug }}">
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="kt_accordion_{{ $titleSlug }}_header">
+                                                        <button class="accordion-button fs-4 fw-semibold collapsed"
+                                                                type="button" data-bs-toggle="collapse"
+                                                                data-bs-target="#kt_accordion_{{ $titleSlug }}_body"
+                                                                aria-expanded="false"
+                                                                aria-controls="kt_accordion_{{ $titleSlug }}_body">
+                                                            {{ $title }}
+                                                        </button>
+                                                    </h2>
+                                                    <div id="kt_accordion_{{ $titleSlug }}_body"
+                                                         class="accordion-collapse collapse"
+                                                         aria-labelledby="kt_accordion_{{ $titleSlug }}_header"
+                                                         data-bs-parent="#kt_accordion_{{ $titleSlug }}">
+                                                        <div class="accordion-body">
+                                                            @foreach ($sectionFields as $field)
+                                                                @if (in_array($field, $fields))
+                                                                    @php($fieldSlug = Str::slug($field))
+                                                                    <div class="row mb-10">
+                                                                        <div class="col-md-6 fv-row">
+                                                                            <div class="accordion"
+                                                                                 id="kt_accordion_{{ $fieldSlug }}_en">
+                                                                                <div class="accordion-item">
+                                                                                    <h2 class="accordion-header"
+                                                                                        id="kt_accordion_{{ $fieldSlug }}_en_header">
+                                                                                        <button
+                                                                                            class="accordion-button fs-4 fw-semibold collapsed"
+                                                                                            type="button"
+                                                                                            data-bs-toggle="collapse"
+                                                                                            data-bs-target="#kt_accordion_{{ $fieldSlug }}_en_body"
+                                                                                            aria-expanded="false"
+                                                                                            aria-controls="kt_accordion_{{ $fieldSlug }}_en_body">
+                                                                                            {{ ucwords(str_replace('_', ' ', $field)) }}
+                                                                                            (English)
+                                                                                        </button>
+                                                                                    </h2>
+                                                                                    <div id="kt_accordion_{{ $fieldSlug }}_en_body"
+                                                                                         class="accordion-collapse collapse"
+                                                                                         aria-labelledby="kt_accordion_{{ $fieldSlug }}_en_header"
+                                                                                         data-bs-parent="#kt_accordion_{{ $fieldSlug }}_en">
+                                                                                        <div class="accordion-body">
+                                                                                            <input type="text" class="form-control"
+                                                                                                   name="{{ $field }}[en]"
+                                                                                                   value="{{ trans('trans.' . $field, [], 'en') }}"/>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-6 fv-row">
+                                                                            <div class="accordion"
+                                                                                 id="kt_accordion_{{ $fieldSlug }}_ar">
+                                                                                <div class="accordion-item">
+                                                                                    <h2 class="accordion-header"
+                                                                                        id="kt_accordion_{{ $fieldSlug }}_ar_header">
+                                                                                        <button
+                                                                                            class="accordion-button fs-4 fw-semibold collapsed"
+                                                                                            type="button"
+                                                                                            data-bs-toggle="collapse"
+                                                                                            data-bs-target="#kt_accordion_{{ $fieldSlug }}_ar_body"
+                                                                                            aria-expanded="false"
+                                                                                            aria-controls="kt_accordion_{{ $fieldSlug }}_ar_body">
+                                                                                            {{ ucwords(str_replace('_', ' ', $field)) }}
+                                                                                            (Arabic)
+                                                                                        </button>
+                                                                                    </h2>
+                                                                                    <div id="kt_accordion_{{ $fieldSlug }}_ar_body"
+                                                                                         class="accordion-collapse collapse"
+                                                                                         aria-labelledby="kt_accordion_{{ $fieldSlug }}_ar_header"
+                                                                                         data-bs-parent="#kt_accordion_{{ $fieldSlug }}_ar">
+                                                                                        <div class="accordion-body">
+                                                                                            <input type="text" class="form-control"
+                                                                                                   name="{{ $field }}[ar]"
+                                                                                                   value="{{ trans('trans.' . $field, [], 'ar') }}"/>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 fv-row">
-                                                            <div class="accordion" id="kt_accordion_{{ $field }}_ar">
-                                                                <div class="accordion-item">
-                                                                    <h2 class="accordion-header"
-                                                                        id="kt_accordion_{{ $field }}_ar_header">
-                                                                        <button
-                                                                            class="accordion-button fs-4 fw-semibold collapsed"
-                                                                            type="button" data-bs-toggle="collapse"
-                                                                            data-bs-target="#kt_accordion_{{ $field }}_ar_body"
-                                                                            aria-expanded="false"
-                                                                            aria-controls="kt_accordion_{{ $field }}_ar_body">
-                                                                            {{ ucwords(str_replace('_', ' ', $field)) }}
-                                                                            (Arabic)
-                                                                        </button>
-                                                                    </h2>
-                                                                    <div id="kt_accordion_{{ $field }}_ar_body"
-                                                                         class="accordion-collapse collapse"
-                                                                         aria-labelledby="kt_accordion_{{ $field }}_ar_header"
-                                                                         data-bs-parent="#kt_accordion_{{ $field }}_ar">
-                                                                        <div class="accordion-body">
-                                                                            <textarea class="editor"
-                                                                                      name="{{ $field }}[ar]">{{ trans('trans.' . $field, [], 'ar') }}</textarea>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                                    <hr>
+                                                                @endif
+                                                            @endforeach
                                                         </div>
                                                     </div>
-                                                    <hr>
-                                                @endif
-                                            @endforeach
+                                                </div>
+                                            </div>
                                         @endforeach
                                     </div>
                                     <!--end::Card body-->
@@ -232,7 +272,7 @@
 
                     <div class="d-flex justify-content-end">
                         <!--begin::Button-->
-                        <a href="{{route('notes.index')}}" id="kt_ecommerce_edit_coupon_cancel"
+                        <a href="{{route('titles.index')}}" id="kt_ecommerce_edit_coupon_cancel"
                            class="btn btn-light me-5">{{trans('dashboard_trans.Cancel')}}</a>
                         <!--end::Button-->
                         <!--begin::Button-->
@@ -251,34 +291,4 @@
         <!--end::Container-->
     </div>
     <!--end::Content-->
-@endsection
-@section('script')
-    <script src="https://cdn.tiny.cloud/1/f1jknqc2028uapitbujovxdivdz2ufny3mvk5zy195agahcx/tinymce/7/tinymce.min.js"
-            referrerpolicy="origin"></script>
-
-
-    <script>
-        tinymce.init({
-            selector: 'textarea.editor',   // all textareas with class="editor"
-            height: 400,
-            plugins: 'print preview importcss searchreplace autolink autosave save directionality ' +
-                'code visualblocks visualchars fullscreen image link media template codesample ' +
-                'table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists ' +
-                'wordcount imagetools textpattern help emoticons autosave',
-            toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | ' +
-                'alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | ' +
-                'forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | ' +
-                'charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ' +
-                'ltr rtl',
-            menubar: 'file edit view insert format tools table help',
-            toolbar_sticky: false,
-            autosave_ask_before_unload: true,
-            autosave_interval: "30s",
-            autosave_restore_when_empty: true,
-            autosave_retention: "2m",
-            image_advtab: true,
-            importcss_append: true,
-        });
-    </script>
-
 @endsection
