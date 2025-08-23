@@ -1,0 +1,166 @@
+@extends('cms.layout.master')
+@section('title','القطاعات')
+@section('style')
+    <!-- Uppy CSS -->
+
+    <link
+        href="https://preview.keenthemes.com/metronic/theme/html/demo1/dist/assets/plugins/custom/uppy/uppy.bundle.css?v=7.2.9"
+        rel="stylesheet" type="text/css"/>
+
+@endsection
+@section('content')
+    <!--begin::Page title-->
+    <div class="page-title d-flex flex-column align-items-start justify-content-center flex-wrap me-lg-2 pb-10 pb-lg-0"
+         data-kt-swapper="true" data-kt-swapper-mode="prepend"
+         data-kt-swapper-parent="{default: '#kt_content_container', lg: '#kt_header_container'}">
+        <!--begin::Heading-->
+        <h1 class="d-flex flex-column text-dark fw-bold my-0 fs-1">القطاعات</h1>
+        <!--end::Heading-->
+        <!--begin::Breadcrumb-->
+        <ul class="breadcrumb breadcrumb-dot fw-semibold fs-base my-1">
+            <li class="breadcrumb-item text-muted">
+                <a href="{{ route('dashboard') }}"
+                   class="text-muted text-hover-primary">{{trans('dashboard_trans.Home')}}</a>
+            </li>
+            <li class="breadcrumb-item text-dark">إستيراد القطاعات</li>
+
+        </ul>
+        <!--end::Breadcrumb-->
+    </div>
+    <!--end::Page title=-->
+    <!--begin::Content-->
+    <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+        <!--begin::Container-->
+        <div class="container-xxl" id="kt_content_container">
+            <!--begin::Products-->
+            <div class="card card-flush">
+                <!--begin::Card header-->
+                <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                    <!--begin::Card title-->
+                    <div class="card-title">
+                        <!--begin::Search-->
+                        {{--                        <div class="d-flex align-items-center position-relative my-1">--}}
+                        {{--                            <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-4">--}}
+                        {{--                                <span class="path1"></span>--}}
+                        {{--                                <span class="path2"></span>--}}
+                        {{--                            </i>--}}
+                        {{--                            <input type="text" data-kt-ecommerce-coupons-filter="search" class="form-control form-control-solid w-250px ps-12" placeholder="Search Notes" />--}}
+                        {{--                        </div>--}}
+                        <div class="alert alert-custom alert-white alert-shadow gutter-b" role="alert">
+                            <div class="alert-icon">
+		<span class="svg-icon svg-icon-primary svg-icon-xl"><!--begin::Svg Icon | path:/metronic/theme/html/demo1/dist/assets/media/svg/icons/Tools/Compass.svg-->
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect x="0" y="0" width="24" height="24"></rect>
+        <path
+            d="M7.07744993,12.3040451 C7.72444571,13.0716094 8.54044565,13.6920474 9.46808594,14.1079953 L5,23 L4.5,18 L7.07744993,12.3040451 Z M14.5865511,14.2597864 C15.5319561,13.9019016 16.375416,13.3366121 17.0614026,12.6194459 L19.5,18 L19,23 L14.5865511,14.2597864 Z M12,3.55271368e-14 C12.8284271,3.53749572e-14 13.5,0.671572875 13.5,1.5 L13.5,4 L10.5,4 L10.5,1.5 C10.5,0.671572875 11.1715729,3.56793164e-14 12,3.55271368e-14 Z"
+            fill="#000000" opacity="0.3"></path>
+        <path
+            d="M12,10 C13.1045695,10 14,9.1045695 14,8 C14,6.8954305 13.1045695,6 12,6 C10.8954305,6 10,6.8954305 10,8 C10,9.1045695 10.8954305,10 12,10 Z M12,13 C9.23857625,13 7,10.7614237 7,8 C7,5.23857625 9.23857625,3 12,3 C14.7614237,3 17,5.23857625 17,8 C17,10.7614237 14.7614237,13 12,13 Z"
+            fill="#000000" fill-rule="nonzero"></path>
+    </g>
+            </svg><!--end::Svg Icon--></span>
+                            </div>
+                            <div class="alert-text">
+                                لوريم إيبسوم(Lorem Ipsum) هو ببساطة نص شكلي (بمعنى أن الغاية هي الشكل وليس المحتوى)
+                                ويُستخدم في صناعات المطابع ودور النشر. كان لوريم إيبسوم ولايزال المعيار للنص الشكلي منذ
+                                القرن الخامس عشر عندما قامت مطبعة مجهولة برص مجموعة من الأحرف بشكل عشوائي أخذتها من نص،
+                            </div>
+                        </div>
+                        <!--end::Search-->
+                    </div>
+                    <!--end::Card title-->
+                    <!--begin::Card toolbar-->
+                    {{--                    <div class="card-toolbar flex-row-fluid justify-content-end gap-5">--}}
+                    {{--                        <!--begin::Add product-->--}}
+                    {{--                        <a href="" class="btn btn-primary">Create Note</a>--}}
+                    {{--                        <!--end::Add product-->--}}
+                    {{--                    </div>--}}
+                    <!--end::Card toolbar-->
+
+                </div>
+                <!--end::Card header-->
+
+
+                <!--begin::Row-->
+
+
+                <div class="col-lg-12">
+                    <!--begin::Card-->
+                    <div class="card card-custom card-stretch">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h3 class="card-label">
+                                    Manual Upload Without External Sources &amp; File Limitations
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="uppy" id="kt_uppy_2">
+                                <div class="uppy-Root" dir="rtl">
+                                    <div
+                                        class="uppy-Dashboard uppy-Dashboard--animateOpenClose uppy-size--md uppy-size--lg uppy-size--height-md uppy-Dashboard--isInnerWrapVisible"
+                                        data-uppy-theme="light" data-uppy-num-acquirers="0"
+                                        data-uppy-drag-drop-supported="true" aria-hidden="false"
+                                        aria-label="File Uploader">
+                                        <div class="uppy-Dashboard-overlay" tabindex="-1"></div>
+                                        <div class="uppy-Dashboard-inner" style="width: 750px; height: 470px;">
+                                            <div class="uppy-Dashboard-innerWrap">
+                                                <div class="uppy-Dashboard-dropFilesHereHint">Drop your files here</div>
+                                                <div class="uppy-Dashboard-AddFiles"><input class="uppy-Dashboard-input"
+                                                                                            hidden="" aria-hidden="true"
+                                                                                            tabindex="-1" type="file"
+                                                                                            name="files[]" multiple=""
+                                                                                            accept="image/*,video/*"><input
+                                                        class="uppy-Dashboard-input" hidden="" aria-hidden="true"
+                                                        tabindex="-1" webkitdirectory="" type="file" name="files[]"
+                                                        multiple="" accept="image/*,video/*">
+                                                    <div class="uppy-Dashboard-AddFiles-title">قم بإسقاط الملف هنا أو
+                                                        <button type="button" class="uppy-u-reset uppy-Dashboard-browse"
+                                                                data-uppy-super-focusable="true">تصفح الملفات
+                                                        </button>
+                                                    </div>
+                                                    <div class="uppy-Dashboard-AddFiles-info">
+                                                        <div class="uppy-Dashboard-note">Images and video only, 2–3
+                                                            files, up to 1 MB
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="uppy-Dashboard-progressindicators">
+                                                    <div class="uppy-StatusBar is-waiting" aria-hidden="true">
+                                                        <div class="uppy-StatusBar-progress
+                           " role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"
+                                                             style="width: 0%;"></div>
+                                                        <div class="uppy-StatusBar-actions"></div>
+                                                    </div>
+                                                    <div class="uppy uppy-Informer" aria-hidden="true"><p
+                                                            role="alert"></p></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Card-->
+                </div>
+                <!--end::Row-->
+
+
+            </div>
+            <!--end::Products-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::Content-->
+@endsection
+@section('script')
+    <!-- Uppy JS -->
+
+    <script
+        src="https://preview.keenthemes.com/metronic/theme/html/demo1/dist/assets/plugins/custom/uppy/uppy.bundle.js?v=7.2.9"></script>
+    <script
+        src="https://preview.keenthemes.com/metronic/theme/html/demo1/dist/assets/js/pages/crud/file-upload/uppy.js?v=7.2.9"></script>
+
+
+@endsection
