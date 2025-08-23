@@ -1,11 +1,10 @@
 @extends('cms.layout.master')
 @section('title','القطاعات')
 @section('style')
-    <!-- Uppy CSS -->
 
-    <link
-        href="https://preview.keenthemes.com/metronic/theme/html/demo1/dist/assets/plugins/custom/uppy/uppy.bundle.css?v=7.2.9"
-        rel="stylesheet" type="text/css"/>
+    <!-- Dropzone CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.css">
+
 
 @endsection
 @section('content')
@@ -61,13 +60,17 @@
             </svg><!--end::Svg Icon--></span>
                             </div>
                             <div class="alert-text">
-                                لوريم إيبسوم(Lorem Ipsum) هو ببساطة نص شكلي (بمعنى أن الغاية هي الشكل وليس المحتوى)
-                                ويُستخدم في صناعات المطابع ودور النشر. كان لوريم إيبسوم ولايزال المعيار للنص الشكلي منذ
-                                القرن الخامس عشر عندما قامت مطبعة مجهولة برص مجموعة من الأحرف بشكل عشوائي أخذتها من نص،
+                                البيانات المستوردة من الملف تتضمن معلومات عن القطاعات خلال فترة زمنية تمتد إلى 8 سنوات، وتشمل عدة عناصر رئيسية
+                                هي: الأسعار، الرموز، التواريخ، والأسماء، بحيث يتم تنظيمها بشكل يسهّل تحليلها ودراسة التغيرات عبر السنوات.
                             </div>
+                            <span class="form-text text-dark">تاريخ اَخر تحديث لبيانات القطاعات  {{$lastSectorDate->diffForHumans()}} | {{$lastSectorDate->format('Y-m-d')}}</span>
+
+
                         </div>
+
                         <!--end::Search-->
                     </div>
+
                     <!--end::Card title-->
                     <!--begin::Card toolbar-->
                     {{--                    <div class="card-toolbar flex-row-fluid justify-content-end gap-5">--}}
@@ -84,67 +87,20 @@
                 <!--begin::Row-->
 
 
-                <div class="col-lg-12">
-                    <!--begin::Card-->
-                    <div class="card card-custom card-stretch">
-                        <div class="card-header">
-                            <div class="card-title">
-                                <h3 class="card-label">
-                                    Manual Upload Without External Sources &amp; File Limitations
-                                </h3>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="uppy" id="kt_uppy_2">
-                                <div class="uppy-Root" dir="rtl">
-                                    <div
-                                        class="uppy-Dashboard uppy-Dashboard--animateOpenClose uppy-size--md uppy-size--lg uppy-size--height-md uppy-Dashboard--isInnerWrapVisible"
-                                        data-uppy-theme="light" data-uppy-num-acquirers="0"
-                                        data-uppy-drag-drop-supported="true" aria-hidden="false"
-                                        aria-label="File Uploader">
-                                        <div class="uppy-Dashboard-overlay" tabindex="-1"></div>
-                                        <div class="uppy-Dashboard-inner" style="width: 750px; height: 470px;">
-                                            <div class="uppy-Dashboard-innerWrap">
-                                                <div class="uppy-Dashboard-dropFilesHereHint">Drop your files here</div>
-                                                <div class="uppy-Dashboard-AddFiles"><input class="uppy-Dashboard-input"
-                                                                                            hidden="" aria-hidden="true"
-                                                                                            tabindex="-1" type="file"
-                                                                                            name="files[]" multiple=""
-                                                                                            accept="image/*,video/*"><input
-                                                        class="uppy-Dashboard-input" hidden="" aria-hidden="true"
-                                                        tabindex="-1" webkitdirectory="" type="file" name="files[]"
-                                                        multiple="" accept="image/*,video/*">
-                                                    <div class="uppy-Dashboard-AddFiles-title">قم بإسقاط الملف هنا أو
-                                                        <button type="button" class="uppy-u-reset uppy-Dashboard-browse"
-                                                                data-uppy-super-focusable="true">تصفح الملفات
-                                                        </button>
-                                                    </div>
-                                                    <div class="uppy-Dashboard-AddFiles-info">
-                                                        <div class="uppy-Dashboard-note">Images and video only, 2–3
-                                                            files, up to 1 MB
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="uppy-Dashboard-progressindicators">
-                                                    <div class="uppy-StatusBar is-waiting" aria-hidden="true">
-                                                        <div class="uppy-StatusBar-progress
-                           " role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"
-                                                             style="width: 0%;"></div>
-                                                        <div class="uppy-StatusBar-actions"></div>
-                                                    </div>
-                                                    <div class="uppy uppy-Informer" aria-hidden="true"><p
-                                                            role="alert"></p></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="mb-3">تحميل ملف Excel الخاص بالقطاعات</h3>
+
+                        <form action="{{ route('upload-sector-data') }}"
+                              class="dropzone"
+                              id="excel-dropzone"
+                              enctype="multipart/form-data">
+                            @csrf
+                        </form>
                     </div>
-                    <!--end::Card-->
+                    <span class="form-text text-danger">صيغة الملف المسموحة : .xlsx, .xls, .csv, .xlsm. الحجم الأقصى للملف: 10MB.</span>
+
                 </div>
-                <!--end::Row-->
 
 
             </div>
@@ -155,12 +111,26 @@
     <!--end::Content-->
 @endsection
 @section('script')
-    <!-- Uppy JS -->
-
-    <script
-        src="https://preview.keenthemes.com/metronic/theme/html/demo1/dist/assets/plugins/custom/uppy/uppy.bundle.js"></script>
-    <script
-        src="https://preview.keenthemes.com/metronic/theme/html/demo1/dist/assets/js/pages/crud/file-upload/uppy.js"></script>
-
+    <!-- Dropzone JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js"></script>
+    <script>
+        Dropzone.options.excelDropzone = {
+            paramName: "file", // The name that will be used to transfer the file
+            maxFilesize: 10, // MB
+            maxFiles: 1,    // allow only ONE file
+            acceptedFiles: ".csv",
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            init: function () {
+                this.on("success", function (file, response) {
+                    toastr.success("تم رفع الملف بنجاح ✅");
+                });
+                this.on("error", function (file, errorMessage) {
+                    toastr.error("فشل رفع الملف ❌");
+                });
+            }
+        };
+    </script>
 
 @endsection
