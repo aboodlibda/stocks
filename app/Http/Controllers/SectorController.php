@@ -1,0 +1,22 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class SectorController extends Controller
+{
+    public function index()
+    {
+        return view('cms.sector.index');
+    }
+
+    public function uploadData(Request $request)
+    {
+        $file = $request->file('file');
+        $path = $file->store('public/uploads');
+        return response()->json(['message' => 'File uploaded successfully', 'path' => $path], 200);
+
+
+    }
+}
