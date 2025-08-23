@@ -89,7 +89,11 @@
                             <td class="text-center num-cell"> {{number_format($company->close,2)}} </td>
                         </tr>
                         <tr>
-                            <td class="text-center">{{__('trans.Average Price Midpoint')}}</td>
+                            <td class="text-center" data-bs-toggle="tooltip" data-bs-placement="right"
+                                data-key="average_price_midpoint"
+                                onclick="showTooltipFromKey(this)">
+                                <i class="fa fa-info-circle text-primary fs-5"></i>
+                                {{__('trans.Average Price Midpoint')}}</td>
                             <td class="text-center num-cell"> N/A </td>
                             <td class="text-center num-cell"> N/A </td>
                         </tr>
