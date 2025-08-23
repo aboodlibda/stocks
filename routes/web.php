@@ -20,12 +20,19 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
 /////////////////////////////////// Dashboard Routes ///////////////////////////////////////////
     Route::group(['prefix' => 'cms', 'middleware' => ['auth:user']], function () {
-        Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
+        Route::get('/dashboard/', [HomeController::class, 'dashboard'])->name('dashboard');
         Route::resource('portfolios', PortfolioController::class);
         Route::get('notes',[\App\Http\Controllers\NotesController::class,'index'])->name('notes.index');
         Route::get('notes/{note}',[\App\Http\Controllers\NotesController::class,'edit'])->name('notes.edit');
         Route::put('notes/{note}',[\App\Http\Controllers\NotesController::class,'update'])->name('notes.update');
-        Route::get('/select-stock', [HomeController::class, 'selectStock'])->name('select-stock');
+        Route::get('select-stock', [HomeController::class, 'selectStock'])->name('select-stock');
+        Route::get('sector-data', [\App\Http\Controllers\SectorController::class, 'index'])->name('sector-data');
+        Route::post('upload-sector-data', [\App\Http\Controllers\SectorController::class, 'uploadData'])->name('upload-sector-data');
+        Route::get('update-lang-key', [\App\Http\Controllers\NotesController::class,'updateLangKey'])->name('update-lang-key');
+        Route::get('titles',[\App\Http\Controllers\TitlesController::class,'index'])->name('titles.index');
+        Route::get('edit-title',[\App\Http\Controllers\TitlesController::class,'edit'])->name('titles.edit');
+        Route::put('titles/{title}',[\App\Http\Controllers\NotesController::class,'update'])->name('titles.update');
+
 
     });
 
