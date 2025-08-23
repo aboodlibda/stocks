@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Support\Facades\File;
+
+class TitlesController extends Controller
+{
+    public function index()
+    {
+        return view('cms.titles.index');
+    }
+
+    public function edit()
+    {
+        return view('cms.titles.edit');
+    }
+
+
+    public function update()
+    {
+        $path = lang_path('en/trans.php');
+
+        // Get the current translations
+        $translations = include($path);
+
+//        dd($translations['close']);
+        // Update the key
+        $translations['close'] = 'uhhuhuhihi';
+
+//        // Convert array back to PHP file format
+        $content = "<?php\n\nreturn " . var_export($translations, true) . ";\n";
+
+        // Save file
+        File::put($path, $content);
+
+//        return "Updated successfully!";
+    }
+
+}
