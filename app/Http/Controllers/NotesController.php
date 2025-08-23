@@ -32,8 +32,11 @@ class NotesController extends Controller
 //        dd($request);
         $note->update($request->validated());
 
-        return redirect()->route('notes.index')
-            ->with('success', 'تم تحديث الملاحظات بنجاح');
+        return redirect()->route('notes.index')->with('toast', [
+            'key' => 'success',
+            'message' => 'تم تحديث الملاحظات بنجاح'
+        ]);
+
     }
 
     public function getTooltipContent(Request $request)
