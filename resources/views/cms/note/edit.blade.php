@@ -74,20 +74,93 @@
                                                 'last_stock_vs_index_return_chart',
                                                 'support_and_resistance_price_level_chart',
                                             ];
+                                            $sections = [
+                                                'Stock Movement' => [
+                                                    'closing_price',
+                                                    'average_price_midpoint',
+                                                    '52_week_high',
+                                                    '52_week_low',
+                                                    'maximum_stock_return_over_250_days',
+                                                    'minimum_stock_return_over_250_days',
+                                                ],
+                                                'Stock Risk Measurement' => [
+                                                    'sharp_risk_ratio',
+                                                    'beta_coefficient',
+                                                    'daily_stock_volatility',
+                                                    'annual_stock_volatility',
+                                                    'stock_risk_ranking',
+                                                ],
+                                                'Stock Performance (Key Financial Ratios)' => [
+                                                    'price_earning_ratio',
+                                                    'market_to_book_ratio',
+                                                    'free_cash_flow',
+                                                    'leverage_ratio',
+                                                    'return_on_equity',
+                                                    'dividend_yield',
+                                                    'earning_per_share',
+                                                    'annual_dividend_rate',
+                                                ],
+                                                'Expected Stock Return Based on Historical Data & CAPM Model' => [
+                                                    'expected_annual_stock_return',
+                                                    'daily_expected_stock_return',
+                                                ],
+                                                'Expected Stock VaR' => [
+                                                    'stock_value_at_risk',
+                                                ],
+                                                'Financial Statements Issuance Dates' => [
+                                                    'last_date_for_dividend_distribution',
+                                                    'last_updated_income_statement',
+                                                    'last_updated_balance_sheet',
+                                                ],
+                                                'Chart Analysis' => [
+                                                    'stock_dividend_distribution_possibilities_chart',
+                                                    'last_stock_vs_index_return_chart',
+                                                    'support_and_resistance_price_level_chart',
+                                                ],
+                                            ];
                                         @endphp
 
-                                        @foreach ($fields as $field)
-                                            <div class="row mb-10">
-                                                <div class="col-md-6 fv-row">
-                                                    <label class="form-label fw-bold">{{ ucwords(str_replace('_', ' ', $field)) }} (English)</label>
-                                                    <textarea class="editor" name="{{ $field }}[en]">{{ $note->{$field}['en'] ?? '' }}</textarea>
-                                                </div>
-                                                <div class="col-md-6 fv-row">
-                                                    <label class="form-label fw-bold">{{ ucwords(str_replace('_', ' ', $field)) }} (Arabic)</label>
-                                                    <textarea class="editor" name="{{ $field }}[ar]">{{ $note->{$field}['ar'] ?? '' }}</textarea>
-                                                </div>
-                                            </div>
-                                            <hr>
+                                        @foreach ($sections as $title => $sectionFields)
+                                            <h2 class="mb-5">{{ $title }}</h2>
+                                            @foreach ($sectionFields as $field)
+                                                @if (in_array($field, $fields))
+                                                    <div class="row mb-10">
+                                                        <div class="col-md-6 fv-row">
+                                                            <div class="accordion" id="kt_accordion_{{ $field }}_en">
+                                                                <div class="accordion-item">
+                                                                    <h2 class="accordion-header" id="kt_accordion_{{ $field }}_en_header">
+                                                                        <button class="accordion-button fs-4 fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#kt_accordion_{{ $field }}_en_body" aria-expanded="false" aria-controls="kt_accordion_{{ $field }}_en_body">
+                                                                            {{ ucwords(str_replace('_', ' ', $field)) }} (English)
+                                                                        </button>
+                                                                    </h2>
+                                                                    <div id="kt_accordion_{{ $field }}_en_body" class="accordion-collapse collapse" aria-labelledby="kt_accordion_{{ $field }}_en_header" data-bs-parent="#kt_accordion_{{ $field }}_en">
+                                                                        <div class="accordion-body">
+                                                                            <textarea class="editor" name="{{ $field }}[en]">{{ $note->{$field}['en'] ?? '' }}</textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 fv-row">
+                                                            <div class="accordion" id="kt_accordion_{{ $field }}_ar">
+                                                                <div class="accordion-item">
+                                                                    <h2 class="accordion-header" id="kt_accordion_{{ $field }}_ar_header">
+                                                                        <button class="accordion-button fs-4 fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#kt_accordion_{{ $field }}_ar_body" aria-expanded="false" aria-controls="kt_accordion_{{ $field }}_ar_body">
+                                                                            {{ ucwords(str_replace('_', ' ', $field)) }} (Arabic)
+                                                                        </button>
+                                                                    </h2>
+                                                                    <div id="kt_accordion_{{ $field }}_ar_body" class="accordion-collapse collapse" aria-labelledby="kt_accordion_{{ $field }}_ar_header" data-bs-parent="#kt_accordion_{{ $field }}_ar">
+                                                                        <div class="accordion-body">
+                                                                            <textarea class="editor" name="{{ $field }}[ar]">{{ $note->{$field}['ar'] ?? '' }}</textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+                                                @endif
+                                            @endforeach
                                         @endforeach
                                     </div>
                                     <!--end::Card body-->
