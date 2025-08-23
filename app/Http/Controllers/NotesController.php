@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\File;
 
 use App\Http\Requests\UpdateNoteRequest;
 use App\Models\Note;
@@ -12,10 +13,6 @@ class NotesController extends Controller
     {
         $note = Note::query()->first();
         return view('cms.note.index',compact('note'));
-    }
-
-    public function show(Note $note)
-    {
     }
 
     public function edit(Note $note)
@@ -51,4 +48,27 @@ class NotesController extends Controller
 
         return response()->json(['en' => 'Content not found.', 'ar' => 'المحتوى غير موجود.'], 404);
     }
+
+
+
+    public function updateLangKey()
+    {
+        $path = lang_path('en/trans.php');
+
+        // Get the current translations
+        $translations = include($path);
+
+//        dd($translations['close']);
+        // Update the key
+        $translations['close'] = 'uhhuhuhihi';
+
+//        // Convert array back to PHP file format
+        $content = "<?php\n\nreturn " . var_export($translations, true) . ";\n";
+
+        // Save file
+        File::put($path, $content);
+
+//        return "Updated successfully!";
+    }
+
 }
