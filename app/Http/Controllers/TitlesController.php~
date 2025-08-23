@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
 class TitlesController extends Controller
@@ -17,24 +18,35 @@ class TitlesController extends Controller
     }
 
 
-    public function update()
+    public function update(Request $request)
     {
-        $path = lang_path('en/trans.php');
+        $path_en = lang_path('en/trans.php');
+        $path_ar = lang_path('ar/trans.php');
 
         // Get the current translations
-        $translations = include($path);
+        $translations_en = include($path_en);
+        $translations_ar = include($path_ar);
 
-//        dd($translations['close']);
         // Update the key
-        $translations['close'] = 'uhhuhuhihi';
+        foreach ($request->except(['_method','_token']) as $key => $value) {
 
-//        // Convert array back to PHP file format
-        $content = "<?php\n\nreturn " . var_export($translations, true) . ";\n";
+            $key = str_replace("_", " ", $key);
+
+            $translations_en[$key] = $value['en'];
+            $translations_ar[$key] = $value['ar'];
+        }
+
+        // Convert array back to PHP file format
+        $content_en = "<?php\n\nreturn " . var_export($translations_en, true) . ";\n";
+        $content_ar = "<?php\n\nreturn " . var_export($translations_ar, true) . ";\n";
 
         // Save file
-        File::put($path, $content);
+        File::put($path_en, $content_en);
+        File::put($path_ar, $content_ar);
 
-//        return "Updated successfully!";
+//        return redirect()->route('titles.index')->with('success', 'تم تحديث العناوين بنجاح');
+        return redirect()->route('titles.index')->with(['key' => 'success', 'message' => 'تم تحديث العناوين بنجاح']);
+
     }
 
 }
