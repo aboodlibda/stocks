@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PortfolioController;
+use App\Http\Controllers\SectorController;
 use App\Http\Controllers\StockController;
 use App\Models\Company;
 use Illuminate\Support\Facades\Http;
@@ -26,8 +27,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::get('notes/{note}',[\App\Http\Controllers\NotesController::class,'edit'])->name('notes.edit');
         Route::put('notes/{note}',[\App\Http\Controllers\NotesController::class,'update'])->name('notes.update');
         Route::get('select-stock', [HomeController::class, 'selectStock'])->name('select-stock');
-        Route::get('sector-data', [\App\Http\Controllers\SectorController::class, 'index'])->name('sector-data');
-        Route::post('upload-sector-data', [\App\Http\Controllers\SectorController::class, 'uploadSectorData'])->name('upload-sector-data');
+        Route::get('sectors', [SectorController::class, 'index'])->name('sectors.index');
+        Route::get('sectors/search', [SectorController::class, 'search'])->name('sectors.search');
+        Route::get('upload-sector-data', [SectorController::class, 'uploadPage'])->name('sectors.upload-page');
+        Route::post('upload-sector-data', [SectorController::class, 'uploadSectorData'])->name('upload-sector-data');
         Route::get('update-lang-key', [\App\Http\Controllers\NotesController::class,'updateLangKey'])->name('update-lang-key');
         Route::get('titles',[\App\Http\Controllers\TitlesController::class,'index'])->name('titles.index');
         Route::get('edit-title',[\App\Http\Controllers\TitlesController::class,'edit'])->name('titles.edit');
@@ -50,7 +53,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     Route::get('read-companies', [StockController::class, 'read_companies'])->name('read-companies');
     Route::get('test_api', [StockController::class,'getApi'])->name('get-api');
     Route::get('execute',function(){
-        calculateRatiosByCompany(2270);
+//        calculateRatiosByCompany(2270);
     });
 
     Route::get('new_test',function(){
