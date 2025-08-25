@@ -1,0 +1,150 @@
+@extends('cms.layout.master')
+@section('title','إستيراد القطاعات')
+@section('style')
+
+    <!-- Dropzone CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.css">
+
+
+@endsection
+@section('content')
+    <!--begin::Page title-->
+    <div class="page-title d-flex flex-column align-items-start justify-content-center flex-wrap me-lg-2 pb-10 pb-lg-0"
+         data-kt-swapper="true" data-kt-swapper-mode="prepend"
+         data-kt-swapper-parent="{default: '#kt_content_container', lg: '#kt_header_container'}">
+        <!--begin::Heading-->
+        <h1 class="d-flex flex-column text-dark fw-bold my-0 fs-1">القطاعات</h1>
+        <!--end::Heading-->
+        <!--begin::Breadcrumb-->
+        <ul class="breadcrumb breadcrumb-dot fw-semibold fs-base my-1">
+            <li class="breadcrumb-item text-muted">
+                <a href="{{ route('dashboard') }}"
+                   class="text-muted text-hover-primary">{{trans('dashboard_trans.Home')}}</a>
+            </li>
+            <li class="breadcrumb-item text-dark">إستيراد القطاعات</li>
+
+        </ul>
+        <!--end::Breadcrumb-->
+    </div>
+    <!--end::Page title=-->
+    <!--begin::Content-->
+    <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+        <!--begin::Container-->
+        <div class="container-xxl" id="kt_content_container">
+            <!--begin::Products-->
+            <div class="card card-flush">
+                <!--begin::Card header-->
+                <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                    <!--begin::Card title-->
+                    <div class="card-title">
+                        <!--begin::Search-->
+                        {{--                        <div class="d-flex align-items-center position-relative my-1">--}}
+                        {{--                            <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-4">--}}
+                        {{--                                <span class="path1"></span>--}}
+                        {{--                                <span class="path2"></span>--}}
+                        {{--                            </i>--}}
+                        {{--                            <input type="text" data-kt-ecommerce-coupons-filter="search" class="form-control form-control-solid w-250px ps-12" placeholder="Search Notes" />--}}
+                        {{--                        </div>--}}
+                        <div class="alert alert-custom alert-white alert-shadow gutter-b" role="alert">
+                            <div class="alert-icon">
+		<span class="svg-icon svg-icon-primary svg-icon-xl"><!--begin::Svg Icon | path:/metronic/theme/html/demo1/dist/assets/media/svg/icons/Tools/Compass.svg-->
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect x="0" y="0" width="24" height="24"></rect>
+        <path
+            d="M7.07744993,12.3040451 C7.72444571,13.0716094 8.54044565,13.6920474 9.46808594,14.1079953 L5,23 L4.5,18 L7.07744993,12.3040451 Z M14.5865511,14.2597864 C15.5319561,13.9019016 16.375416,13.3366121 17.0614026,12.6194459 L19.5,18 L19,23 L14.5865511,14.2597864 Z M12,3.55271368e-14 C12.8284271,3.53749572e-14 13.5,0.671572875 13.5,1.5 L13.5,4 L10.5,4 L10.5,1.5 C10.5,0.671572875 11.1715729,3.56793164e-14 12,3.55271368e-14 Z"
+            fill="#000000" opacity="0.3"></path>
+        <path
+            d="M12,10 C13.1045695,10 14,9.1045695 14,8 C14,6.8954305 13.1045695,6 12,6 C10.8954305,6 10,6.8954305 10,8 C10,9.1045695 10.8954305,10 12,10 Z M12,13 C9.23857625,13 7,10.7614237 7,8 C7,5.23857625 9.23857625,3 12,3 C14.7614237,3 17,5.23857625 17,8 C17,10.7614237 14.7614237,13 12,13 Z"
+            fill="#000000" fill-rule="nonzero"></path>
+    </g>
+            </svg><!--end::Svg Icon--></span>
+                            </div>
+                            <div class="alert-text">
+                                البيانات المستوردة من الملف تتضمن معلومات عن القطاعات خلال فترة زمنية تمتد إلى 10 سنوات، وتشمل عدة عناصر رئيسية
+                                هي: الأسعار، الرموز، التواريخ، والأسماء، بحيث يتم تنظيمها بشكل يسهّل تحليلها ودراسة التغيرات عبر السنوات.
+                            </div>
+                            <span class="form-text text-dark bold">تاريخ اَخر تحديث لبيانات القطاعات  {{$lastSectorDate->diffForHumans()}} | {{$lastSectorDate->format('Y-m-d')}}</span>
+
+
+                        </div>
+
+                        <!--end::Search-->
+                    </div>
+
+                    <!--end::Card title-->
+                    <!--begin::Card toolbar-->
+                    {{--                    <div class="card-toolbar flex-row-fluid justify-content-end gap-5">--}}
+                    {{--                        <!--begin::Add product-->--}}
+                    {{--                        <a href="" class="btn btn-primary">Create Note</a>--}}
+                    {{--                        <!--end::Add product-->--}}
+                    {{--                    </div>--}}
+                    <!--end::Card toolbar-->
+
+                </div>
+                <!--end::Card header-->
+
+
+                <!--begin::Row-->
+
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="mb-3">تحميل ملف Excel الخاص بالقطاعات</h3>
+
+                        <form action="{{ route('upload-sector-data') }}"
+                              class="dropzone"
+                              id="excel-dropzone"
+                              enctype="multipart/form-data">
+                            @csrf
+                        </form>
+                        <span class="form-text text-danger bold">صيغة الملف المسموحة : csv. |  الحجم الأقصى للملف: 10MB.</span>
+                    </div>
+                    <div class="col-md-6">
+                        <h3 class="mb-3">تنزيل القالب وتعبئته</h3>
+
+                        <a href="{{asset('uploads/template/sectors.csv')}}" class="w-100 justify-content-center">
+                            <img src="{{asset('assets/media/csv.png')}}" class="h-25" alt="csv file">
+                        </a>
+                        <div class="d-flex justify-content-center">
+                             <span class="form-text text-dark bold">
+                            القالب هو النموذج المعتمد في النظام، مقسّم إلى أعمدة (الأسعار، الرموز، التواريخ، الأسماء) لفترة 10 سنوات، ويجب تعبئته كما هو دون تعديل لضمان قبول البيانات.
+                        </span>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+            <!--end::Products-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::Content-->
+@endsection
+@section('script')
+    <!-- Dropzone JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js"></script>
+    <script>
+        Dropzone.options.excelDropzone = {
+            paramName: "file", // The name that will be used to transfer the file
+            maxFilesize: 10, // MB
+            maxFiles: 1,    // allow only ONE file
+            acceptedFiles: ".csv",
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            init: function () {
+                this.on("success", function (file, response) {
+                    toastr.success(response.message);
+                });
+                this.on("error", function (file, errorMessage) {
+                    toastr.error(errorMessage.message);
+                });
+            }
+        };
+    </script>
+
+@endsection
