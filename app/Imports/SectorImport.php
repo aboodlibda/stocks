@@ -25,6 +25,7 @@ class SectorImport implements ToModel, withHeadingRow
             'turnover' => $row['turnover'],
             'code' => $row['code'],
             'name' => $row['name'],
+
         ]);
     }
 }
