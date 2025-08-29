@@ -63,7 +63,10 @@
                                 البيانات المستوردة من الملف تتضمن معلومات عن القطاعات خلال فترة زمنية تمتد إلى 10 سنوات، وتشمل عدة عناصر رئيسية
                                 هي: الأسعار، الرموز، التواريخ، والأسماء، بحيث يتم تنظيمها بشكل يسهّل تحليلها ودراسة التغيرات عبر السنوات.
                             </div>
-                            <span class="form-text text-dark bold">تاريخ اَخر تحديث لبيانات القطاعات  {{$lastSectorDate->diffForHumans()}} | {{$lastSectorDate->format('Y-m-d')}}</span>
+                            @if($lastSectorDate)
+                                <span class="form-text text-dark bold">تاريخ اَخر تحديث لبيانات القطاعات
+                                    {{$lastSectorDate->diffForHumans()}} | {{$lastSectorDate->format('Y-m-d')}}</span>
+                            @endif
 
 
                         </div>
