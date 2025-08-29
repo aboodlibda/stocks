@@ -16,7 +16,8 @@ class SectorController extends Controller
 
     public function uploadPage()
     {
-        $lastSectorDate = Sector::query()->orderBy('updated_at', 'desc')->first()->updated_at;
+        $lastSectorDate = Sector::query()->orderBy('updated_at', 'desc')->value('updated_at');
+        $lastSectorDate = $lastSectorDate ? $lastSectorDate : null;
         return view('cms.sector.upload',compact('lastSectorDate'));
     }
 
@@ -35,9 +36,27 @@ class SectorController extends Controller
         // Use built-in PHP for CSV
         $rows = array_map('str_getcsv', file($path));
 
-        // Check header values
-        $header = $rows[0];
-        if ($header[0] !== 'date;open;high;low;close;volume;turnover;code;name') {
+        foreach ($rows as $row) {
+            // Remove BOM
+            $line = preg_replace('/^\x{FEFF}/u', '', $row[0]);
+
+            // Convert to array by delimiter
+            $columns = str_getcsv($line, ';');
+
+            // Access by index or map
+            $data = [
+                'date' => $columns[0],
+                'open' => $columns[1],
+                'high' => $columns[2],
+                'low' => $columns[3],
+                'close' => $columns[4],
+                'volume' => $columns[5],
+                'turnover' => $columns[6],
+                'code' => $columns[7],
+                'name' => $columns[8], // Arabic name should appear here
+            ];
+        }
+        if (!$data['date'] && !$data['open'] && !$data['high'] && !$data['low'] && !$data['close'] && !$data['volume'] && !$data['turnover'] && !$data['code'] && !$data['name']) {
             return response()->json([
                 'success' => false,
                 'message' => [
