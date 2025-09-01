@@ -60,7 +60,7 @@
                                     </div>
                                     <!--end::Card header-->
                                     <!--begin::Card body-->
-                                    <div class="card-body pt-0">
+                                    <div class="card-body pt-5">
                                         @php
                                             $fields = [
                                                   'Stock performance analysis',
@@ -172,80 +172,46 @@
                                         @endphp
 
                                         @foreach ($sections as $title => $sectionFields)
-                                            @php($titleSlug = Str::slug($title))
-                                            <div class="accordion mb-10" id="kt_accordion_{{ $titleSlug }}">
+                                            <div class="accordion mb-10" id="accordionExample-{{ $loop->index }}">
                                                 <div class="accordion-item">
-                                                    <h2 class="accordion-header" id="kt_accordion_{{ $titleSlug }}_header">
-                                                        <button class="accordion-button fs-4 fw-semibold collapsed"
-                                                                type="button" data-bs-toggle="collapse"
-                                                                data-bs-target="#kt_accordion_{{ $titleSlug }}_body"
-                                                                aria-expanded="false"
-                                                                aria-controls="kt_accordion_{{ $titleSlug }}_body">
+                                                    <h2 class="accordion-header" id="heading-{{ $loop->index }}">
+                                                        <button class="accordion-button fs-4 fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ $loop->index }}" aria-expanded="false" aria-controls="collapse-{{ $loop->index }}">
                                                             {{ trans('trans.' . $title, [], app()->getLocale()) }}
                                                         </button>
                                                     </h2>
-                                                    <div id="kt_accordion_{{ $titleSlug }}_body"
-                                                         class="accordion-collapse collapse"
-                                                         aria-labelledby="kt_accordion_{{ $titleSlug }}_header"
-                                                         data-bs-parent="#kt_accordion_{{ $titleSlug }}">
+                                                    <div id="collapse-{{ $loop->index }}" class="accordion-collapse collapse" aria-labelledby="heading-{{ $loop->index }}" data-bs-parent="#accordionExample-{{ $loop->index }}">
                                                         <div class="accordion-body">
                                                             @foreach ($sectionFields as $field)
                                                                 @if (in_array($field, $fields))
                                                                     @php($fieldSlug = Str::slug($field))
                                                                     <div class="row mb-10">
                                                                         <div class="col-md-6 fv-row">
-                                                                            <div class="accordion"
-                                                                                 id="kt_accordion_{{ $fieldSlug }}_en">
+                                                                            <div class="accordion" id="kt_accordion_{{ $fieldSlug }}_en">
                                                                                 <div class="accordion-item">
-                                                                                    <h2 class="accordion-header"
-                                                                                        id="kt_accordion_{{ $fieldSlug }}_en_header">
-                                                                                        <button
-                                                                                            class="accordion-button fs-4 fw-semibold collapsed"
-                                                                                            type="button"
-                                                                                            data-bs-toggle="collapse"
-                                                                                            data-bs-target="#kt_accordion_{{ $fieldSlug }}_en_body"
-                                                                                            aria-expanded="false"
-                                                                                            aria-controls="kt_accordion_{{ $fieldSlug }}_en_body">
+                                                                                    <h2 class="accordion-header" id="kt_accordion_{{ $fieldSlug }}_en_header">
+                                                                                        <button class="accordion-button fs-4 fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#kt_accordion_{{ $fieldSlug }}_en_body" aria-expanded="false" aria-controls="kt_accordion_{{ $fieldSlug }}_en_body">
                                                                                             {{ trans('trans.' . $field, [], 'en') }}
                                                                                         </button>
                                                                                     </h2>
-                                                                                    <div id="kt_accordion_{{ $fieldSlug }}_en_body"
-                                                                                         class="accordion-collapse collapse"
-                                                                                         aria-labelledby="kt_accordion_{{ $fieldSlug }}_en_header"
-                                                                                         data-bs-parent="#kt_accordion_{{ $fieldSlug }}_en">
+                                                                                    <div id="kt_accordion_{{ $fieldSlug }}_en_body" class="accordion-collapse collapse" aria-labelledby="kt_accordion_{{ $fieldSlug }}_en_header" data-bs-parent="#kt_accordion_{{ $fieldSlug }}_en">
                                                                                         <div class="accordion-body">
-                                                                                            <input type="text" class="form-control"
-                                                                                                   name="{{ $field }}[en]"
-                                                                                                   value="{{ trans('trans.' . $field, [], 'en') }}"/>
+                                                                                            <input type="text" class="form-control" name="{{ $field }}[en]" value="{{ trans('trans.' . $field, [], 'en') }}"/>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-6 fv-row">
-                                                                            <div class="accordion"
-                                                                                 id="kt_accordion_{{ $fieldSlug }}_ar">
+                                                                            <div class="accordion" id="kt_accordion_{{ $fieldSlug }}_ar">
                                                                                 <div class="accordion-item">
-                                                                                    <h2 class="accordion-header"
-                                                                                        id="kt_accordion_{{ $fieldSlug }}_ar_header">
-                                                                                        <button
-                                                                                            class="accordion-button fs-4 fw-semibold collapsed"
-                                                                                            type="button"
-                                                                                            data-bs-toggle="collapse"
-                                                                                            data-bs-target="#kt_accordion_{{ $fieldSlug }}_ar_body"
-                                                                                            aria-expanded="false"
-                                                                                            aria-controls="kt_accordion_{{ $fieldSlug }}_ar_body">
+                                                                                    <h2 class="accordion-header" id="kt_accordion_{{ $fieldSlug }}_ar_header">
+                                                                                        <button class="accordion-button fs-4 fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#kt_accordion_{{ $fieldSlug }}_ar_body" aria-expanded="false" aria-controls="kt_accordion_{{ $fieldSlug }}_ar_body">
                                                                                             {{ trans('trans.' . $field, [], 'ar') }}
                                                                                         </button>
                                                                                     </h2>
-                                                                                    <div id="kt_accordion_{{ $fieldSlug }}_ar_body"
-                                                                                         class="accordion-collapse collapse"
-                                                                                         aria-labelledby="kt_accordion_{{ $fieldSlug }}_ar_header"
-                                                                                         data-bs-parent="#kt_accordion_{{ $fieldSlug }}_ar">
+                                                                                    <div id="kt_accordion_{{ $fieldSlug }}_ar_body" class="accordion-collapse collapse" aria-labelledby="kt_accordion_{{ $fieldSlug }}_ar_header" data-bs-parent="#kt_accordion_{{ $fieldSlug }}_ar">
                                                                                         <div class="accordion-body">
-                                                                                            <input type="text" class="form-control"
-                                                                                                   name="{{ $field }}[ar]"
-                                                                                                   value="{{ trans('trans.' . $field, [], 'ar') }}"/>
+                                                                                            <input type="text" class="form-control" name="{{ $field }}[ar]" value="{{ trans('trans.' . $field, [], 'ar') }}"/>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
