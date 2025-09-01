@@ -23,4 +23,5 @@ Homestead.json
 .phpunit.result.cache
 .idea/vcs.xml
 
-/lang/
+/lang/ar
+/lang/en
