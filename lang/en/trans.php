@@ -214,4 +214,7 @@ return array (
   'Financial Statements Issuance Dates' => 'Financial Statements Issuance Dates',
   'View Chart Analysis For:' => 'View Chart Analysis For:',
   'Stock vs  Index Return' => 'Stock vs. Index Return',
+  'Chart Analysis' => 'Chart Analysis',
+  'Heading Titles' => 'Heading Titles',
+
 );
