@@ -19,6 +19,9 @@ class ProcessSectorSeederJob implements ShouldQueue
      *
      * @return void
      */
+
+    public $timeout = 600; // seconds (10 minutes)
+
     public function __construct()
     {
         //
