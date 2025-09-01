@@ -44,36 +44,37 @@
                                     <!--begin::Card body-->
                                     <div class="card-body pt-0">
                                         @php
-                                            $fields = [
-                                                'closing_price',
-                                                'average_price_midpoint',
-                                                '52_week_high',
-                                                '52_week_low',
-                                                'maximum_stock_return_over_250_days',
-                                                'minimum_stock_return_over_250_days',
-                                                'sharp_risk_ratio',
-                                                'beta_coefficient',
-                                                'daily_stock_volatility',
-                                                'annual_stock_volatility',
-                                                'stock_risk_ranking',
-                                                'price_earning_ratio',
-                                                'market_to_book_ratio',
-                                                'free_cash_flow',
-                                                'leverage_ratio',
-                                                'return_on_equity',
-                                                'dividend_yield',
-                                                'earning_per_share',
-                                                'annual_dividend_rate',
-                                                'expected_annual_stock_return',
-                                                'daily_expected_stock_return',
-                                                'stock_value_at_risk',
-                                                'last_date_for_dividend_distribution',
-                                                'last_updated_income_statement',
-                                                'last_updated_balance_sheet',
-                                                'stock_dividend_distribution_possibilities_chart',
-                                                'last_stock_vs_index_return_chart',
-                                                'support_and_resistance_price_level_chart',
+                                            $fieldLabels = [
+                                                'closing_price' => 'Market Price (Closing Price)',
+                                                'average_price_midpoint' => 'Average Price Midpoint',
+                                                '52_week_high' => '52 Week High',
+                                                '52_week_low' => '52 Week Low',
+                                                'maximum_stock_return_over_250_days' => 'Maximum Stock Return over 250 Days Trading',
+                                                'minimum_stock_return_over_250_days' => 'Minimum Stock Return over 250 Days Trading',
+                                                'sharp_risk_ratio' => 'Sharp Risk Ratio',
+                                                'beta_coefficient' => 'Beta Coefficient',
+                                                'daily_stock_volatility' => 'Daily Stock Volatility',
+                                                'annual_stock_volatility' => 'Annual Stock Volatility',
+                                                'stock_risk_ranking' => 'Stock Risk Ranking',
+                                                'price_earning_ratio' => 'Price Earning Ratio',
+                                                'market_to_book_ratio' => 'Market to Book Ratio',
+                                                'free_cash_flow' => 'Free Cash Flow',
+                                                'leverage_ratio' => 'Leverage Ratio',
+                                                'return_on_equity' => 'Return on Equity',
+                                                'dividend_yield' => 'Dividend Yield',
+                                                'earning_per_share' => 'Earning Per Share',
+                                                'annual_dividend_rate' => 'Annual Dividend Rate',
+                                                'expected_annual_stock_return' => 'Expected Annual Stock Return',
+                                                'daily_expected_stock_return' => 'Daily Expected Stock Return',
+                                                'stock_value_at_risk' => 'Stock Value at Risk',
+                                                'last_date_for_dividend_distribution' => 'Last date for dividend distribution',
+                                                'last_updated_income_statement' => 'Last Updated Income Statement',
+                                                'last_updated_balance_sheet' => 'Last Updated Balance Sheet',
+                                                'stock_dividend_distribution_possibilities_chart' => 'Stock dividend distribution possibilities',
+                                                'last_stock_vs_index_return_chart' => 'Stock vs. Index Return',
+                                                'support_and_resistance_price_level_chart' => 'Support and Resistance Price Level',
                                             ];
+
                                             $sections = [
                                                 'Stock Movement' => [
                                                     'closing_price',
@@ -121,46 +122,59 @@
                                         @endphp
 
                                         @foreach ($sections as $title => $sectionFields)
-                                            <h2 class="mb-5">{{ $title }}</h2>
-                                            @foreach ($sectionFields as $field)
-                                                @if (in_array($field, $fields))
-                                                    <div class="row mb-10">
-                                                        <div class="col-md-6 fv-row">
-                                                            <div class="accordion" id="kt_accordion_{{ $field }}_en">
-                                                                <div class="accordion-item">
-                                                                    <h2 class="accordion-header" id="kt_accordion_{{ $field }}_en_header">
-                                                                        <button class="accordion-button fs-4 fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#kt_accordion_{{ $field }}_en_body" aria-expanded="false" aria-controls="kt_accordion_{{ $field }}_en_body">
-                                                                            {{ ucwords(str_replace('_', ' ', $field)) }} (English)
-                                                                        </button>
-                                                                    </h2>
-                                                                    <div id="kt_accordion_{{ $field }}_en_body" class="accordion-collapse collapse" aria-labelledby="kt_accordion_{{ $field }}_en_header" data-bs-parent="#kt_accordion_{{ $field }}_en">
-                                                                        <div class="accordion-body">
-                                                                            <textarea class="editor" name="{{ $field }}[en]">{{ $note->{$field}['en'] ?? '' }}</textarea>
+                                            <div class="accordion" id="accordionExample-{{ $loop->index }}">
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="heading-{{ $loop->index }}">
+                                                        <button class="accordion-button fs-4 fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ $loop->index }}" aria-expanded="false" aria-controls="collapse-{{ $loop->index }}">
+                                                            {{ trans('trans.' . $title, [], app()->getLocale()) }}
+                                                        </button>
+                                                    </h2>
+                                                    <div id="collapse-{{ $loop->index }}" class="accordion-collapse collapse" aria-labelledby="heading-{{ $loop->index }}" data-bs-parent="#accordionExample-{{ $loop->index }}">
+                                                        <div class="accordion-body">
+                                                            @foreach ($sectionFields as $field)
+                                                                @if (isset($fieldLabels[$field]))
+                                                                    @php($fieldSlug = Str::slug($field))
+                                                                    <div class="row mb-10">
+                                                                        <div class="col-md-6 fv-row">
+                                                                            <div class="accordion" id="kt_accordion_{{ $fieldSlug }}_en">
+                                                                                <div class="accordion-item">
+                                                                                    <h2 class="accordion-header" id="kt_accordion_{{ $fieldSlug }}_en_header">
+                                                                                        <button class="accordion-button fs-4 fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#kt_accordion_{{ $fieldSlug }}_en_body" aria-expanded="false" aria-controls="kt_accordion_{{ $fieldSlug }}_en_body">
+                                                                                            {{ trans('trans.' . $fieldLabels[$field], [], 'en') }}
+                                                                                        </button>
+                                                                                    </h2>
+                                                                                    <div id="kt_accordion_{{ $fieldSlug }}_en_body" class="accordion-collapse collapse" aria-labelledby="kt_accordion_{{ $fieldSlug }}_en_header" data-bs-parent="#kt_accordion_{{ $fieldSlug }}_en">
+                                                                                        <div class="accordion-body">
+                                                                                            <textarea class="editor" name="{{ $field }}[en]">{{ $note->{$field}['en'] ?? '' }}</textarea>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-6 fv-row">
+                                                                            <div class="accordion" id="kt_accordion_{{ $fieldSlug }}_ar">
+                                                                                <div class="accordion-item">
+                                                                                    <h2 class="accordion-header" id="kt_accordion_{{ $fieldSlug }}_ar_header">
+                                                                                        <button class="accordion-button fs-4 fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#kt_accordion_{{ $fieldSlug }}_ar_body" aria-expanded="false" aria-controls="kt_accordion_{{ $fieldSlug }}_ar_body">
+                                                                                            {{ trans('trans.' . $fieldLabels[$field], [], 'ar') }}
+                                                                                        </button>
+                                                                                    </h2>
+                                                                                    <div id="kt_accordion_{{ $fieldSlug }}_ar_body" class="accordion-collapse collapse" aria-labelledby="kt_accordion_{{ $fieldSlug }}_ar_header" data-bs-parent="#kt_accordion_{{ $fieldSlug }}_ar">
+                                                                                        <div class="accordion-body">
+                                                                                            <textarea class="editor" name="{{ $field }}[ar]">{{ $note->{$field}['ar'] ?? '' }}</textarea>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 fv-row">
-                                                            <div class="accordion" id="kt_accordion_{{ $field }}_ar">
-                                                                <div class="accordion-item">
-                                                                    <h2 class="accordion-header" id="kt_accordion_{{ $field }}_ar_header">
-                                                                        <button class="accordion-button fs-4 fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#kt_accordion_{{ $field }}_ar_body" aria-expanded="false" aria-controls="kt_accordion_{{ $field }}_ar_body">
-                                                                            {{ ucwords(str_replace('_', ' ', $field)) }} (Arabic)
-                                                                        </button>
-                                                                    </h2>
-                                                                    <div id="kt_accordion_{{ $field }}_ar_body" class="accordion-collapse collapse" aria-labelledby="kt_accordion_{{ $field }}_ar_header" data-bs-parent="#kt_accordion_{{ $field }}_ar">
-                                                                        <div class="accordion-body">
-                                                                            <textarea class="editor" name="{{ $field }}[ar]">{{ $note->{$field}['ar'] ?? '' }}</textarea>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                                    <hr>
+                                                                @endif
+                                                            @endforeach
                                                         </div>
                                                     </div>
-                                                    <hr>
-                                                @endif
-                                            @endforeach
+                                                </div>
+                                            </div>
                                         @endforeach
                                     </div>
                                     <!--end::Card body-->
