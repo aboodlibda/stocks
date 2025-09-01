@@ -181,7 +181,7 @@
                                                                 data-bs-target="#kt_accordion_{{ $titleSlug }}_body"
                                                                 aria-expanded="false"
                                                                 aria-controls="kt_accordion_{{ $titleSlug }}_body">
-                                                            {{ $title }}
+                                                            {{ trans('trans.' . $title, [], app()->getLocale()) }}
                                                         </button>
                                                     </h2>
                                                     <div id="kt_accordion_{{ $titleSlug }}_body"
@@ -206,8 +206,7 @@
                                                                                             data-bs-target="#kt_accordion_{{ $fieldSlug }}_en_body"
                                                                                             aria-expanded="false"
                                                                                             aria-controls="kt_accordion_{{ $fieldSlug }}_en_body">
-                                                                                            {{ ucwords(str_replace('_', ' ', $field)) }}
-                                                                                            (English)
+                                                                                            {{ trans('trans.' . $field, [], 'en') }}
                                                                                         </button>
                                                                                     </h2>
                                                                                     <div id="kt_accordion_{{ $fieldSlug }}_en_body"
@@ -236,8 +235,7 @@
                                                                                             data-bs-target="#kt_accordion_{{ $fieldSlug }}_ar_body"
                                                                                             aria-expanded="false"
                                                                                             aria-controls="kt_accordion_{{ $fieldSlug }}_ar_body">
-                                                                                            {{ ucwords(str_replace('_', ' ', $field)) }}
-                                                                                            (Arabic)
+                                                                                            {{ trans('trans.' . $field, [], 'ar') }}
                                                                                         </button>
                                                                                     </h2>
                                                                                     <div id="kt_accordion_{{ $fieldSlug }}_ar_body"
