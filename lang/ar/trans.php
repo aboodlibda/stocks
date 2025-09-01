@@ -215,4 +215,6 @@ return array (
   'Financial Statements Issuance Dates' => 'تواريخ إصدار البيانات المالية',
   'View Chart Analysis For:' => 'عرض تحليل الرسم البياني لـ:',
   'Stock vs  Index Return' => 'عائد الأسهم مقابل عائد المؤشر',
+  'Chart Analysis' => 'تحليل الرسم البياني',
+  'Heading Titles' => 'العناوين الرئيسية',
 );
