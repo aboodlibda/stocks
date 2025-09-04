@@ -206,7 +206,7 @@
     <!--end::Content-->
 @endsection
 @section('script')
-    <script src="https://cdn.tiny.cloud/1/f1jknqc2028uapitbujovxdivdz2ufny3mvk5zy195agahcx/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/11yf6gljx37tcqqf4tv2mddqp7gzgvm184vh36v0ipe7pnmh/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 
 
     <script>
