@@ -860,10 +860,10 @@ var min = Math.min.apply(null, values);
                         color: "#4e7bd1",
                         // yValueFormatString: "#,##0K",
                         dataPoints: [
-                            { label: 'Resistance Price',indexLabel: data.resistance_price.toFixed(2).toString(), y: data.resistance_price },
-                            { label: 'Market Close Price',indexLabel: data.market_close_price.toFixed(2).toString(), y: data.market_close_price },
-                            { label: 'Price Midpoint',indexLabel: data.average_price_midpoint.toFixed(2).toString(), y: data.average_price_midpoint },
-                            { label: 'Support Price',indexLabel: data.support_price.toFixed(2).toString(), y: data.support_price },
+                            { label: 'Resistance Price',indexLabel: Number(data.resistance_price).toFixed(2).toString(), y: Number(data.resistance_price) },
+                            { label: 'Market Close Price',indexLabel: Number(data.market_close_price).toFixed(2).toString(), y: Number(data.market_close_price) },
+                            { label: 'Price Midpoint',indexLabel: Number(data.average_price_midpoint).toFixed(2).toString(), y: Number(data.average_price_midpoint) },
+                            { label: 'Support Price',indexLabel: Number(data.support_price).toFixed(2).toString(), y: Number(data.support_price) },
                         ]
 
                     }]
