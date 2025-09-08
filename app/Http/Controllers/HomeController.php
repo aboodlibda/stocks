@@ -166,6 +166,7 @@ class HomeController extends Controller
         $sector_ratios = array_slice($sector_ratios, 0,180);
         $company_ratios = array_slice($company_ratios, 0,180);
 
+//        dd("test");
         $binBoundary = binBoundary($company->company_num);
         $frequency = frequency($company_ratios,$binBoundary);
         return response()->json([
