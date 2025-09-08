@@ -2,11 +2,10 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Company;
 use App\Services\StockService;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
-use mysql_xdevapi\Table;
 
 class FetchStockData extends Command
 {
@@ -23,9 +22,16 @@ class FetchStockData extends Command
 
     public function handle()
     {
+
+        // Check if today is Friday or Saturday
+        $today = Carbon::now()->timezone('Asia/Riyadh')->isoWeekday();
+        if ($today === Carbon::FRIDAY || $today === Carbon::SATURDAY) {
+            $this->info('Stock market is closed on Friday and Saturday. Skipping execution.');
+            return;
+        }
         // Fetch tickers dynamically using Laravel Query Builder
         $tickers = DB::table('companies')->pluck('company_num')->toArray();
-//        $tickers = DB::table('companies')->pluck('company_num')->toArray();
+//        $tickers = DB::table('companies')->where('company_num', '=', 7010)->pluck('company_num')->toArray();
 
 
 // Step 1: Get the target record
@@ -49,10 +55,15 @@ class FetchStockData extends Command
             return;
         }
 
-        // Define start and end dates
-        $sdate = '2021-09-12';
-        $edate = '2024-09-13';
 
+        $sdate = '2021-09-12';
+//        $edate = '2024-09-13';
+
+
+
+        // Define start and end dates
+//        $sdate = Carbon::yesterday()->timezone('Asia/Riyadh')->startOfDay();
+        $edate = Carbon::today()->timezone('Asia/Riyadh')->setTime(15,15);
         // Fetch stock data
         $data = $this->stockService->getStockData($tickers, $sdate, $edate);
 
