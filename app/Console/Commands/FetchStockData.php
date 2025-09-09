@@ -26,7 +26,7 @@ class FetchStockData extends Command
         // Check if today is Friday or Saturday
         $today = Carbon::now()->timezone('Asia/Riyadh')->isoWeekday();
         if ($today === Carbon::FRIDAY || $today === Carbon::SATURDAY) {
-            $this->info('Stock market is closed on Friday and Saturday. Skipping execution.');
+            $this->info('Stock market is closed on Friday and Saturday. Skipping execution fetch:stock-data.');
             return;
         }
         // Fetch tickers dynamically using Laravel Query Builder
