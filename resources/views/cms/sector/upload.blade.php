@@ -135,7 +135,7 @@
             paramName: "file", // The name that will be used to transfer the file
             maxFilesize: 10, // MB
             maxFiles: 1,    // allow only ONE file
-            acceptedFiles: ".csv",
+            acceptedFiles: ".xlsx",
             headers: {
                 'X-CSRF-TOKEN': "{{ csrf_token() }}"
             },
