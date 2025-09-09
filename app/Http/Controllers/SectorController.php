@@ -29,41 +29,41 @@ class SectorController extends Controller
         ]);
 
         $file = $request->file('file');
-        $filename = 'sectors.csv';
+        $filename = 'sectors.xlsx';
         $file->move(public_path('uploads/excel'), $filename);
-        $path = public_path('uploads/excel/sectors.csv');
+        $path = public_path('uploads/excel/sectors.xlsx');
 
         // Use built-in PHP for CSV
-        $rows = array_map('str_getcsv', file($path));
-
-        foreach ($rows as $row) {
-            // Remove BOM
-            $line = preg_replace('/^\x{FEFF}/u', '', $row[0]);
-
-            // Convert to array by delimiter
-            $columns = str_getcsv($line, ';');
-
-            // Access by index or map
-            $data = [
-                'date' => $columns[0],
-                'open' => $columns[1],
-                'high' => $columns[2],
-                'low' => $columns[3],
-                'close' => $columns[4],
-                'volume' => $columns[5],
-                'turnover' => $columns[6],
-                'code' => $columns[7],
-                'name' => $columns[8], // Arabic name should appear here
-            ];
-        }
-        if (!$data['date'] && !$data['open'] && !$data['high'] && !$data['low'] && !$data['close'] && !$data['volume'] && !$data['turnover'] && !$data['code'] && !$data['name']) {
-            return response()->json([
-                'success' => false,
-                'message' => [
-                    "The header row does not match the expected format: date|open|high|low|close|volume|turnover|code|name"
-                ]
-            ], 422);
-        }
+//        $rows = array_map('str_getcsv', file($path));
+//
+//        foreach ($rows as $row) {
+//            // Remove BOM
+//            $line = preg_replace('/^\x{FEFF}/u', '', $row[0]);
+//
+//            // Convert to array by delimiter
+//            $columns = str_getcsv($line, ';');
+//
+//            // Access by index or map
+//            $data = [
+//                'date' => $columns[0],
+//                'open' => $columns[1],
+//                'high' => $columns[2],
+//                'low' => $columns[3],
+//                'close' => $columns[4],
+//                'volume' => $columns[5],
+//                'turnover' => $columns[6],
+//                'code' => $columns[7],
+//                'name' => $columns[8], // Arabic name should appear here
+//            ];
+//        }
+//        if (!$data['date'] && !$data['open'] && !$data['high'] && !$data['low'] && !$data['close'] && !$data['volume'] && !$data['turnover'] && !$data['code'] && !$data['name']) {
+//            return response()->json([
+//                'success' => false,
+//                'message' => [
+//                    "The header row does not match the expected format: date|open|high|low|close|volume|turnover|code|name"
+//                ]
+//            ], 422);
+//        }
 
 //        // run the queue worker
         ProcessSectorSeederJob::dispatch();
