@@ -57,14 +57,16 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     });
 
     Route::get('new_test',function(){
-        $url = "https://finance.yahoo.com/quote/7010.SR/key-statistics?p=7010.SR";
 
-        $response = Http::withHeaders([
-            "X-RapidAPI-Host" => $this->apiHost,
-            "X-RapidAPI-Key" => $this->apiKey
-        ])->get($url);
-
-        return $response->successful() ? $response->json() : null;
+        calculateRatiosBySector('TMDI');
+//        $url = "https://finance.yahoo.com/quote/7010.SR/key-statistics?p=7010.SR";
+//
+//        $response = Http::withHeaders([
+//            "X-RapidAPI-Host" => $this->apiHost,
+//            "X-RapidAPI-Key" => $this->apiKey
+//        ])->get($url);
+//
+//        return $response->successful() ? $response->json() : null;
 
 
     });
