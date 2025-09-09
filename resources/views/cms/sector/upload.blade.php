@@ -100,7 +100,7 @@
                               enctype="multipart/form-data">
                             @csrf
                         </form>
-                        <span class="form-text text-danger bold">صيغة الملف المسموحة : csv. |  الحجم الأقصى للملف: 10MB.</span>
+                        <span class="form-text text-danger bold">صيغة الملف المسموحة : xlsx. |  الحجم الأقصى للملف: 10MB.</span>
                     </div>
                     <div class="col-md-6">
                         <h3 class="mb-3">تنزيل القالب وتعبئته</h3>
