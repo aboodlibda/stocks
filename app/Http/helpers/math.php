@@ -76,10 +76,11 @@ function calculateRatiosByCompany($ticker): array
 
 function calculateRatiosBySector($code): array
 {
+
     $sdate='2023-09-12';
     $edate='2024-09-13';
     // Get adjclose values for the given ticker, ordered by ID (or date if available)
-    $closes = Sector::where('code', $code)
+    $closes = Sector::where('code',$code)
 //        ->whereBetween('date', [$sdate, $edate])
         ->orderBy('id', 'asc')  // Use 'date' if your table has it
         ->pluck('close');
@@ -98,7 +99,6 @@ function calculateRatiosBySector($code): array
 //        ->orderBy('sectors.date','asc')
 //        ->get();
 //
-//    dd($data);
     // Calculate ratios like B10/B11, B11/B12, etc.
     $closes[] = $closes[count($closes) - 1]; // Add a duplicate of the last element
 
@@ -112,6 +112,7 @@ function calculateRatiosBySector($code): array
     }
 
 
+//    dd($ratios);
 
     return $ratios;
 }
