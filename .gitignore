@@ -25,3 +25,5 @@ Homestead.json
 
 /lang/ar
 /lang/en
+lang/ar/trans.php
+lang/en/trans.php
