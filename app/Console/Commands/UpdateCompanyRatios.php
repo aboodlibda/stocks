@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class UpdateCompanyRatios extends Command
@@ -15,6 +16,14 @@ class UpdateCompanyRatios extends Command
      */
     public function handle(): void
     {
+
+        // Check if today is Friday or Saturday
+        $today = Carbon::now()->timezone('Asia/Riyadh')->isoWeekday();
+        if ($today === Carbon::FRIDAY || $today === Carbon::SATURDAY) {
+            $this->info('Stock market is closed on Friday and Saturday. Skipping execution updateCompanyRatios.');
+            return;
+        }
+
         updateCompanyRatios();
     }
 }
