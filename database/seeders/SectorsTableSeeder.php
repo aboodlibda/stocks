@@ -10,7 +10,7 @@ class SectorsTableSeeder extends Seeder
 {
     public function run(): void
     {
-        Excel::import(new SectorImport(), public_path('uploads/excel/sectors.csv'));
+        Excel::import(new SectorImport(), public_path('uploads/excel/sectors.xlsx'));
     }
 }
 
